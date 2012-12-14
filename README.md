@@ -1,23 +1,56 @@
 Language Independent Validation Rules Specification
 ===================================================
 
+I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
+Requirements:
 1. Rules must be declarative and language independent
-2. Easy to use
-3. Easy to extend
+2. Any quantity of rules for each field
+3. Return together errors for all fields
+4. Exclude all fields that do not have validation rules described
+5. Possibility to stop on first failed field
+6. Possibility to validatate complex hierarchical structures
+7. Easy to described and undersand rules
+8. Easy to implement own rules
 
-## Simple Rules Example ##
+
+## Rules Examples ##
+**Simple registration data**
+
     {
-        name: 'required', 
-        email: ['required', 'email'] 
+        name: 'required',
+        phone: {'max_length': [10]},
+        email: ['required', 'email']
+        password: ['required', {'min_length': [10]} ]
+        password2: { is_equal_to: ['password2'] }
     }
 
-## Standard validator shortcuts ##
+**Sub list validation**
 
-    [ {'min_length': [1]}, {'max_length': [10]}, { is_in: [['a', 'b']] }]
+    {
+        order_id: ['required', 'positive_integer'],
+        products: ['is_required', 'is_valid_list': [{
+            product_id: ['required','positive_integer'],
+            quantity: ['required', 'positive_integer']
+        }]]
+    }
 
-    [ {'min_length': [1]}, {'max_length': [10]}, { is_in: [['a', 'b']] }]
+**Sub list with conditional rules set**
 
-    ['required', { between: [10, 20] } ]
+    {
+        order_id: ['required', 'positive_integer'],
+        products: ['is_required', 'is_valid_multitype_list': [
+            'product_type': {
+                material: {
+                    material_id: ['required', 'positive_integer'],
+                    quantity: ['required', { 'min_number': [1]} ],
+                    warehouse_id: 'positive_integer'
+                },
+                service: {
+                    name: ['required', 'max_lengh': [10] ]
+                }
+            }
+        ]]
+    }
 
 ## Validation Rules ##
 
