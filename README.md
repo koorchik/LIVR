@@ -6,13 +6,14 @@ I tryed a lot of validators but I did not find any that meet all my needs. So, i
 Requirements:
 
 1. Rules must be declarative and language independent
-2. Any quantity of rules for each field
-3. Return together errors for all fields
+2. Any number of rules for each field
+3. Should return together errors for all fields
 4. Exclude all fields that do not have validation rules described
-5. Possibility to stop on first failed field
+5. Possibility to stop on first failed rule
 6. Possibility to validatate complex hierarchical structures
 7. Easy to described and undersand rules
-8. Easy to implement own rules
+8. Should return understandable error codes(not error messages).
+9. Easy to implement own rules
 
 ## Rules Examples ##
 **Simple registration data**
@@ -71,123 +72,123 @@ Validator callback/object receives value to validate and returns an error messag
 ## Validation Rules ##
 ### Base Validators ###
 #### required ####
-Default Error: 'REQUIRED'
+Error code: 'REQUIRED'
 
 Example:
     
-    {name: 'required'}
+    {first_name: 'required'}
 
 #### not_empty ####
-Default Error: 'CANNOT_BE_EMPTY'
+Error code: 'CANNOT_BE_EMPTY'
 
 Example:
     
-    {name: 'not_empty'}
+    {first_name: 'not_empty'}
 
 #### is_in ####
-Default Error: 'NOT_ALLOWED_VALUE'
+Error code: 'NOT_ALLOWED_VALUE'
 
 Example:
     
-    {name: {'is_in': [['val1', 'val2']]} }
+    {first_name: {'is_in': [['Anton', 'Igor']]} }
 
 ### String Validators ###
 #### max_length  ####
-Default Error: 'TOO_LONG'
+Error code: 'TOO_LONG'
 
 Example:
     
-    {name: {max_length: [10] }
+    {first_name: {max_length: [10] }
 
 #### min_length ####
-Default Error: 'TOO_SHORT'
+Error code: 'TOO_SHORT'
 
 Example:
     
-    {name: {min_length: [2] }
+    {first_name: {min_length: [2] }
 
 #### length_between ####
-Default Error: 'TOO_LONG' or 'TOO_SHORT'
+Error code: 'TOO_LONG' or 'TOO_SHORT'
 
 Example:
     
-    {name: {length_between: [5, 10] }
+    {first_name: {length_between: [2, 10] }
 
 #### length_equal ####
-Default Error: 'TOO_LONG' or 'TOO_SHORT'
+Error code: 'TOO_LONG' or 'TOO_SHORT'
 
 Example:
     
-    {name: {length_equal: [7] }
+    {first_name: {length_equal: [7] }
 
 #### like ####
-Default Error: 'WRONG_FORMAT'
+Error code: 'WRONG_FORMAT'
 
 Example:
     
-    {name: {like: ['^\w+?$'] }
+    {first_name: {like: ['^\w+?$'] }
 
 ### Numeric Validators ###
 #### integer ####
-Default Error: 'NOT_INTEGER'
+Error code: 'NOT_INTEGER'
 
 Example:
     
-    {name: 'integer'}
+    {age: 'integer'}
 
 #### positive_integer ####
-Default Error: 'NOT_POSITIVE_INTEGER'
+Error code: 'NOT_POSITIVE_INTEGER'
 
 Example:
     
-    {name: 'positive_integer'}
+    {age: 'positive_integer'}
 
 
 #### decimal ####
-Default Error: 'NOT_DECIMAL'
+Error code: 'NOT_DECIMAL'
 
 Example:
     
-    {name: 'decimal'}
+    {price: 'decimal'}
 
 #### positive_decimal ####
-Default Error: 'NOT_POSITIVE_DECIMAL'
+Error code: 'NOT_POSITIVE_DECIMAL'
 
 Example:
     
-    {name: 'positive_decimal'}
+    {price: 'positive_decimal'}
 
 #### max_number ####
-Default Error: 'TOO_HIGH'
+Error code: 'TOO_HIGH'
 
 Example:
     
-    {name: { 'max_number': [42] } }
+    {age: { 'max_number': [95] } }
 
 #### min_number ####
-Default Error: 'TOO_LOW'
+Error code: 'TOO_LOW'
 
 Example:
     
-    {name: { 'min_number': [42] } }
+    {age: { 'min_number': [18] } }
 
 #### number_between ####
-Default Error: 'TOO_HIGH' or 'TOO_LOW'
+Error code: 'TOO_HIGH' or 'TOO_LOW'
 
 Example:
     
-    {name: { 'number_between': [10, 42] } }
+    {age: { 'number_between': [18, 95] } }
 
 ###  Special Validators ###
 #### email ####
-Default Error: 'WRONG_EMAIL'
+Error code: 'WRONG_EMAIL'
 
 Example:
     
-    {name: 'email'}
+    {login: 'email'}
 
 #### equal_to_field ####
-Default Error: 'WRONG_EMAIL'
+Error code: 'WRONG_EMAIL'
 
 Example:
     
