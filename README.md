@@ -3,8 +3,7 @@ Language Independent Validation Rules Specification (FIRST DRAFT)
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
 
-Requirements:
-
+ Requirements:
 1. Rules must be declarative and language independent
 2. Any number of rules for each field
 3. Should return together errors for all fields
@@ -23,7 +22,7 @@ Requirements:
         phone: {'max_length': [10]},
         email: ['required', 'email']
         password: ['required', {'min_length': [10]} ]
-        password2: { equal_to_field: ['password2'] }
+        password2: { equal_to_field: ['password'] }
     }
 
 **Sub list validation**
@@ -37,7 +36,6 @@ Requirements:
     }
 
 **Sub list with conditional rules set**
-
     {
         order_id: ['required', 'positive_integer'],
         products: ['is_required', 'is_valid_multitype_list': [
@@ -62,10 +60,13 @@ You should define a structure:
 
 Examples:
 
-* 'required' or {'required': [] } becomes "required()"
-* {'length_between': [1,10] } becomes "length_between(1,10)"
-* {'in': [['Kiev','Moscow']] } becomes "in(['Kiev', 'Moscow'])"
-* {'my_own_rule': [1, 2, 'bla'] } becomes "my_own_rule(1, 2, 'bla')"
+    'required' or {'required': [] } becomes  "required()"
+
+    {'length_between': [1,10] } becomes "length_between(1,10)"
+
+    {'in': [['Kiev','Moscow']] } becomes "in(['Kiev', 'Moscow'])"
+
+    {'my_own_rule': [1, 2, 'bla'] } becomes "my_own_rule(1, 2, 'bla')"
 
 Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
@@ -85,12 +86,12 @@ Example:
     
     {first_name: 'not_empty'}
 
-#### is_in ####
+#### in ####
 Error code: 'NOT_ALLOWED_VALUE'
 
 Example:
     
-    {first_name: {'is_in': [['Anton', 'Igor']]} }
+    {first_name: {'in': [['Anton', 'Igor']]} }
 
 ### String Validators ###
 #### max_length  ####
