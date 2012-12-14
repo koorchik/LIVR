@@ -14,9 +14,9 @@ Language Independent Validation Rules Specification
 ## Standard validator shortcuts ##
 
     [ {'min_length': [1]}, {'max_length': [10]}, { is_in: [['a', 'b']] }]
-    
+
     [ {'min_length': [1]}, {'max_length': [10]}, { is_in: [['a', 'b']] }]
-    
+
     ['required', { between: [10, 20] } ]
 
 ## Validation Rules ##
@@ -35,6 +35,13 @@ Default Error: 'CANNOT_BE_EMPTY'
 Example:
     
     {name: 'not_empty'}
+
+#### is_in ####
+Default Error: 'NOT_ALLOWED_VALUE'
+
+Example:
+    
+    {name: {'is_in': [['val1', 'val2']]} }
 
 ### String Validators ###
 #### max_length  ####
