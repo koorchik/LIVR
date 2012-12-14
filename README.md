@@ -26,20 +26,28 @@ Requirements:
         password2: { equal_to_field: ['password'] }
     }
 
-**Sub list validation**
+**Simple list validation**
+
+    { 
+        order_id: ['required', 'positive_integer'],
+        product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }
+    }
+
+**Validating list of objects**
 
     {
         order_id: ['required', 'positive_integer'],
-        products: ['is_required', 'is_valid_list': [{
+        products: ['required', 'list_of_objects': [{
             product_id: ['required','positive_integer'],
             quantity: ['required', 'positive_integer']
         }]]
     }
 
-**Sub list with conditional rules set**
+**Validating list of different objects**
+    
     {
         order_id: ['required', 'positive_integer'],
-        products: ['is_required', 'is_valid_multitype_list': [
+        products: ['required', 'list_of_different_objects': [
             'product_type': {
                 material: {
                     material_id: ['required', 'positive_integer'],
@@ -79,7 +87,18 @@ Examples:
 
 Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
+So, the idea is that there is a tiny core which can be easly extended with new rules.
+
+
 ## Validation Rules ##
+Be aware that all rules just skip checking empty values. 
+So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present. 
+This allows us to use the same rules for not required fields.
+
+    first_name: { min_length: [10] } # name is optional. We will check length only if "first_name" was passed
+    first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
+
+
 ### Base Validators ###
 #### required ####
 Error code: 'REQUIRED'
@@ -95,6 +114,7 @@ Example:
     
     {first_name: 'not_empty'}
 
+### String Validators ###
 #### in ####
 Error code: 'NOT_ALLOWED_VALUE'
 
@@ -102,7 +122,6 @@ Example:
     
     {first_name: {'in': [['Anton', 'Igor']]} }
 
-### String Validators ###
 #### max_length  ####
 Error code: 'TOO_LONG'
 
@@ -203,6 +222,59 @@ Error code: 'WRONG_EMAIL'
 Example:
     
     {password2: {'equal_to_field': ['password'] }}
+
+#### list_of ####
+Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
+
+Error code: depends on nested validators
+
+Example:
+    
+    { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+
+#### list_of_objects ####
+Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
+
+Error code: depends on nested validators
+
+Example:
+    
+    products: ['required', 'list_of_objects': [{
+        product_id: ['required','positive_integer'],
+        quantity: ['required', 'positive_integer']
+    }]]
+
+
+#### list_of_different_objects ####
+Allows you to describe validation rules for list of different objects. Validation rules will be applyed for each array element.
+
+Error code: depends on nested validators
+
+Example:
+
+    products: ['required', 'list_of_different_objects': [
+        'product_type': {
+            material: {
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', { 'min_number': [1]} ],
+                warehouse_id: 'positive_integer'
+            },
+            service: {
+                name: ['required', 'max_lengh': [10] ]
+            }
+        }
+    ]]
+
+In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules
+
+
+## Developers Guide ##
+
+Requirements to implementation
+
+1. Your implementation should support all validation rules described in "Validation Rules"
+2. Your implementation should return error codes descibed in specification
+3. It should be easy to implement own rules
 
 ## TODO ##
 
