@@ -2,6 +2,7 @@ Language Independent Validation Rules Specification
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
+
 Requirements:
 
 1. Rules must be declarative and language independent
@@ -12,7 +13,6 @@ Requirements:
 6. Possibility to validatate complex hierarchical structures
 7. Easy to described and undersand rules
 8. Easy to implement own rules
-
 
 ## Rules Examples ##
 **Simple registration data**
@@ -52,6 +52,14 @@ Requirements:
             }
         ]]
     }
+
+### How it works ###
+You should define a structure: 
+    FIELD_NAME: VALIDATION_RULES
+* FIELD_NAME is a name of field to validate
+* VALIDATION_RULES is a name of function(or array of functions) to be called for building validation callback/object.
+
+Validation callback receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
 ## Validation Rules ##
 
@@ -179,11 +187,8 @@ Example:
     
     {password2: {'equal_to_field': ['password'] }}
 
-### How it works ###
-You should define a structure: 
-    FIELD_NAME: VALIDATION_RULES
-* FIELD_NAME is a name of field to validate
-* VALIDATION_RULES is a name of function((or array of functions) to be called for validation.
+## TODO ##
 
-Validation function receives value to validate and return an error message(in case of failed validation) or empty string(in case of success)
-Thats all.
+* Describe internals with detailed step-by-step example
+* Write developers guide
+* Provide links to existing implementation
