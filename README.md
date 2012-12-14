@@ -3,6 +3,7 @@ Language Independent Validation Rules Specification
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
 Requirements:
+
 1. Rules must be declarative and language independent
 2. Any quantity of rules for each field
 3. Return together errors for all fields
