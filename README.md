@@ -3,7 +3,8 @@ Language Independent Validation Rules Specification (FIRST DRAFT)
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
 
- Requirements:
+Requirements:
+
 1. Rules must be declarative and language independent
 2. Any number of rules for each field
 3. Should return together errors for all fields
@@ -60,13 +61,21 @@ You should define a structure:
 
 Examples:
 
-    'required' or {'required': [] } becomes  "required()"
+'required' or {'required': [] } becomes:
 
-    {'length_between': [1,10] } becomes "length_between(1,10)"
+    required();
 
-    {'in': [['Kiev','Moscow']] } becomes "in(['Kiev', 'Moscow'])"
+{'length_between': [1,10] } becomes:
 
-    {'my_own_rule': [1, 2, 'bla'] } becomes "my_own_rule(1, 2, 'bla')"
+    length_between(1,10);
+
+{'in': [['Kiev','Moscow']] } becomes:
+    
+    in(['Kiev', 'Moscow']);
+
+{'my_own_rule': [1, 2, 'bla'] } becomes: 
+
+    my_own_rule(1, 2, 'bla');
 
 Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
