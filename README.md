@@ -1,4 +1,4 @@
-Language Independent Validation Rules Specification
+Language Independent Validation Rules Specification (FIRST DRAFT)
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
@@ -22,7 +22,7 @@ Requirements:
         phone: {'max_length': [10]},
         email: ['required', 'email']
         password: ['required', {'min_length': [10]} ]
-        password2: { is_equal_to: ['password2'] }
+        password2: { equal_to_field: ['password2'] }
     }
 
 **Sub list validation**
@@ -55,14 +55,20 @@ Requirements:
 
 ### How it works ###
 You should define a structure: 
-    FIELD_NAME: VALIDATION_RULES
+    FIELD_NAME: VALIDATION_RULE
 * FIELD_NAME is a name of field to validate
-* VALIDATION_RULES is a name of function(or array of functions) to be called for building validation callback/object.
+* VALIDATION_RULE is a name of function to be called for building validator callback/object. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules.
 
-Validation callback receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
+Examples:
+
+* 'required' or {'required': [] } becomes "required()"
+* {'length_between': [1,10] } becomes "length_between(1,10)"
+* {'in': [['Kiev','Moscow']] } becomes "in(['Kiev', 'Moscow'])"
+* {'my_own_rule': [1, 2, 'bla'] } becomes "my_own_rule(1, 2, 'bla')"
+
+Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
 ## Validation Rules ##
-
 ### Base Validators ###
 #### required ####
 Default Error: 'REQUIRED'
