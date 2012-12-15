@@ -1,4 +1,4 @@
-Language Independent Validation Rules Specification (FIRST DRAFT)
+Language Independent Validation Rules Specification (DRAFT)
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
@@ -20,11 +20,15 @@ Requirements:
 
     {
         name: 'required',
-        phone: {'max_length': [10]},
+        phone: {max_length: 10},
         email: ['required', 'email']
-        password: ['required', {'min_length': [10]} ]
-        password2: { equal_to_field: ['password'] }
+        password: ['required', {min_length: 10} ]
+        password2: { equal_to_field: 'password' }
     }
+
+"'required'" is a shorter form of "{ 'required': [] }"
+"{max_length: 10}" is a shorter form of "{max_length: [10]}"
+See "How it works" section
 
 **Simple list validation**
 
@@ -65,13 +69,17 @@ Requirements:
 You should define a structure: 
     FIELD_NAME: VALIDATION_RULE
 * FIELD_NAME is a name of field to validate
-* VALIDATION_RULE is a name of function to be called for building validator callback/object. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules.
+* VALIDATION_RULE is a name of function to be called for building validator closure/object. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
 
 Examples:
 
 'required' or {'required': [] } becomes:
 
     required();
+
+{ 'max_length': 5 } or { 'max_length': [5] } becomes:
+
+    max_length(5);    
 
 {'length_between': [1,10] } becomes:
 
@@ -81,9 +89,9 @@ Examples:
     
     in(['Kiev', 'Moscow']);
 
-{'my_own_rule': [1, 2, 'bla'] } becomes: 
+{'my_own_rule': [1, [2, 3], 'bla'] } becomes: 
 
-    my_own_rule(1, 2, 'bla');
+    my_own_rule(1, [2, 3], 'bla');
 
 Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
@@ -99,7 +107,7 @@ This allows us to use the same rules for not required fields.
     first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
 
 
-### Base Validators ###
+### Base Rules ###
 #### required ####
 Error code: 'REQUIRED'
 
@@ -114,7 +122,7 @@ Example:
     
     {first_name: 'not_empty'}
 
-### String Validators ###
+### String Rules ###
 #### in ####
 Error code: 'NOT_ALLOWED_VALUE'
 
@@ -157,7 +165,9 @@ Example:
     
     {first_name: {like: ['^\w+?$'] }
 
-### Numeric Validators ###
+Be aware that regelar expressions cab be language dependent. Try to use most common syntax.
+
+### Numeric Rules ###
 #### integer ####
 Error code: 'NOT_INTEGER'
 
@@ -208,7 +218,7 @@ Example:
     
     {age: { 'number_between': [18, 95] } }
 
-###  Special Validators ###
+###  Special Rules ###
 #### email ####
 Error code: 'WRONG_EMAIL'
 
@@ -223,6 +233,7 @@ Example:
     
     {password2: {'equal_to_field': ['password'] }}
 
+###  Helper Rules ###
 #### list_of ####
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
 
