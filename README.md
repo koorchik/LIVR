@@ -26,9 +26,12 @@ Requirements:
         password2: { equal_to_field: 'password' }
     }
 
-"'required'" is a shorter form of "{ 'required': [] }"
-"{max_length: 10}" is a shorter form of "{max_length: [10]}"
+'required' is a shorter form of { 'required': [] }
+
+{max_length: 10} is a shorter form of {max_length: [10]}
+
 See "How it works" section
+
 
 **Simple list validation**
 
