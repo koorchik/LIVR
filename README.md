@@ -28,7 +28,18 @@ Requirements:
 
 * 'required' is a shorter form of { 'required': [] }
 * {max_length: 10} is a shorter form of {max_length: [10]}
-See "How it works" section
+*See "How it works" section*
+
+**Simple validation of nested object**
+
+    {
+        name: 'required',
+        phone: {max_length: 10},
+        address: { 'nested_object': [{
+            city: 'required', 
+            zip: ['required', 'positive_integer']
+        }]}
+    }
 
 **Simple list validation**
 
@@ -36,6 +47,7 @@ See "How it works" section
         order_id: ['required', 'positive_integer'],
         product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }
     }
+
 
 **Validating list of objects**
 
@@ -106,6 +118,35 @@ This allows us to use the same rules for not required fields.
     first_name: { min_length: [10] } # name is optional. We will check length only if "first_name" was passed
     first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
 
+
+Standard rules that should be supported by every implementation:
+ 
+ * Base Rules
+    * required
+    * not_empty
+ * String Rules
+    * in
+    * max_length
+    * min_length
+    * length_between
+    * length_equal
+    * like
+ * Numeric Rules
+    * integer
+    * positive_integer
+    * decimal
+    * positive_decimal
+    * max_number
+    * min_number
+    * number_between
+ * Special Rules
+    * email
+    * equal_to_field
+ * Helper Rules
+    * nested_object
+    * list_of
+    * list_of_objects
+    * list_of_different_objects
 
 ### Base Rules ###
 #### required ####
@@ -242,6 +283,19 @@ Error code: depends on nested validators
 Example:
     
     { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+
+#### nested_object ####
+Allows you to describe validation rules for a nested object.
+
+Error code: depends on nested validators
+
+Example:
+    
+    address: { 'nested_object': [{
+        city: 'required', 
+        zip: ['required', 'positive_integer']
+    }]}
+
 
 #### list_of_objects ####
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
