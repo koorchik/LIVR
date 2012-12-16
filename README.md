@@ -35,11 +35,13 @@ Requirements:
     {
         name: 'required',
         phone: {max_length: 10},
-        address: { 'nested_object': [{
+        address: { 'nested_object': {
             city: 'required', 
             zip: ['required', 'positive_integer']
-        }]}
+        }}
     }
+* {nested_object: {}} is a shorter form of {nested_object: [{}]}
+*See "How it works" section*
 
 **Simple list validation**
 
@@ -53,28 +55,28 @@ Requirements:
 
     {
         order_id: ['required', 'positive_integer'],
-        products: ['required', 'list_of_objects': [{
+        products: [ 'required', { 'list_of_objects': {
             product_id: ['required','positive_integer'],
             quantity: ['required', 'positive_integer']
-        }]]
+        }}]
     }
 
 **Validating list of different objects**
     
     {
         order_id: ['required', 'positive_integer'],
-        products: ['required', 'list_of_different_objects': [
-            'product_type': {
+        products: ['required', { 'list_of_different_objects': [
+            'product_type', {
                 material: {
                     material_id: ['required', 'positive_integer'],
-                    quantity: ['required', { 'min_number': [1]} ],
+                    quantity: ['required', {'min_number': [1]} ],
                     warehouse_id: 'positive_integer'
                 },
                 service: {
                     name: ['required', 'max_lengh': [10] ]
                 }
             }
-        ]]
+        ]}]
     }
 
 ### How it works ###
@@ -304,10 +306,10 @@ Error code: depends on nested validators
 
 Example:
     
-    products: ['required', 'list_of_objects': [{
+    products: ['required', { 'list_of_objects': [{
         product_id: ['required','positive_integer'],
         quantity: ['required', 'positive_integer']
-    }]]
+    }]}]
 
 
 #### list_of_different_objects ####
@@ -317,8 +319,8 @@ Error code: depends on nested validators
 
 Example:
 
-    products: ['required', 'list_of_different_objects': [
-        'product_type': {
+    products: ['required', { 'list_of_different_objects': [
+        'product_type', {
             material: {
                 material_id: ['required', 'positive_integer'],
                 quantity: ['required', { 'min_number': [1]} ],
@@ -328,7 +330,7 @@ Example:
                 name: ['required', 'max_lengh': [10] ]
             }
         }
-    ]]
+    }]]
 
 In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules
 
