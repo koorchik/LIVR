@@ -9,11 +9,11 @@ Requirements:
 2. Any number of rules for each field
 3. Should return together errors for all fields
 4. Exclude all fields that do not have validation rules described
-5. Possibility to stop on first failed rule
-6. Possibility to validatate complex hierarchical structures
-7. Easy to described and undersand rules
-8. Should return understandable error codes(not error messages).
-9. Easy to implement own rules
+5. Possibility to validatate complex hierarchical structures
+6. Easy to describe and undersand rules
+7. Should return understandable error codes(not error messages)
+8. Easy to add own rules
+9. Multipurpose
 
 ## Rules Examples ##
 **Simple registration data**
