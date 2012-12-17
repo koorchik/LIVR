@@ -20,8 +20,9 @@ Requirements:
 
     {
         name: 'required',
+        email: ['required', 'email'],
+        gender: { oneof: [['male', 'female']] },
         phone: {max_length: 10},
-        email: ['required', 'email']
         password: ['required', {min_length: 10} ]
         password2: { equal_to_field: 'password' }
     }
@@ -99,9 +100,9 @@ Examples:
 
     length_between(1,10);
 
-{'in': [['Kiev','Moscow']] } becomes:
+{'oneof': [['Kiev','Moscow']] } becomes:
     
-    in(['Kiev', 'Moscow']);
+    oneof(['Kiev', 'Moscow']);
 
 {'my_own_rule': [1, [2, 3], 'bla'] } becomes: 
 
@@ -127,7 +128,7 @@ Standard rules that should be supported by every implementation:
     * required
     * not_empty
  * String Rules
-    * in
+    * oneof
     * max_length
     * min_length
     * length_between
@@ -166,12 +167,12 @@ Example:
     {first_name: 'not_empty'}
 
 ### String Rules ###
-#### in ####
+#### oneof ####
 Error code: 'NOT_ALLOWED_VALUE'
 
 Example:
     
-    {first_name: {'in': [['Anton', 'Igor']]} }
+    {first_name: {'oneof': [['Anton', 'Igor']]} }
 
 #### max_length  ####
 Error code: 'TOO_LONG'
