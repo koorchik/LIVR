@@ -13,7 +13,7 @@ Requirements:
 6. Easy to describe and undersand rules
 7. Should return understandable error codes(not error messages)
 8. Easy to add own rules
-9. Multipurpose
+9. Multipurpose (user input validation, configs validation, contracts programming etc)
 
 ## Rules Examples ##
 **Simple registration data**
@@ -21,7 +21,7 @@ Requirements:
     {
         name: 'required',
         email: ['required', 'email'],
-        gender: { oneof: [['male', 'female']] },
+        gender: { one_of: [['male', 'female']] },
         phone: {max_length: 10},
         password: ['required', {min_length: 10} ]
         password2: { equal_to_field: 'password' }
@@ -100,9 +100,9 @@ Examples:
 
     length_between(1,10);
 
-{'oneof': [['Kiev','Moscow']] } becomes:
+{'one_of': [['Kiev','Moscow']] } becomes:
     
-    oneof(['Kiev', 'Moscow']);
+    one_of(['Kiev', 'Moscow']);
 
 {'my_own_rule': [1, [2, 3], 'bla'] } becomes: 
 
@@ -128,7 +128,7 @@ Standard rules that should be supported by every implementation:
     * required
     * not_empty
  * String Rules
-    * oneof
+    * one_of
     * max_length
     * min_length
     * length_between
@@ -167,12 +167,12 @@ Example:
     {first_name: 'not_empty'}
 
 ### String Rules ###
-#### oneof ####
+#### one_of ####
 Error code: 'NOT_ALLOWED_VALUE'
 
 Example:
     
-    {first_name: {'oneof': [['Anton', 'Igor']]} }
+    {first_name: {'one_of': [['Anton', 'Igor']]} }
 
 #### max_length  ####
 Error code: 'TOO_LONG'
