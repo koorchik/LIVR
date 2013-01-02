@@ -70,11 +70,11 @@ Requirements:
             'product_type', {
                 material: {
                     material_id: ['required', 'positive_integer'],
-                    quantity: ['required', {'min_number': [1]} ],
+                    quantity: ['required', {'min_number': 1} ],
                     warehouse_id: 'positive_integer'
                 },
                 service: {
-                    name: ['required', 'max_lengh': [10] ]
+                    name: ['required', {'max_lengh': 10} ]
                 }
             }
         ]}]
@@ -84,7 +84,7 @@ Requirements:
 You should define a structure: 
     FIELD_NAME: VALIDATION_RULE
 * FIELD_NAME is a name of field to validate
-* VALIDATION_RULE is a name of function to be called for building validator closure/object. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
+* VALIDATION_RULE is a name of function to be called. It can be function that builds validator or maybe just a validation function itself. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
 
 Examples:
 
@@ -108,9 +108,9 @@ Examples:
 
     my_own_rule(1, [2, 3], 'bla');
 
-Validator callback/object receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
+Validator receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
-So, the idea is that there is a tiny core which can be easly extended with new rules.
+So, the idea is that there is a tiny core which can be easly extended with new rules. 
 
 
 ## Validation Rules ##
