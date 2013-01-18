@@ -1,0 +1,8 @@
+{
+    "first_name": "Vasya",
+    "last_name": "Pupkin",
+    "age": "27",
+    "gender": "male",
+    "extra_field": "some_value",
+    "empty_extra_field": ""
+}

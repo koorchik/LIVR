@@ -343,6 +343,7 @@ Requirements to implementation
 1. Your implementation should support all validation rules described in "Validation Rules"
 2. Your implementation should return error codes descibed in specification
 3. It should be easy to implement own rules
+4. Please use "test_suite" to ensure that yout implementation works correctly
 
 ## TODO ##
 

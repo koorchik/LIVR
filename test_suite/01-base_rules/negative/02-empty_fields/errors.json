@@ -1,0 +1,6 @@
+{
+    "first_name": "REQUIRED",
+    "last_name": "REQUIRED",
+    "age": "CANNOT_BE_EMPTY",
+    "gender": "CANNOT_BE_EMPTY"
+}
