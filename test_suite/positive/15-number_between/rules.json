@@ -1,0 +1,6 @@
+{
+    "number1": { "number_between": [10, 20] },
+    "number2": { "number_between": [20, 30] },
+    "number3": [ { "number_between": [-1, 1] } ],
+    "empty_field": { "number_between": [10, 20] }
+}

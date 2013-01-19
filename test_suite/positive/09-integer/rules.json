@@ -1,0 +1,6 @@
+{
+    "number1": "integer",
+    "number2": ["integer"],
+    "number3": [ { "integer": [] } ],
+    "empty_field": "integer"
+}
