@@ -271,7 +271,7 @@ Example:
     {login: 'email'}
 
 #### equal_to_field ####
-Error code: 'WRONG_EMAIL'
+Error code: 'FIELDS_NOT_EQUAL'
 
 Example:
     
