@@ -1,0 +1,6 @@
+{
+    "first_name":   { "max_length": 4 },
+    "last_name":    { "max_length": [5] },
+    "middle_name": [{ "max_length": [0] }],
+    "empty_name":   { "max_length": 3 }
+}
