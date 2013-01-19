@@ -1,0 +1,4 @@
+{
+    "product_ids": [ "NOT_POSITIVE_INTEGER", "REQUIRED", null, "TOO_HIGH" ],
+    "user_ids": "FORMAT_ERROR"
+}

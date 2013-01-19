@@ -65,16 +65,18 @@ Requirements:
 **Validating list of different objects**
     
     {
-        order_id: ['required', 'positive_integer'],
-        products: ['required', { 'list_of_different_objects': [
-            'product_type', {
-                material: {
-                    material_id: ['required', 'positive_integer'],
-                    quantity: ['required', {'min_number': 1} ],
-                    warehouse_id: 'positive_integer'
+        "order_id": ["required", "positive_integer"],
+        "products": ["required", { "list_of_different_objects": [
+            "product_type", {
+                "material": {
+                    "product_type": "required",
+                    "material_id": ["required", "positive_integer"],
+                    "quantity": ["required", {"min_number": 1} ],
+                    "warehouse_id": "positive_integer"
                 },
-                service: {
-                    name: ['required', {'max_lengh': 10} ]
+                "service": {
+                    "product_type": "required",
+                    "name": ["required", {"max_length": 10} ]
                 }
             }
         ]}]
@@ -278,6 +280,19 @@ Example:
     {password2: {'equal_to_field': ['password'] }}
 
 ###  Helper Rules ###
+
+#### nested_object ####
+Allows you to describe validation rules for a nested object.
+
+Error code: depends on nested validators. If nested object is not a hash should return "FORMAT_ERROR"
+
+Example:
+    
+    address: { 'nested_object': [{
+        city: 'required', 
+        zip: ['required', 'positive_integer']
+    }]}
+
 #### list_of ####
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
 
@@ -287,23 +302,10 @@ Example:
     
     { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
 
-#### nested_object ####
-Allows you to describe validation rules for a nested object.
-
-Error code: depends on nested validators
-
-Example:
-    
-    address: { 'nested_object': [{
-        city: 'required', 
-        zip: ['required', 'positive_integer']
-    }]}
-
-
 #### list_of_objects ####
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
 
-Error code: depends on nested validators
+Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.
 
 Example:
     
@@ -316,22 +318,25 @@ Example:
 #### list_of_different_objects ####
 Allows you to describe validation rules for list of different objects. Validation rules will be applyed for each array element.
 
-Error code: depends on nested validators
+Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.
 
 Example:
 
-    products: ['required', { 'list_of_different_objects': [
-        'product_type', {
-            material: {
-                material_id: ['required', 'positive_integer'],
-                quantity: ['required', { 'min_number': [1]} ],
-                warehouse_id: 'positive_integer'
+    "products": ["required", { "list_of_different_objects": [
+        "product_type", {
+            "material": {
+                "product_type": "required",
+                "material_id": ["required", "positive_integer"],
+                "quantity": ["required", {"min_number": 1} ],
+                "warehouse_id": "positive_integer"
             },
-            service: {
-                name: ['required', 'max_lengh': [10] ]
+            "service": {
+                "product_type": "required",
+                "name": ["required", {"max_length": 10} ]
             }
         }
-    }]]
+    ]}]
+
 
 In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules
 

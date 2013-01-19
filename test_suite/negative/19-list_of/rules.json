@@ -1,0 +1,9 @@
+{
+    "product_ids": ["required", { "list_of": [[
+        "required",
+        "positive_integer",
+        { "max_number": 100 }
+    ]] }],
+    "user_ids": { "list_of": [[ "required" ]] }
+
+}

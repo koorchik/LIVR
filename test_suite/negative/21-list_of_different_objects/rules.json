@@ -1,0 +1,17 @@
+{
+    "order_id": ["required", "positive_integer"],
+    "products": ["required", { "list_of_different_objects": [
+        "product_type", {
+            "material": {
+                "product_type": "required",
+                "material_id": ["required", "positive_integer"],
+                "quantity": ["required", {"min_number": 1} ],
+                "warehouse_id": "positive_integer"
+            },
+            "service": {
+                "product_type": "required",
+                "name": ["required", {"max_length": 10} ]
+            }
+        }
+    ]}]
+}
