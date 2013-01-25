@@ -14,6 +14,12 @@ Requirements:
 7. Should return understandable error codes(not error messages)
 8. Easy to add own rules
 9. Multipurpose (user input validation, configs validation, contracts programming etc)
+10. Unicode support (only UTF-8 encoding support is required)
+
+## Existing implemenations ##
+
+* Perl - https://github.com/koorchik/Validator-LIVR
+* PHP - https://github.com/koorchik/php-validator-livr (in progress)
 
 ## Rules Examples ##
 **Simple registration data**
