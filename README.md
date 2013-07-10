@@ -179,7 +179,7 @@ Example:
 #### not_empty_list ####
 Checks that list contains at least one element
 
-Error code: 'CANNOT_BE_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be "WRONG_FORMAT"
+Error code: 'CANNOT_BE_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'WRONG_FORMAT'
 
 Example:
     
