@@ -1,4 +1,4 @@
-Language Independent Validation Rules Specification (DRAFT)
+Language Independent Validation Rules Specification (v0.2)
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
@@ -63,7 +63,7 @@ Requirements:
 
     {
         order_id: ['required', 'positive_integer'],
-        products: [ 'required', { 'list_of_objects': {
+        products: [ 'not_empty_list', { 'list_of_objects': {
             product_id: ['required','positive_integer'],
             quantity: ['required', 'positive_integer']
         }}]
@@ -136,6 +136,7 @@ Standard rules that should be supported by every implementation:
  * Base Rules
     * required
     * not_empty
+    * not_empty_list
  * String Rules
     * one_of
     * max_length
@@ -174,6 +175,15 @@ Error code: 'CANNOT_BE_EMPTY'
 Example:
     
     {first_name: 'not_empty'}
+
+#### not_empty_list ####
+Checks that list contains at least one element
+
+Error code: 'CANNOT_BE_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be "WRONG_FORMAT"
+
+Example:
+    
+    {products_ids: 'not_empty_list'}
 
 ### String Rules ###
 #### one_of ####
@@ -356,6 +366,12 @@ Requirements to implementation
 2. Your implementation should return error codes descibed in specification
 3. It should be easy to implement own rules
 4. Please use "test_suite" to ensure that yout implementation works correctly
+
+## Changes
+
+### v0.2
+ 
+ * Added not_empty_list rule with test cases
 
 ## TODO ##
 
