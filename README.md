@@ -1,4 +1,4 @@
-Language Independent Validation Rules Specification (v0.2)
+Language Independent Validation Rules Specification (v0.3)
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
@@ -13,8 +13,9 @@ Requirements:
 6. Easy to describe and undersand rules
 7. Should return understandable error codes(not error messages)
 8. Easy to add own rules
-9. Multipurpose (user input validation, configs validation, contracts programming etc)
-10. Unicode support (only UTF-8 encoding support is required)
+9. Rules should be able to change results output ("trim", "nested_object", for example) 
+10. Multipurpose (user input validation, configs validation, contracts programming etc)
+11. Unicode support (only UTF-8 encoding support is required)
 
 ## Existing implemenations ##
 
@@ -89,6 +90,17 @@ Requirements:
         ]}]
     }
 
+**Output modification**
+    
+    {
+        email: ['trim', 'required', 'email', 'to_lc']
+    }
+
+* "trim" removes leading and trailing spaces. (skips empty values and object references)
+* "to_lc" transforms string to lower case. (skips empty values and object references)
+
+You can create pipeline with any filters you like.
+
 ### How it works ###
 You should define a structure: 
     FIELD_NAME: VALIDATION_RULE
@@ -123,7 +135,7 @@ So, the idea is that there is a tiny core which can be easly extended with new r
 
 
 ## Validation Rules ##
-Be aware that all rules just skip checking empty values. 
+Be aware that all standard rules just skip checking empty values. 
 So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present. 
 This allows us to use the same rules for not required fields.
 
@@ -160,6 +172,10 @@ Standard rules that should be supported by every implementation:
     * list_of
     * list_of_objects
     * list_of_different_objects
+* Filter rules
+    * trim
+    * to_lc
+    * to_uc
 
 ### Base Rules ###
 #### required ####
@@ -357,6 +373,30 @@ Example:
 
 In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules
 
+###  Filter Rules ###
+
+Additional rules for data modification. They do not return errors just skips values that are not appropriate.  
+
+#### trim ####
+Removes leading and trailing spaces. Skips object references.
+
+Example:
+    
+    {email: 'trim'}
+
+#### to_lc ####
+Converts string to lower case. Skips object references.
+
+Example:
+    
+    {email: 'to_lc'}
+
+#### to_uc ####
+Converts string to upper case. Skips object references.
+
+Example:
+    
+    {currency_code: 'to_uc'} 
 
 ## Developers Guide ##
 
@@ -365,7 +405,7 @@ Requirements to implementation
 1. Your implementation should support all validation rules described in "Validation Rules"
 2. Your implementation should return error codes descibed in specification
 3. It should be easy to implement own rules
-4. Please use "test_suite" to ensure that yout implementation works correctly
+4. Please use provided "test_suite" to ensure that your implementation works correctly
 
 ## Changes
 
@@ -373,8 +413,11 @@ Requirements to implementation
  
  * Added not_empty_list rule with test cases
 
+### v0.3
+
+ * Added filter rules (trim, to\_lc, to\_uc)
+
 ## TODO ##
 
 * Describe internals with detailed step-by-step example
 * Write developers guide
-* Provide links to existing implementation
