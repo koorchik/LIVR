@@ -172,7 +172,7 @@ Standard rules that should be supported by every implementation:
     * list_of
     * list_of_objects
     * list_of_different_objects
-* Filter rules
+ * Filter rules
     * trim
     * to_lc
     * to_uc
