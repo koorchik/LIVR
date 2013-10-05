@@ -9,10 +9,10 @@ Requirements:
 2. Any number of rules for each field
 3. Should return together errors for all fields
 4. Exclude all fields that do not have validation rules described
-5. Possibility to validatate complex hierarchical structures
-6. Easy to describe and undersand rules
+5. Possibility to validate complex hierarchical structures
+6. Easy to describe and understand validation
 7. Should return understandable error codes(not error messages)
-8. Easy to add own rules
+8. Easy to implement own rules
 9. Rules should be able to change results output ("trim", "nested_object", for example) 
 10. Multipurpose (user input validation, configs validation, contracts programming etc)
 11. Unicode support (only UTF-8 encoding support is required)
