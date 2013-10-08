@@ -36,7 +36,7 @@ Requirements:
     }
 
 * 'required' is a shorter form of { 'required': [] }
-* {max_length: 10} is a shorter form of {max_length: [10]}
+* {max\_length: 10} is a shorter form of {max\_length: [10]}
 *See "How it works" section*
 
 **Simple validation of nested object**
@@ -49,7 +49,7 @@ Requirements:
             zip: ['required', 'positive_integer']
         }}
     }
-* {nested_object: {}} is a shorter form of {nested_object: [{}]}
+* {nested\_object: {}} is a shorter form of {nested\_object: [{}]}
 *See "How it works" section*
 
 **Simple list validation**
@@ -97,15 +97,15 @@ Requirements:
     }
 
 * "trim" removes leading and trailing spaces. (skips empty values and object references)
-* "to_lc" transforms string to lower case. (skips empty values and object references)
+* "to\_lc" transforms string to lower case. (skips empty values and object references)
 
 You can create pipeline with any filters you like.
 
 ### How it works ###
 You should define a structure: 
-    FIELD_NAME: VALIDATION_RULE
-* FIELD_NAME is a name of field to validate
-* VALIDATION_RULE is a name of function to be called. It can be function that builds validator or maybe just a validation function itself. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
+    FIELD\_NAME: VALIDATION\_RULE
+* FIELD\_NAME is a name of field to validate
+* VALIDATION\_RULE is a name of function to be called. It can be function that builds validator or maybe just a validation function itself. Some arguments cab be passed to the function - "{ VALIDATION\_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
 
 Examples:
 
@@ -113,19 +113,19 @@ Examples:
 
     required();
 
-{ 'max_length': 5 } or { 'max_length': [5] } becomes:
+{ 'max\_length': 5 } or { 'max\_length': [5] } becomes:
 
     max_length(5);    
 
-{'length_between': [1,10] } becomes:
+{'length\_between': [1,10] } becomes:
 
     length_between(1,10);
 
-{'one_of': [['Kiev','Moscow']] } becomes:
+{'one\_of': [['Kiev','Moscow']] } becomes:
     
     one_of(['Kiev', 'Moscow']);
 
-{'my_own_rule': [1, [2, 3], 'bla'] } becomes: 
+{'my\_own\_rule': [1, [2, 3], 'bla'] } becomes: 
 
     my_own_rule(1, [2, 3], 'bla');
 
@@ -147,35 +147,35 @@ Standard rules that should be supported by every implementation:
  
  * Base Rules
     * required
-    * not_empty
-    * not_empty_list
+    * not\_empty
+    * not\_empty\_list
  * String Rules
-    * one_of
-    * max_length
-    * min_length
-    * length_between
-    * length_equal
+    * one\_of
+    * max\_length
+    * min\_length
+    * length\_between
+    * length\_equal
     * like
  * Numeric Rules
     * integer
-    * positive_integer
+    * positive\_integer
     * decimal
-    * positive_decimal
-    * max_number
-    * min_number
-    * number_between
+    * positive\_decimal
+    * max\_number
+    * min\_number
+    * number\_between
  * Special Rules
     * email
-    * equal_to_field
+    * equal\_to\_field
  * Helper Rules
-    * nested_object
-    * list_of
-    * list_of_objects
-    * list_of_different_objects
+    * nested\_object
+    * list\_of
+    * list\_of\_objects
+    * list\_of\_different\_objects
  * Filter rules
     * trim
-    * to_lc
-    * to_uc
+    * to\_lc
+    * to\_uc
 
 ### Base Rules ###
 #### required ####
@@ -185,60 +185,60 @@ Example:
     
     {first_name: 'required'}
 
-#### not_empty ####
+#### not\_empty ####
 Error code: 'CANNOT_BE_EMPTY'
 
 Example:
     
     {first_name: 'not_empty'}
 
-#### not_empty_list ####
+#### not\_empty\_list ####
 Checks that list contains at least one element
 
-Error code: 'CANNOT_BE_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'WRONG_FORMAT'
+Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'WRONG\_FORMAT'
 
 Example:
     
     {products_ids: 'not_empty_list'}
 
 ### String Rules ###
-#### one_of ####
-Error code: 'NOT_ALLOWED_VALUE'
+#### one\_of ####
+Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
     
     {first_name: {'one_of': [['Anton', 'Igor']]} }
 
-#### max_length  ####
-Error code: 'TOO_LONG'
+#### max\_length  ####
+Error code: 'TOO\_LONG'
 
 Example:
     
     {first_name: {max_length: [10] }
 
-#### min_length ####
-Error code: 'TOO_SHORT'
+#### min\_length ####
+Error code: 'TOO\_SHORT'
 
 Example:
     
     {first_name: {min_length: [2] }
 
-#### length_between ####
-Error code: 'TOO_LONG' or 'TOO_SHORT'
+#### length\_between ####
+Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
     
     {first_name: {length_between: [2, 10] }
 
-#### length_equal ####
-Error code: 'TOO_LONG' or 'TOO_SHORT'
+#### length\_equal ####
+Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
     
     {first_name: {length_equal: [7] }
 
 #### like ####
-Error code: 'WRONG_FORMAT'
+Error code: 'WRONG\_FORMAT'
 
 Example:
     
@@ -248,14 +248,14 @@ Be aware that regelar expressions cab be language dependent. Try to use most com
 
 ### Numeric Rules ###
 #### integer ####
-Error code: 'NOT_INTEGER'
+Error code: 'NOT\_INTEGER'
 
 Example:
     
     {age: 'integer'}
 
-#### positive_integer ####
-Error code: 'NOT_POSITIVE_INTEGER'
+#### positive\_integer ####
+Error code: 'NOT\_POSITIVE\_INTEGER'
 
 Example:
     
@@ -263,35 +263,35 @@ Example:
 
 
 #### decimal ####
-Error code: 'NOT_DECIMAL'
+Error code: 'NOT\_DECIMAL'
 
 Example:
     
     {price: 'decimal'}
 
-#### positive_decimal ####
-Error code: 'NOT_POSITIVE_DECIMAL'
+#### positive\_decimal ####
+Error code: 'NOT\_POSITIVE_DECIMAL'
 
 Example:
     
     {price: 'positive_decimal'}
 
-#### max_number ####
-Error code: 'TOO_HIGH'
+#### max\_number ####
+Error code: 'TOO\_HIGH'
 
 Example:
     
     {age: { 'max_number': [95] } }
 
-#### min_number ####
-Error code: 'TOO_LOW'
+#### min\_number ####
+Error code: 'TOO\_LOW'
 
 Example:
     
     {age: { 'min_number': [18] } }
 
-#### number_between ####
-Error code: 'TOO_HIGH' or 'TOO_LOW'
+#### number\_between ####
+Error code: 'TOO\_HIGH' or 'TOO\_LOW'
 
 Example:
     
@@ -305,8 +305,8 @@ Example:
     
     {login: 'email'}
 
-#### equal_to_field ####
-Error code: 'FIELDS_NOT_EQUAL'
+#### equal\_to\_field ####
+Error code: 'FIELDS\_NOT\_EQUAL'
 
 Example:
     
@@ -371,7 +371,7 @@ Example:
     ]}]
 
 
-In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules
+In this example validator will look on "product\_type" in each object and depending on it will use corresponding set of rules
 
 ###  Filter Rules ###
 
@@ -405,13 +405,13 @@ Requirements to implementation
 1. Your implementation should support all validation rules described in "Validation Rules"
 2. Your implementation should return error codes descibed in specification
 3. It should be easy to implement own rules
-4. Please use provided "test_suite" to ensure that your implementation works correctly
+4. Please use provided "test\_suite" to ensure that your implementation works correctly
 
 ## Changes
 
 ### v0.2
  
- * Added not_empty_list rule with test cases
+ * Added not\_empty\_list rule with test cases
 
 ### v0.3
 
@@ -428,7 +428,7 @@ Copyright 2012 Viktor Turskyi.
 
 This program is free software; you can redistribute it and/or modify it under the terms of the the Artistic License (2.0). You may obtain a copy of the full license at:
 
-http://www.perlfoundation.org/artistic_license_2_0
+http://www.perlfoundation.org/artistic\_license\_2\_0
 
 Any use, modification, and distribution of the Standard or Modified Versions is governed by this Artistic License. By using, modifying or distributing the Package, you accept this license. Do not use, modify, or distribute the Package, if you do not accept this license.
 
