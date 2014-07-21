@@ -20,8 +20,8 @@ Requirements:
 ## Existing implemenations ##
 
 * Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
-* PHP - https://github.com/koorchik/php-validator-livr (in progress)
-* Javascript - https://github.com/koorchik/js-validator-livr (BETA)
+* PHP - https://github.com/koorchik/php-validator-livr
+* JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
 
 ## Rules Examples ##
 **Simple registration data**
