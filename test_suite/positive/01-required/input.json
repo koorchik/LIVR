@@ -2,5 +2,6 @@
     "first_name": "Vasya",
     "last_name": "Pupkin",
     "middle_name": "Some",
-    "age": "25"
+    "age": "25",
+    "salary": 0
 }
