@@ -1,4 +1,4 @@
-Language Independent Validation Rules Specification (v0.3)
+Language Independent Validation Rules Specification (v0.4)
 ===================================================
 
 I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
@@ -167,6 +167,8 @@ Standard rules that should be supported by every implementation:
     * number\_between
  * Special Rules
     * email
+    * url
+    * iso\_date
     * equal\_to\_field
  * Helper Rules
     * nested\_object
@@ -177,6 +179,8 @@ Standard rules that should be supported by every implementation:
     * trim
     * to\_lc
     * to\_uc
+    * remove
+    * leave\_only
 
 ### Base Rules ###
 #### required ####
@@ -215,14 +219,14 @@ Error code: 'TOO\_LONG'
 
 Example:
     
-    {first_name: {max_length: [10] }
+    {first_name: {max_length: 10}
 
 #### min\_length ####
 Error code: 'TOO\_SHORT'
 
 Example:
     
-    {first_name: {min_length: [2] }
+    {first_name: {min_length: 2}
 
 #### length\_between ####
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
@@ -236,16 +240,19 @@ Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
     
-    {first_name: {length_equal: [7] }
+    {first_name: {length_equal: 7}
 
 #### like ####
 Error code: 'WRONG\_FORMAT'
 
 Example:
     
-    {first_name: {like: ['^\w+?$'] }
+    {first_name: {like: '^\w+?$'}
+    {first_name: {like: ['^\w+?$', 'i']} // with flags 
 
-Be aware that regelar expressions cab be language dependent. Try to use most common syntax.
+Only 'i' flag is currently required by specification. 
+
+**Be aware** that regelar expressions cab be language dependent. Try to use most common syntax.
 
 ### Numeric Rules ###
 #### integer ####
@@ -262,6 +269,16 @@ Example:
     
     {age: 'positive_integer'}
 
+Optionally you can pass maximum precision and maximum scale. 
+Precision is the number of digits to both sides of the decimal point. For example, the number 23.5141 has a precision of 6.
+The scale is the count of decimal digits in the fractional part, to the right of the decimal point. For example, the number 23.5141 has a scale of 4.
+
+Additional error codes: 'WRONG_DECIMAL_PRECISION', 'WRONG_DECIMAL_SCALE'
+
+Example:
+
+    { price: { 'positive_decimal': 10 } } // only precision
+    { price: { 'positive_decimal': [10, 2] }} // precision and scale
 
 #### decimal ####
 Error code: 'NOT\_DECIMAL'
@@ -269,6 +286,17 @@ Error code: 'NOT\_DECIMAL'
 Example:
     
     {price: 'decimal'}
+
+Optionally you can pass maximum precision and maximum scale. 
+Precision is the number of digits to both sides of the decimal point. For example, the number 23.5141 has a precision of 6.
+The scale is the count of decimal digits in the fractional part, to the right of the decimal point. For example, the number 23.5141 has a scale of 4.
+
+Additional error codes: 'WRONG_DECIMAL_PRECISION', 'WRONG_DECIMAL_SCALE'
+
+Example:
+
+    { price: {'decimal': 10 }} // only precision
+    { price: {'decimal': [10, 2] }} // precision and scale
 
 #### positive\_decimal ####
 Error code: 'NOT\_POSITIVE_DECIMAL'
@@ -282,14 +310,14 @@ Error code: 'TOO\_HIGH'
 
 Example:
     
-    {age: { 'max_number': [95] } }
+    {age: { 'max_number': 95 } }
 
 #### min\_number ####
 Error code: 'TOO\_LOW'
 
 Example:
     
-    {age: { 'min_number': [18] } }
+    {age: { 'min_number': 18 } }
 
 #### number\_between ####
 Error code: 'TOO\_HIGH' or 'TOO\_LOW'
@@ -306,12 +334,32 @@ Example:
     
     {login: 'email'}
 
+#### url ####
+Allows you to validate url. Allows 'http', 'https' and 'ftp' protocols. Protocol is required.
+
+Error code: 'WRONG_URL'
+
+Example:
+    
+    {url: 'url'}
+
+#### iso\_date ####
+
+Check whether a value is an ISO 8601 date (without time). Allowed date example - "2014-08-14"
+
+Error code: 'WRONG_DATE'
+
+Example:
+    
+    {date: 'iso_date'}
+
+
 #### equal\_to\_field ####
 Error code: 'FIELDS\_NOT\_EQUAL'
 
 Example:
     
-    {password2: {'equal_to_field': ['password'] }}
+    {password2: {'equal_to_field': 'password' }}
 
 ###  Helper Rules ###
 
@@ -322,10 +370,10 @@ Error code: depends on nested validators. If nested object is not a hash should 
 
 Example:
     
-    address: { 'nested_object': [{
+    address: { 'nested_object': {
         city: 'required', 
         zip: ['required', 'positive_integer']
-    }]}
+    } }
 
 #### list_of ####
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
@@ -399,6 +447,20 @@ Example:
     
     {currency_code: 'to_uc'} 
 
+#### remove ####
+Removes characters from string
+
+Example:
+    
+    { text: { remove: '0123456789' } }  // Remove all numbers from text
+
+#### leave\_only ####
+Removes characters from string
+
+Example:
+    
+    { text: { leave_only: '0123456789' } }  // Leaves only numbers in text
+
 ## Developers Guide ##
 
 Requirements to implementation
@@ -417,6 +479,13 @@ Requirements to implementation
 ### v0.3
 
  * Added filter rules (trim, to\_lc, to\_uc)
+
+## v0.4
+
+ * Added special rules (url, iso\_date)
+ * Added filter rules (remove, leave_only)
+ * Add precision and scale support to "decimal" and "positive_decimal"
+ * Add flags 'i' flag support to the "like" rule
 
 ## TODO ##
 
