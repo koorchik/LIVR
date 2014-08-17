@@ -57,7 +57,7 @@ Requirements:
 
     { 
         order_id: ['required', 'positive_integer'],
-        product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }
+        product_ids: { 'list\_of': [ 'required',  'positive_integer' ] }
     }
 
 
@@ -122,9 +122,13 @@ Examples:
 
     length_between(1,10);
 
-{'one\_of': [['Kiev','Moscow']] } becomes:
+{'one\_of': [['Kiev','Moscow']] } (this is old syntax) becomes:
     
     one_of(['Kiev', 'Moscow']);
+
+{'one\_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:
+    
+    one_of('Kiev', 'Moscow'); 
 
 {'my\_own\_rule': [1, [2, 3], 'bla'] } becomes: 
 
@@ -133,7 +137,6 @@ Examples:
 Validator receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
 So, the idea is that there is a tiny core which can be easly extended with new rules. 
-
 
 ## Validation Rules ##
 Be aware that all standard rules just skip checking empty values. 
@@ -211,8 +214,12 @@ Example:
 Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
+   
+    // new syntax (introduced in v0.4)
+    { first_name: {'one_of': ['Anton', 'Igor']} }
     
-    {first_name: {'one_of': [['Anton', 'Igor']]} }
+    // old syntax
+    { first_name: {'one_of': [['Anton', 'Igor']]} }
 
 #### max\_length  ####
 Error code: 'TOO\_LONG'
@@ -382,7 +389,13 @@ Error code: depends on nested validators
 
 Example:
     
-    { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+    // new syntax (introduced in v0.4)
+    { product_ids: { 'list_of': 'positive_integer' }} 
+    { product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
+    
+    // old syntax 
+    { product_ids: { 'list_of': [[ 'positive_integer' ]] }} 
+    { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }} 
 
 #### list_of_objects ####
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
@@ -461,14 +474,85 @@ Example:
     
     { text: { leave_only: '0123456789' } }  // Leaves only numbers in text
 
-## Developers Guide ##
+## Rules aliasing
+
+With rules aliasing you can create custom rules easely and assign own error codes in case own need.
+
+Let's assume that you have next data structure:
+
+    {
+        name: 'Viktor',
+        age: 30,
+        address: {
+            country: 'Ukraine',
+            city: 'Kiev', 
+            zip: '11111'
+        }
+    }
+
+And you have next validation rules for it:
+
+    {
+        name: 'required',
+        age: ['required', 'positive_integer', { min_number: 18 } ],
+        address: ['required', {nested_object: {
+            country: 'required',
+            city: 'required',
+            zip: 'positive_integer'
+        }}]
+    }
+
+You use 'address' in a lot of you objects (user address, office address and others) and you want to reuse the same address rules in all places.  You have two ways: write custom rule 'valid_address' or assign rules to a variable and just reuse the variable. The first way requires much time and coding. Moreover, you cannot save new rule implementation is serialzed JSON file. The second way is much easier and you can store rule implemetation in JSON file but you cannot store 'address' rule itself.
+
+From v0.4 you have the third way - rule aliasing.
+
+You can register aliases for complex rules. The way how you make alias for rules depends on the implementation but the way how use them is covered by the specification:
+
+    // Aliasing pseudo code
+    validator.register_rule_alias( 'valid_address',  { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }});
+    
+    validator.register_rule_alias( 'adult_age', [ 'positive_integer', { min_number: 18 } ] );
+
+    // Usage
+    {
+        name: 'required',
+        age: ['required', 'adult_age' ],
+        address: ['required', 'valid_address']
+    }
+
+
+Moreover, you can add own error codes for the rules
+
+For example
+
+    // Aliasing pseudo code
+    validator.register_rule_alias( 'valid_address',  { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}, 'WRONG_ADDRESS');
+
+and if validation of address fails you will have the next error
+
+    {
+        address: 'WRONG_ADDRESS'
+    }
+
+You can use aliased rules in aliased rules.
+
+## Developers Guide
 
 Requirements to implementation
 
 1. Your implementation should support all validation rules described in "Validation Rules"
-2. Your implementation should return error codes descibed in specification
-3. It should be easy to implement own rules
-4. Please use provided "test\_suite" to ensure that your implementation works correctly
+2. Your implementation should support "Rules aliasing"
+3. Your implementation should return error codes descibed in the specification
+4. It should be easy to implement own rules
+5. Please, use provided "test\_suite" to ensure that your implementation works correctly
 
 ## Changes
 
@@ -486,6 +570,12 @@ Requirements to implementation
  * Added filter rules (remove, leave_only)
  * Add precision and scale support to "decimal" and "positive_decimal"
  * Add flags 'i' flag support to the "like" rule
+ * Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules") 
+ * Rules aliasing (with custom errors)
+
+
+## Syntax changes for 'one_of' and 'list_of' rules
+Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.
 
 ## TODO ##
 
