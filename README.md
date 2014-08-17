@@ -476,7 +476,7 @@ Example:
 
 ## Rules aliasing
 
-With rules aliasing you can create custom rules easely and assign own error codes in case own need.
+With rules aliasing you can create custom rules easely and assign own error codes in case own need. Moreover, aliased rules will work across all implementations as they are just data structures.
 
 Let's assume that you have next data structure:
 
