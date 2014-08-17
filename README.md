@@ -259,7 +259,7 @@ Example:
 
 Only 'i' flag is currently required by specification. 
 
-**Be aware** that regelar expressions cab be language dependent. Try to use most common syntax.
+**Be aware** that regular expressions can be language dependent. Try to use most common syntax.
 
 ### Numeric Rules ###
 #### integer ####
