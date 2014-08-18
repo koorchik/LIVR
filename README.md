@@ -1,7 +1,7 @@
 Language Independent Validation Rules Specification (v0.4)
 ===================================================
 
-I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
+I tried a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
 
 Requirements:
 
