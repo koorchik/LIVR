@@ -276,34 +276,12 @@ Example:
     
     {age: 'positive_integer'}
 
-Optionally you can pass maximum precision and maximum scale. 
-Precision is the number of digits to both sides of the decimal point. For example, the number 23.5141 has a precision of 6.
-The scale is the count of decimal digits in the fractional part, to the right of the decimal point. For example, the number 23.5141 has a scale of 4.
-
-Additional error codes: 'WRONG_DECIMAL_PRECISION', 'WRONG_DECIMAL_SCALE'
-
-Example:
-
-    { price: { 'positive_decimal': 10 } } // only precision
-    { price: { 'positive_decimal': [10, 2] }} // precision and scale
-
 #### decimal ####
 Error code: 'NOT\_DECIMAL'
 
 Example:
     
     {price: 'decimal'}
-
-Optionally you can pass maximum precision and maximum scale. 
-Precision is the number of digits to both sides of the decimal point. For example, the number 23.5141 has a precision of 6.
-The scale is the count of decimal digits in the fractional part, to the right of the decimal point. For example, the number 23.5141 has a scale of 4.
-
-Additional error codes: 'WRONG_DECIMAL_PRECISION', 'WRONG_DECIMAL_SCALE'
-
-Example:
-
-    { price: {'decimal': 10 }} // only precision
-    { price: {'decimal': [10, 2] }} // precision and scale
 
 #### positive\_decimal ####
 Error code: 'NOT\_POSITIVE_DECIMAL'
@@ -342,7 +320,7 @@ Example:
     {login: 'email'}
 
 #### url ####
-Allows you to validate url. Allows 'http', 'https' and 'ftp' protocols. Protocol is required.
+Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.
 
 Error code: 'WRONG_URL'
 
@@ -606,7 +584,6 @@ Requirements to implementation
 
  * Added special rules (url, iso\_date)
  * Added filter rules (remove, leave_only)
- * Add precision and scale support to "decimal" and "positive_decimal"
  * Add flags 'i' flag support to the "like" rule
  * Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules") 
  * Rules aliasing (with custom errors)
