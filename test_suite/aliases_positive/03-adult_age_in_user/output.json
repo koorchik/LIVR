@@ -1,0 +1,12 @@
+{
+    "user": {
+        "name": "koorchik",
+        "age1": 20,
+        "age2": 40
+    },
+    "user_custom_error": {
+        "name": "koorchik",
+        "age1": 33,
+        "age2": 22
+    }
+}

@@ -1,0 +1,31 @@
+[
+    {
+        "name": "adult_age",
+        "rules": ["positive_integer", {"min_number": 18}]
+    },
+
+    {
+        "name": "adult_age_with_custom_error",
+        "rules": ["positive_integer", {"min_number": 18}],
+        "error": "WRONG_AGE"
+    },
+
+    {
+        "name": "user",
+        "rules": { "nested_object":{
+            "name": "required",
+            "age1": "adult_age",
+            "age2": "adult_age_with_custom_error"
+        }}
+    },
+
+    {
+        "name": "user_with_custom_error",
+        "rules": { "nested_object":{
+            "name": "required",
+            "age1": "adult_age",
+            "age2": "adult_age_with_custom_error"
+        }},
+        "error": "WRONG_USER"
+    }
+]

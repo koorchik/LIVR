@@ -1,0 +1,14 @@
+{
+    "user": {
+        "name": "",
+        "age1": 15,
+        "age2": 15,
+        "extra_field": "som value"
+    },
+    "user_custom_error": {
+        "name": "koorchik",
+        "age1": 15,
+        "age2": 22
+    },
+    "extra_field": 12
+}

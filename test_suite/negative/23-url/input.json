@@ -1,0 +1,7 @@
+{
+    "url1": "www.google.com",
+    "url2": "ftp://facebook.com",
+    "url3": "http://g_oogle.com",
+    "empty_field": "",
+    "extra_field": "aaaa"
+}

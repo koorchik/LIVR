@@ -1,0 +1,8 @@
+{
+    "address": {
+        "street": "REQUIRED",
+        "zip": "NOT_POSITIVE_INTEGER",
+        "city": "NOT_ALLOWED_VALUE"
+    },
+    "address_custom_error": "WRONG_ADDRESS"
+}
