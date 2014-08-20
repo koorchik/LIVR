@@ -9,7 +9,7 @@ Validator meets the following requirements:
 4. Exclude all fields that do not have validation rules described
 5. Possibility to validate complex hierarchical structures
 6. Easy to describe and understand validation
-7. Should return understandable error codes (neither error messages nor numeric codes)
+7. Returns understandable error codes (neither error messages nor numeric codes)
 8. Easy to implement own rules (usually you will have several in every project)
 9. Rules should be able to change results output ("trim", "nested\_object", for example) 
 10. Multipurpose (user input validation, configs validation, contracts programming etc)
