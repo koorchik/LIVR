@@ -17,10 +17,10 @@ Validator meets the following requirements:
 
 ## Existing implemenations ##
 
-* Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
-* PHP - https://github.com/koorchik/php-validator-livr (https://packagist.org/packages/validator/livr)
 * JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
-* Python (https://github.com/asholok/python-validator-livr) (NOT READY YET)
+* Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
+* PHP - https://github.com/koorchik/php-validator-livr (LIVR v0.3) (https://packagist.org/packages/validator/livr)
+* Python (https://github.com/asholok/python-validator-livr) (EARLY STAGE OF DEVELOPMENT)
 
 ## Rules Examples ##
 **Simple registration data**
