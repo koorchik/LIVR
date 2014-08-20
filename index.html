@@ -32,21 +32,19 @@
 
         <section id="main_content">
           <h1>
-<a name="language-independent-validation-rules-specification-v03" class="anchor" href="#language-independent-validation-rules-specification-v03"><span class="octicon octicon-link"></span></a>Language Independent Validation Rules Specification (v0.3)</h1>
+<a name="language-independent-validation-rules-" class="anchor" href="#language-independent-validation-rules-"><span class="octicon octicon-link"></span></a>Language Independent Validation Rules </h1>
 
-<p>I tryed a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.</p>
-
-<p>Requirements:</p>
+<p>Validator meets the following requirements:</p>
 
 <ol>
-<li>Rules must be declarative and language independent</li>
+<li>Rules are declarative and language independent</li>
 <li>Any number of rules for each field</li>
-<li>Should return together errors for all fields</li>
+<li>Validator should return together errors for all fields</li>
 <li>Exclude all fields that do not have validation rules described</li>
 <li>Possibility to validate complex hierarchical structures</li>
 <li>Easy to describe and understand validation</li>
-<li>Should return understandable error codes(not error messages)</li>
-<li>Easy to implement own rules</li>
+<li>Returns understandable error codes (neither error messages nor numeric codes)</li>
+<li>Easy to implement own rules (usually you will have several in every project)</li>
 <li>Rules should be able to change results output ("trim", "nested_object", for example) </li>
 <li>Multipurpose (user input validation, configs validation, contracts programming etc)</li>
 <li>Unicode support</li>
@@ -54,10 +52,10 @@
 <a name="existing-implemenations" class="anchor" href="#existing-implemenations"><span class="octicon octicon-link"></span></a>Existing implemenations</h2>
 
 <ul>
-<li>Perl - <a href="https://github.com/koorchik/Validator-LIVR">https://github.com/koorchik/Validator-LIVR</a> (Available on CPAN)</li>
-<li>PHP - <a href="https://github.com/koorchik/php-validator-livr">https://github.com/koorchik/php-validator-livr</a> (<a href="https://packagist.org/packages/validator/livr">https://packagist.org/packages/validator/livr</a>)</li>
 <li>JavaScript - <a href="https://github.com/koorchik/js-validator-livr">https://github.com/koorchik/js-validator-livr</a> (Available for node.js(npm) and browsers)</li>
-<li>Python (<a href="https://github.com/asholok/python-validator-livr">https://github.com/asholok/python-validator-livr</a>) (NOT READY YET)</li>
+<li>Perl - <a href="https://github.com/koorchik/Validator-LIVR">https://github.com/koorchik/Validator-LIVR</a> (Available on CPAN)</li>
+<li>PHP - <a href="https://github.com/koorchik/php-validator-livr">https://github.com/koorchik/php-validator-livr</a> (LIVR v0.3) (<a href="https://packagist.org/packages/validator/livr">https://packagist.org/packages/validator/livr</a>)</li>
+<li>Python (<a href="https://github.com/asholok/python-validator-livr">https://github.com/asholok/python-validator-livr</a>) (EARLY STAGE OF DEVELOPMENT)</li>
 </ul><h2>
 <a name="rules-examples" class="anchor" href="#rules-examples"><span class="octicon octicon-link"></span></a>Rules Examples</h2>
 
@@ -66,7 +64,7 @@
 <pre><code>{
     name: 'required',
     email: ['required', 'email'],
-    gender: { one_of: [['male', 'female']] },
+    gender: { one_of: ['male', 'female'] },
     phone: {max_length: 10},
     password: ['required', {min_length: 10} ]
     password2: { equal_to_field: 'password' }
@@ -98,7 +96,7 @@
 
 <pre><code>{ 
     order_id: ['required', 'positive_integer'],
-    product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }
+    product_ids: { 'list\_of': [ 'required',  'positive_integer' ] }
 }
 </code></pre>
 
@@ -172,9 +170,14 @@
 <pre><code>length_between(1,10);
 </code></pre>
 
-<p>{'one_of': [['Kiev','Moscow']] } becomes:</p>
+<p>{'one_of': [['Kiev','Moscow']] } (this is old syntax) becomes:</p>
 
 <pre><code>one_of(['Kiev', 'Moscow']);
+</code></pre>
+
+<p>{'one_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:</p>
+
+<pre><code>one_of('Kiev', 'Moscow'); 
 </code></pre>
 
 <p>{'my_own_rule': [1, [2, 3], 'bla'] } becomes: </p>
@@ -235,6 +238,8 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <ul>
 <li>email</li>
+<li>url</li>
+<li>iso_date</li>
 <li>equal_to_field</li>
 </ul>
 </li>
@@ -253,6 +258,8 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <li>trim</li>
 <li>to_lc</li>
 <li>to_uc</li>
+<li>remove</li>
+<li>leave_only</li>
 </ul>
 </li>
 </ul><h3>
@@ -300,7 +307,11 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{first_name: {'one_of': [['Anton', 'Igor']]} }
+<pre><code>// new syntax (introduced in v0.4)
+{ first_name: {'one_of': ['Anton', 'Igor']} }
+
+// old syntax
+{ first_name: {'one_of': [['Anton', 'Igor']]} }
 </code></pre>
 
 <h4>
@@ -310,7 +321,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{first_name: {max_length: [10] }
+<pre><code>{first_name: {max_length: 10}
 </code></pre>
 
 <h4>
@@ -320,7 +331,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{first_name: {min_length: [2] }
+<pre><code>{first_name: {min_length: 2}
 </code></pre>
 
 <h4>
@@ -340,7 +351,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{first_name: {length_equal: [7] }
+<pre><code>{first_name: {length_equal: 7}
 </code></pre>
 
 <h4>
@@ -350,10 +361,13 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{first_name: {like: ['^\w+?$'] }
+<pre><code>{first_name: {like: '^\w+?$'}
+{first_name: {like: ['^\w+?$', 'i']} // with flags 
 </code></pre>
 
-<p>Be aware that regelar expressions cab be language dependent. Try to use most common syntax.</p>
+<p>Only 'i' flag is currently required by specification. </p>
+
+<p><strong>Be aware</strong> that regular expressions can be language dependent. Try to use most common syntax.</p>
 
 <h3>
 <a name="numeric-rules" class="anchor" href="#numeric-rules"><span class="octicon octicon-link"></span></a>Numeric Rules</h3>
@@ -405,7 +419,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{age: { 'max_number': [95] } }
+<pre><code>{age: { 'max_number': 95 } }
 </code></pre>
 
 <h4>
@@ -415,7 +429,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{age: { 'min_number': [18] } }
+<pre><code>{age: { 'min_number': 18 } }
 </code></pre>
 
 <h4>
@@ -442,13 +456,37 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
+<a name="url" class="anchor" href="#url"><span class="octicon octicon-link"></span></a>url</h4>
+
+<p>Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.</p>
+
+<p>Error code: 'WRONG_URL'</p>
+
+<p>Example:</p>
+
+<pre><code>{url: 'url'}
+</code></pre>
+
+<h4>
+<a name="iso_date" class="anchor" href="#iso_date"><span class="octicon octicon-link"></span></a>iso_date</h4>
+
+<p>Check whether a value is an ISO 8601 date (without time). Allowed date example - "2014-08-14"</p>
+
+<p>Error code: 'WRONG_DATE'</p>
+
+<p>Example:</p>
+
+<pre><code>{date: 'iso_date'}
+</code></pre>
+
+<h4>
 <a name="equal_to_field" class="anchor" href="#equal_to_field"><span class="octicon octicon-link"></span></a>equal_to_field</h4>
 
 <p>Error code: 'FIELDS_NOT_EQUAL'</p>
 
 <p>Example:</p>
 
-<pre><code>{password2: {'equal_to_field': ['password'] }}
+<pre><code>{password2: {'equal_to_field': 'password' }}
 </code></pre>
 
 <h3>
@@ -463,10 +501,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>address: { 'nested_object': [{
+<pre><code>address: { 'nested_object': {
     city: 'required', 
     zip: ['required', 'positive_integer']
-}]}
+} }
 </code></pre>
 
 <h4>
@@ -478,7 +516,13 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>Example:</p>
 
-<pre><code>{ product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+<pre><code>// new syntax (introduced in v0.4)
+{ product_ids: { 'list_of': 'positive_integer' }} 
+{ product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
+
+// old syntax 
+{ product_ids: { 'list_of': [[ 'positive_integer' ]] }} 
+{ product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }} 
 </code></pre>
 
 <h4>
@@ -558,6 +602,143 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <pre><code>{currency_code: 'to_uc'} 
 </code></pre>
 
+<h4>
+<a name="remove" class="anchor" href="#remove"><span class="octicon octicon-link"></span></a>remove</h4>
+
+<p>Removes characters from string</p>
+
+<p>Example:</p>
+
+<pre><code>{ text: { remove: '0123456789' } }  // Remove all numbers from text
+</code></pre>
+
+<h4>
+<a name="leave_only" class="anchor" href="#leave_only"><span class="octicon octicon-link"></span></a>leave_only</h4>
+
+<p>Removes characters from string</p>
+
+<p>Example:</p>
+
+<pre><code>{ text: { leave_only: '0123456789' } }  // Leaves only numbers in text
+</code></pre>
+
+<h2>
+<a name="rules-aliasing" class="anchor" href="#rules-aliasing"><span class="octicon octicon-link"></span></a>Rules aliasing</h2>
+
+<p>With rules aliasing you can create custom rules easely and assign own error codes in case own need. Moreover, aliased rules will work across all implementations as they are just data structures.</p>
+
+<p>Alias struture:</p>
+
+<pre><code>{
+    name: ALIAS_NAME,
+    rules: ALIAS_RULES,
+    error: ERROR_CODE (optional)
+}
+</code></pre>
+
+<p>If ERROR_CODE is empty than validator will return subrules errors. </p>
+
+<p>Example:</p>
+
+<pre><code>{
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}
+}
+
+{ 
+    name: 'adult_age'
+    rules: [ 'positive_integer', { min_number: 18 } ],
+    error: 'WRONG_AGE'
+}
+</code></pre>
+
+<p>Moreover, you can use aliased rules in aliased rules.</p>
+
+<h3>
+<a name="usage-example" class="anchor" href="#usage-example"><span class="octicon octicon-link"></span></a>Usage example</h3>
+
+<p>Let's assume that you have next data structure:</p>
+
+<pre><code>{
+    name: 'Viktor',
+    age: 30,
+    address: {
+        country: 'Ukraine',
+        city: 'Kiev', 
+        zip: '11111'
+    }
+}
+</code></pre>
+
+<p>And you have next validation rules for it:</p>
+
+<pre><code>{
+    name: 'required',
+    age: ['required', 'positive_integer', { min_number: 18 } ],
+    address: ['required', {nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}]
+}
+</code></pre>
+
+<p>You use 'address' in a lot of your objects (user address in user, office address in office object and others) and you want to reuse the same address rules in all places.  You have two ways: write custom rule 'valid_address' or assign rules to a variable and just reuse the variable. The first way requires much time and coding. Moreover, you cannot save new rule implementation is serialzed JSON file. The second way is much easier and you can store rule implemetation in JSON file but you cannot store user validation rules. Moreover, the second way does not allow you to redefine error code for address.</p>
+
+<p>From v0.4 you have the third way - rule aliasing.</p>
+
+<p>You can register aliases for complex rules. The way how you register an alias depends on the implementation but the way how use and describe it is covered by the specification. This appoach allows you store aliases in serialized JSON files and then use them across different implementations. </p>
+
+<pre><code>// Aliasing pseudo code
+validator.register_rule_alias({
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}
+});
+
+validator.register_rule_alias( {
+    name: 'adult_age', 
+    rules: [ 'positive_integer', { min_number: 18 } ] 
+});
+
+// Usage
+{
+    name: 'required',
+    age: ['required', 'adult_age' ],
+    address: ['required', 'valid_address']
+}
+</code></pre>
+
+<p>Moreover, you can add own error codes for the rules</p>
+
+<p>For example</p>
+
+<pre><code>// Aliasing pseudo code
+validator.register_rule_alias({
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }},
+    error: 'WRONG_ADDRESS'
+});
+</code></pre>
+
+<p>and if validation of address fails you will have the next error</p>
+
+<pre><code>{
+    address: 'WRONG_ADDRESS'
+}
+</code></pre>
+
 <h2>
 <a name="developers-guide" class="anchor" href="#developers-guide"><span class="octicon octicon-link"></span></a>Developers Guide</h2>
 
@@ -565,9 +746,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <ol>
 <li>Your implementation should support all validation rules described in "Validation Rules"</li>
-<li>Your implementation should return error codes descibed in specification</li>
+<li>Your implementation should support "Rules aliasing"</li>
+<li>Your implementation should return error codes descibed in the specification</li>
 <li>It should be easy to implement own rules</li>
-<li>Please use provided "test_suite" to ensure that your implementation works correctly</li>
+<li>Please, use provided "test_suite" to ensure that your implementation works correctly</li>
 </ol><h2>
 <a name="changes" class="anchor" href="#changes"><span class="octicon octicon-link"></span></a>Changes</h2>
 
@@ -582,6 +764,20 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <ul>
 <li>Added filter rules (trim, to_lc, to_uc)</li>
 </ul><h2>
+<a name="v04-current" class="anchor" href="#v04-current"><span class="octicon octicon-link"></span></a>v0.4 (current)</h2>
+
+<ul>
+<li>Added special rules (url, iso_date)</li>
+<li>Added filter rules (remove, leave_only)</li>
+<li>Add flags 'i' flag support to the "like" rule</li>
+<li>Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules") </li>
+<li>Rules aliasing (with custom errors)</li>
+</ul><h2>
+<a name="syntax-changes-for-one_of-and-list_of-rules" class="anchor" href="#syntax-changes-for-one_of-and-list_of-rules"><span class="octicon octicon-link"></span></a>Syntax changes for 'one_of' and 'list_of' rules</h2>
+
+<p>Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.</p>
+
+<h2>
 <a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h2>
 
 <ul>
