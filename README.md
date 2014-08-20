@@ -1,18 +1,16 @@
-Language Independent Validation Rules Specification (v0.4)
-===================================================
+Language Independent Validation Rules 
+=====================================
 
-I tried a lot of validators but I did not find any that meet all my needs. So, it was decided to create the ideal validator.
+Validator meets the following requirements:
 
-Requirements:
-
-1. Rules must be declarative and language independent
+1. Rules are declarative and language independent
 2. Any number of rules for each field
-3. Should return together errors for all fields
+3. Validator should return together errors for all fields
 4. Exclude all fields that do not have validation rules described
 5. Possibility to validate complex hierarchical structures
 6. Easy to describe and understand validation
-7. Should return understandable error codes(not error messages)
-8. Easy to implement own rules
+7. Should return understandable error codes (neither error messages nor numeric codes)
+8. Easy to implement own rules (usually you will have several in every project)
 9. Rules should be able to change results output ("trim", "nested\_object", for example) 
 10. Multipurpose (user input validation, configs validation, contracts programming etc)
 11. Unicode support
@@ -30,7 +28,7 @@ Requirements:
     {
         name: 'required',
         email: ['required', 'email'],
-        gender: { one_of: [['male', 'female']] },
+        gender: { one_of: ['male', 'female'] },
         phone: {max_length: 10},
         password: ['required', {min_length: 10} ]
         password2: { equal_to_field: 'password' }
@@ -580,7 +578,7 @@ Requirements to implementation
 
  * Added filter rules (trim, to\_lc, to\_uc)
 
-## v0.4
+## v0.4 (current)
 
  * Added special rules (url, iso\_date)
  * Added filter rules (remove, leave_only)
