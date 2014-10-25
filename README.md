@@ -19,8 +19,8 @@ Validator meets the following requirements:
 
 * JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
 * Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
-* PHP - https://github.com/koorchik/php-validator-livr (LIVR v0.3) (https://packagist.org/packages/validator/livr)
-* Python (https://github.com/asholok/python-validator-livr) (EARLY STAGE OF DEVELOPMENT)
+* PHP - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
+* Python (https://github.com/asholok/python-validator-livr) (https://pypi.python.org/pypi/LIVR)
 
 ## Rules Examples ##
 **Simple registration data**
@@ -578,7 +578,7 @@ Requirements to implementation
 
  * Added filter rules (trim, to\_lc, to\_uc)
 
-## v0.4 (current)
+### v0.4 (current)
 
  * Added special rules (url, iso\_date)
  * Added filter rules (remove, leave_only)
