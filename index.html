@@ -48,15 +48,19 @@
 <li>Rules should be able to change results output ("trim", "nested_object", for example) </li>
 <li>Multipurpose (user input validation, configs validation, contracts programming etc)</li>
 <li>Unicode support</li>
-</ol><h2>
+</ol>
+
+<h2>
 <a name="existing-implemenations" class="anchor" href="#existing-implemenations"><span class="octicon octicon-link"></span></a>Existing implemenations</h2>
 
 <ul>
 <li>JavaScript - <a href="https://github.com/koorchik/js-validator-livr">https://github.com/koorchik/js-validator-livr</a> (Available for node.js(npm) and browsers)</li>
 <li>Perl - <a href="https://github.com/koorchik/Validator-LIVR">https://github.com/koorchik/Validator-LIVR</a> (Available on CPAN)</li>
-<li>PHP - <a href="https://github.com/koorchik/php-validator-livr">https://github.com/koorchik/php-validator-livr</a> (LIVR v0.3) (<a href="https://packagist.org/packages/validator/livr">https://packagist.org/packages/validator/livr</a>)</li>
-<li>Python (<a href="https://github.com/asholok/python-validator-livr">https://github.com/asholok/python-validator-livr</a>) (EARLY STAGE OF DEVELOPMENT)</li>
-</ul><h2>
+<li>PHP - <a href="https://github.com/WebbyLab/php-validator-livr">https://github.com/WebbyLab/php-validator-livr</a> (<a href="https://packagist.org/packages/validator/livr">https://packagist.org/packages/validator/livr</a>)</li>
+<li>Python (<a href="https://github.com/asholok/python-validator-livr">https://github.com/asholok/python-validator-livr</a>) (<a href="https://pypi.python.org/pypi/LIVR">https://pypi.python.org/pypi/LIVR</a>)</li>
+</ul>
+
+<h2>
 <a name="rules-examples" class="anchor" href="#rules-examples"><span class="octicon octicon-link"></span></a>Rules Examples</h2>
 
 <p><strong>Simple registration data</strong></p>
@@ -76,7 +80,9 @@
 <li>{max_length: 10} is a shorter form of {max_length: [10]}
 <em>See "How it works" section</em>
 </li>
-</ul><p><strong>Simple validation of nested object</strong></p>
+</ul>
+
+<p><strong>Simple validation of nested object</strong></p>
 
 <pre><code>{
     name: 'required',
@@ -92,7 +98,9 @@
 <li>{nested_object: {}} is a shorter form of {nested_object: [{}]}
 <em>See "How it works" section</em>
 </li>
-</ul><p><strong>Simple list validation</strong></p>
+</ul>
+
+<p><strong>Simple list validation</strong></p>
 
 <pre><code>{ 
     order_id: ['required', 'positive_integer'],
@@ -142,7 +150,9 @@
 <ul>
 <li>"trim" removes leading and trailing spaces. (skips empty values and object references)</li>
 <li>"to_lc" transforms string to lower case. (skips empty values and object references)</li>
-</ul><p>You can create pipeline with any filters you like.</p>
+</ul>
+
+<p>You can create pipeline with any filters you like.</p>
 
 <h3>
 <a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h3>
@@ -153,7 +163,9 @@
 <ul>
 <li>FIELD_NAME is a name of field to validate</li>
 <li>VALIDATION_RULE is a name of function to be called. It can be function that builds validator or maybe just a validation function itself. Some arguments cab be passed to the function - "{ VALIDATION_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.</li>
-</ul><p>Examples:</p>
+</ul>
+
+<p>Examples:</p>
 
 <p>'required' or {'required': [] } becomes:</p>
 
@@ -262,7 +274,9 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <li>leave_only</li>
 </ul>
 </li>
-</ul><h3>
+</ul>
+
+<h3>
 <a name="base-rules" class="anchor" href="#base-rules"><span class="octicon octicon-link"></span></a>Base Rules</h3>
 
 <h4>
@@ -750,7 +764,9 @@ validator.register_rule_alias({
 <li>Your implementation should return error codes descibed in the specification</li>
 <li>It should be easy to implement own rules</li>
 <li>Please, use provided "test_suite" to ensure that your implementation works correctly</li>
-</ol><h2>
+</ol>
+
+<h2>
 <a name="changes" class="anchor" href="#changes"><span class="octicon octicon-link"></span></a>Changes</h2>
 
 <h3>
@@ -758,13 +774,17 @@ validator.register_rule_alias({
 
 <ul>
 <li>Added not_empty_list rule with test cases</li>
-</ul><h3>
+</ul>
+
+<h3>
 <a name="v03" class="anchor" href="#v03"><span class="octicon octicon-link"></span></a>v0.3</h3>
 
 <ul>
 <li>Added filter rules (trim, to_lc, to_uc)</li>
-</ul><h2>
-<a name="v04-current" class="anchor" href="#v04-current"><span class="octicon octicon-link"></span></a>v0.4 (current)</h2>
+</ul>
+
+<h3>
+<a name="v04-current" class="anchor" href="#v04-current"><span class="octicon octicon-link"></span></a>v0.4 (current)</h3>
 
 <ul>
 <li>Added special rules (url, iso_date)</li>
@@ -772,7 +792,9 @@ validator.register_rule_alias({
 <li>Add flags 'i' flag support to the "like" rule</li>
 <li>Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules") </li>
 <li>Rules aliasing (with custom errors)</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="syntax-changes-for-one_of-and-list_of-rules" class="anchor" href="#syntax-changes-for-one_of-and-list_of-rules"><span class="octicon octicon-link"></span></a>Syntax changes for 'one_of' and 'list_of' rules</h2>
 
 <p>Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.</p>
@@ -783,7 +805,9 @@ validator.register_rule_alias({
 <ul>
 <li>Describe internals with detailed step-by-step example</li>
 <li>Write developers guide</li>
-</ul><h1>
+</ul>
+
+<h1>
 <a name="license-and-copyright" class="anchor" href="#license-and-copyright"><span class="octicon octicon-link"></span></a>LICENSE AND COPYRIGHT</h1>
 
 <p>Copyright 2012 Viktor Turskyi.</p>
