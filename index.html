@@ -1,38 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <title>LIVR by koorchik</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>LIVR by koorchik</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <div class="wrapper">
+      <header>
+        <h1 class="header">LIVR</h1>
+        <p class="header">Language Independent Validation Rules Specification</p>
 
-        <header>
-          <h1>LIVR</h1>
-          <h2>Language Independent Validation Rules Specification</h2>
-        </header>
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/koorchik/LIVR/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/koorchik/LIVR/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/koorchik/LIVR">View On GitHub</a></li>
+        </ul>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/koorchik/LIVR/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/koorchik/LIVR/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/koorchik/LIVR" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/koorchik">koorchik</a></p>
 
-        <hr>
 
-        <section id="main_content">
-          <h1>
-<a name="language-independent-validation-rules-" class="anchor" href="#language-independent-validation-rules-"><span class="octicon octicon-link"></span></a>Language Independent Validation Rules </h1>
+      </header>
+      <section>
+        <h1>
+<a id="language-independent-validation-rules" class="anchor" href="#language-independent-validation-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Language Independent Validation Rules</h1>
 
 <p>Validator meets the following requirements:</p>
 
@@ -45,13 +44,13 @@
 <li>Easy to describe and understand validation</li>
 <li>Returns understandable error codes (neither error messages nor numeric codes)</li>
 <li>Easy to implement own rules (usually you will have several in every project)</li>
-<li>Rules should be able to change results output ("trim", "nested_object", for example) </li>
+<li>Rules should be able to change results output ("trim", "nested_object", for example)</li>
 <li>Multipurpose (user input validation, configs validation, contracts programming etc)</li>
 <li>Unicode support</li>
 </ol>
 
 <h2>
-<a name="existing-implemenations" class="anchor" href="#existing-implemenations"><span class="octicon octicon-link"></span></a>Existing implemenations</h2>
+<a id="existing-implemenations" class="anchor" href="#existing-implemenations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Existing implemenations</h2>
 
 <ul>
 <li>JavaScript - <a href="https://github.com/koorchik/js-validator-livr">https://github.com/koorchik/js-validator-livr</a> (Available for node.js(npm) and browsers)</li>
@@ -61,9 +60,9 @@
 </ul>
 
 <h2>
-<a name="rules-examples" class="anchor" href="#rules-examples"><span class="octicon octicon-link"></span></a>Rules Examples</h2>
+<a id="rules-examples" class="anchor" href="#rules-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rules Examples</h2>
 
-<p><strong>Simple registration data</strong></p>
+<p><strong>Simple registration data</strong> <a href="http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20email%3A%20%5B'required'%2C%20'email'%5D%2C%5Cn%20%20%20%20gender%3A%20%7B%20one_of%3A%20%5B%5B'male'%2C%20'female'%5D%5D%20%7D%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20password%3A%20%5B'required'%2C%20%7Bmin_length%3A%2010%7D%20%5D%2C%5Cn%20%20%20%20password2%3A%20%7B%20equal_to_field%3A%20'password'%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'John'%2C%5Cn%20%20%20%20email%3A%20'john%40mail.com'%2C%5Cn%20%20%20%20gender%3A%20'male'%2C%5Cn%20%20%20%20phone%3A%20'%2B22221212'%2C%5Cn%20%20%20%20password%3A%20'mypassword1'%2C%5Cn%20%20%20%20password2%3A%20'mypassword1'%5Cn%7D%22%7D">(demo)</a></p>
 
 <pre><code>{
     name: 'required',
@@ -82,13 +81,13 @@
 </li>
 </ul>
 
-<p><strong>Simple validation of nested object</strong></p>
+<p><strong>Simple validation of nested object</strong> <a href="http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20address%3A%20%7B%20'nested_object'%3A%20%7B%5Cn%20%20%20%20%20%20%20%20city%3A%20'required'%2C%20%5Cn%20%20%20%20%20%20%20%20zip%3A%20%5B'required'%2C%20'positive_integer'%5D%5Cn%20%20%20%20%7D%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20%5C%22Michael%5C%22%2C%5Cn%20%20%20%20phone%3A%20%5C%220441234567%5C%22%2C%5Cn%20%20%20%20address%3A%20%7B%5Cn%20%20%20%20%20%20%20%20city%3A%20%5C%22Kiev%5C%22%2C%20%5Cn%20%20%20%20%20%20%20%20zip%3A%20%5C%2230552%5C%22%5Cn%20%20%20%20%7D%5Cn%7D%22%7D">(demo)</a></p>
 
 <pre><code>{
     name: 'required',
     phone: {max_length: 10},
     address: { 'nested_object': {
-        city: 'required', 
+        city: 'required',
         zip: ['required', 'positive_integer']
     }}
 }
@@ -100,15 +99,15 @@
 </li>
 </ul>
 
-<p><strong>Simple list validation</strong></p>
+<p><strong>Simple list validation</strong> <a href="http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20product_ids%3A%20%7B%20%5Cn%20%20%20%20%20%20%20'list_of'%3A%20%5B%20'required'%2C%20%20'positive_integer'%20%5D%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010455%2C%5Cn%20%20%20%20product_ids%3A%20%5B3455%2C3456%2C3566%5D%5Cn%7D%22%7D">(demo)</a></p>
 
-<pre><code>{ 
+<pre><code>{
     order_id: ['required', 'positive_integer'],
-    product_ids: { 'list\_of': [ 'required',  'positive_integer' ] }
+    product_ids: { 'list_of': [ 'required',  'positive_integer' ] }
 }
 </code></pre>
 
-<p><strong>Validating list of objects</strong></p>
+<p><strong>Validating list of objects</strong> <a href="http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20products%3A%20%5B%20'not_empty_list'%2C%20%7B%20'list_of_objects'%3A%20%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%20%5B'required'%2C'positive_integer'%5D%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A%20%5B'required'%2C%20'positive_integer'%5D%5Cn%20%20%20%20%7D%7D%5D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010345%2C%5Cn%20%20%20%20products%3A%20%5B%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%203455%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A2%5Cn%20%20%20%20%7D%2C%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%203456%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A3%5Cn%20%20%20%20%7D%5D%5Cn%7D%22%7D">(demo)</a></p>
 
 <pre><code>{
     order_id: ['required', 'positive_integer'],
@@ -119,21 +118,21 @@
 }
 </code></pre>
 
-<p><strong>Validating list of different objects</strong></p>
+<p><strong>Validating list of different objects</strong> <a href="http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20products%3A%20%5B'required'%2C%20%7B%20'list_of_different_objects'%3A%20%5B%5Cn%20%20%20%20%20%20%20%20product_type%2C%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20material%3A%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20product_type%3A%20'required'%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20material_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20quantity%3A%20%5B'required'%2C%20%7B'min_number'%3A%201%7D%20%5D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20warehouse_id%3A%20'positive_integer'%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20service%3A%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20product_type%3A%20'required'%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20name%3A%20%5B'required'%2C%20%7B'max_length'%3A%2020%7D%20%5D%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%5D%7D%5D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010455%2C%5Cn%20%20%20%20products%3A%20%5B%7B%20%5Cn%20%20%20%20%20%20%20%20product_type%3A%20'material'%2C%5Cn%20%20%20%20%20%20%20%20material_id%3A%20345%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A%20%205%2C%5Cn%20%20%20%20%20%20%20%20warehouse_id%3A%2024%5Cn%20%20%20%20%7D%2C%7B%5Cn%20%20%20%20%20%20%20%20product_type%3A%20'service'%2C%5Cn%20%20%20%20%20%20%20%20name%3A%20'Clean%20filter'%5Cn%20%20%20%20%7D%5D%5Cn%7D%22%7D">(demo)</a></p>
 
 <pre><code>{
-    "order_id": ["required", "positive_integer"],
-    "products": ["required", { "list_of_different_objects": [
-        "product_type", {
-            "material": {
-                "product_type": "required",
-                "material_id": ["required", "positive_integer"],
-                "quantity": ["required", {"min_number": 1} ],
-                "warehouse_id": "positive_integer"
+    order_id: ['required', 'positive_integer'],
+    products: ['required', { 'list_of_different_objects': [
+        'product_type', {
+            material: {
+                product_type: 'required',
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', {'min_number': 1} ],
+                warehouse_id: 'positive_integer'
             },
-            "service": {
-                "product_type": "required",
-                "name": ["required", {"max_length": 10} ]
+            service: {
+                product_type: 'required',
+                name: ['required', {'max_length': 10} ]
             }
         }
     ]}]
@@ -155,9 +154,9 @@
 <p>You can create pipeline with any filters you like.</p>
 
 <h3>
-<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h3>
+<a id="how-it-works" class="anchor" href="#how-it-works" aria-hidden="true"><span class="octicon octicon-link"></span></a>How it works</h3>
 
-<p>You should define a structure: 
+<p>You should define a structure:
     FIELD_NAME: VALIDATION_RULE</p>
 
 <ul>
@@ -174,7 +173,7 @@
 
 <p>{ 'max_length': 5 } or { 'max_length': [5] } becomes:</p>
 
-<pre><code>max_length(5);    
+<pre><code>max_length(5);
 </code></pre>
 
 <p>{'length_between': [1,10] } becomes:</p>
@@ -189,23 +188,23 @@
 
 <p>{'one_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:</p>
 
-<pre><code>one_of('Kiev', 'Moscow'); 
+<pre><code>one_of('Kiev', 'Moscow');
 </code></pre>
 
-<p>{'my_own_rule': [1, [2, 3], 'bla'] } becomes: </p>
+<p>{'my_own_rule': [1, [2, 3], 'bla'] } becomes:</p>
 
 <pre><code>my_own_rule(1, [2, 3], 'bla');
 </code></pre>
 
 <p>Validator receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.</p>
 
-<p>So, the idea is that there is a tiny core which can be easly extended with new rules. </p>
+<p>So, the idea is that there is a tiny core which can be easly extended with new rules.</p>
 
 <h2>
-<a name="validation-rules" class="anchor" href="#validation-rules"><span class="octicon octicon-link"></span></a>Validation Rules</h2>
+<a id="validation-rules" class="anchor" href="#validation-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation Rules</h2>
 
-<p>Be aware that all standard rules just skip checking empty values. 
-So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present. 
+<p>Be aware that all standard rules just skip checking empty values.
+So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present.
 This allows us to use the same rules for not required fields.</p>
 
 <pre><code>first_name: { min_length: [10] } # name is optional. We will check length only if "first_name" was passed
@@ -277,10 +276,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </ul>
 
 <h3>
-<a name="base-rules" class="anchor" href="#base-rules"><span class="octicon octicon-link"></span></a>Base Rules</h3>
+<a id="base-rules" class="anchor" href="#base-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Base Rules</h3>
 
 <h4>
-<a name="required" class="anchor" href="#required"><span class="octicon octicon-link"></span></a>required</h4>
+<a id="required" class="anchor" href="#required" aria-hidden="true"><span class="octicon octicon-link"></span></a>required</h4>
 
 <p>Error code: 'REQUIRED'</p>
 
@@ -290,7 +289,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="not_empty" class="anchor" href="#not_empty"><span class="octicon octicon-link"></span></a>not_empty</h4>
+<a id="not_empty" class="anchor" href="#not_empty" aria-hidden="true"><span class="octicon octicon-link"></span></a>not_empty</h4>
 
 <p>Error code: 'CANNOT_BE_EMPTY'</p>
 
@@ -300,7 +299,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="not_empty_list" class="anchor" href="#not_empty_list"><span class="octicon octicon-link"></span></a>not_empty_list</h4>
+<a id="not_empty_list" class="anchor" href="#not_empty_list" aria-hidden="true"><span class="octicon octicon-link"></span></a>not_empty_list</h4>
 
 <p>Checks that list contains at least one element</p>
 
@@ -312,10 +311,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h3>
-<a name="string-rules" class="anchor" href="#string-rules"><span class="octicon octicon-link"></span></a>String Rules</h3>
+<a id="string-rules" class="anchor" href="#string-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>String Rules</h3>
 
 <h4>
-<a name="one_of" class="anchor" href="#one_of"><span class="octicon octicon-link"></span></a>one_of</h4>
+<a id="one_of" class="anchor" href="#one_of" aria-hidden="true"><span class="octicon octicon-link"></span></a>one_of</h4>
 
 <p>Error code: 'NOT_ALLOWED_VALUE'</p>
 
@@ -329,7 +328,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="max_length" class="anchor" href="#max_length"><span class="octicon octicon-link"></span></a>max_length</h4>
+<a id="max_length" class="anchor" href="#max_length" aria-hidden="true"><span class="octicon octicon-link"></span></a>max_length</h4>
 
 <p>Error code: 'TOO_LONG'</p>
 
@@ -339,7 +338,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="min_length" class="anchor" href="#min_length"><span class="octicon octicon-link"></span></a>min_length</h4>
+<a id="min_length" class="anchor" href="#min_length" aria-hidden="true"><span class="octicon octicon-link"></span></a>min_length</h4>
 
 <p>Error code: 'TOO_SHORT'</p>
 
@@ -349,7 +348,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="length_between" class="anchor" href="#length_between"><span class="octicon octicon-link"></span></a>length_between</h4>
+<a id="length_between" class="anchor" href="#length_between" aria-hidden="true"><span class="octicon octicon-link"></span></a>length_between</h4>
 
 <p>Error code: 'TOO_LONG' or 'TOO_SHORT'</p>
 
@@ -359,7 +358,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="length_equal" class="anchor" href="#length_equal"><span class="octicon octicon-link"></span></a>length_equal</h4>
+<a id="length_equal" class="anchor" href="#length_equal" aria-hidden="true"><span class="octicon octicon-link"></span></a>length_equal</h4>
 
 <p>Error code: 'TOO_LONG' or 'TOO_SHORT'</p>
 
@@ -369,25 +368,25 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="like" class="anchor" href="#like"><span class="octicon octicon-link"></span></a>like</h4>
+<a id="like" class="anchor" href="#like" aria-hidden="true"><span class="octicon octicon-link"></span></a>like</h4>
 
 <p>Error code: 'WRONG_FORMAT'</p>
 
 <p>Example:</p>
 
 <pre><code>{first_name: {like: '^\w+?$'}
-{first_name: {like: ['^\w+?$', 'i']} // with flags 
+{first_name: {like: ['^\w+?$', 'i']} // with flags
 </code></pre>
 
-<p>Only 'i' flag is currently required by specification. </p>
+<p>Only 'i' flag is currently required by specification.</p>
 
 <p><strong>Be aware</strong> that regular expressions can be language dependent. Try to use most common syntax.</p>
 
 <h3>
-<a name="numeric-rules" class="anchor" href="#numeric-rules"><span class="octicon octicon-link"></span></a>Numeric Rules</h3>
+<a id="numeric-rules" class="anchor" href="#numeric-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numeric Rules</h3>
 
 <h4>
-<a name="integer" class="anchor" href="#integer"><span class="octicon octicon-link"></span></a>integer</h4>
+<a id="integer" class="anchor" href="#integer" aria-hidden="true"><span class="octicon octicon-link"></span></a>integer</h4>
 
 <p>Error code: 'NOT_INTEGER'</p>
 
@@ -397,7 +396,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="positive_integer" class="anchor" href="#positive_integer"><span class="octicon octicon-link"></span></a>positive_integer</h4>
+<a id="positive_integer" class="anchor" href="#positive_integer" aria-hidden="true"><span class="octicon octicon-link"></span></a>positive_integer</h4>
 
 <p>Error code: 'NOT_POSITIVE_INTEGER'</p>
 
@@ -407,7 +406,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="decimal" class="anchor" href="#decimal"><span class="octicon octicon-link"></span></a>decimal</h4>
+<a id="decimal" class="anchor" href="#decimal" aria-hidden="true"><span class="octicon octicon-link"></span></a>decimal</h4>
 
 <p>Error code: 'NOT_DECIMAL'</p>
 
@@ -417,7 +416,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="positive_decimal" class="anchor" href="#positive_decimal"><span class="octicon octicon-link"></span></a>positive_decimal</h4>
+<a id="positive_decimal" class="anchor" href="#positive_decimal" aria-hidden="true"><span class="octicon octicon-link"></span></a>positive_decimal</h4>
 
 <p>Error code: 'NOT_POSITIVE_DECIMAL'</p>
 
@@ -427,7 +426,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="max_number" class="anchor" href="#max_number"><span class="octicon octicon-link"></span></a>max_number</h4>
+<a id="max_number" class="anchor" href="#max_number" aria-hidden="true"><span class="octicon octicon-link"></span></a>max_number</h4>
 
 <p>Error code: 'TOO_HIGH'</p>
 
@@ -437,7 +436,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="min_number" class="anchor" href="#min_number"><span class="octicon octicon-link"></span></a>min_number</h4>
+<a id="min_number" class="anchor" href="#min_number" aria-hidden="true"><span class="octicon octicon-link"></span></a>min_number</h4>
 
 <p>Error code: 'TOO_LOW'</p>
 
@@ -447,7 +446,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="number_between" class="anchor" href="#number_between"><span class="octicon octicon-link"></span></a>number_between</h4>
+<a id="number_between" class="anchor" href="#number_between" aria-hidden="true"><span class="octicon octicon-link"></span></a>number_between</h4>
 
 <p>Error code: 'TOO_HIGH' or 'TOO_LOW'</p>
 
@@ -457,10 +456,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h3>
-<a name="special-rules" class="anchor" href="#special-rules"><span class="octicon octicon-link"></span></a>Special Rules</h3>
+<a id="special-rules" class="anchor" href="#special-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Special Rules</h3>
 
 <h4>
-<a name="email" class="anchor" href="#email"><span class="octicon octicon-link"></span></a>email</h4>
+<a id="email" class="anchor" href="#email" aria-hidden="true"><span class="octicon octicon-link"></span></a>email</h4>
 
 <p>Error code: 'WRONG_EMAIL'</p>
 
@@ -470,7 +469,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="url" class="anchor" href="#url"><span class="octicon octicon-link"></span></a>url</h4>
+<a id="url" class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>url</h4>
 
 <p>Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.</p>
 
@@ -482,7 +481,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="iso_date" class="anchor" href="#iso_date"><span class="octicon octicon-link"></span></a>iso_date</h4>
+<a id="iso_date" class="anchor" href="#iso_date" aria-hidden="true"><span class="octicon octicon-link"></span></a>iso_date</h4>
 
 <p>Check whether a value is an ISO 8601 date (without time). Allowed date example - "2014-08-14"</p>
 
@@ -494,7 +493,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="equal_to_field" class="anchor" href="#equal_to_field"><span class="octicon octicon-link"></span></a>equal_to_field</h4>
+<a id="equal_to_field" class="anchor" href="#equal_to_field" aria-hidden="true"><span class="octicon octicon-link"></span></a>equal_to_field</h4>
 
 <p>Error code: 'FIELDS_NOT_EQUAL'</p>
 
@@ -504,10 +503,10 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h3>
-<a name="helper-rules" class="anchor" href="#helper-rules"><span class="octicon octicon-link"></span></a>Helper Rules</h3>
+<a id="helper-rules" class="anchor" href="#helper-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Helper Rules</h3>
 
 <h4>
-<a name="nested_object" class="anchor" href="#nested_object"><span class="octicon octicon-link"></span></a>nested_object</h4>
+<a id="nested_object" class="anchor" href="#nested_object" aria-hidden="true"><span class="octicon octicon-link"></span></a>nested_object</h4>
 
 <p>Allows you to describe validation rules for a nested object.</p>
 
@@ -516,13 +515,13 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <p>Example:</p>
 
 <pre><code>address: { 'nested_object': {
-    city: 'required', 
+    city: 'required',
     zip: ['required', 'positive_integer']
 } }
 </code></pre>
 
 <h4>
-<a name="list_of" class="anchor" href="#list_of"><span class="octicon octicon-link"></span></a>list_of</h4>
+<a id="list_of" class="anchor" href="#list_of" aria-hidden="true"><span class="octicon octicon-link"></span></a>list_of</h4>
 
 <p>Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.</p>
 
@@ -531,16 +530,16 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <p>Example:</p>
 
 <pre><code>// new syntax (introduced in v0.4)
-{ product_ids: { 'list_of': 'positive_integer' }} 
+{ product_ids: { 'list_of': 'positive_integer' }}
 { product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
 
-// old syntax 
-{ product_ids: { 'list_of': [[ 'positive_integer' ]] }} 
-{ product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }} 
+// old syntax
+{ product_ids: { 'list_of': [[ 'positive_integer' ]] }}
+{ product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
 </code></pre>
 
 <h4>
-<a name="list_of_objects" class="anchor" href="#list_of_objects"><span class="octicon octicon-link"></span></a>list_of_objects</h4>
+<a id="list_of_objects" class="anchor" href="#list_of_objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>list_of_objects</h4>
 
 <p>Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.</p>
 
@@ -555,25 +554,25 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="list_of_different_objects" class="anchor" href="#list_of_different_objects"><span class="octicon octicon-link"></span></a>list_of_different_objects</h4>
+<a id="list_of_different_objects" class="anchor" href="#list_of_different_objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>list_of_different_objects</h4>
 
-<p>Allows you to describe validation rules for list of different objects. Validation rules will be applyed for each array element.</p>
+<p>Allows you to describe validation rules for list of different objects. Validation rules will be applied for each array element.</p>
 
 <p>Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.</p>
 
 <p>Example:</p>
 
-<pre><code>"products": ["required", { "list_of_different_objects": [
-    "product_type", {
-        "material": {
-            "product_type": "required",
-            "material_id": ["required", "positive_integer"],
-            "quantity": ["required", {"min_number": 1} ],
-            "warehouse_id": "positive_integer"
+<pre><code>products: ['required', { 'list_of_different_objects': [
+    product_type, {
+        material: {
+            product_type: 'required',
+            material_id: ['required', 'positive_integer'],
+            quantity: ['required', {'min_number': 1} ],
+            warehouse_id: 'positive_integer'
         },
-        "service": {
-            "product_type": "required",
-            "name": ["required", {"max_length": 10} ]
+        service: {
+            product_type: 'required',
+            name: ['required', {'max_length': 10} ]
         }
     }
 ]}]
@@ -582,12 +581,12 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <p>In this example validator will look on "product_type" in each object and depending on it will use corresponding set of rules</p>
 
 <h3>
-<a name="filter-rules" class="anchor" href="#filter-rules"><span class="octicon octicon-link"></span></a>Filter Rules</h3>
+<a id="filter-rules" class="anchor" href="#filter-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filter Rules</h3>
 
-<p>Additional rules for data modification. They do not return errors just skips values that are not appropriate.  </p>
+<p>Additional rules for data modification. They do not return errors just skips values that are not appropriate.</p>
 
 <h4>
-<a name="trim" class="anchor" href="#trim"><span class="octicon octicon-link"></span></a>trim</h4>
+<a id="trim" class="anchor" href="#trim" aria-hidden="true"><span class="octicon octicon-link"></span></a>trim</h4>
 
 <p>Removes leading and trailing spaces. Skips object references.</p>
 
@@ -597,7 +596,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="to_lc" class="anchor" href="#to_lc"><span class="octicon octicon-link"></span></a>to_lc</h4>
+<a id="to_lc" class="anchor" href="#to_lc" aria-hidden="true"><span class="octicon octicon-link"></span></a>to_lc</h4>
 
 <p>Converts string to lower case. Skips object references.</p>
 
@@ -607,17 +606,17 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="to_uc" class="anchor" href="#to_uc"><span class="octicon octicon-link"></span></a>to_uc</h4>
+<a id="to_uc" class="anchor" href="#to_uc" aria-hidden="true"><span class="octicon octicon-link"></span></a>to_uc</h4>
 
 <p>Converts string to upper case. Skips object references.</p>
 
 <p>Example:</p>
 
-<pre><code>{currency_code: 'to_uc'} 
+<pre><code>{currency_code: 'to_uc'}
 </code></pre>
 
 <h4>
-<a name="remove" class="anchor" href="#remove"><span class="octicon octicon-link"></span></a>remove</h4>
+<a id="remove" class="anchor" href="#remove" aria-hidden="true"><span class="octicon octicon-link"></span></a>remove</h4>
 
 <p>Removes characters from string</p>
 
@@ -627,7 +626,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h4>
-<a name="leave_only" class="anchor" href="#leave_only"><span class="octicon octicon-link"></span></a>leave_only</h4>
+<a id="leave_only" class="anchor" href="#leave_only" aria-hidden="true"><span class="octicon octicon-link"></span></a>leave_only</h4>
 
 <p>Removes characters from string</p>
 
@@ -637,7 +636,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 </code></pre>
 
 <h2>
-<a name="rules-aliasing" class="anchor" href="#rules-aliasing"><span class="octicon octicon-link"></span></a>Rules aliasing</h2>
+<a id="rules-aliasing" class="anchor" href="#rules-aliasing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rules aliasing</h2>
 
 <p>With rules aliasing you can create custom rules easely and assign own error codes in case own need. Moreover, aliased rules will work across all implementations as they are just data structures.</p>
 
@@ -650,7 +649,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 }
 </code></pre>
 
-<p>If ERROR_CODE is empty than validator will return subrules errors. </p>
+<p>If ERROR_CODE is empty than validator will return subrules errors.</p>
 
 <p>Example:</p>
 
@@ -663,7 +662,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
     }}
 }
 
-{ 
+{
     name: 'adult_age'
     rules: [ 'positive_integer', { min_number: 18 } ],
     error: 'WRONG_AGE'
@@ -673,7 +672,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 <p>Moreover, you can use aliased rules in aliased rules.</p>
 
 <h3>
-<a name="usage-example" class="anchor" href="#usage-example"><span class="octicon octicon-link"></span></a>Usage example</h3>
+<a id="usage-example" class="anchor" href="#usage-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage example</h3>
 
 <p>Let's assume that you have next data structure:</p>
 
@@ -682,7 +681,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
     age: 30,
     address: {
         country: 'Ukraine',
-        city: 'Kiev', 
+        city: 'Kiev',
         zip: '11111'
     }
 }
@@ -705,7 +704,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 <p>From v0.4 you have the third way - rule aliasing.</p>
 
-<p>You can register aliases for complex rules. The way how you register an alias depends on the implementation but the way how use and describe it is covered by the specification. This appoach allows you store aliases in serialized JSON files and then use them across different implementations. </p>
+<p>You can register aliases for complex rules. The way how you register an alias depends on the implementation but the way how use and describe it is covered by the specification. This appoach allows you store aliases in serialized JSON files and then use them across different implementations.</p>
 
 <pre><code>// Aliasing pseudo code
 validator.register_rule_alias({
@@ -718,8 +717,8 @@ validator.register_rule_alias({
 });
 
 validator.register_rule_alias( {
-    name: 'adult_age', 
-    rules: [ 'positive_integer', { min_number: 18 } ] 
+    name: 'adult_age',
+    rules: [ 'positive_integer', { min_number: 18 } ]
 });
 
 // Usage
@@ -754,7 +753,7 @@ validator.register_rule_alias({
 </code></pre>
 
 <h2>
-<a name="developers-guide" class="anchor" href="#developers-guide"><span class="octicon octicon-link"></span></a>Developers Guide</h2>
+<a id="developers-guide" class="anchor" href="#developers-guide" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developers Guide</h2>
 
 <p>Requirements to implementation</p>
 
@@ -767,40 +766,40 @@ validator.register_rule_alias({
 </ol>
 
 <h2>
-<a name="changes" class="anchor" href="#changes"><span class="octicon octicon-link"></span></a>Changes</h2>
+<a id="changes" class="anchor" href="#changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changes</h2>
 
 <h3>
-<a name="v02" class="anchor" href="#v02"><span class="octicon octicon-link"></span></a>v0.2</h3>
+<a id="v02" class="anchor" href="#v02" aria-hidden="true"><span class="octicon octicon-link"></span></a>v0.2</h3>
 
 <ul>
 <li>Added not_empty_list rule with test cases</li>
 </ul>
 
 <h3>
-<a name="v03" class="anchor" href="#v03"><span class="octicon octicon-link"></span></a>v0.3</h3>
+<a id="v03" class="anchor" href="#v03" aria-hidden="true"><span class="octicon octicon-link"></span></a>v0.3</h3>
 
 <ul>
 <li>Added filter rules (trim, to_lc, to_uc)</li>
 </ul>
 
 <h3>
-<a name="v04-current" class="anchor" href="#v04-current"><span class="octicon octicon-link"></span></a>v0.4 (current)</h3>
+<a id="v04-current" class="anchor" href="#v04-current" aria-hidden="true"><span class="octicon octicon-link"></span></a>v0.4 (current)</h3>
 
 <ul>
 <li>Added special rules (url, iso_date)</li>
 <li>Added filter rules (remove, leave_only)</li>
 <li>Add flags 'i' flag support to the "like" rule</li>
-<li>Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules") </li>
+<li>Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules")</li>
 <li>Rules aliasing (with custom errors)</li>
 </ul>
 
 <h2>
-<a name="syntax-changes-for-one_of-and-list_of-rules" class="anchor" href="#syntax-changes-for-one_of-and-list_of-rules"><span class="octicon octicon-link"></span></a>Syntax changes for 'one_of' and 'list_of' rules</h2>
+<a id="syntax-changes-for-one_of-and-list_of-rules" class="anchor" href="#syntax-changes-for-one_of-and-list_of-rules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax changes for 'one_of' and 'list_of' rules</h2>
 
 <p>Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.</p>
 
 <h2>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
 
 <ul>
 <li>Describe internals with detailed step-by-step example</li>
@@ -808,7 +807,7 @@ validator.register_rule_alias({
 </ul>
 
 <h1>
-<a name="license-and-copyright" class="anchor" href="#license-and-copyright"><span class="octicon octicon-link"></span></a>LICENSE AND COPYRIGHT</h1>
+<a id="license-and-copyright" class="anchor" href="#license-and-copyright" aria-hidden="true"><span class="octicon octicon-link"></span></a>LICENSE AND COPYRIGHT</h1>
 
 <p>Copyright 2012 Viktor Turskyi.</p>
 
@@ -825,14 +824,13 @@ validator.register_rule_alias({
 <p>This license includes the non-exclusive, worldwide, free-of-charge patent license to make, have made, use, offer to sell, sell, import and otherwise transfer the Package with respect to any patent claims licensable by the Copyright Holder that are necessarily infringed by the Package. If you institute patent litigation (including a cross-claim or counterclaim) against any party alleging that the Package constitutes direct or contributory patent infringement, then this Artistic License to you shall terminate on the date that such litigation is filed.</p>
 
 <p>Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
-        </section>
-
-        <footer>
-          LIVR is maintained by <a href="https://github.com/koorchik">koorchik</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-                  <script type="text/javascript">
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -843,7 +841,5 @@ validator.register_rule_alias({
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
   </body>
 </html>
