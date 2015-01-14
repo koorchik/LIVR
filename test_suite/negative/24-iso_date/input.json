@@ -3,5 +3,10 @@
     "iso_date2": "2011-02-29",
     "iso_date3": "2014-10-10T22:22",
     "empty_field": "",
-    "extra_field": "aaaa"
+    "extra_field": "aaaa",
+
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
 }

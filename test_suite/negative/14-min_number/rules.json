@@ -1,5 +1,10 @@
 {
     "number1": { "min_number" : 10 },
     "number2": [{ "min_number" : 20 }],
-    "empty_field":  { "min_number" : 10 }
+    "empty_field":  { "min_number" : 10 },
+
+    "value_is_hash":        { "min_number": 10 },
+    "value_is_empty_hash":  { "min_number": 10 },
+    "value_is_array":       { "min_number": 10 },
+    "value_is_empty_array": { "min_number": 10 }
 }
