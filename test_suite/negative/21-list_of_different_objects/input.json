@@ -16,6 +16,10 @@
             "product_type": "service",
             "name": "Very Long Name"
         },
+        {
+            "product_type": "wrongtype",
+            "name": "Wrongtype"
+        },
         "Some Wrong Data"
     ],
     "users": "not an array"

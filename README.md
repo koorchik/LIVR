@@ -591,7 +591,7 @@ Requirements to implementation
 ## Syntax changes for 'one_of' and 'list_of' rules
 Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.
 
-## TODO ##
+## TODO
 
 * Describe internals with detailed step-by-step example
 * Write developers guide
