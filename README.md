@@ -152,6 +152,7 @@ Standard rules that should be supported by every implementation:
     * required
     * not\_empty
     * not\_empty\_list
+    * any
  * String Rules
     * one\_of
     * max\_length
@@ -207,6 +208,19 @@ Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). 
 Example:
 
     {products_ids: 'not_empty_list'}
+
+#### any ####
+
+Allows a value to be of any type. The validator removes all fields without validation. But there are situations when you do not want field to have any validation.
+
+Does not return any error.
+
+Example:
+
+    {
+        data: 'any' // validator will pass "data" field
+        payload: ['required', 'any'] // "any" rule does nothing here.
+    }
 
 ### String Rules ###
 #### one\_of ####
@@ -579,13 +593,16 @@ Requirements to implementation
 
  * Added filter rules (trim, to\_lc, to\_uc)
 
-### v0.4 (current)
+### v0.4
 
  * Added special rules (url, iso\_date)
  * Added filter rules (remove, leave_only)
  * Add flags 'i' flag support to the "like" rule
  * Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules")
  * Rules aliasing (with custom errors)
+
+### v0.5 (proposal)
+ * Added base rule "any".
 
 
 ## Syntax changes for 'one_of' and 'list_of' rules
