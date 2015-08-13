@@ -20,7 +20,8 @@ Validator meets the following requirements:
 * JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
 * Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
 * PHP - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
-* Python (https://github.com/asholok/python-validator-livr) (https://pypi.python.org/pypi/LIVR)
+* Python - https://github.com/asholok/python-validator-livr (https://pypi.python.org/pypi/LIVR)
+* Erlang - https://github.com/Prots/olifer
 
 ## Rules Examples ##
 **Simple registration data** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20email%3A%20%5B'required'%2C%20'email'%5D%2C%5Cn%20%20%20%20gender%3A%20%7B%20one_of%3A%20%5B%5B'male'%2C%20'female'%5D%5D%20%7D%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20password%3A%20%5B'required'%2C%20%7Bmin_length%3A%2010%7D%20%5D%2C%5Cn%20%20%20%20password2%3A%20%7B%20equal_to_field%3A%20'password'%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'John'%2C%5Cn%20%20%20%20email%3A%20'john%40mail.com'%2C%5Cn%20%20%20%20gender%3A%20'male'%2C%5Cn%20%20%20%20phone%3A%20'%2B22221212'%2C%5Cn%20%20%20%20password%3A%20'mypassword1'%2C%5Cn%20%20%20%20password2%3A%20'mypassword1'%5Cn%7D%22%7D)
