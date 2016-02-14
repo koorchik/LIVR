@@ -13,5 +13,15 @@
                 "name": ["required", {"max_length": 10} ]
             }
         }
+    ]}],
+    "empty_list": ["required", { "list_of_different_objects": [
+        "item_type", {
+            "string": {
+                "value": "required"
+            },
+            "number": {
+                "value": ["required", "integer" ]
+            }
+        }
     ]}]
 }
