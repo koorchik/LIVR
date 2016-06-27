@@ -15,7 +15,7 @@ Validator meets the following requirements:
 10. Multipurpose (user input validation, configs validation, contracts programming etc)
 11. Unicode support
 
-## Existing implemenations ##
+## Existing implemenations
 
 * JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
 * Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
@@ -24,12 +24,12 @@ Validator meets the following requirements:
 * Erlang - https://github.com/Prots/olifer
 * Ruby - https://github.com/maktwin/ruby-validator-livr (https://rubygems.org/gems/livr)
 
-## Additional Tools ##
+## Additional Tools
 
-* Online JavaScript playground - http://webbylab.github.io/livr-playground/ 
+* Online JavaScript playground - http://webbylab.github.io/livr-playground/
 * Online multi-language playground - http://livr-multi-playground.webbylab.com/
 
-## Rules Examples ##
+## Rules Examples
 **Simple registration data** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20email%3A%20%5B'required'%2C%20'email'%5D%2C%5Cn%20%20%20%20gender%3A%20%7B%20one_of%3A%20%5B%5B'male'%2C%20'female'%5D%5D%20%7D%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20password%3A%20%5B'required'%2C%20%7Bmin_length%3A%2010%7D%20%5D%2C%5Cn%20%20%20%20password2%3A%20%7B%20equal_to_field%3A%20'password'%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'John'%2C%5Cn%20%20%20%20email%3A%20'john%40mail.com'%2C%5Cn%20%20%20%20gender%3A%20'male'%2C%5Cn%20%20%20%20phone%3A%20'%2B22221212'%2C%5Cn%20%20%20%20password%3A%20'mypassword1'%2C%5Cn%20%20%20%20password2%3A%20'mypassword1'%5Cn%7D%22%7D)
 
     {
@@ -108,7 +108,7 @@ Validator meets the following requirements:
 
 You can create pipeline with any filters you like.
 
-### How it works ###
+### How it works
 You should define a structure:
     FIELD\_NAME: VALIDATION\_RULE
 * FIELD\_NAME is a name of field to validate
@@ -144,7 +144,7 @@ Validator receives value to validate and returns an error message(in case of fai
 
 So, the idea is that there is a tiny core which can be easly extended with new rules.
 
-## Validation Rules ##
+## Validation Rules
 Be aware that all standard rules just skip checking empty values.
 So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present.
 This allows us to use the same rules for not required fields.
@@ -153,14 +153,46 @@ This allows us to use the same rules for not required fields.
     first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
 
 
+### Types coercing
+
+You should treat rules as expectations.  Therefore, all implementation make types coercing in numeric rules. This is reasonable because if someone says "positive_integer" then he expects to receive positive integer after validation.
+
+We follow the same logic for string rules.  We compare values as string as rule are "string rules" but return what developer expects.  For example, if we use "eq" rule with input:
+
+    {
+        field1: 1,
+        field2: 1
+    }
+
+and rules:
+
+    {
+        field1: {eq: "1"},
+        field2: {eq: 1},
+    }
+
+output will be:
+
+    {
+        field1: "1",
+        field2: 1
+    }
+
+[(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20field1%3A%20%7Beq%3A%201%7D%2C%5Cn%20%20%20field2%3A%20%7Beq%3A%20%5C%221%5C%22%7D%2C%5Cn%7D%22%2C%22data%22%3A%22%7B%20%5Cn%20%20%20%20field1%3A%201%2C%20%5Cn%20%20%20%20field2%3A%201%5Cn%7D%22%7D)
+
+
+*What about the test suite? The test suite is stored in JSON format, therefore we can rely only on types that are supported by JSON. So, if we have input {field: "1"}, rules {field: 'positive_integer'} then the output will be { field: 1 }. As I see it should work. For example, JavaScript will coerce "1" to 1. And the test will pass. Perl will do nothing. And the test will pass. Please, let me know if there are any issues with this.*
+
 Standard rules that should be supported by every implementation:
 
  * Base Rules
     * required
     * not\_empty
     * not\_empty\_list
-    * any
+    * any_object
  * String Rules
+    * string
+    * eq
     * one\_of
     * max\_length
     * min\_length
@@ -191,23 +223,24 @@ Standard rules that should be supported by every implementation:
     * to\_uc
     * remove
     * leave\_only
+    * default
 
-### Base Rules ###
-#### required ####
+### Base Rules
+#### required
 Error code: 'REQUIRED'
 
 Example:
 
     {first_name: 'required'}
 
-#### not\_empty ####
+#### not\_empty
 Error code: 'CANNOT_BE_EMPTY'
 
 Example:
 
     {first_name: 'not_empty'}
 
-#### not\_empty\_list ####
+#### not\_empty\_list
 Checks that list contains at least one element
 
 Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'WRONG\_FORMAT'
@@ -216,21 +249,30 @@ Example:
 
     {products_ids: 'not_empty_list'}
 
-#### any ####
 
-Allows a value to be of any type. The validator removes all fields without validation. But there are situations when you do not want field to have any validation.
+### String Rules
 
-Does not return any error.
+
+#### string
+Checks that value is primitive type and coerces it to the string. Better use more strict rules.
 
 Example:
 
     {
         data: 'any' // validator will pass "data" field
-        payload: ['required', 'any'] // "any" rule does nothing here.
+        payload: ['required', 'string'] //
     }
 
-### String Rules ###
-#### one\_of ####
+You can treat this rule as modifier.
+
+#### eq
+Error code: 'NOT\_ALLOWED\_VALUE'
+
+Example:
+    { first_name: {'eq': 'Anton'} }
+
+
+#### one\_of
 Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
@@ -241,35 +283,35 @@ Example:
     // old syntax
     { first_name: {'one_of': [['Anton', 'Igor']]} }
 
-#### max\_length  ####
+#### max\_length
 Error code: 'TOO\_LONG'
 
 Example:
 
     {first_name: {max_length: 10}
 
-#### min\_length ####
+#### min\_length
 Error code: 'TOO\_SHORT'
 
 Example:
 
     {first_name: {min_length: 2}
 
-#### length\_between ####
+#### length\_between
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
     {first_name: {length_between: [2, 10] }
 
-#### length\_equal ####
+#### length\_equal
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
     {first_name: {length_equal: 7}
 
-#### like ####
+#### like
 Error code: 'WRONG\_FORMAT'
 
 Example:
@@ -279,67 +321,67 @@ Example:
 
 Only 'i' flag is currently required by specification.
 
-**Be aware** that regular expressions can be language dependent. Try to use most common syntax.
+**Be aware** that regular expressions can be language dependent. Try to use most common syntax. This rule is experimental as it requires more strict semantics.
 
-### Numeric Rules ###
-#### integer ####
+### Numeric Rules
+#### integer
 Error code: 'NOT\_INTEGER'
 
 Example:
 
     {age: 'integer'}
 
-#### positive\_integer ####
+#### positive\_integer
 Error code: 'NOT\_POSITIVE\_INTEGER'
 
 Example:
 
     {age: 'positive_integer'}
 
-#### decimal ####
+#### decimal
 Error code: 'NOT\_DECIMAL'
 
 Example:
 
     {price: 'decimal'}
 
-#### positive\_decimal ####
+#### positive\_decimal
 Error code: 'NOT\_POSITIVE_DECIMAL'
 
 Example:
 
     {price: 'positive_decimal'}
 
-#### max\_number ####
-Error code: 'TOO\_HIGH'
+#### max\_number
+Error code: 'TOO\_HIGH' or 'NOT\_NUMBER'
 
 Example:
 
     {age: { 'max_number': 95 } }
 
-#### min\_number ####
-Error code: 'TOO\_LOW'
+#### min\_number
+Error code: 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
     {age: { 'min_number': 18 } }
 
-#### number\_between ####
-Error code: 'TOO\_HIGH' or 'TOO\_LOW'
+#### number\_between
+Error code: 'TOO\_HIGH' or 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
     {age: { 'number_between': [18, 95] } }
 
-###  Special Rules ###
-#### email ####
+###  Special Rules
+#### email
 Error code: 'WRONG_EMAIL'
 
 Example:
 
     {login: 'email'}
 
-#### url ####
+#### url
 Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.
 
 Error code: 'WRONG_URL'
@@ -348,7 +390,7 @@ Example:
 
     {url: 'url'}
 
-#### iso\_date ####
+#### iso\_date
 
 Check whether a value is an ISO 8601 date (without time). Allowed date example - "2014-08-14"
 
@@ -359,16 +401,16 @@ Example:
     {date: 'iso_date'}
 
 
-#### equal\_to\_field ####
+#### equal\_to\_field
 Error code: 'FIELDS\_NOT\_EQUAL'
 
 Example:
 
     {password2: {'equal_to_field': 'password' }}
 
-###  Helper Rules ###
+###  Helper Rules
 
-#### nested_object ####
+#### nested_object
 Allows you to describe validation rules for a nested object.
 
 Error code: depends on nested validators. If nested object is not a hash should return "FORMAT_ERROR"
@@ -380,7 +422,7 @@ Example:
         zip: ['required', 'positive_integer']
     } }
 
-#### list_of ####
+#### list_of
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
 
 Error code: depends on nested validators
@@ -395,7 +437,7 @@ Example:
     { product_ids: { 'list_of': [[ 'positive_integer' ]] }}
     { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
 
-#### list_of_objects ####
+#### list_of_objects
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
 
 Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.
@@ -408,7 +450,7 @@ Example:
     }]}]
 
 
-#### list_of_different_objects ####
+#### list_of_different_objects
 Allows you to describe validation rules for list of different objects. Validation rules will be applied for each array element.
 
 Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.
@@ -433,44 +475,51 @@ Example:
 
 In this example validator will look on "product\_type" in each object and depending on it will use corresponding set of rules
 
-###  Filter Rules ###
+###  Filter Rules
 
 Additional rules for data modification. They do not return errors just skips values that are not appropriate.
 
-#### trim ####
+#### trim
 Removes leading and trailing spaces. Skips object references.
 
 Example:
 
     {email: 'trim'}
 
-#### to\_lc ####
+#### to\_lc
 Converts string to lower case. Skips object references.
 
 Example:
 
     {email: 'to_lc'}
 
-#### to\_uc ####
+#### to\_uc
 Converts string to upper case. Skips object references.
 
 Example:
 
     {currency_code: 'to_uc'}
 
-#### remove ####
+#### remove
 Removes characters from string
 
 Example:
 
     { text: { remove: '0123456789' } }  // Remove all numbers from text
 
-#### leave\_only ####
+#### leave\_only
 Removes characters from string
 
 Example:
 
     { text: { leave_only: '0123456789' } }  // Leaves only numbers in text
+
+#### default
+Set value if is not present.
+
+Example:
+
+    { age: { default: 18 } }  // Sets age to 18 if not passed
 
 ## Rules aliasing
 
@@ -580,6 +629,7 @@ and if validation of address fails you will have the next error
         address: 'WRONG_ADDRESS'
     }
 
+
 ## Developers Guide
 
 Requirements to implementation
@@ -598,7 +648,9 @@ Requirements to implementation
 
 ### v0.3
 
- * Added filter rules (trim, to\_lc, to\_uc)
+ * Added filter rule "trim"
+ * Added filter rule "to\_lc"
+ * Added filter rule "to\_uc"
 
 ### v0.4
 
@@ -608,8 +660,19 @@ Requirements to implementation
  * Introduces new syntax for "one_of" and "list_of" rules. (See "Syntax changes for 'one_of' and 'list_of' rules")
  * Rules aliasing (with custom errors)
 
-### v0.5 (proposal)
- * Added base rule "any".
+### v2.0
+ + Switched to semver. New release version is 2.0
+ + Unified approach to types handling
+ * "Filter rules" renamed to "Modifiers". They do not validate anything, just modify data.
+ * "Helper rules" renamed to "Metarules" as this rules are for describing other rules
+ * Added base rule "any_object"
+ + Added string rule "string"
+ + Added string rule "eq"
+ * Added metarule "variable_object"
+ * Added metarule "or"
+ + Added modifier "default"
+ + Add more edge cases to test suite
+ + Add experimental status to the "like" rule
 
 
 ## Syntax changes for 'one_of' and 'list_of' rules
@@ -617,6 +680,7 @@ Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. Th
 
 ## TODO
 
+* Add JSON Schema comparison
 * Describe internals with detailed step-by-step example
 * Write developers guide
 
