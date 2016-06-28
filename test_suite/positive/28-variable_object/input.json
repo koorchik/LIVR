@@ -1,0 +1,19 @@
+{
+    "order_id": "10",
+    "product1": {
+        "product_type": "material",
+        "material_id": 12,
+        "quantity": "11"
+    },
+    "product2": {
+        "product_type": "material",
+        "material_id": 100,
+        "quantity": 10,
+        "warehouse_id": 100
+    },
+    "product3": {
+        "product_type": "service",
+        "name": "service1",
+        "extra_field": "will be removed"
+    }
+}

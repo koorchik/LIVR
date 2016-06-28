@@ -6,7 +6,7 @@
     },
     "address_custom_error": {
         "street": "My street",
-        "zip": "12312",
+        "zip": 12312,
         "city": "Kharkiv"
     }
 }

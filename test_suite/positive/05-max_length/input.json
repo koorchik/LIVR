@@ -2,6 +2,7 @@
     "first_name": "Васек",
     "last_name": "Pupkin",
     "middle_name": "Some name",
+    "number1": 1111,
     "empty_name": "",
     "extra_name": "extra_name"
 }

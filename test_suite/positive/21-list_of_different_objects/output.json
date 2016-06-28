@@ -1,10 +1,10 @@
 {
-    "order_id": "10",
+    "order_id": 10,
     "products": [
         {
             "product_type": "material",
             "material_id": 12,
-            "quantity": "11"
+            "quantity": 11
         },
         {
             "product_type": "material",

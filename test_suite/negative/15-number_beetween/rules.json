@@ -3,6 +3,7 @@
     "number2": [ { "number_between": [10,20] } ],
     "empty_field": { "number_between": [10,20] },
 
+    "value_is_string":      { "number_between": [10,20] },
     "value_is_hash":        { "number_between": [10,20] },
     "value_is_empty_hash":  { "number_between": [10,20] },
     "value_is_array":       { "number_between": [10,20] },

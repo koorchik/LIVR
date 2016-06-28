@@ -1,0 +1,7 @@
+{
+    "object1": "any_object",
+    "object2": [{ "any_object": [] }],
+    "object3": "any_object",
+    "empty_field": "any_object",
+    "missed_field": "any_object"
+}

@@ -1,0 +1,11 @@
+{
+    "empty_value1": {"default": [10]},
+    "empty_value2": {"default": [[]]},
+    "empty_value3": [{"default": {}}],
+    "zero_value": {"default": 10},
+    "missed_value": {"default": "15"},
+
+    "string_value": {"default": 10},
+    "object": {"default": 10},
+    "list_of_string_values": {"default": 10}
+}

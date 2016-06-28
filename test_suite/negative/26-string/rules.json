@@ -1,0 +1,6 @@
+{
+    "value_is_hash":        "string",
+    "value_is_empty_hash":  "string",
+    "value_is_array":       "string",
+    "value_is_empty_array": "string"
+}

@@ -1,5 +1,5 @@
-Language Independent Validation Rules
-=====================================
+Language Independent Validation Rules (v2.0)
+============================================
 
 Validator meets the following requirements:
 
@@ -106,7 +106,7 @@ Validator meets the following requirements:
 * "trim" removes leading and trailing spaces. (skips empty values and object references)
 * "to\_lc" transforms string to lower case. (skips empty values and object references)
 
-You can create pipeline with any filters you like.
+You can create pipeline with any modifiers you like.
 
 ### How it works
 You should define a structure:
@@ -185,7 +185,7 @@ output will be:
 
 Standard rules that should be supported by every implementation:
 
- * Base Rules
+ * Common Rules
     * required
     * not\_empty
     * not\_empty\_list
@@ -212,12 +212,13 @@ Standard rules that should be supported by every implementation:
     * url
     * iso\_date
     * equal\_to\_field
- * Helper Rules
+ * Metarules
     * nested\_object
     * list\_of
     * list\_of\_objects
     * list\_of\_different\_objects
- * Filter rules
+    * or
+ * Modifiers (previously - "Filter rules")
     * trim
     * to\_lc
     * to\_uc
@@ -225,7 +226,7 @@ Standard rules that should be supported by every implementation:
     * leave\_only
     * default
 
-### Base Rules
+### Common Rules
 #### required
 Error code: 'REQUIRED'
 
@@ -243,11 +244,20 @@ Example:
 #### not\_empty\_list
 Checks that list contains at least one element
 
-Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'WRONG\_FORMAT'
+Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). If the value is present but it is not a list the error code will be 'FORMAT\_ERROR'
 
 Example:
 
     {products_ids: 'not_empty_list'}
+
+#### any\_object
+Checks that the value is an plain object
+
+Error code: 'FORMAT\_ERROR' if the value is not a plain object.
+
+Example:
+
+    {address: 'any_object'}
 
 
 ### String Rules
@@ -408,7 +418,9 @@ Example:
 
     {password2: {'equal_to_field': 'password' }}
 
-###  Helper Rules
+###  Metarules
+
+Metarules are rules for describing more complex rules.
 
 #### nested_object
 Allows you to describe validation rules for a nested object.
@@ -421,6 +433,32 @@ Example:
         city: 'required',
         zip: ['required', 'positive_integer']
     } }
+
+
+#### variable_object
+Allows you to describe validation rules for field that can conatain different objects.
+
+Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving data not suitable for validation.
+
+Example:
+
+    product: ['required', { 'variable_object': [
+        product_type, {
+            material: {
+                product_type: 'required',
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', {'min_number': 1} ],
+                warehouse_id: 'positive_integer'
+            },
+            service: {
+                product_type: 'required',
+                name: ['required', {'max_length': 10} ]
+            }
+        }
+    ]}]
+
+
+In this example validator will look on "product\_type" and depending on it will use corresponding set of rules
 
 #### list_of
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
@@ -475,7 +513,79 @@ Example:
 
 In this example validator will look on "product\_type" in each object and depending on it will use corresponding set of rules
 
-###  Filter Rules
+#### or (experimental)
+
+The rule takes sets of other rules and applies them one after another until successful validation.
+
+This rule simplifies alias creation. See "Aliases" section. It is a good idea to define custom error for your alias.
+
+Errors: As we pass several sets of rules it is unclear what should validator return in case of several errors. Currenly we return the last error (this bahavior can change in future, this rule is experimental).
+
+Examples:
+
+"id" should be email or positive_integer:
+
+    {
+        id: { or: ['email', 'positive_integer' ] }
+    }
+
+
+Combining with other rules:
+
+    {
+        id: [{ or: ['email', 'positive_integer' ] }, 'to_lc']
+    }
+
+
+Set of rules in "or":
+
+    {
+        id: { or: [['email', 'to_lc'], 'positive_integer' ] }
+    }
+
+
+Emulate list_of_different_objects:
+
+    {
+        products: {list_of: { or: [
+            {nested_object: {
+                product_type: ['required', {eq: 'material'}],
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', {'min_number': 1} ],
+                warehouse_id: 'positive_integer'
+            }},
+
+            {nested_object: {
+                product_type: ['required', {eq: 'service'}],
+                name: ['required', {'max_length': 20} ]
+            }}
+        ]}}
+    }
+
+
+is the same as
+
+    {
+        order_id: ['required', 'positive_integer'],
+        products: ['required', { 'list_of_different_objects': [
+            product_type, {
+                material: {
+                    product_type: 'required',
+                    material_id: ['required', 'positive_integer'],
+                    quantity: ['required', {'min_number': 1} ],
+                    warehouse_id: 'positive_integer'
+                },
+                service: {
+                    product_type: 'required',
+                    name: ['required', {'max_length': 20} ]
+                }
+            }
+        ]}]
+    }
+
+*Internally there is a difference. "or" will try apply one rule after another, but "list_of_different_objects" will select only one set of rules.*
+
+###  Modifiers
 
 Additional rules for data modification. They do not return errors just skips values that are not appropriate.
 
@@ -661,19 +771,19 @@ Requirements to implementation
  * Rules aliasing (with custom errors)
 
 ### v2.0
- + Switched to semver. New release version is 2.0
- + Unified approach to types handling
+ * Switched to semver. New release version is 2.0
+ * Unified approach to types handling
+ * "Base rules" renamed to "Common rules".
  * "Filter rules" renamed to "Modifiers". They do not validate anything, just modify data.
  * "Helper rules" renamed to "Metarules" as this rules are for describing other rules
- * Added base rule "any_object"
- + Added string rule "string"
- + Added string rule "eq"
+ * Added common rule "any_object"
+ * Added string rule "string"
+ * Added string rule "eq"
  * Added metarule "variable_object"
  * Added metarule "or"
- + Added modifier "default"
- + Add more edge cases to test suite
- + Add experimental status to the "like" rule
-
+ * Added modifier "default"
+ * Add more edge cases to test suite
+ * Add experimental status to the "like" rule
 
 ## Syntax changes for 'one_of' and 'list_of' rules
 Old syntax {one_of: [['val1', 'val2']]} was hard to remember for many people. The idea was that list of allowed values should be passed as array reference. So, {one_of: [['val1', 'val2']]} becomes one_of(['val1', 'val2']) but it is not always clear for users. Therefore, it was decided to introduce a new syntax. Now you can write {one_of: ['val1', 'val2']} that becomes one_of('val1', 'val2'). The main problem with it that you do not know how many arguments will be passed to 'one_of'. Moreover, you should support both syntaxes for backward compatibility (test suite contains tests for both cases). But it was decided that "one_of" and "list_of" rules can handle both syntaxes by themselves.

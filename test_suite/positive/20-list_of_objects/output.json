@@ -2,7 +2,7 @@
     "products": [
         {
             "product_id": 10,
-            "quantity": "10"
+            "quantity": 10
         },
         {
             "product_id": 20,

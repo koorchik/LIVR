@@ -2,5 +2,8 @@
     "city1": { "one_of": [["Moscow", "Kiev" ]] },
     "city2": [{ "one_of": [["Moscow", "Kiev" ]] }],
     "city3": { "one_of": ["Moscow", "Kiev"] },
+    "number1": { "one_of": [1, 2] },
+    "number2": { "one_of": ["1", "2"] },
+    "boolean": { "one_of": [true, false] },
     "empty_city": { "one_of": [["Moscow", "Kiev" ]] }
 }

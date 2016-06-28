@@ -1,5 +1,5 @@
 {
-    "number1": "10.12",
+    "number1": 10.12,
     "number2": 0.55,
     "number3": -1.10,
     "empty_field": ""

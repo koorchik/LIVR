@@ -4,6 +4,7 @@
     "number3": [ { "integer": [] } ],
     "empty_field": "integer",
 
+    "value_is_string":      "integer",
     "value_is_hash":        "integer",
     "value_is_empty_hash":  "integer",
     "value_is_array":       "integer",

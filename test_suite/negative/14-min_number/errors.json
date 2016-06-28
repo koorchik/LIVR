@@ -2,6 +2,7 @@
     "number1": "TOO_LOW",
     "number2": "TOO_LOW",
 
+    "value_is_string":      "NOT_NUMBER",
     "value_is_hash":        "FORMAT_ERROR",
     "value_is_empty_hash":  "FORMAT_ERROR",
     "value_is_array":       "FORMAT_ERROR",

@@ -1,0 +1,11 @@
+{
+    "city1": { "eq": "Moscow" },
+    "city2": [{ "eq": "Moscow" }],
+    "city3": { "eq": "Kiev" },
+    "number1": { "eq": 1 },
+
+    "value_is_hash":        { "eq": "Moscow" },
+    "value_is_empty_hash":  { "eq": "Moscow" },
+    "value_is_array":       { "eq": "Moscow" },
+    "value_is_empty_array": { "eq": "Moscow" }
+}

@@ -2,5 +2,7 @@
     "first_name":   { "max_length": 5 },
     "last_name":    { "max_length": [10] },
     "middle_name": [{ "max_length": [10] }],
-    "empty_name":   { "max_length": 3 }
+    "number1":      { "max_length": 5 },
+    "empty_name":   { "max_length": 3 },
+    "missed_name":  { "max_length": 3 }
 }
