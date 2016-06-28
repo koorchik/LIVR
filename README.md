@@ -17,12 +17,15 @@ Validator meets the following requirements:
 
 ## Existing implemenations
 
-* JavaScript - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
-* Perl - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
-* PHP - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
-* Python - https://github.com/asholok/python-validator-livr (https://pypi.python.org/pypi/LIVR)
-* Erlang - https://github.com/Prots/olifer
-* Ruby - https://github.com/maktwin/ruby-validator-livr (https://rubygems.org/gems/livr)
+* JavaScript (LIVR 2.0, latest version) - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
+* Perl (LIVR 0.4, previous version) - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
+* PHP (LIVR 0.4, previous version) - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
+* Python (LIVR 0.4, previous version) - https://github.com/asholok/python-validator-livr (https://pypi.python.org/pypi/LIVR)
+* Erlang (LIVR 0.4, previous version) - https://github.com/Prots/olifer
+* Ruby (LIVR 0.4, previous version) - https://github.com/maktwin/ruby-validator-livr (https://rubygems.org/gems/livr)
+
+*Latest LIVR version is 2.0*
+*Previous LIVR version is 0.4*
 
 ## Additional Tools
 
