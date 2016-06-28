@@ -17,5 +17,6 @@
             "name": "service1",
             "extra_field": "will be removed"
         }
-    ]
+    ],
+    "empty_list": []
 }

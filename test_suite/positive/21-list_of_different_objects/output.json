@@ -16,5 +16,6 @@
             "product_type": "service",
             "name": "service1"
         }
-    ]
+    ],
+    "empty_list": []
 }

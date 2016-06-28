@@ -10,6 +10,6 @@
         { "max_number": 100 }
     ] }],
     "product_ids3": ["required", { "list_of": "positive_integer" } ],
-    "user_ids": { "list_of": [[ "required" ]] }
-
+    "user_ids": { "list_of": [[ "required" ]] },
+    "empty_list": { "list_of": ["required"] }
 }
