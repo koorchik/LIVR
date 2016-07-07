@@ -6,5 +6,10 @@
         "building": "10",
         "extra_field": "will be removed"
     },
+
+    "should_be_empty": {
+        "extra_field": "will be removed"
+    },
+
     "extra_field": "will be removed"
 }
