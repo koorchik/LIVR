@@ -35,14 +35,16 @@ Validator meets the following requirements:
 ## Rules Examples
 **Simple registration data** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20email%3A%20%5B'required'%2C%20'email'%5D%2C%5Cn%20%20%20%20gender%3A%20%7B%20one_of%3A%20%5B%5B'male'%2C%20'female'%5D%5D%20%7D%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20password%3A%20%5B'required'%2C%20%7Bmin_length%3A%2010%7D%20%5D%2C%5Cn%20%20%20%20password2%3A%20%7B%20equal_to_field%3A%20'password'%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'John'%2C%5Cn%20%20%20%20email%3A%20'john%40mail.com'%2C%5Cn%20%20%20%20gender%3A%20'male'%2C%5Cn%20%20%20%20phone%3A%20'%2B22221212'%2C%5Cn%20%20%20%20password%3A%20'mypassword1'%2C%5Cn%20%20%20%20password2%3A%20'mypassword1'%5Cn%7D%22%7D)
 
-    {
-        name: 'required',
-        email: ['required', 'email'],
-        gender: { one_of: ['male', 'female'] },
-        phone: {max_length: 10},
-        password: ['required', {min_length: 10} ]
-        password2: { equal_to_field: 'password' }
-    }
+```javascript
+{
+    name: 'required',
+    email: ['required', 'email'],
+    gender: { one_of: ['male', 'female'] },
+    phone: {max_length: 10},
+    password: ['required', {min_length: 10} ]
+    password2: { equal_to_field: 'password' }
+}
+```
 
 
 * 'required' is a shorter form of { 'required': [] }
@@ -110,42 +112,6 @@ Validator meets the following requirements:
 * "to\_lc" transforms string to lower case. (skips empty values and object references)
 
 You can create pipeline with any modifiers you like.
-
-### How it works
-You should define a structure:
-    FIELD\_NAME: VALIDATION\_RULE
-* FIELD\_NAME is a name of field to validate
-* VALIDATION\_RULE is a name of function to be called. It can be function that builds validator or maybe just a validation function itself. Some arguments cab be passed to the function - "{ VALIDATION\_RULE: ARGUMENTS }". You may pass an array of validation rules. If you want to pass several arguments you should use array.
-
-Examples:
-
-'required' or {'required': [] } becomes:
-
-    required();
-
-{ 'max\_length': 5 } or { 'max\_length': [5] } becomes:
-
-    max_length(5);
-
-{'length\_between': [1,10] } becomes:
-
-    length_between(1,10);
-
-{'one\_of': [['Kiev','Moscow']] } (this is old syntax) becomes:
-
-    one_of(['Kiev', 'Moscow']);
-
-{'one\_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:
-
-    one_of('Kiev', 'Moscow');
-
-{'my\_own\_rule': [1, [2, 3], 'bla'] } becomes:
-
-    my_own_rule(1, [2, 3], 'bla');
-
-Validator receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
-
-So, the idea is that there is a tiny core which can be easly extended with new rules.
 
 ## Validation Rules
 Be aware that all standard rules just skip checking empty values.
