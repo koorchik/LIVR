@@ -19,8 +19,8 @@ Validator meets the following requirements:
 
 * JavaScript (LIVR 2.0) - https://github.com/koorchik/js-validator-livr (Available for node.js(npm) and browsers)
 * Perl (LIVR 2.0) - https://github.com/koorchik/Validator-LIVR (Available on CPAN)
-* PHP (LIVR 0.4, previous version) - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
-* Python (LIVR 0.4, previous version) - https://github.com/asholok/python-validator-livr (https://pypi.python.org/pypi/LIVR)
+* PHP (LIVR 2.0) - https://github.com/WebbyLab/php-validator-livr (https://packagist.org/packages/validator/livr)
+* Python (LIVR 2.0) - https://github.com/asholok/python-validator-livr (https://pypi.python.org/pypi/LIVR)
 * Erlang (LIVR 2.0) - https://github.com/Prots/olifer
 * Ruby (LIVR 0.4, previous version) - https://github.com/maktwin/ruby-validator-livr (https://rubygems.org/gems/livr)
 
