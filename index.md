@@ -52,60 +52,70 @@ Validator meets the following requirements:
 
 **Simple validation of nested object** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20name%3A%20'required'%2C%5Cn%20%20%20%20phone%3A%20%7Bmax_length%3A%2010%7D%2C%5Cn%20%20%20%20address%3A%20%7B%20'nested_object'%3A%20%7B%5Cn%20%20%20%20%20%20%20%20city%3A%20'required'%2C%20%5Cn%20%20%20%20%20%20%20%20zip%3A%20%5B'required'%2C%20'positive_integer'%5D%5Cn%20%20%20%20%7D%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20name%3A%20%5C%22Michael%5C%22%2C%5Cn%20%20%20%20phone%3A%20%5C%220441234567%5C%22%2C%5Cn%20%20%20%20address%3A%20%7B%5Cn%20%20%20%20%20%20%20%20city%3A%20%5C%22Kiev%5C%22%2C%20%5Cn%20%20%20%20%20%20%20%20zip%3A%20%5C%2230552%5C%22%5Cn%20%20%20%20%7D%5Cn%7D%22%7D)
 
-    {
-        name: 'required',
-        phone: {max_length: 10},
-        address: { 'nested_object': {
-            city: 'required',
-            zip: ['required', 'positive_integer']
-        }}
-    }
+```text
+{
+    name: 'required',
+    phone: {max_length: 10},
+    address: { 'nested_object': {
+        city: 'required',
+        zip: ['required', 'positive_integer']
+    }}
+}
+```
+    
 * {nested\_object: {}} is a shorter form of {nested\_object: [{}]}
 *See "How it works" section*
 
 **Simple list validation** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20product_ids%3A%20%7B%20%5Cn%20%20%20%20%20%20%20'list_of'%3A%20%5B%20'required'%2C%20%20'positive_integer'%20%5D%5Cn%20%20%20%20%7D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010455%2C%5Cn%20%20%20%20product_ids%3A%20%5B3455%2C3456%2C3566%5D%5Cn%7D%22%7D)
 
-    {
-        order_id: ['required', 'positive_integer'],
-        product_ids: { 'list_of': [ 'required',  'positive_integer' ] }
-    }
-
+```text
+{
+    order_id: ['required', 'positive_integer'],
+    product_ids: { 'list_of': [ 'required',  'positive_integer' ] }
+}
+```
 
 **Validating list of objects** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20products%3A%20%5B%20'not_empty_list'%2C%20%7B%20'list_of_objects'%3A%20%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%20%5B'required'%2C'positive_integer'%5D%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A%20%5B'required'%2C%20'positive_integer'%5D%5Cn%20%20%20%20%7D%7D%5D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010345%2C%5Cn%20%20%20%20products%3A%20%5B%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%203455%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A2%5Cn%20%20%20%20%7D%2C%7B%5Cn%20%20%20%20%20%20%20%20product_id%3A%203456%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A3%5Cn%20%20%20%20%7D%5D%5Cn%7D%22%7D)
 
-    {
-        order_id: ['required', 'positive_integer'],
-        products: [ 'not_empty_list', { 'list_of_objects': {
-            product_id: ['required','positive_integer'],
-            quantity: ['required', 'positive_integer']
-        }}]
-    }
+```text
+{
+    order_id: ['required', 'positive_integer'],
+    products: [ 'not_empty_list', { 'list_of_objects': {
+        product_id: ['required','positive_integer'],
+        quantity: ['required', 'positive_integer']
+    }}]
+}
+```
 
 **Validating list of different objects** [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20products%3A%20%5B'required'%2C%20%7B%20'list_of_different_objects'%3A%20%5B%5Cn%20%20%20%20%20%20%20%20product_type%2C%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20material%3A%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20product_type%3A%20'required'%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20material_id%3A%20%5B'required'%2C%20'positive_integer'%5D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20quantity%3A%20%5B'required'%2C%20%7B'min_number'%3A%201%7D%20%5D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20warehouse_id%3A%20'positive_integer'%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20service%3A%20%7B%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20product_type%3A%20'required'%2C%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20name%3A%20%5B'required'%2C%20%7B'max_length'%3A%2020%7D%20%5D%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%20%20%20%20%7D%5Cn%20%20%20%20%5D%7D%5D%5Cn%7D%22%2C%22data%22%3A%22%7B%5Cn%20%20%20%20order_id%3A%2010455%2C%5Cn%20%20%20%20products%3A%20%5B%7B%20%5Cn%20%20%20%20%20%20%20%20product_type%3A%20'material'%2C%5Cn%20%20%20%20%20%20%20%20material_id%3A%20345%2C%5Cn%20%20%20%20%20%20%20%20quantity%3A%20%205%2C%5Cn%20%20%20%20%20%20%20%20warehouse_id%3A%2024%5Cn%20%20%20%20%7D%2C%7B%5Cn%20%20%20%20%20%20%20%20product_type%3A%20'service'%2C%5Cn%20%20%20%20%20%20%20%20name%3A%20'Clean%20filter'%5Cn%20%20%20%20%7D%5D%5Cn%7D%22%7D)
 
-    {
-        order_id: ['required', 'positive_integer'],
-        products: ['required', { 'list_of_different_objects': [
-            'product_type', {
-                material: {
-                    product_type: 'required',
-                    material_id: ['required', 'positive_integer'],
-                    quantity: ['required', {'min_number': 1} ],
-                    warehouse_id: 'positive_integer'
-                },
-                service: {
-                    product_type: 'required',
-                    name: ['required', {'max_length': 10} ]
-                }
+```text
+{
+    order_id: ['required', 'positive_integer'],
+    products: ['required', { 'list_of_different_objects': [
+        'product_type', {
+            material: {
+                product_type: 'required',
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', {'min_number': 1} ],
+                warehouse_id: 'positive_integer'
+            },
+            service: {
+                product_type: 'required',
+                name: ['required', {'max_length': 10} ]
             }
-        ]}]
-    }
+        }
+    ]}]
+}
+```
 
 **Output modification**
 
-    {
-        email: ['trim', 'required', 'email', 'to_lc']
-    }
+```text
+{
+    email: ['trim', 'required', 'email', 'to_lc']
+}
+```
 
 * "trim" removes leading and trailing spaces. (skips empty values and object references)
 * "to\_lc" transforms string to lower case. (skips empty values and object references)
@@ -122,27 +132,39 @@ Examples:
 
 'required' or {'required': [] } becomes:
 
-    required();
+```text
+ required();
+```
 
 { 'max\_length': 5 } or { 'max\_length': [5] } becomes:
 
-    max_length(5);
+```text
+max_length(5);
+```
 
 {'length\_between': [1,10] } becomes:
 
-    length_between(1,10);
+```text
+length_between(1,10);
+```
 
 {'one\_of': [['Kiev','Moscow']] } (this is old syntax) becomes:
 
-    one_of(['Kiev', 'Moscow']);
+```text
+one_of(['Kiev', 'Moscow']);
+```
 
 {'one\_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:
 
-    one_of('Kiev', 'Moscow');
+```text
+one_of('Kiev', 'Moscow');
+```
 
 {'my\_own\_rule': [1, [2, 3], 'bla'] } becomes:
 
-    my_own_rule(1, [2, 3], 'bla');
+```text
+my_own_rule(1, [2, 3], 'bla');
+```
 
 Validator receives value to validate and returns an error message(in case of failed validation) or empty string(in case of success). Thats all.
 
@@ -153,9 +175,10 @@ Be aware that all standard rules just skip checking empty values.
 So, empty string will pass next validation - "first_name: { min_length: [10] }". We have special rules "required" and "not_empty" to check that value is present.
 This allows us to use the same rules for not required fields.
 
-    first_name: { min_length: [10] } # name is optional. We will check length only if "first_name" was passed
-    first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
-
+```text
+first_name: { min_length: [10] } # name is optional. We will check length only if "first_name" was passed
+first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
+```
 
 ### Types coercing
 
@@ -163,24 +186,30 @@ You should treat rules as expectations.  Therefore, all implementation make type
 
 We follow the same logic for string rules.  We compare values as string as rule are "string rules" but return what developer expects.  For example, if we use "eq" rule with input:
 
-    {
-        field1: 1,
-        field2: 1
-    }
+```text
+{
+    field1: 1,
+    field2: 1
+}
+```
 
 and rules:
 
-    {
-        field1: {eq: "1"},
-        field2: {eq: 1},
-    }
+```text
+{
+    field1: {eq: "1"},
+    field2: {eq: 1},
+}
+```
 
 output will be:
 
-    {
-        field1: "1",
-        field2: 1
-    }
+```text
+{
+    field1: "1",
+    field2: 1
+}
+```
 
 [(demo)](http://webbylab.github.io/livr-playground/#%7B%22rules%22%3A%22%7B%5Cn%20%20%20field1%3A%20%7Beq%3A%201%7D%2C%5Cn%20%20%20field2%3A%20%7Beq%3A%20%5C%221%5C%22%7D%2C%5Cn%7D%22%2C%22data%22%3A%22%7B%20%5Cn%20%20%20%20field1%3A%201%2C%20%5Cn%20%20%20%20field2%3A%201%5Cn%7D%22%7D)
 
@@ -236,14 +265,18 @@ Error code: 'REQUIRED'
 
 Example:
 
-    {first_name: 'required'}
+```text
+{first_name: 'required'}
+```
 
 #### not\_empty
 Error code: 'CANNOT_BE_EMPTY'
 
 Example:
 
-    {first_name: 'not_empty'}
+```text
+{first_name: 'not_empty'}
+```
 
 #### not\_empty\_list
 Checks that list contains at least one element
@@ -252,7 +285,9 @@ Error code: 'CANNOT\_BE\_EMPTY' (If the value is not present or list is empty). 
 
 Example:
 
-    {products_ids: 'not_empty_list'}
+```text
+{products_ids: 'not_empty_list'}
+```
 
 #### any\_object
 Checks that the value is an plain object
@@ -261,7 +296,9 @@ Error code: 'FORMAT\_ERROR' if the value is not a plain object.
 
 Example:
 
-    {address: 'any_object'}
+```text
+{address: 'any_object'}
+```
 
 
 ### String Rules
@@ -272,10 +309,12 @@ Checks that value is primitive type and coerces it to the string. Better use mor
 
 Example:
 
-    {
-        data: 'any' // validator will pass "data" field
-        payload: ['required', 'string'] //
-    }
+```text
+{
+    data: 'any' // validator will pass "data" field
+    payload: ['required', 'string'] //
+}
+```
 
 You can treat this rule as modifier.
 
@@ -283,7 +322,10 @@ You can treat this rule as modifier.
 Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
-    { first_name: {'eq': 'Anton'} }
+
+```text
+{ first_name: {'eq': 'Anton'} }
+```
 
 
 #### one\_of
@@ -291,47 +333,59 @@ Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
 
-    // new syntax (introduced in v0.4)
-    { first_name: {'one_of': ['Anton', 'Igor']} }
+```text
+// new syntax (introduced in v0.4)
+{ first_name: {'one_of': ['Anton', 'Igor']} }
 
-    // old syntax
-    { first_name: {'one_of': [['Anton', 'Igor']]} }
+// old syntax
+{ first_name: {'one_of': [['Anton', 'Igor']]} }
+```
 
 #### max\_length
 Error code: 'TOO\_LONG'
 
 Example:
 
-    {first_name: {max_length: 10}
+```text
+{first_name: {max_length: 10}
+```
 
 #### min\_length
 Error code: 'TOO\_SHORT'
 
 Example:
 
-    {first_name: {min_length: 2}
+```text
+{first_name: {min_length: 2}
+```
 
 #### length\_between
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
-    {first_name: {length_between: [2, 10] }
+```text
+{first_name: {length_between: [2, 10] }
+```
 
 #### length\_equal
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
-    {first_name: {length_equal: 7}
+```text
+{first_name: {length_equal: 7}
+```
 
 #### like
 Error code: 'WRONG\_FORMAT'
 
 Example:
 
-    {first_name: {like: '^\w+?$'}
-    {first_name: {like: ['^\w+?$', 'i']} // with flags
+```text
+{first_name: {like: '^\w+?$'}
+{first_name: {like: ['^\w+?$', 'i']} // with flags
+```
 
 Only 'i' flag is currently required by specification.
 
@@ -343,49 +397,63 @@ Error code: 'NOT\_INTEGER'
 
 Example:
 
-    {age: 'integer'}
+```text
+{age: 'integer'}
+```
 
 #### positive\_integer
 Error code: 'NOT\_POSITIVE\_INTEGER'
 
 Example:
 
-    {age: 'positive_integer'}
+```text
+{age: 'positive_integer'}
+```
 
 #### decimal
 Error code: 'NOT\_DECIMAL'
 
 Example:
 
-    {price: 'decimal'}
+```text
+{price: 'decimal'}
+```
 
 #### positive\_decimal
 Error code: 'NOT\_POSITIVE_DECIMAL'
 
 Example:
 
-    {price: 'positive_decimal'}
+```text
+{price: 'positive_decimal'}
+```
 
 #### max\_number
 Error code: 'TOO\_HIGH' or 'NOT\_NUMBER'
 
 Example:
 
-    {age: { 'max_number': 95 } }
+```text
+{age: { 'max_number': 95 } }
+```
 
 #### min\_number
 Error code: 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
-    {age: { 'min_number': 18 } }
+```
+{age: { 'min_number': 18 } }
+```
 
 #### number\_between
 Error code: 'TOO\_HIGH' or 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
-    {age: { 'number_between': [18, 95] } }
+```text
+{age: { 'number_between': [18, 95] } }
+```
 
 ###  Special Rules
 #### email
@@ -393,7 +461,9 @@ Error code: 'WRONG_EMAIL'
 
 Example:
 
-    {login: 'email'}
+```text
+{login: 'email'}
+```
 
 #### url
 Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.
@@ -402,7 +472,9 @@ Error code: 'WRONG_URL'
 
 Example:
 
-    {url: 'url'}
+```text
+{url: 'url'}
+```
 
 #### iso\_date
 
@@ -412,7 +484,9 @@ Error code: 'WRONG_DATE'
 
 Example:
 
-    {date: 'iso_date'}
+```text
+{date: 'iso_date'}
+```
 
 
 #### equal\_to\_field
@@ -420,7 +494,9 @@ Error code: 'FIELDS\_NOT\_EQUAL'
 
 Example:
 
-    {password2: {'equal_to_field': 'password' }}
+```text
+{password2: {'equal_to_field': 'password' }}
+```
 
 ###  Metarules
 
@@ -433,10 +509,12 @@ Error code: depends on nested validators. If nested object is not a hash should 
 
 Example:
 
-    address: { 'nested_object': {
-        city: 'required',
-        zip: ['required', 'positive_integer']
-    } }
+```text
+address: { 'nested_object': {
+    city: 'required',
+    zip: ['required', 'positive_integer']
+} }
+```
 
 
 #### variable_object
@@ -446,20 +524,22 @@ Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving
 
 Example:
 
-    product: ['required', { 'variable_object': [
-        product_type, {
-            material: {
-                product_type: 'required',
-                material_id: ['required', 'positive_integer'],
-                quantity: ['required', {'min_number': 1} ],
-                warehouse_id: 'positive_integer'
-            },
-            service: {
-                product_type: 'required',
-                name: ['required', {'max_length': 10} ]
-            }
+```text
+product: ['required', { 'variable_object': [
+    product_type, {
+        material: {
+            product_type: 'required',
+            material_id: ['required', 'positive_integer'],
+            quantity: ['required', {'min_number': 1} ],
+            warehouse_id: 'positive_integer'
+        },
+        service: {
+            product_type: 'required',
+            name: ['required', {'max_length': 10} ]
         }
-    ]}]
+    }
+]}]
+```
 
 
 In this example validator will look on "product\_type" and depending on it will use corresponding set of rules
@@ -471,13 +551,15 @@ Error code: depends on nested validators
 
 Example:
 
-    // new syntax (introduced in v0.4)
-    { product_ids: { 'list_of': 'positive_integer' }}
-    { product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
+```text
+// new syntax (introduced in v0.4)
+{ product_ids: { 'list_of': 'positive_integer' }}
+{ product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
 
-    // old syntax
-    { product_ids: { 'list_of': [[ 'positive_integer' ]] }}
-    { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+// old syntax
+{ product_ids: { 'list_of': [[ 'positive_integer' ]] }}
+{ product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
+```
 
 #### list_of_objects
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
@@ -486,11 +568,12 @@ Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving
 
 Example:
 
-    products: ['required', { 'list_of_objects': [{
-        product_id: ['required','positive_integer'],
-        quantity: ['required', 'positive_integer']
-    }]}]
-
+```text
+products: ['required', { 'list_of_objects': [{
+    product_id: ['required','positive_integer'],
+    quantity: ['required', 'positive_integer']
+}]}]
+```
 
 #### list_of_different_objects
 Allows you to describe validation rules for list of different objects. Validation rules will be applied for each array element.
@@ -499,20 +582,22 @@ Error code: depends on nested validators. Or "FORMAT_ERROR" in case of receiving
 
 Example:
 
-    products: ['required', { 'list_of_different_objects': [
-        product_type, {
-            material: {
-                product_type: 'required',
-                material_id: ['required', 'positive_integer'],
-                quantity: ['required', {'min_number': 1} ],
-                warehouse_id: 'positive_integer'
-            },
-            service: {
-                product_type: 'required',
-                name: ['required', {'max_length': 10} ]
-            }
+```text
+products: ['required', { 'list_of_different_objects': [
+    product_type, {
+        material: {
+            product_type: 'required',
+            material_id: ['required', 'positive_integer'],
+            quantity: ['required', {'min_number': 1} ],
+            warehouse_id: 'positive_integer'
+        },
+        service: {
+            product_type: 'required',
+            name: ['required', {'max_length': 10} ]
         }
-    ]}]
+    }
+]}]
+```
 
 
 In this example validator will look on "product\_type" in each object and depending on it will use corresponding set of rules
@@ -529,63 +614,72 @@ Examples:
 
 "id" should be email or positive_integer:
 
-    {
-        id: { or: ['email', 'positive_integer' ] }
-    }
-
+```text
+{
+    id: { or: ['email', 'positive_integer' ] }
+}
+```
 
 Combining with other rules:
 
-    {
-        id: [{ or: ['email', 'positive_integer' ] }, 'to_lc']
-    }
+```text
+{
+    id: [{ or: ['email', 'positive_integer' ] }, 'to_lc']
+}
+```
 
 
 Set of rules in "or":
 
-    {
-        id: { or: [['email', 'to_lc'], 'positive_integer' ] }
-    }
+```text
+{
+    id: { or: [['email', 'to_lc'], 'positive_integer' ] }
+}
+```
 
 
 Emulate list_of_different_objects:
 
-    {
-        products: {list_of: { or: [
-            {nested_object: {
-                product_type: ['required', {eq: 'material'}],
-                material_id: ['required', 'positive_integer'],
-                quantity: ['required', {'min_number': 1} ],
-                warehouse_id: 'positive_integer'
-            }},
+```text
+{
+    products: {list_of: { or: [
+        {nested_object: {
+            product_type: ['required', {eq: 'material'}],
+            material_id: ['required', 'positive_integer'],
+            quantity: ['required', {'min_number': 1} ],
+            warehouse_id: 'positive_integer'
+        }},
 
-            {nested_object: {
-                product_type: ['required', {eq: 'service'}],
-                name: ['required', {'max_length': 20} ]
-            }}
-        ]}}
-    }
+        {nested_object: {
+            product_type: ['required', {eq: 'service'}],
+            name: ['required', {'max_length': 20} ]
+        }}
+    ]}}
+}
+```
 
 
 is the same as
 
-    {
-        order_id: ['required', 'positive_integer'],
-        products: ['required', { 'list_of_different_objects': [
-            product_type, {
-                material: {
-                    product_type: 'required',
-                    material_id: ['required', 'positive_integer'],
-                    quantity: ['required', {'min_number': 1} ],
-                    warehouse_id: 'positive_integer'
-                },
-                service: {
-                    product_type: 'required',
-                    name: ['required', {'max_length': 20} ]
-                }
+```text
+{
+    order_id: ['required', 'positive_integer'],
+    products: ['required', { 'list_of_different_objects': [
+        product_type, {
+            material: {
+                product_type: 'required',
+                material_id: ['required', 'positive_integer'],
+                quantity: ['required', {'min_number': 1} ],
+                warehouse_id: 'positive_integer'
+            },
+            service: {
+                product_type: 'required',
+                name: ['required', {'max_length': 20} ]
             }
-        ]}]
-    }
+        }
+    ]}]
+}
+```
 
 *Internally there is a difference. "or" will try apply one rule after another, but "list_of_different_objects" will select only one set of rules.*
 
@@ -598,42 +692,54 @@ Removes leading and trailing spaces. Skips object references.
 
 Example:
 
-    {email: 'trim'}
+```text
+{email: 'trim'}
+```
 
 #### to\_lc
 Converts string to lower case. Skips object references.
 
 Example:
 
-    {email: 'to_lc'}
+```text
+{email: 'to_lc'}
+```
 
 #### to\_uc
 Converts string to upper case. Skips object references.
 
 Example:
 
-    {currency_code: 'to_uc'}
+```text
+{currency_code: 'to_uc'}
+```
 
 #### remove
 Removes characters from string
 
 Example:
 
-    { text: { remove: '0123456789' } }  // Remove all numbers from text
+```text
+{ text: { remove: '0123456789' } }  // Remove all numbers from text
+```
 
 #### leave\_only
 Removes characters from string
 
 Example:
 
-    { text: { leave_only: '0123456789' } }  // Leaves only numbers in text
+```text
+{ text: { leave_only: '0123456789' } }  // Leaves only numbers in text
+```
 
 #### default
 Set value if is not present.
 
 Example:
 
-    { age: { default: 18 } }  // Sets age to 18 if not passed
+```text
+{ age: { default: 18 } }  // Sets age to 18 if not passed
+```
 
 ## Rules aliasing
 
@@ -641,30 +747,34 @@ With rules aliasing you can create custom rules easely and assign own error code
 
 Alias struture:
 
-    {
-        name: ALIAS_NAME,
-        rules: ALIAS_RULES,
-        error: ERROR_CODE (optional)
-    }
+```text
+{
+    name: ALIAS_NAME,
+    rules: ALIAS_RULES,
+    error: ERROR_CODE (optional)
+}
+```
 
 If ERROR_CODE is empty than validator will return subrules errors.
 
 Example:
 
-    {
-        name: 'valid_address',
-        rules: { nested_object: {
-            country: 'required',
-            city: 'required',
-            zip: 'positive_integer'
-        }}
-    }
+```text
+{
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}
+}
 
-    {
-        name: 'adult_age'
-        rules: [ 'positive_integer', { min_number: 18 } ],
-        error: 'WRONG_AGE'
-    }
+{
+    name: 'adult_age'
+    rules: [ 'positive_integer', { min_number: 18 } ],
+    error: 'WRONG_AGE'
+}
+```
 
 Moreover, you can use aliased rules in aliased rules.
 
@@ -672,27 +782,31 @@ Moreover, you can use aliased rules in aliased rules.
 
 Let's assume that you have next data structure:
 
-    {
-        name: 'Viktor',
-        age: 30,
-        address: {
-            country: 'Ukraine',
-            city: 'Kiev',
-            zip: '11111'
-        }
+```text
+{
+    name: 'Viktor',
+    age: 30,
+    address: {
+        country: 'Ukraine',
+        city: 'Kiev',
+        zip: '11111'
     }
+}
+```
 
 And you have next validation rules for it:
 
-    {
-        name: 'required',
-        age: ['required', 'positive_integer', { min_number: 18 } ],
-        address: ['required', {nested_object: {
-            country: 'required',
-            city: 'required',
-            zip: 'positive_integer'
-        }}]
-    }
+```text
+{
+    name: 'required',
+    age: ['required', 'positive_integer', { min_number: 18 } ],
+    address: ['required', {nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}]
+}
+```
 
 You use 'address' in a lot of your objects (user address in user, office address in office object and others) and you want to reuse the same address rules in all places.  You have two ways: write custom rule 'valid_address' or assign rules to a variable and just reuse the variable. The first way requires much time and coding. Moreover, you cannot save new rule implementation is serialzed JSON file. The second way is much easier and you can store rule implemetation in JSON file but you cannot store user validation rules. Moreover, the second way does not allow you to redefine error code for address.
 
@@ -700,49 +814,54 @@ From v0.4 you have the third way - rule aliasing.
 
 You can register aliases for complex rules. The way how you register an alias depends on the implementation but the way how use and describe it is covered by the specification. This appoach allows you store aliases in serialized JSON files and then use them across different implementations.
 
-    // Aliasing pseudo code
-    validator.register_rule_alias({
-        name: 'valid_address',
-        rules: { nested_object: {
-            country: 'required',
-            city: 'required',
-            zip: 'positive_integer'
-        }}
-    });
+```text
+// Aliasing pseudo code
+validator.register_rule_alias({
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }}
+});
 
-    validator.register_rule_alias( {
-        name: 'adult_age',
-        rules: [ 'positive_integer', { min_number: 18 } ]
-    });
+validator.register_rule_alias( {
+    name: 'adult_age',
+    rules: [ 'positive_integer', { min_number: 18 } ]
+});
 
-    // Usage
-    {
-        name: 'required',
-        age: ['required', 'adult_age' ],
-        address: ['required', 'valid_address']
-    }
+// Usage
+{
+    name: 'required',
+    age: ['required', 'adult_age' ],
+    address: ['required', 'valid_address']
+}
+```
 
 Moreover, you can add own error codes for the rules
 
 For example
 
-    // Aliasing pseudo code
-    validator.register_rule_alias({
-        name: 'valid_address',
-        rules: { nested_object: {
-            country: 'required',
-            city: 'required',
-            zip: 'positive_integer'
-        }},
-        error: 'WRONG_ADDRESS'
-    });
+```text
+// Aliasing pseudo code
+validator.register_rule_alias({
+    name: 'valid_address',
+    rules: { nested_object: {
+        country: 'required',
+        city: 'required',
+        zip: 'positive_integer'
+    }},
+    error: 'WRONG_ADDRESS'
+});
+```
 
 and if validation of address fails you will have the next error
 
-    {
-        address: 'WRONG_ADDRESS'
-    }
-
+```text
+{
+    address: 'WRONG_ADDRESS'
+}
+```
 
 ## Developers Guide
 
