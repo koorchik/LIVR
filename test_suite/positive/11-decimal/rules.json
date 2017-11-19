@@ -2,5 +2,6 @@
     "number1": "decimal",
     "number2": ["decimal"],
     "number3": [ { "decimal": [] } ],
+    "number4": "decimal",    
     "empty_field": "decimal"
 }
