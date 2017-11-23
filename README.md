@@ -14,7 +14,7 @@ Validator meets the following requirements:
 10. Multipurpose \(user input validation, configs validation, contracts programming etc\)
 11. Unicode support
 
-## Additional Tools {#additional-tools}
+## Additional Tools
 
 * [Online JavaScript playground](http://webbylab.github.io/livr-playground/)
 * [Online multi-language playground](http://livr-multi-playground.webbylab.com/)

@@ -1,6 +1,6 @@
 ### Common Rules
 
-#### required
+#### required {#required}
 
 Error code: 'REQUIRED'
 
@@ -10,7 +10,7 @@ Example:
 { first_name: 'required' }
 ```
 
-#### not\_empty
+#### not\_empty {#not-empty}
 
 Error code: 'CANNOT\_BE\_EMPTY'
 
@@ -20,7 +20,7 @@ Example:
 { first_name: 'not_empty' }
 ```
 
-#### not\_empty\_list
+#### not\_empty\_list {#not-empty-list}
 
 Checks that list contains at least one element
 
@@ -32,7 +32,7 @@ Example:
 { products_ids: 'not_empty_list' }
 ```
 
-#### any\_object
+#### any\_object {#any-object}
 
 Checks that the value is an plain object
 

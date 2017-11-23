@@ -1,6 +1,6 @@
 ### String Rules
 
-#### string
+#### string {#string}
 
 Checks that value is primitive type and coerces it to the string. Better use more strict rules.
 
@@ -15,7 +15,7 @@ Example:
 
 You can treat this rule as modifier.
 
-#### eq
+#### eq {#eq}
 
 Error code: 'NOT\_ALLOWED\_VALUE'
 
@@ -25,7 +25,7 @@ Example:
 { first_name: {'eq': 'Anton'} }
 ```
 
-#### one\_of
+#### one\_of {#one-of}
 
 Error code: 'NOT\_ALLOWED\_VALUE'
 
@@ -39,7 +39,7 @@ Example:
 { first_name: {'one_of': [['Anton', 'Igor']]} }
 ```
 
-#### max\_length
+#### max\_length {#max-length}
 
 Error code: 'TOO\_LONG'
 
@@ -49,7 +49,7 @@ Example:
 { first_name: { max_length: 10 } }
 ```
 
-#### min\_length
+#### min\_length {#min-length}
 
 Error code: 'TOO\_SHORT'
 
@@ -59,7 +59,7 @@ Example:
 { first_name: { min_length: 2 } }
 ```
 
-#### length\_between
+#### length\_between {#length-between}
 
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
@@ -69,7 +69,7 @@ Example:
 { first_name: { length_between: [2, 10] }
 ```
 
-#### length\_equal
+#### length\_equal {#length-equal}
 
 Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
@@ -79,7 +79,7 @@ Example:
 { first_name: { length_equal: 7 }
 ```
 
-#### like
+#### like {#like}
 
 Error code: 'WRONG\_FORMAT'
 

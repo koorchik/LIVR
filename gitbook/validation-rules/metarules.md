@@ -2,7 +2,7 @@
 
 Metarules are rules for describing more complex rules.
 
-#### nested\_object
+#### nested\_object {#nested-object}
 
 Allows you to describe validation rules for a nested object.
 
@@ -17,7 +17,7 @@ address: { 'nested_object': {
 } }
 ```
 
-#### variable\_object
+#### variable\_object {#variable-object}
 
 Allows you to describe validation rules for field that can conatain different objects.
 
@@ -44,7 +44,7 @@ product: ['required', { 'variable_object': [
 
 In this example validator will look on "product\_type" and depending on it will use corresponding set of rules
 
-#### list\_of
+#### list\_of {#list-of}
 
 Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.
 
@@ -62,7 +62,7 @@ Example:
 { product_ids: { 'list_of': [[ 'required',  'positive_integer' ]] }}
 ```
 
-#### list\_of\_objects
+#### list\_of\_objects {#list-of-objects}
 
 Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.
 
@@ -77,7 +77,7 @@ products: ['required', { 'list_of_objects': [{
 }]}]
 ```
 
-#### list\_of\_different\_objects
+#### list\_of\_different\_objects {#list-of-different-objects}
 
 Allows you to describe validation rules for list of different objects. Validation rules will be applied for each array element.
 
@@ -104,7 +104,7 @@ products: ['required', { 'list_of_different_objects': [
 
 In this example validator will look on "product\_type" in each object and depending on it will use corresponding set of rules
 
-#### or \(experimental\)
+#### or \(experimental\) {#or}
 
 The rule takes sets of other rules and applies them one after another until successful validation.
 

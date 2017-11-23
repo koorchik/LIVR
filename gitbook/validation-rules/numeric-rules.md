@@ -1,6 +1,6 @@
 ### Numeric Rules
 
-#### integer
+#### integer {#integer}
 
 Error code: 'NOT\_INTEGER'
 
@@ -10,7 +10,7 @@ Example:
 { age: 'integer' }
 ```
 
-#### positive\_integer
+#### positive\_integer {#positive-integer}
 
 Error code: 'NOT\_POSITIVE\_INTEGER'
 
@@ -20,7 +20,7 @@ Example:
 { age: 'positive_integer' }
 ```
 
-#### decimal
+#### decimal {#decimal}
 
 Error code: 'NOT\_DECIMAL'
 
@@ -30,7 +30,7 @@ Example:
 { price: 'decimal' }
 ```
 
-#### positive\_decimal
+#### positive\_decimal {#positive-decimal}
 
 Error code: 'NOT\_POSITIVE\_DECIMAL'
 
@@ -40,7 +40,7 @@ Example:
 { price: 'positive_decimal' }
 ```
 
-#### max\_number
+#### max\_number {#max-number}
 
 Error code: 'TOO\_HIGH' or 'NOT\_NUMBER'
 
@@ -50,7 +50,7 @@ Example:
 { age: { 'max_number': 95 } }
 ```
 
-#### min\_number
+#### min\_number {#min-number}
 
 Error code: 'TOO\_LOW' or 'NOT\_NUMBER'
 
@@ -60,7 +60,7 @@ Example:
 { age: { 'min_number': 18 } }
 ```
 
-#### number\_between
+#### number\_between {#number-between}
 
 Error code: 'TOO\_HIGH' or 'TOO\_LOW' or 'NOT\_NUMBER'
 

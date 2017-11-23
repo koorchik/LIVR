@@ -1,6 +1,6 @@
 ### Special Rules
 
-#### email
+#### email {#email}
 
 Error code: 'WRONG\_EMAIL'
 
@@ -10,7 +10,7 @@ Example:
 { login: 'email' }
 ```
 
-#### url
+#### url {#url}
 
 Allows you to validate url. Allows 'HTTP' and 'HTTPS' protocols. Protocol is required.
 
@@ -22,7 +22,7 @@ Example:
 { url: 'url' }
 ```
 
-#### iso\_date
+#### iso\_date {#iso-date}
 
 Check whether a value is an ISO 8601 date \(without time\). Allowed date example - "2014-08-14"
 
@@ -34,7 +34,7 @@ Example:
 { date: 'iso_date' }
 ```
 
-#### equal\_to\_field
+#### equal\_to\_field {#equal-to-field}
 
 Error code: 'FIELDS\_NOT\_EQUAL'
 
