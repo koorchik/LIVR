@@ -9,17 +9,50 @@ first_name: { min_length: [10] } # name is optional. We will check length only i
 first_name: [ 'required', { min_length: [10] } ] # check that the name is present and validate length
 ```
 
+##### Standard rules that should be supported by every implementation:
+
+* [Common Rules](/gitbook/validation-rules/common-rules.md)
+  * required
+  * not\_empty
+  * not\_empty\_list
+  * any\_object
+* String Rules
+  * string
+  * eq
+  * one\_of
+  * max\_length
+  * min\_length
+  * length\_between
+  * length\_equal
+  * like
+* Numeric Rules
+  * integer
+  * positive\_integer
+  * decimal
+  * positive\_decimal
+  * max\_number
+  * min\_number
+  * number\_between
+* Special Rules
+  * email
+  * url
+  * iso\_date
+  * equal\_to\_field
+* Metarules
+  * nested\_object
+  * list\_of
+  * list\_of\_objects
+  * list\_of\_different\_objects
+  * or
+* Modifiers \(previously - "Filter rules"\)
+  * trim
+  * to\_lc
+  * to\_uc
+  * remove
+  * leave\_only
+  * default
 
 
-#### Rules:
-
-* [Types coercing](/gitbook/validation-rules/types-coercing.md)
-* [Common](/gitbook/validation-rules/common-rules.md)
-* [String](/gitbook/validation-rules/string-rules.md)
-* [Numeric](/gitbook/validation-rules/numeric-rules.md)
-* [Special](/gitbook/validation-rules/special-rules.md)
-* [Metarules](/gitbook/validation-rules/metarules.md)
-* [Modifiers](/gitbook/validation-rules/modifiers.md)
 
 
 
