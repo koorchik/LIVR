@@ -12,4 +12,6 @@
   * [Metarules](validation-rules/metarules.md)
   * [Modifiers](validation-rules/modifiers.md)
 * [Rules aliasing](rules-aliasing.md)
+* [Changes & Developers Guide](changes-and-developers-guide.md)
+* [LICENSE AND COPYRIGHT](license-and-copyright.md)
 
