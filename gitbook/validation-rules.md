@@ -11,3 +11,15 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 
 
+#### Rules:
+
+* [Types coercing](/gitbook/validation-rules/types-coercing.md)
+* [Common](/gitbook/validation-rules/common-rules.md)
+* [String](/gitbook/validation-rules/string-rules.md)
+* [Numeric](/gitbook/validation-rules/numeric-rules.md)
+* [Special](/gitbook/validation-rules/special-rules.md)
+* [Metarules](/gitbook/validation-rules/metarules.md)
+* [Modifiers](/gitbook/validation-rules/modifiers.md)
+
+
+
