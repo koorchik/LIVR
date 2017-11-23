@@ -7,7 +7,7 @@ Error code: 'WRONG\_EMAIL'
 Example:
 
 ```text
-{login: 'email'}
+{ login: 'email' }
 ```
 
 #### url
@@ -19,7 +19,7 @@ Error code: 'WRONG\_URL'
 Example:
 
 ```text
-{url: 'url'}
+{ url: 'url' }
 ```
 
 #### iso\_date
@@ -31,7 +31,7 @@ Error code: 'WRONG\_DATE'
 Example:
 
 ```text
-{date: 'iso_date'}
+{ date: 'iso_date' }
 ```
 
 #### equal\_to\_field
@@ -41,7 +41,7 @@ Error code: 'FIELDS\_NOT\_EQUAL'
 Example:
 
 ```text
-{password2: {'equal_to_field': 'password' }}
+{ password2: { 'equal_to_field': 'password' } }
 ```
 
 

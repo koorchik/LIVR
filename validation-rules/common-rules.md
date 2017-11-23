@@ -7,7 +7,7 @@ Error code: 'REQUIRED'
 Example:
 
 ```text
-{first_name: 'required'}
+{ first_name: 'required' }
 ```
 
 #### not\_empty
@@ -17,7 +17,7 @@ Error code: 'CANNOT\_BE\_EMPTY'
 Example:
 
 ```text
-{first_name: 'not_empty'}
+{ first_name: 'not_empty' }
 ```
 
 #### not\_empty\_list
@@ -29,7 +29,7 @@ Error code: 'CANNOT\_BE\_EMPTY' \(If the value is not present or list is empty\)
 Example:
 
 ```text
-{products_ids: 'not_empty_list'}
+{ products_ids: 'not_empty_list' }
 ```
 
 #### any\_object
@@ -41,7 +41,7 @@ Error code: 'FORMAT\_ERROR' if the value is not a plain object.
 Example:
 
 ```text
-{address: 'any_object'}
+{ address: 'any_object' }
 ```
 
 

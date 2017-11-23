@@ -46,7 +46,7 @@ Error code: 'TOO\_LONG'
 Example:
 
 ```text
-{first_name: {max_length: 10}
+{ first_name: { max_length: 10 } }
 ```
 
 #### min\_length
@@ -56,7 +56,7 @@ Error code: 'TOO\_SHORT'
 Example:
 
 ```text
-{first_name: {min_length: 2}
+{ first_name: { min_length: 2 } }
 ```
 
 #### length\_between
@@ -66,7 +66,7 @@ Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 Example:
 
 ```text
-{first_name: {length_between: [2, 10] }
+{ first_name: { length_between: [2, 10] }
 ```
 
 #### length\_equal
@@ -76,7 +76,7 @@ Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 Example:
 
 ```text
-{first_name: {length_equal: 7}
+{ first_name: { length_equal: 7 }
 ```
 
 #### like
@@ -86,8 +86,8 @@ Error code: 'WRONG\_FORMAT'
 Example:
 
 ```text
-{first_name: {like: '^\w+?$'}
-{first_name: {like: ['^\w+?$', 'i']} // with flags
+{ first_name: { like: '^\w+?$' }
+{ first_name: { like: ['^\w+?$', 'i'] } // with flags
 ```
 
 Only 'i' flag is currently required by specification.
