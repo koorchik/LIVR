@@ -1,5 +1,6 @@
 # Summary
 
 * [Introduction](README.md)
-* [Existing implemenations](existing-implemenations.md)
+  * [Existing implementations](existing-implementations.md)
+  * [Additional Tools](additional-tools.md)
 
