@@ -16,7 +16,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
   * not\_empty
   * not\_empty\_list
   * any\_object
-* String Rules
+* [String Rules](/gitbook/validation-rules/string-rules.md)
   * string
   * eq
   * one\_of
@@ -25,7 +25,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
   * length\_between
   * length\_equal
   * like
-* Numeric Rules
+* [Numeric Rules](/gitbook/validation-rules/numeric-rules.md)
   * integer
   * positive\_integer
   * decimal
@@ -33,26 +33,24 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
   * max\_number
   * min\_number
   * number\_between
-* Special Rules
+* [Special Rules](/gitbook/validation-rules/special-rules.md)
   * email
   * url
   * iso\_date
   * equal\_to\_field
-* Metarules
+* [Metarules](/gitbook/validation-rules/metarules.md)
   * nested\_object
   * list\_of
   * list\_of\_objects
   * list\_of\_different\_objects
   * or
-* Modifiers \(previously - "Filter rules"\)
+* [Modifiers](/gitbook/validation-rules/modifiers.md) \(previously - "Filter rules"\)
   * trim
   * to\_lc
   * to\_uc
   * remove
   * leave\_only
   * default
-
-
 
 
 
