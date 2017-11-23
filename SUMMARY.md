@@ -6,7 +6,6 @@
 * [Validation Rules](gitbook/validation-rules.md)
   * [Types coercing](gitbook/validation-rules/types-coercing.md)
   * [Common Rules](gitbook/validation-rules/common-rules.md)
-    * [required](//gitbook/validation-rules/common-rules.md#required)
     * [/gitbook/validation-rules/common-rules.md\#notempty](/gitbook/validation-rules/common-rules.md#notempty)
   * [String Rules](gitbook/validation-rules/string-rules.md)
   * [Numeric Rules](gitbook/validation-rules/numeric-rules.md)
