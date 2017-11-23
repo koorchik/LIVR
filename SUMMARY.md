@@ -5,4 +5,6 @@
 * [How it works](how-it-works.md)
 * [Validation Rules](validation-rules.md)
   * [Types coercing](validation-rules/types-coercing.md)
+  * [Common Rules](validation-rules/common-rules.md)
+  * [String Rules](validation-rules/string-rules.md)
 
