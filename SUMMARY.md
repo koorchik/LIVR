@@ -6,7 +6,7 @@
 * [Validation Rules](gitbook/validation-rules.md)
   * [Types coercing](gitbook/validation-rules/types-coercing.md)
   * [Common Rules](gitbook/validation-rules/common-rules.md)
-    * \[required\]\([gitbook/validation-rules/common-rules.md\#required](https://www.gitbook.com/book/verarodionova/livr-test/edit#)\)
+    * [required](https://www.gitbook.com/book/verarodionova/livr-test/edit#)
   * [String Rules](gitbook/validation-rules/string-rules.md)
   * [Numeric Rules](gitbook/validation-rules/numeric-rules.md)
   * [Special Rules](gitbook/validation-rules/special-rules.md)
