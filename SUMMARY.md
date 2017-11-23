@@ -12,8 +12,6 @@
   * [Metarules](gitbook/validation-rules/metarules.md)
   * [Modifiers](gitbook/validation-rules/modifiers.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
-* [Changes & Developers Guide](gitbook/changes-and-developers-guide.md)
+* [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
 * [LICENSE AND COPYRIGHT](gitbook/license-and-copyright.md)
-
-
 
