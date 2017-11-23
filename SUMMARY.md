@@ -7,4 +7,5 @@
   * [Types coercing](validation-rules/types-coercing.md)
   * [Common Rules](validation-rules/common-rules.md)
   * [String Rules](validation-rules/string-rules.md)
+  * [Numeric Rules](validation-rules/numeric-rules.md)
 
