@@ -1,7 +1,13 @@
 # Summary
 
-* [Introduction](README.md)
-* [Rules Examples](gitbook/rules-examples.md)
+* [Read Me](README.md)
+* [Introduction](gitbook/introduction.md)
+  * [Core concepts](gitbook/introduction/core-concepts.md)
+  * [Motivation](gitbook/introduction/motivation.md)
+  * [Implementations](gitbook/introduction/implementations.md)
+  * [Principles](gitbook/introduction/principles.md)
+  * [Ecosystem](gitbook/introduction/ecosystem.md)
+  * [Examples](gitbook/introduction/examples.md)
 * [How it works](gitbook/how-it-works.md)
 * [Validation Rules](gitbook/validation-rules.md)
   * [Types coercing](gitbook/validation-rules/types-coercing.md)
