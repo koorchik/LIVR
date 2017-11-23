@@ -10,4 +10,5 @@
   * [Numeric Rules](validation-rules/numeric-rules.md)
   * [Special Rules](validation-rules/special-rules.md)
   * [Metarules](validation-rules/metarules.md)
+  * [Modifiers](validation-rules/modifiers.md)
 
