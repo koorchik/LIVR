@@ -16,6 +16,7 @@
   * [Special](gitbook/validation-rules/special-rules.md)
   * [Metarules](gitbook/validation-rules/metarules.md)
   * [Modifiers](gitbook/validation-rules/modifiers.md)
+* [How to contribute](how-to-contribute.md)
 * [How it works](gitbook/how-it-works.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
 * [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
