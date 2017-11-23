@@ -11,4 +11,5 @@
   * [Special Rules](validation-rules/special-rules.md)
   * [Metarules](validation-rules/metarules.md)
   * [Modifiers](validation-rules/modifiers.md)
+* [Rules aliasing](rules-aliasing.md)
 
