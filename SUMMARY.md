@@ -8,4 +8,5 @@
   * [Common Rules](validation-rules/common-rules.md)
   * [String Rules](validation-rules/string-rules.md)
   * [Numeric Rules](validation-rules/numeric-rules.md)
+  * [Special Rules](validation-rules/special-rules.md)
 
