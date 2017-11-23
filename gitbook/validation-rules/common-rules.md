@@ -1,6 +1,6 @@
 ### Common Rules
 
-#### required
+#### required {#required}
 
 Error code: 'REQUIRED'
 
