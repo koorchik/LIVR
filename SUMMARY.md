@@ -31,6 +31,3 @@
 * [How it works](gitbook/how-it-works.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
 * [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
-
-
-

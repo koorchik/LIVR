@@ -1,6 +1,6 @@
 ### Common Rules
 
-#### required
+#### required {#required}
 
 Error code: 'REQUIRED'
 
@@ -10,7 +10,7 @@ Example:
 { first_name: 'required' }
 ```
 
-#### not\_empty
+#### not\_empty {#notempty}
 
 Error code: 'CANNOT\_BE\_EMPTY'
 
