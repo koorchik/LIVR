@@ -16,9 +16,16 @@
   * [Special](gitbook/validation-rules/special-rules.md)
   * [Metarules](gitbook/validation-rules/metarules.md)
   * [Modifiers](gitbook/validation-rules/modifiers.md)
-* [How to contribute](how-to-contribute.md)
+* [How to contribute](/gitbook/how-to-contribute.md)
+  * [Create own Implementation](gitbook/how-to-contribute/create-own-implementation.md)
+  * [Create own plugins](gitbook/how-to-contribute/create-own-plugins.md)
+* [License](gitbook/license-and-copyright.md)
+
+---
+
 * [How it works](gitbook/how-it-works.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
 * [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
-* [LICENSE AND COPYRIGHT](gitbook/license-and-copyright.md)
+
+
 
