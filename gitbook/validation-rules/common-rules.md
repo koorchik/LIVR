@@ -1,4 +1,4 @@
-### Common Rules {#required}
+### Common Rules {#common}
 
 #### required {#required}
 
@@ -32,7 +32,7 @@ Example:
 { products_ids: 'not_empty_list' }
 ```
 
-#### any\_object
+#### any\_object {#any-object}
 
 Checks that the value is an plain object
 
