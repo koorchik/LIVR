@@ -1,0 +1,1193 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Metarules · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="metarules.html" />
+    
+    
+    <link rel="prev" href="special-rules.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Read Me
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction.html">
+            
+                <a href="../introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../introduction/core-concepts.html">
+            
+                <a href="../introduction/core-concepts.html">
+            
+                    
+                    Core concepts
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../introduction/motivation.html">
+            
+                <a href="../introduction/motivation.html">
+            
+                    
+                    Motivation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../introduction/implementations.html">
+            
+                <a href="../introduction/implementations.html">
+            
+                    
+                    Implementations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../introduction/principles.html">
+            
+                <a href="../introduction/principles.html">
+            
+                    
+                    Principles
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../introduction/ecosystem.html">
+            
+                <a href="../introduction/ecosystem.html">
+            
+                    
+                    Ecosystem
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../introduction/examples.html">
+            
+                <a href="../introduction/examples.html">
+            
+                    
+                    Examples
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../validation-rules.html">
+            
+                <a href="../validation-rules.html">
+            
+                    
+                    Validation Rules
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="types-coercing.html">
+            
+                <a href="types-coercing.html">
+            
+                    
+                    Types coercing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="common-rules.html">
+            
+                <a href="common-rules.html#common">
+            
+                    
+                    Common
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1" data-path="common-rules.html">
+            
+                <a href="common-rules.html#required">
+            
+                    
+                    required
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="common-rules.html">
+            
+                <a href="common-rules.html#not-empty">
+            
+                    
+                    not_empty
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.3" data-path="common-rules.html">
+            
+                <a href="common-rules.html#not-empty-list">
+            
+                    
+                    not_empty_list
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.4" data-path="common-rules.html">
+            
+                <a href="common-rules.html#any-object">
+            
+                    
+                    any_object
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="string-rules.html">
+            
+                <a href="string-rules.html">
+            
+                    
+                    String
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.3.1" data-path="string-rules.html">
+            
+                <a href="string-rules.html#string">
+            
+                    
+                    string
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.2" data-path="string-rules.html">
+            
+                <a href="string-rules.html#eq">
+            
+                    
+                    eq
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.3" data-path="string-rules.html">
+            
+                <a href="string-rules.html#one-of">
+            
+                    
+                    one_of
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.4" data-path="string-rules.html">
+            
+                <a href="string-rules.html#max-length">
+            
+                    
+                    max_length
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.5" data-path="string-rules.html">
+            
+                <a href="string-rules.html#min-length">
+            
+                    
+                    min_length
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.6" data-path="string-rules.html">
+            
+                <a href="string-rules.html#length-between">
+            
+                    
+                    length_between
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.7" data-path="string-rules.html">
+            
+                <a href="string-rules.html#length-equal">
+            
+                    
+                    length_equal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3.8" data-path="string-rules.html">
+            
+                <a href="string-rules.html#like">
+            
+                    
+                    like
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html">
+            
+                    
+                    Numeric
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#integer">
+            
+                    
+                    integer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#positive-integer">
+            
+                    
+                    positive_integer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#decimal">
+            
+                    
+                    decimal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#positive-decimal">
+            
+                    
+                    positive_decimal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#max-number">
+            
+                    
+                    max_number
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.6" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#min-number">
+            
+                    
+                    min_number
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.7" data-path="numeric-rules.html">
+            
+                <a href="numeric-rules.html#number-between">
+            
+                    
+                    number_between
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="special-rules.html">
+            
+                <a href="special-rules.html">
+            
+                    
+                    Special
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.5.1" data-path="special-rules.html">
+            
+                <a href="special-rules.html#email">
+            
+                    
+                    email
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.2" data-path="special-rules.html">
+            
+                <a href="special-rules.html#url">
+            
+                    
+                    url
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.3" data-path="special-rules.html">
+            
+                <a href="special-rules.html#iso-date">
+            
+                    
+                    iso_date
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.4" data-path="special-rules.html">
+            
+                <a href="special-rules.html#equal-to-field">
+            
+                    
+                    equal_to_field
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6" data-path="metarules.html">
+            
+                <a href="metarules.html">
+            
+                    
+                    Metarules
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.6.1" data-path="metarules.html">
+            
+                <a href="metarules.html#nested-object">
+            
+                    
+                    nested_object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.2" data-path="metarules.html">
+            
+                <a href="metarules.html#variable-object">
+            
+                    
+                    variable_object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.3" data-path="metarules.html">
+            
+                <a href="metarules.html#list-of">
+            
+                    
+                    list_of
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.4" data-path="metarules.html">
+            
+                <a href="metarules.html#list-of-objects">
+            
+                    
+                    list_of_objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.5" data-path="metarules.html">
+            
+                <a href="metarules.html#list-of-different-objects">
+            
+                    
+                    list_of_different_objects
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.6" data-path="metarules.html">
+            
+                <a href="metarules.html#or">
+            
+                    
+                    or
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="modifiers.html">
+            
+                <a href="modifiers.html">
+            
+                    
+                    Modifiers
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.7.1" data-path="modifiers.html">
+            
+                <a href="modifiers.html#trim">
+            
+                    
+                    trim
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.2" data-path="modifiers.html">
+            
+                <a href="modifiers.html#to-lc">
+            
+                    
+                    to_lc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.3" data-path="modifiers.html">
+            
+                <a href="modifiers.html#to-uc">
+            
+                    
+                    to_uc
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.4" data-path="modifiers.html">
+            
+                <a href="modifiers.html#remove">
+            
+                    
+                    remove
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.5" data-path="modifiers.html">
+            
+                <a href="modifiers.html#leave-only">
+            
+                    
+                    leave_only
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7.6" data-path="modifiers.html">
+            
+                <a href="modifiers.html#default">
+            
+                    
+                    default
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../how-to-contribute.html">
+            
+                <a href="../how-to-contribute.html">
+            
+                    
+                    How to contribute
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../how-to-contribute/create-own-implementation.html">
+            
+                <a href="../how-to-contribute/create-own-implementation.html">
+            
+                    
+                    Create own Implementation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../how-to-contribute/create-own-plugins.html">
+            
+                <a href="../how-to-contribute/create-own-plugins.html">
+            
+                    
+                    Create own Plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../license-and-copyright.html">
+            
+                <a href="../license-and-copyright.html">
+            
+                    
+                    License
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Tools</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../tools/implementations.html">
+            
+                <a href="../tools/implementations.html">
+            
+                    
+                    Implementations
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" >
+            
+                <a target="_blank" href="https://github.com/koorchik/js-livr-extra-rules">
+            
+                    
+                    js-livr-extra-rules
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Additional</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../how-it-works.html">
+            
+                <a href="../how-it-works.html">
+            
+                    
+                    How it works
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../rules-aliasing.html">
+            
+                <a href="../rules-aliasing.html">
+            
+                    
+                    Rules aliasing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../changes-and-developers-guide.html">
+            
+                <a href="../changes-and-developers-guide.html">
+            
+                    
+                    Developers Guide & Changes
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Metarules</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="metarules">Metarules</h3>
+<p>Metarules are rules for describing more complex rules.</p>
+<h4 id="nested-object">nested_object </h4>
+<p>Allows you to describe validation rules for a nested object.</p>
+<p>Error code: depends on nested validators. If nested object is not a hash should return &quot;FORMAT_ERROR&quot;</p>
+<p>Example:</p>
+<pre><code class="lang-text">address: { &apos;nested_object&apos;: {
+    city: &apos;required&apos;,
+    zip: [&apos;required&apos;, &apos;positive_integer&apos;]
+} }
+</code></pre>
+<h4 id="variable-object">variable_object </h4>
+<p>Allows you to describe validation rules for field that can conatain different objects.</p>
+<p>Error code: depends on nested validators. Or &quot;FORMAT_ERROR&quot; in case of receiving data not suitable for validation.</p>
+<p>Example:</p>
+<pre><code class="lang-text">product: [&apos;required&apos;, { &apos;variable_object&apos;: [
+    product_type, {
+        material: {
+            product_type: &apos;required&apos;,
+            material_id: [&apos;required&apos;, &apos;positive_integer&apos;],
+            quantity: [&apos;required&apos;, {&apos;min_number&apos;: 1} ],
+            warehouse_id: &apos;positive_integer&apos;
+        },
+        service: {
+            product_type: &apos;required&apos;,
+            name: [&apos;required&apos;, {&apos;max_length&apos;: 10} ]
+        }
+    }
+]}]
+</code></pre>
+<p>In this example validator will look on &quot;product_type&quot; and depending on it will use corresponding set of rules</p>
+<h4 id="list-of">list_of </h4>
+<p>Allows you to describe validation rules for a list. Validation rules will be applyed for each array element.</p>
+<p>Error code: depends on nested validators</p>
+<p>Example:</p>
+<pre><code class="lang-text">// new syntax (introduced in v0.4)
+{ product_ids: { &apos;list_of&apos;: &apos;positive_integer&apos; }}
+{ product_ids: { &apos;list_of&apos;: [&apos;required&apos;,  &apos;positive_integer&apos;] }} // new syntax
+
+// old syntax
+{ product_ids: { &apos;list_of&apos;: [[ &apos;positive_integer&apos; ]] }}
+{ product_ids: { &apos;list_of&apos;: [[ &apos;required&apos;,  &apos;positive_integer&apos; ]] }}
+</code></pre>
+<h4 id="list-of-objects">list_of_objects </h4>
+<p>Allows you to describe validation rules for list of objects. Validation rules will be applyed for each array element.</p>
+<p>Error code: depends on nested validators. Or &quot;FORMAT_ERROR&quot; in case of receiving data not suitable for validation.</p>
+<p>Example:</p>
+<pre><code class="lang-text">products: [&apos;required&apos;, { &apos;list_of_objects&apos;: [{
+    product_id: [&apos;required&apos;,&apos;positive_integer&apos;],
+    quantity: [&apos;required&apos;, &apos;positive_integer&apos;]
+}]}]
+</code></pre>
+<h4 id="list-of-different-objects">list_of_different_objects </h4>
+<p>Allows you to describe validation rules for list of different objects. Validation rules will be applied for each array element.</p>
+<p>Error code: depends on nested validators. Or &quot;FORMAT_ERROR&quot; in case of receiving data not suitable for validation.</p>
+<p>Example:</p>
+<pre><code class="lang-text">products: [&apos;required&apos;, { &apos;list_of_different_objects&apos;: [
+    product_type, {
+        material: {
+            product_type: &apos;required&apos;,
+            material_id: [&apos;required&apos;, &apos;positive_integer&apos;],
+            quantity: [&apos;required&apos;, {&apos;min_number&apos;: 1} ],
+            warehouse_id: &apos;positive_integer&apos;
+        },
+        service: {
+            product_type: &apos;required&apos;,
+            name: [&apos;required&apos;, {&apos;max_length&apos;: 10} ]
+        }
+    }
+]}]
+</code></pre>
+<p>In this example validator will look on &quot;product_type&quot; in each object and depending on it will use corresponding set of rules</p>
+<h4 id="or">or (experimental) </h4>
+<p>The rule takes sets of other rules and applies them one after another until successful validation.</p>
+<p>This rule simplifies alias creation. See &quot;Aliases&quot; section. It is a good idea to define custom error for your alias.</p>
+<p>Errors: As we pass several sets of rules it is unclear what should validator return in case of several errors. Currenly we return the last error (this bahavior can change in future, this rule is experimental).</p>
+<p>Examples:</p>
+<p>&quot;id&quot; should be email or positive_integer:</p>
+<pre><code class="lang-text">{
+    id: { or: [&apos;email&apos;, &apos;positive_integer&apos; ] }
+}
+</code></pre>
+<p>Combining with other rules:</p>
+<pre><code class="lang-text">{
+    id: [{ or: [&apos;email&apos;, &apos;positive_integer&apos; ] }, &apos;to_lc&apos;]
+}
+</code></pre>
+<p>Set of rules in &quot;or&quot;:</p>
+<pre><code class="lang-text">{
+    id: { or: [[&apos;email&apos;, &apos;to_lc&apos;], &apos;positive_integer&apos; ] }
+}
+</code></pre>
+<p>Emulate list_of_different_objects:</p>
+<pre><code class="lang-text">{
+    products: {list_of: { or: [
+        {nested_object: {
+            product_type: [&apos;required&apos;, {eq: &apos;material&apos;}],
+            material_id: [&apos;required&apos;, &apos;positive_integer&apos;],
+            quantity: [&apos;required&apos;, {&apos;min_number&apos;: 1} ],
+            warehouse_id: &apos;positive_integer&apos;
+        }},
+
+        {nested_object: {
+            product_type: [&apos;required&apos;, {eq: &apos;service&apos;}],
+            name: [&apos;required&apos;, {&apos;max_length&apos;: 20} ]
+        }}
+    ]}}
+}
+</code></pre>
+<p>is the same as</p>
+<pre><code class="lang-text">{
+    order_id: [&apos;required&apos;, &apos;positive_integer&apos;],
+    products: [&apos;required&apos;, { &apos;list_of_different_objects&apos;: [
+        product_type, {
+            material: {
+                product_type: &apos;required&apos;,
+                material_id: [&apos;required&apos;, &apos;positive_integer&apos;],
+                quantity: [&apos;required&apos;, {&apos;min_number&apos;: 1} ],
+                warehouse_id: &apos;positive_integer&apos;
+            },
+            service: {
+                product_type: &apos;required&apos;,
+                name: [&apos;required&apos;, {&apos;max_length&apos;: 20} ]
+            }
+        }
+    ]}]
+}
+</code></pre>
+<p><em>Internally there is a difference. &quot;or&quot; will try apply one rule after another, but &quot;list_of_different_objects&quot; will select only one set of rules.</em></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="special-rules.html#equal-to-field" class="navigation navigation-prev " aria-label="Previous page: equal_to_field">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="metarules.html#nested-object" class="navigation navigation-next " aria-label="Next page: nested_object">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Metarules","level":"1.3.6","depth":2,"next":{"title":"nested_object","level":"1.3.6.1","depth":3,"anchor":"#nested-object","path":"gitbook/validation-rules/metarules.md","ref":"gitbook/validation-rules/metarules.md#nested-object","articles":[]},"previous":{"title":"equal_to_field","level":"1.3.5.4","depth":3,"anchor":"#equal-to-field","path":"gitbook/validation-rules/special-rules.md","ref":"gitbook/validation-rules/special-rules.md#equal-to-field","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"gitbook/validation-rules/metarules.md","mtime":"2017-11-24T11:14:29.447Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2017-11-24T11:27:10.442Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook.js"></script>
+    <script src="../theme.js"></script>
+    
+        
+        <script src="../gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
