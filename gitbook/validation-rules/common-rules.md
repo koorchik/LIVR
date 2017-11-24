@@ -1,4 +1,4 @@
-### Common Rules {#common}
+### Common Rules
 
 #### required {#required}
 
