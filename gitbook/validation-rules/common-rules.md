@@ -1,4 +1,4 @@
-### Common Rules
+### Common Rules {#required}
 
 #### required {#required}
 
@@ -10,7 +10,7 @@ Example:
 { first_name: 'required' }
 ```
 
-#### not\_empty {#notempty}
+#### not\_empty {#not-empty}
 
 Error code: 'CANNOT\_BE\_EMPTY'
 
@@ -20,7 +20,7 @@ Example:
 { first_name: 'not_empty' }
 ```
 
-#### not\_empty\_list
+#### not\_empty\_list {#not-empty-list}
 
 Checks that list contains at least one element
 

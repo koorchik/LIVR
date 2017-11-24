@@ -11,6 +11,9 @@
 * [Validation Rules](gitbook/validation-rules.md)
   * [Types coercing](gitbook/validation-rules/types-coercing.md)
   * [Common](gitbook/validation-rules/common-rules.md)
+    * [required](/gitbook/validation-rules/common-rules.md#required)
+    * [not\_empty](/gitbook/validation-rules/common-rules.md#not-empty)
+    * [not\_empty\_list](/gitbook/validation-rules/common-rules.md#not-empty-list)
   * [String](gitbook/validation-rules/string-rules.md)
   * [Numeric](gitbook/validation-rules/numeric-rules.md)
   * [Special](gitbook/validation-rules/special-rules.md)
@@ -31,3 +34,6 @@
 * [How it works](gitbook/how-it-works.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
 * [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
+
+
+
