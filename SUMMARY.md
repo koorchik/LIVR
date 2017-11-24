@@ -18,10 +18,15 @@
   * [Modifiers](gitbook/validation-rules/modifiers.md)
 * [How to contribute](/gitbook/how-to-contribute.md)
   * [Create own Implementation](gitbook/how-to-contribute/create-own-implementation.md)
-  * [Create own plugins](gitbook/how-to-contribute/create-own-plugins.md)
+  * [Create own Plugins](gitbook/how-to-contribute/create-own-plugins.md)
 * [License](gitbook/license-and-copyright.md)
 
----
+## Tools
+
+* [Implementations](gitbook/tools/implementations.md)
+* [js-livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules)
+
+## Additional
 
 * [How it works](gitbook/how-it-works.md)
 * [Rules aliasing](gitbook/rules-aliasing.md)
