@@ -1,0 +1,6 @@
+{
+    "field1": { "equal_to_field": "field2" },
+    "field2": { "equal_to_field": ["field1"] },
+    "field3": { "equal_to_field": ["field1"] },
+    "empty_field":  { "equal_to_field": "field2" }
+}

@@ -1,0 +1,12 @@
+{
+    "address": {
+        "country": "Ukraine",
+        "zip": 12345,
+        "street": "10",
+        "building": 10
+    },
+
+    "should_be_empty": {
+      
+    }
+}

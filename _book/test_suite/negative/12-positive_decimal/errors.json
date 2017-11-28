@@ -1,0 +1,11 @@
+{
+    "number1": "NOT_POSITIVE_DECIMAL",
+    "number2": "NOT_POSITIVE_DECIMAL",
+    "number3": "NOT_POSITIVE_DECIMAL",
+
+    "value_is_string":      "NOT_POSITIVE_DECIMAL",
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

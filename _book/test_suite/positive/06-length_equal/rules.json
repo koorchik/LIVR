@@ -1,0 +1,8 @@
+{
+    "first_name":   { "length_equal": 5 },
+    "last_name":    { "length_equal": [6] },
+    "middle_name": [{ "length_equal": [9] }],
+    "number1":      { "length_equal": 4 },
+    "empty_name":   { "length_equal": 3 },
+    "missed_name":  { "length_equal": 3 }
+}

@@ -1,0 +1,10 @@
+{
+    "first_name": "TOO_SHORT",
+    "last_name": "TOO_SHORT",
+    "middle_name": "TOO_SHORT",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

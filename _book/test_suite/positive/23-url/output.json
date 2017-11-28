@@ -1,0 +1,6 @@
+{
+    "url1": "https://google.com",
+    "url2": "HTTP://127.0.0.1:3233/?param_1=123&param_2=asd",
+    "url3": "http://webbylab.com/?param_1=123#anchor",
+    "empty_field": ""
+}

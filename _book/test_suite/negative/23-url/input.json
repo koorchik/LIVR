@@ -1,0 +1,12 @@
+{
+    "url1": "www.google.com",
+    "url2": "ftp://facebook.com",
+    "url3": "http://g_oogle.com",
+    "empty_field": "",
+    "extra_field": "aaaa",
+
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

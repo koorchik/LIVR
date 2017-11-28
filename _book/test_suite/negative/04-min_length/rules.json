@@ -1,0 +1,11 @@
+{
+    "first_name":   { "min_length": 6 },
+    "last_name":    { "min_length": [10] },
+    "middle_name": [{ "min_length": [10] }],
+    "empty_name":   { "min_length": 3 },
+
+    "value_is_hash":        { "min_length": 6 },
+    "value_is_empty_hash":  { "min_length": 6 },
+    "value_is_array":       { "min_length": 6 },
+    "value_is_empty_array": { "min_length": 6 }
+}

@@ -1,0 +1,13 @@
+{
+    "address": {
+        "street": "",
+        "zip": -1232131,
+        "city": "Moscow"
+    },
+    "address_custom_error": {
+        "street": "My street",
+        "zip": "12312",
+        "city": "Moscow"
+    },
+    "extra_field": 12
+}

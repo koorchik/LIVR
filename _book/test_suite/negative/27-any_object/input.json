@@ -1,0 +1,6 @@
+{
+    "value_is_string":      "test",
+    "value_is_number":      0,
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

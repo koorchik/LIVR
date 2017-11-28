@@ -1,0 +1,11 @@
+{
+    "city1": { "one_of": [["Moscow", "Kiev" ]] },
+    "city2": [{ "one_of": [["Moscow", "Kiev" ]] }],
+    "city3": { "one_of": ["Moscow", "Kiev"] },
+    "number1": { "one_of": [1, "1.00", "1"] },
+
+    "value_is_hash":        { "one_of": [["Moscow", "Kiev" ]] },
+    "value_is_empty_hash":  { "one_of": [["Moscow", "Kiev" ]] },
+    "value_is_array":       { "one_of": [["Moscow", "Kiev" ]] },
+    "value_is_empty_array": { "one_of": [["Moscow", "Kiev" ]] }
+}

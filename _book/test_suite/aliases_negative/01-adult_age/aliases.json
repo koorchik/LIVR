@@ -1,0 +1,12 @@
+[
+    {
+        "name": "adult_age",
+        "rules": ["positive_integer", {"min_number": 18}]
+    },
+
+    {
+        "name": "adult_age_with_custom_error",
+        "rules": ["positive_integer", {"min_number": 18}],
+        "error": "WRONG_AGE"
+    }
+]

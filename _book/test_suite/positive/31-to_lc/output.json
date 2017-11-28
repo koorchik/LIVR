@@ -1,0 +1,6 @@
+{
+    "string_value": "value",
+    "object": {"string_value": "some value"},
+    "list_of_string_values": ["value1", {"key": "123"}, "value2"],
+    "to_lc_with_another_rule": "value"
+}

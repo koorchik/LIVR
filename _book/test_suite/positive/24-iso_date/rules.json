@@ -1,0 +1,8 @@
+{
+    "iso_date1": "iso_date",
+    "iso_date2": { "iso_date": [] },
+    "iso_date3": [ { "iso_date": [] } ],
+    "iso_date4": [ { "iso_date": [] } ],
+    "iso_date5": "iso_date",
+    "empty_field": "iso_date"
+}

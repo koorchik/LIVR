@@ -1,3 +1,5 @@
+![LIVR logo](assets/logo.png)
+
 # Language Independent Validation Rules \(v2.0\)
 
 Validator meets the following requirements:
@@ -18,6 +20,3 @@ Validator meets the following requirements:
 
 * [Online JavaScript playground](http://webbylab.github.io/livr-playground/)
 * [Online multi-language playground](http://livr-multi-playground.webbylab.com/)
-
-
-

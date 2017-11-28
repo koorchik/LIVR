@@ -1,0 +1,11 @@
+{
+    "number1": { "max_number": 10 },
+    "number2": [{ "max_number": 20 }],
+    "empty_field":  { "max_number": 40 },
+
+    "value_is_string":      { "max_number": 10 },
+    "value_is_hash":        { "max_number": 10 },
+    "value_is_empty_hash":  { "max_number": 10 },
+    "value_is_array":       { "max_number": 10 },
+    "value_is_empty_array": { "max_number": 10 }
+}

@@ -1,0 +1,6 @@
+{
+    "first_name": "required",
+    "last_name": ["required"],
+    "middle_name": [ { "required": [] } ],
+    "salary": { "required": [] }
+}

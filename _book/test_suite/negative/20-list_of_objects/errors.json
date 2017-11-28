@@ -1,0 +1,14 @@
+{
+    "products": [
+        {
+            "product_id": "NOT_POSITIVE_INTEGER",
+            "quantity": "REQUIRED"
+        },
+        null,
+        {
+            "product_id": "NOT_POSITIVE_INTEGER"
+        },
+        "FORMAT_ERROR"
+    ],
+    "users": "FORMAT_ERROR"
+}

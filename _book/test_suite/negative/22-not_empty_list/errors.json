@@ -1,0 +1,7 @@
+{
+    "list1": "CANNOT_BE_EMPTY",
+    "list2": "CANNOT_BE_EMPTY",
+    "not_list": "FORMAT_ERROR",
+    "empty_field": "CANNOT_BE_EMPTY",
+    "missed_field":  "CANNOT_BE_EMPTY"
+}

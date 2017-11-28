@@ -1,0 +1,12 @@
+{
+    "address": {
+        "street": "My street",
+        "zip": 1232131,
+        "city": "Kiev"
+    },
+    "address_custom_error": {
+        "street": "My street",
+        "zip": 12312,
+        "city": "Kharkiv"
+    }
+}

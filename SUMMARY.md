@@ -9,6 +9,7 @@
     * [Ecosystem](gitbook/introduction/ecosystem.md)
     * [Examples](gitbook/introduction/examples.md)
 * [Validation Rules](gitbook/validation-rules.md)
+    * [How it works](gitbook/validation-rules/how-it-works.md)
     * [Types coercing](gitbook/validation-rules/types-coercing.md)
     * [Common](gitbook/validation-rules/common-rules.md#common)
         * [required](gitbook/validation-rules/common-rules.md#required)
@@ -51,17 +52,13 @@
         * [remove](gitbook/validation-rules/modifiers.md#remove)
         * [leave_only](gitbook/validation-rules/modifiers.md#leave-only)
         * [default](gitbook/validation-rules/modifiers.md#default)
+* [Rules aliasing](gitbook/rules-aliasing.md)
 * [How to contribute](gitbook/how-to-contribute.md)
     * [Create own Implementation](gitbook/how-to-contribute/create-own-implementation.md)
     * [Create own Plugins](gitbook/how-to-contribute/create-own-plugins.md)
+* [Changes](gitbook/changes.md)
 * [License](gitbook/license-and-copyright.md)
 
 ## Tools
 * [Implementations](gitbook/tools/implementations.md)
 * [js-livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules)
-
-## Additional
-* [How it works](gitbook/how-it-works.md)
-* [Rules aliasing](gitbook/rules-aliasing.md)
-* [Developers Guide & Changes](gitbook/changes-and-developers-guide.md)
-

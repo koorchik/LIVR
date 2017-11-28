@@ -1,0 +1,11 @@
+{
+    "first_name":   { "max_length": 4 },
+    "last_name":    { "max_length": [5] },
+    "middle_name": [{ "max_length": [0] }],
+    "empty_name":   { "max_length": 3 },
+
+    "value_is_hash":        { "max_length": 4 },
+    "value_is_empty_hash":  { "max_length": 4 },
+    "value_is_array":       { "max_length": 4 },
+    "value_is_empty_array": { "max_length": 4 }
+}

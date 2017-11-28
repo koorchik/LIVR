@@ -1,0 +1,12 @@
+{
+    "field1": "some value1",
+    "field2": "some value",
+    "field3": "some value",
+    "empty_field":  "",
+    "extra_field": "some value",
+
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

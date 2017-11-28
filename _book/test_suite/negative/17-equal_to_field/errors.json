@@ -1,0 +1,10 @@
+{
+    "field1": "FIELDS_NOT_EQUAL",
+    "field2": "FIELDS_NOT_EQUAL",
+    "field3": "FIELDS_NOT_EQUAL",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

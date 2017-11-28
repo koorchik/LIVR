@@ -1,0 +1,13 @@
+{
+    "email1": "email",
+    "email2": { "email": [] },
+    "email3": [ { "email": [] } ],
+    "email4": "email",
+    "email5": "email",
+    "empty_field": "email",
+
+    "value_is_hash":        "email",
+    "value_is_empty_hash":  "email",
+    "value_is_array":       "email",
+    "value_is_empty_array": "email"
+}

@@ -1,0 +1,17 @@
+{
+    "order_id": "NOT_POSITIVE_INTEGER",
+    "products": [
+        {
+            "material_id": "NOT_POSITIVE_INTEGER",
+            "quantity": "REQUIRED"
+        },
+        {
+            "warehouse_id": "NOT_POSITIVE_INTEGER"
+        },
+        {
+            "name": "TOO_LONG"
+        },
+        "FORMAT_ERROR",
+        "FORMAT_ERROR"
+    ]
+}

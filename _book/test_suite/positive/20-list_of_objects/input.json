@@ -1,0 +1,17 @@
+{
+    "products": [
+        {
+            "product_id": 10,
+            "quantity": "10"
+        },
+        {
+            "product_id": 20,
+            "quantity": 20
+        },
+        {
+            "product_id": 30,
+            "quantity": 30
+        }
+    ],
+    "empty_list": []
+}

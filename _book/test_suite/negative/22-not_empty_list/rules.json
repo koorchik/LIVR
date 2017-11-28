@@ -1,0 +1,7 @@
+{
+    "list1": "not_empty_list",
+    "list2": [{ "not_empty_list" : [] }],
+    "not_list": "not_empty_list",
+    "empty_field":  "not_empty_list",
+    "missed_field":  ["not_empty_list"]
+}

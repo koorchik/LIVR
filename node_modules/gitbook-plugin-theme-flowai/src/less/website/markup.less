@@ -1,0 +1,26 @@
+.markdown-section {
+    .gitbook-markdown(@md-color: @content-color, @md-line-height: @content-line-height);
+
+    .glossary-term {
+        cursor: help;
+        text-decoration: underline;
+    }
+
+    table,
+    table tr,
+    table tr td,
+    table tr:nth-child(2n) {
+      background-color: transparent;
+    }
+
+    table {
+        background: #FFF;
+        td, th {
+            border: 1px solid rgba(0,0,0, 0.1);
+        }
+
+        tr {
+            border-top: 1px solid rgba(0,0,0, 0.2);
+        }
+    }
+}

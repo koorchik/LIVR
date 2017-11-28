@@ -1,0 +1,13 @@
+{
+    "address": [ "required", { "nested_object": {
+        "country": ["required", { "one_of": [["Ukraine", "USA"]] } ],
+        "zip": "positive_integer",
+        "street": "required",
+        "building": ["required",  "positive_integer" ]
+    } } ],
+
+    "should_be_empty": [ "required", { "nested_object": {
+        "country": [{ "one_of": [["Ukraine", "USA"]] } ],
+        "zip": "positive_integer"
+    } } ]
+}

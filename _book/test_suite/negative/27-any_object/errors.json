@@ -1,0 +1,6 @@
+{
+    "value_is_string":      "FORMAT_ERROR",
+    "value_is_number":      "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

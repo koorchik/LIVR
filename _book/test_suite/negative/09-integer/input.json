@@ -1,0 +1,13 @@
+{
+    "number1": "A",
+    "number2": "0.12",
+    "number3": -1.12,
+    "empty_field": "",
+    "extra_field": "100",
+
+    "value_is_string":      "some_string",
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

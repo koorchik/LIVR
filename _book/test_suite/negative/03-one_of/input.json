@@ -1,0 +1,12 @@
+{
+    "city1": "New York",
+    "city2": "New York",
+    "city3": "New York",
+    "number1": "1.0",
+    "extra_city": "New York",
+
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

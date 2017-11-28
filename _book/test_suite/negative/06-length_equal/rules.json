@@ -1,0 +1,11 @@
+{
+    "first_name":   { "length_equal": 2 },
+    "last_name":    { "length_equal": [7] },
+    "middle_name": [{ "length_equal": [3] }],
+    "empty_name":   { "length_equal": 3 },
+
+    "value_is_hash":        { "length_equal": 2 },
+    "value_is_empty_hash":  { "length_equal": 2 },
+    "value_is_array":       { "length_equal": 2 },
+    "value_is_empty_array": { "length_equal": 2 }
+}
