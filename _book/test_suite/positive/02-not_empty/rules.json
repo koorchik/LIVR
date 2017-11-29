@@ -1,6 +1,0 @@
-{
-    "first_name": "not_empty",
-    "last_name": ["not_empty"],
-    "middle_name": [ { "not_empty": [] } ],
-    "salary": { "required": [] }
-}

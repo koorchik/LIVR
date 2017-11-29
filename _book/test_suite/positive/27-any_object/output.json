@@ -1,6 +1,0 @@
-{
-    "object1": {"email": "user@mail.com"},
-    "object2": {"id": 123, "address": {"city" : "Kiev"}},
-    "object3": {},
-    "empty_field": ""
-}

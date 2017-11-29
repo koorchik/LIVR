@@ -1,9 +1,0 @@
-{
-    "address": {
-        "country": "Russia",
-        "zip": "AAA",
-        "street": "",
-        "building": "-10"
-    },
-    "address2": "Should be hash"
-}
