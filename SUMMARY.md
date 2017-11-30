@@ -60,5 +60,4 @@
 * [License](gitbook/license-and-copyright.md)
 
 ## Tools
-* [Implementations](gitbook/tools/implementations.md)
 * [js-livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules)

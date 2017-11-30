@@ -1,6 +1,6 @@
 {
   "plugins": ["styles-less"],
   "styles": {
-      "readme": "styles/readme.less"
+      "website": "styles/readme.less"
   }
 }
