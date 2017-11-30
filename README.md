@@ -1,14 +1,13 @@
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-
+<div class="header">
 <a href="https://github.com/koorchik/LIVR">
-    <img src="assets/logo.png">
+    <img src="assets/logo.png" width="240" height="100">
 </a>
+<strong>Language Independent Validation Rules (v2.0) </strong>
 <a class="github-button" href="https://github.com/koorchik/LIVR" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star koorchik/LIVR on GitHub">Star</a>
-
-
-# Language Independent Validation Rules \(v2.0\)
+</div>
 
 ## Validator meets the following requirements:
 
@@ -145,7 +144,11 @@
     </div>
     <div>
         <i>Latest LIVR version is 2.0</i><br>
-        <i>Previous LIVR version is 0.4</i>
+        <i>Previous LIVR version is 0.4</i><br>
+        <br>
+        <i> View on GitHub:
+            <a class="github-button" href="https://github.com/koorchik/LIVR" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star koorchik/LIVR on GitHub">Star</a>
+        </i>
     </div>
 </div>
 

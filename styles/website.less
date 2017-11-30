@@ -1,3 +1,16 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    strong {
+        font-size: 31px;
+        width: 45%;
+        min-width: 320px;
+    }
+}
+
 .langContainer {
     display: flex;
     flex-direction: row;
@@ -28,5 +41,29 @@
 blockquote {
     p, ul li {
         color: #4d506d;
+    }
+}
+
+@media screen and (min-width: 0px) {
+    .header {
+        strong {
+            min-width: 320px;
+        }
+
+        a img {
+            width: 280px;
+        }
+    }
+}
+
+@media screen and (min-width: 370px) {
+    .header {
+        strong {
+            min-width: 370px;
+        }
+
+        a img {
+            width: 240px;
+        }
     }
 }
