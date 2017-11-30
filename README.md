@@ -1,5 +1,5 @@
-<!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
+<!-- uncomment this to build pretty site -->
+<!-- <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <div class="header">
 <a href="https://github.com/koorchik/LIVR">
@@ -7,7 +7,10 @@
 </a>
 <strong>Language Independent Validation Rules (v2.0) </strong>
 <a class="github-button" href="https://github.com/koorchik/LIVR" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star koorchik/LIVR on GitHub">Star</a>
-</div>
+</div> -->
+
+<!-- comment this to build pretty site -->
+# Language Independent Validation Rules \(v2.0\) 
 
 ## Validator meets the following requirements:
 
@@ -30,7 +33,8 @@
 
 ## Existing implemenations
 
-<div class="langContainer">
+<!-- uncomment this to build pretty site -->
+<!-- <div class="langContainer">
     <div class="langItem">
         <a href="https://github.com/koorchik/js-validator-livr">
             <img src="assets/languages/js.jpg" class="icon">
@@ -150,7 +154,19 @@
             <a class="github-button" href="https://github.com/koorchik/LIVR" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star koorchik/LIVR on GitHub">Star</a>
         </i>
     </div>
-</div>
+</div> -->
+
+<!-- comment this to build pretty site -->
+* [JavaScript \(LIVR 2.0\)](https://github.com/koorchik/js-validator-livr) available at [npm](https://www.npmjs.com/package/livr), maintainer @koorchik
+* [Perl \(LIVR 2.0\)](https://github.com/koorchik/Validator-LIVR) available at [CPAN](https://metacpan.org/pod/Validator::LIVR), maintainer @koorchik
+* [PHP \(LIVR 2.0\)](https://github.com/WebbyLab/php-validator-livr) available at [packagist](https://packagist.org/packages/validator/livr), maintainer @WebbyLab
+* [Python \(LIVR 2.0\)](https://github.com/asholok/python-validator-livr) available at [pypi](https://pypi.python.org/pypi/LIVR), maintainer @asholok
+* [Erlang \(LIVR 2.0\)](https://github.com/Prots/olifer), maintainer @Prots
+* [Java \(LIVR 2.0\)](https://github.com/vlbaluk/java-validator-livr), maintainer @vlbaluk
+* [Ruby \(LIVR 0.4, previous version\)](https://github.com/maktwin/ruby-validator-livr) at [rubygems](https://rubygems.org/gems/livr), maintainer @maktwin
+
+_Latest LIVR version is 2.0_  
+_Previous LIVR version is 0.4_
 
 
 ## Documentation {#documentation}
