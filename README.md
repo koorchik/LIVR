@@ -21,71 +21,89 @@
 * [Online JavaScript playground](http://webbylab.github.io/livr-playground/)
 * [Online multi-language playground](http://livr-multi-playground.webbylab.com/)
 
-
 ## Existing implemenations
 
 <div class="langContainer">
     <div class="langItem">
         <a href="https://github.com/koorchik/js-validator-livr">
-            <img src="assets/languages/js.jpg">
+            <img src="assets/languages/js.jpg" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/koorchik/js-validator-livr">
+                <img src="https://travis-ci.org/koorchik/js-validator-livr.svg?branch=master"><br>
+            </a>
             <a href="https://github.com/koorchik/js-validator-livr">
                 JavaScript (LIVR 2.0)
             </a><br>
             available at
             <a href="https://www.npmjs.com/package/livr">
                 npm,
-            </a>maintainer @koorchik
+            </a><br>
+            maintainer @koorchik
         </div>
     </div>
     <div class="langItem">
         <a href="https://github.com/koorchik/Validator-LIVR">
-            <img src="assets/languages/perl.jpg">
+            <img src="assets/languages/perl.jpg" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/koorchik/Validator-LIVR">
+                <img src="https://travis-ci.org/koorchik/Validator-LIVR.svg?branch=master"><br>
+            </a>
             <a href="https://github.com/koorchik/Validator-LIVR">
                 Perl (LIVR 2.0)
             </a><br>
             available at
             <a href="https://metacpan.org/pod/Validator::LIVR">
                 CPAN,
-            </a>maintainer @koorchik
+            </a><br>
+            maintainer @koorchik
         </div>
     </div>
     <div class="langItem">
         <a href="https://github.com/WebbyLab/php-validator-livr">
-            <img src="assets/languages/php.png">
+            <img src="assets/languages/php.png" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/WebbyLab/php-validator-livr">
+                <img src="https://travis-ci.org/WebbyLab/php-validator-livr.svg?branch=master"><br>
+            </a>
             <a href="https://github.com/WebbyLab/php-validator-livr">
                 PHP (LIVR 2.0)
             </a><br>
             available at
             <a href="https://packagist.org/packages/validator/livr">
                 packagist,
-            </a>maintainer @WebbyLab
+            </a><br>
+            maintainer @WebbyLab
         </div>
     </div>
     <div class="langItem">
         <a href="https://github.com/asholok/python-validator-livr">
-            <img src="assets/languages/python.png">
+            <img src="assets/languages/python.png" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/asholok/python-validator-livr">
+                <img src="https://travis-ci.org/asholok/python-validator-livr.svg?branch=master"><br>
+            </a>
             <a href="https://github.com/asholok/python-validator-livr">
                 Python (LIVR 2.0)
             </a><br>
             available at
             <a href="https://pypi.python.org/pypi/LIVR">
                 pypi,
-            </a>maintainer @asholok
+            </a><br>
+            maintainer @asholok
         </div>
     </div>
     <div class="langItem">
         <a href="https://github.com/Prots/olifer">
-            <img src="assets/languages/erlang.png">
+            <img src="assets/languages/erlang.png" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/Prots/olifer">
+                <img src="https://travis-ci.org/Prots/olifer.svg?branch=2.0.2"><br>
+            </a>
             <a href="https://github.com/Prots/olifer">
                 Erlang (LIVR 2.0),
             </a><br>
@@ -94,7 +112,7 @@
     </div>
     <div class="langItem">
         <a href="https://github.com/vlbaluk/java-validator-livr">
-            <img src="assets/languages/java.png">
+            <img src="assets/languages/java.png" class="icon">
         </a>
         <div class="textBlock">
             <a href="https://github.com/vlbaluk/java-validator-livr">
@@ -105,21 +123,24 @@
     </div>
     <div class="langItem">
         <a href="https://github.com/maktwin/ruby-validator-livr">
-            <img src="assets/languages/ruby.png">
+            <img src="assets/languages/ruby.png" class="icon">
         </a>
         <div class="textBlock">
+            <a href="https://travis-ci.org/maktwin/ruby-validator-livr">
+                <img src="https://travis-ci.org/maktwin/ruby-validator-livr.svg?branch=master"><br>
+            </a>
             <a href="https://github.com/maktwin/ruby-validator-livr">
                 Ruby (LIVR 0.4, previous version),
             </a><br>
             maintainer @maktwin
         </div>
     </div>
+    <div>
+        <i>Latest LIVR version is 2.0</i><br>
+        <i>Previous LIVR version is 0.4</i>
+    </div>
 </div>
 
-
-
-_Latest LIVR version is 2.0_  
-_Previous LIVR version is 0.4_
 
 ## Documentation
 
