@@ -1,0 +1,7 @@
+{
+    "string_value": {"remove": "V "},
+    "object": {"nested_object": {
+        "string_value": {"remove": "a-zv|" }
+    }},
+    "list_of_string_values": {"list_of": {"remove": "2"} }
+}

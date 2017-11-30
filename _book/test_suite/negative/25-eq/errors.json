@@ -1,0 +1,11 @@
+{
+    "city1": "NOT_ALLOWED_VALUE",
+    "city2": "NOT_ALLOWED_VALUE",
+    "city3": "NOT_ALLOWED_VALUE",
+    "number1": "NOT_ALLOWED_VALUE",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

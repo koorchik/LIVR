@@ -1,0 +1,8 @@
+{
+    "city1": { "eq": "Moscow" },
+    "city2": [{ "eq": "Kiev" }],
+    "city3": { "eq": "Kiev" },
+    "number1": { "eq": 2 },
+    "number2": { "eq": "2" },
+    "empty_city": { "eq": "Kiev" }
+}

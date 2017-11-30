@@ -1,0 +1,20 @@
+{
+    "id1-1": "Usermail.com",
+    "id2-1": "Usermail.com",
+    "id3-1": "Usermail.com",
+
+    "products": [
+      {
+        "product_type": "material",
+        "material_id": 123,
+        "quantity": 10,
+        "warehouse_id": -321
+      },
+
+      {
+        "product_type": "service",
+        "name": "",
+        "extra_field": "some data"
+      }
+    ]
+}

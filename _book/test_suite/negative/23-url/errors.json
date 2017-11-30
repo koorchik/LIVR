@@ -1,0 +1,10 @@
+{
+    "url1": "WRONG_URL",
+    "url2": "WRONG_URL",
+    "url3": "WRONG_URL",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

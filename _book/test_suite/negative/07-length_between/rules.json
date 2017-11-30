@@ -1,0 +1,11 @@
+{
+    "first_name":   { "length_between": [7, 10]},
+    "last_name":    { "length_between": [4, 5] },
+    "middle_name": [{ "length_between": [2, 3] }],
+    "empty_name":   { "length_between": [4, 10] },
+
+    "value_is_hash":        { "length_between": [7, 10]},
+    "value_is_empty_hash":  { "length_between": [7, 10]},
+    "value_is_array":       { "length_between": [7, 10]},
+    "value_is_empty_array": { "length_between": [7, 10]}
+}

@@ -1,0 +1,10 @@
+{
+    "first_name": "not_empty",
+    "last_name": ["not_empty"],
+    "middle_name": [ { "not_empty": [] } ],
+
+    "value_is_hash":        "not_empty",
+    "value_is_empty_hash":  "not_empty",
+    "value_is_array":       "not_empty",
+    "value_is_empty_array": "not_empty"
+}

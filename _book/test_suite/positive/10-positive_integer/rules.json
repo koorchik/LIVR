@@ -1,0 +1,6 @@
+{
+    "number1": "positive_integer",
+    "number2": ["positive_integer"],
+    "number3": [ { "positive_integer": [] } ],
+    "empty_field": "positive_integer"
+}

@@ -1,0 +1,12 @@
+{
+    "number1": "positive_decimal",
+    "number2": ["positive_decimal"],
+    "number3": [ { "positive_decimal": [] } ],
+    "empty_field": "positive_decimal",
+
+    "value_is_string":      "positive_decimal",
+    "value_is_hash":        "positive_decimal",
+    "value_is_empty_hash":  "positive_decimal",
+    "value_is_array":       "positive_decimal",
+    "value_is_empty_array": "positive_decimal"
+}

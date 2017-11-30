@@ -1,0 +1,8 @@
+{
+    "first_name":   { "length_between": [4, 6] },
+    "last_name":    { "length_between": [6, 6] },
+    "middle_name": [{ "length_between": [0, 100] }],
+    "number1":      { "length_between": [2, 4] },
+    "empty_name":   { "length_between": [2, 3] },
+    "missed_name":  { "length_between": [2, 3] }
+}

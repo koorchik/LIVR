@@ -1,0 +1,5 @@
+{
+    "string_value": "VALUE",
+    "object": {"string_value": "SOME VALUE"},
+    "list_of_string_values": ["VALUE1", {"key": "123"}, "VALUE2"]
+}

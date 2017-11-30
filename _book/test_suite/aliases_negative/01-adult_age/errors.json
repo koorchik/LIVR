@@ -1,0 +1,6 @@
+{
+    "age3": "TOO_LOW",
+    "age4": "NOT_POSITIVE_INTEGER",
+    "age3_custom_error": "WRONG_AGE",
+    "age4_custom_error": "WRONG_AGE"
+}

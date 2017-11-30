@@ -1,0 +1,20 @@
+[
+    {
+        "name": "address",
+        "rules": { "nested_object":{
+            "street": "required",
+            "zip": ["required", "positive_integer"],
+            "city": {"one_of": ["Kiev", "Kharkiv"] }
+        }}
+    },
+
+    {
+        "name": "address_with_custom_error",
+        "rules": { "nested_object":{
+            "street": "required",
+            "zip": ["required", "positive_integer"],
+            "city": {"one_of": ["Kiev", "Kharkiv"] }
+        }},
+        "error": "WRONG_ADDRESS"
+    }
+]

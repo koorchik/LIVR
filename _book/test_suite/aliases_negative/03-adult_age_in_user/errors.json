@@ -1,0 +1,8 @@
+{
+    "user": {
+        "name": "REQUIRED",
+        "age1": "TOO_LOW",
+        "age2": "WRONG_AGE"
+    },
+    "user_custom_error": "WRONG_USER"
+}

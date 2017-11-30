@@ -1,0 +1,18 @@
+{
+    "products": [
+        {
+            "product_id": 0,
+            "quantity": ""
+        },
+        {
+            "product_id": 100,
+            "quantity": 10
+        },
+        {
+            "product_id": -10,
+            "quantity": 10
+        },
+        "Some Wrong Data"
+    ],
+    "users": "not an array"
+}

@@ -1,0 +1,24 @@
+{
+    "id1-1": { "or": ["email", "positive_integer" ] },
+    "id1-2": { "or": ["email", "positive_integer" ] },
+
+    "id2-1": [{ "or": ["email", "positive_integer" ] }, "to_lc"],
+    "id2-2": [{ "or": ["email", "positive_integer" ] }, "to_lc"],
+
+    "id3-1": { "or": [{"min_length": 15}, ["email", "to_lc"] ] },
+    "id3-2": { "or": [{"min_length": 15}, ["email", "to_lc"] ] },
+
+    "products": {"list_of": { "or": [
+        {"nested_object": {
+            "product_type": ["required", {"eq": "material"}],
+            "material_id": ["required", "positive_integer"],
+            "quantity": ["required", {"min_number": 1} ],
+            "warehouse_id": "positive_integer"
+        }},
+
+        {"nested_object": {
+            "product_type": ["required", {"eq": "service"}],
+            "name": ["required", {"max_length": 20} ]
+        }}
+    ]}}
+}

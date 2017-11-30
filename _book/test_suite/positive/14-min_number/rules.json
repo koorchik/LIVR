@@ -1,0 +1,6 @@
+{
+    "number1": { "min_number": 10 },
+    "number2": { "min_number": [20] },
+    "number3": [ { "min_number": [30] } ],
+    "empty_field": { "min_number": 10 }
+}

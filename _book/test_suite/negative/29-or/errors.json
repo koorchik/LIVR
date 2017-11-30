@@ -1,0 +1,14 @@
+{
+     "id1-1": "NOT_POSITIVE_INTEGER",
+     "id2-1": "NOT_POSITIVE_INTEGER",
+     "id3-1": "WRONG_EMAIL",
+     "products": [
+       {
+         "name": "REQUIRED",
+         "product_type": "NOT_ALLOWED_VALUE"
+       },
+       {
+         "name": "REQUIRED"
+       }
+    ]
+}

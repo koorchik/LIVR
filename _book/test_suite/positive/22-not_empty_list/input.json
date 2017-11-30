@@ -1,0 +1,6 @@
+{
+    "list_with_numbers": [0],
+    "list_with_objects": [{},{"key": "123"}],
+    "list_with_arrays":  [[1,2,3]],
+    "extra_field": [1,2,3]
+}

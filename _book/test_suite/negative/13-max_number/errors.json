@@ -1,0 +1,10 @@
+{
+    "number1": "TOO_HIGH",
+    "number2": "TOO_HIGH",
+
+    "value_is_string":      "NOT_NUMBER",
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

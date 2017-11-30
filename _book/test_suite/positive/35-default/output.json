@@ -1,0 +1,11 @@
+{
+    "empty_value1": 10,
+    "empty_value2": [],
+    "empty_value3": {},
+    "zero_value": 0,
+    "missed_value": "15",
+
+    "string_value": "Value",
+    "object": {"name": "Value"},
+    "list_of_string_values": ["value1", {"key": "123"}, "value2"]
+}

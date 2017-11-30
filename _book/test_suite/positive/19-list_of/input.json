@@ -1,0 +1,7 @@
+{
+    "product_ids1": [ 10, 20, 100, 10 ],
+    "product_ids2": [ 10, 20, 100, 10 ],
+    "product_ids3": [ 10, 20, 100, 10 ],
+    "user_ids": "",
+    "empty_list": []
+}

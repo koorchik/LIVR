@@ -1,0 +1,7 @@
+{
+    "city1": "string",
+    "city2": [{ "string": [] }],
+    "number1": "string",
+    "number2": "string",
+    "empty_city": "string"
+}

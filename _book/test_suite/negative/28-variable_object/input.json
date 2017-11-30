@@ -1,0 +1,24 @@
+{
+    "order_id": "-10",
+    "product1": {
+        "product_type": "material",
+        "material_id": 0,
+        "quantity": ""
+    },
+    "product2":   {
+        "product_type": "material",
+        "material_id": 100,
+        "quantity": 10,
+        "warehouse_id": -100
+    },
+    "product3": {
+        "product_type": "service",
+        "name": "Very Long Name"
+    },
+    "product4": {
+        "product_type": "wrongtype",
+        "name": "Wrongtype"
+    },
+    "product5": "Some Wrong Data",
+    "users": "not an array"
+}

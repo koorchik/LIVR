@@ -1,0 +1,11 @@
+{
+    "first_name": "WRONG_FORMAT",
+    "last_name": "WRONG_FORMAT",
+    "middle_name": "WRONG_FORMAT",
+    "age": "WRONG_FORMAT",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

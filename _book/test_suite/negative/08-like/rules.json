@@ -1,0 +1,12 @@
+{
+    "first_name":   { "like": "[0-9]+" },
+    "last_name":    { "like": ["^[A-Z]+$"] },
+    "middle_name":   { "like": ["^[b-z]+$", "i"] },
+    "age": [{ "like": "^[a-z]+$" }],
+    "empty_name":   { "like": "[A-Za-z]" },
+
+    "value_is_hash":        { "like": "[0-9]+" },
+    "value_is_empty_hash":  { "like": "[0-9]+" },
+    "value_is_array":       { "like": "[0-9]+" },
+    "value_is_empty_array": { "like": "[0-9]+" }
+}

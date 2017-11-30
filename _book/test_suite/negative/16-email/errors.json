@@ -1,0 +1,12 @@
+{
+    "email1": "WRONG_EMAIL",
+    "email2": "WRONG_EMAIL",
+    "email3": "WRONG_EMAIL",
+    "email4": "WRONG_EMAIL",
+    "email5": "WRONG_EMAIL",
+
+    "value_is_hash":        "FORMAT_ERROR",
+    "value_is_empty_hash":  "FORMAT_ERROR",
+    "value_is_array":       "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

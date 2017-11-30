@@ -1,0 +1,10 @@
+{
+    "products": [ "required", { "list_of_objects": {
+        "product_id": [ "required","positive_integer" ],
+        "quantity": [ "required", "positive_integer" ]
+    }}],
+
+    "empty_list": [{"list_of_objects": {
+        "some_field": ["required"]
+    }}]
+}

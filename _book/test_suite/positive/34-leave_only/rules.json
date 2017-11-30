@@ -1,0 +1,7 @@
+{
+    "string_value": {"leave_only": "Vl "},
+    "object": {"nested_object": {
+        "string_value": {"leave_only": "a-zv" }
+    }},
+    "list_of_string_values": {"list_of": {"leave_only": "23"} }
+}

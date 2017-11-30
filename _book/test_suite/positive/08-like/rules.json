@@ -1,0 +1,8 @@
+{
+    "first_name":   { "like": "[A-Za-z]+" },
+    "last_name":    { "like": ["^[A-Za-z]+$"] },
+    "middle_name":    { "like": ["^[a-z]+$", "i"] },
+    "age": [{ "like": "^[0-9]+$" }],
+    "empty_name":   { "like": "[A-Za-z]" },
+    "missed_name":   { "like": "[A-Za-z]" }
+}

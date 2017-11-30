@@ -1,0 +1,12 @@
+{
+    "number1": "decimal",
+    "number2": ["decimal"],
+    "number3": [ { "decimal": [] } ],
+    "empty_field": "decimal",
+
+    "value_is_string":      "decimal",
+    "value_is_hash":        "decimal",
+    "value_is_empty_hash":  "decimal",
+    "value_is_array":       "decimal",
+    "value_is_empty_array": "decimal"
+}

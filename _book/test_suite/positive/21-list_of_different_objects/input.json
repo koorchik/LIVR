@@ -1,0 +1,22 @@
+{
+    "order_id": "10",
+    "products": [
+        {
+            "product_type": "material",
+            "material_id": 12,
+            "quantity": "11"
+        },
+        {
+            "product_type": "material",
+            "material_id": 100,
+            "quantity": 10,
+            "warehouse_id": 100
+        },
+        {
+            "product_type": "service",
+            "name": "service1",
+            "extra_field": "will be removed"
+        }
+    ],
+    "empty_list": []
+}

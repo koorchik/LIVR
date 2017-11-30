@@ -4,9 +4,38 @@
 
 ## Existing implemenations
 
-[<img src="assets/languages/js.jpg" width="100" height="100">](https://github.com/koorchik/js-validator-livr) [JavaScript \(LIVR 2.0\)](https://github.com/koorchik/js-validator-livr) available at [npm](https://www.npmjs.com/package/livr), maintainer @koorchik
+<div class="readme/langContainer">
 
-[<img src="assets/languages/perl.jpg" width="100" height="100">](https://github.com/koorchik/Validator-LIVR) [Perl \(LIVR 2.0\)](https://github.com/koorchik/Validator-LIVR) available at [CPAN](https://metacpan.org/pod/Validator::LIVR), maintainer @koorchik
+<div class="readme/langItem">
+<a href="https://github.com/koorchik/js-validator-livr">
+<img src="assets/languages/js.jpg" width="100" height="100">
+</a>
+<div>
+<a href="https://github.com/koorchik/js-validator-livr">
+JavaScript (LIVR 2.0)
+</a> available at
+<a href="https://www.npmjs.com/package/livr">
+npm
+</a>, maintainer @koorchik
+</div>
+</div>
+
+<div class="langItem">
+<a href="https://github.com/koorchik/Validator-LIVR">
+<img src="assets/languages/perl.jpg" width="100" height="100">
+</a>
+<div>
+<a href="https://github.com/koorchik/Validator-LIVR">
+Perl (LIVR 2.0)
+</a> available at
+<a href="https://metacpan.org/pod/Validator::LIVR">
+CPAN
+</a>, maintainer @koorchik
+</div>
+</div>
+
+</div>
+
 
 [<img src="assets/languages/php.png" width="100" height="100">](https://github.com/WebbyLab/php-validator-livr) [PHP \(LIVR 2.0\)](https://github.com/WebbyLab/php-validator-livr) available at [packagist](https://packagist.org/packages/validator/livr), maintainer @WebbyLab
 

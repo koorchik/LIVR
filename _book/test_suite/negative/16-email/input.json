@@ -1,0 +1,14 @@
+{
+    "email1": "testmail.com",
+    "email2": "test@test@mail.com.ua",
+    "email3": "test+test.t_e_s_t@ma_il.in.ua",
+    "email4": "user name@gmail.com",
+    "email5": "username@mail.c om",
+    "empty_field": "",
+    "extra_field": "aaaa",
+
+    "value_is_hash":        {"test": 1},
+    "value_is_empty_hash":  {},
+    "value_is_array":       ["test", 1],
+    "value_is_empty_array": []
+}

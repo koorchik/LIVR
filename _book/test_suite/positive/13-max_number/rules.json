@@ -1,0 +1,6 @@
+{
+    "number1": { "max_number": 10 },
+    "number2": { "max_number": [20] },
+    "number3": [ { "max_number": [30] } ],
+    "empty_field": { "max_number": 10 }
+}
