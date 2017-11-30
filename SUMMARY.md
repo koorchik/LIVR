@@ -58,6 +58,3 @@
     * [Create own Plugins](gitbook/how-to-contribute/create-own-plugins.md)
 * [Changes](gitbook/changes.md)
 * [License](gitbook/license-and-copyright.md)
-
-## Tools
-* [js-livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules)
