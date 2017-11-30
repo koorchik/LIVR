@@ -1,4 +1,12 @@
-![LIVR logo](assets/logo.png)
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<a href="https://github.com/koorchik/LIVR">
+    <img src="assets/logo.png">
+</a>
+<a class="github-button" href="https://github.com/koorchik/LIVR" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star koorchik/LIVR on GitHub">Star</a>
+
 
 # Language Independent Validation Rules \(v2.0\)
 
