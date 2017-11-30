@@ -1,5 +1,0 @@
-{
-    "string_value": "Value value Value",
-    "object": {"string_value": "Value-value |Value|"},
-    "list_of_string_values": ["value1", {"key": "123"}, "value2"]
-}

@@ -1,5 +1,0 @@
-{
-    "list_with_numbers": "not_empty_list",
-    "list_with_objects": [{ "not_empty_list" : [] }],
-    "list_with_arrays":  "not_empty_list"
-}

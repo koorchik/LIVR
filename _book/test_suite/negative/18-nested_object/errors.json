@@ -1,9 +1,0 @@
-{
-    "address": {
-        "country": "NOT_ALLOWED_VALUE",
-        "zip": "NOT_POSITIVE_INTEGER",
-        "street": "REQUIRED",
-        "building": "NOT_POSITIVE_INTEGER"
-    },
-    "address2": "FORMAT_ERROR"
-}

@@ -1,6 +1,0 @@
-{
-    "email1": "email",
-    "email2": { "email": [] },
-    "email3": [ { "email": [] } ],
-    "empty_field": "email"
-}

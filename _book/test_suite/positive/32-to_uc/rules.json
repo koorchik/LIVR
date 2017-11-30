@@ -1,5 +1,0 @@
-{
-    "string_value": "to_uc",
-    "object": {"nested_object": {"string_value": "to_uc"} },
-    "list_of_string_values": {"list_of": "to_uc"}
-}
