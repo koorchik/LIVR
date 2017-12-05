@@ -45,7 +45,8 @@
             <a href="https://www.npmjs.com/package/livr">
                 npm,
             </a><br>
-            maintainer @koorchik
+            maintainer
+            <a href="https://github.com/koorchik" rel="nofollow">@koorchik</a>
         </div>
     </div>
     <div class="langItem">
@@ -63,7 +64,8 @@
             <a href="https://metacpan.org/pod/Validator::LIVR">
                 CPAN,
             </a><br>
-            maintainer @koorchik
+            maintainer
+            <a href="https://github.com/koorchik" rel="nofollow">@koorchik</a>
         </div>
     </div>
     <div class="langItem">
@@ -81,7 +83,8 @@
             <a href="https://packagist.org/packages/validator/livr">
                 packagist,
             </a><br>
-            maintainer @WebbyLab
+            maintainer
+            <a href="https://github.com/WebbyLab" rel="nofollow">@WebbyLab</a>
         </div>
     </div>
     <div class="langItem">
@@ -99,7 +102,8 @@
             <a href="https://pypi.python.org/pypi/LIVR">
                 pypi,
             </a><br>
-            maintainer @asholok
+            maintainer
+            <a href="https://github.com/asholok" rel="nofollow">@asholok</a>
         </div>
     </div>
     <div class="langItem">
@@ -111,9 +115,10 @@
                 <img src="https://travis-ci.org/Prots/olifer.svg?branch=2.0.2"><br>
             </a>
             <a href="https://github.com/Prots/olifer">
-                Erlang (LIVR 2.0, olifer),
+                OLIFER, Erlang (LIVR 2.0),
             </a><br>
-            maintainer @Prots
+            maintainer
+            <a href="https://github.com/Prots" rel="nofollow">@Prots</a>
         </div>
     </div>
     <div class="langItem">
@@ -125,9 +130,10 @@
                 <img src="https://travis-ci.org/erlangbureau/liver.svg?branch=master"><br>
             </a>
             <a href="https://github.com/erlangbureau/liver">
-                Erlang (LIVR 2.0, liver),
+                LIVER, Erlang (LIVR 2.0),
             </a><br>
-            maintainer @erlangbureau
+            maintainer
+            <a href="https://github.com/erlangbureau" rel="nofollow">@erlangbureau</a>
         </div>
     </div>
     <div class="langItem">
@@ -138,7 +144,8 @@
             <a href="https://github.com/vlbaluk/java-validator-livr">
                 Java (LIVR 2.0),
             </a><br>
-            maintainer @vlbaluk
+            maintainer
+            <a href="https://github.com/vlbaluk" rel="nofollow">@vlbaluk</a>
         </div>
     </div>
     <div class="langItem">
@@ -152,7 +159,8 @@
             <a href="https://github.com/maktwin/ruby-validator-livr">
                 Ruby (LIVR 0.4, previous version),
             </a><br>
-            maintainer @maktwin
+            maintainer
+            <a href="https://github.com/maktwin" rel="nofollow">@maktwin</a>
         </div>
     </div>
 </div>
