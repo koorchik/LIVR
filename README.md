@@ -1,4 +1,4 @@
-# Language Independent Validation Rules \(v2.0\) 
+# Language Independent Validation Rules \(v2.0\)
 
 ## Validator meets the following requirements:
 
@@ -33,7 +33,7 @@ _Latest LIVR version is 2.0_
 _Previous LIVR version is 0.4_
 
 
-## Documentation {#documentation}
+## Documentation
 
 * [Introduction](gitbook/introduction.md)
 * [Validation Rules](gitbook/validation-rules.md)
