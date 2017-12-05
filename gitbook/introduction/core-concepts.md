@@ -12,7 +12,7 @@ Since the task was to make the validator independent of the programming language
 4. Be a single basic documentation for all implementations.
 5. Have a set of test data that allows you to verify the implementation for compliance with the specification
 
-The specification is available in [Documentation](../../README.md#documentation).
+The specification is available in [Documentation](../README.md#documentation).
 
 The basic idea was that the description of the validation rules should look like a data schema and be as similar to data as possible, only instead of the rule values.
 

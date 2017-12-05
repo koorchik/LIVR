@@ -11,12 +11,12 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
 
 ##### Standard rules that should be supported by every implementation:
 
-* [Common Rules](/gitbook/validation-rules/common-rules.md)
+* [Common Rules](validation-rules/common-rules.md)
   * required
   * not\_empty
   * not\_empty\_list
   * any\_object
-* [String Rules](/gitbook/validation-rules/string-rules.md)
+* [String Rules](validation-rules/string-rules.md)
   * string
   * eq
   * one\_of
@@ -25,7 +25,7 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
   * length\_between
   * length\_equal
   * like
-* [Numeric Rules](/gitbook/validation-rules/numeric-rules.md)
+* [Numeric Rules](validation-rules/numeric-rules.md)
   * integer
   * positive\_integer
   * decimal
@@ -33,24 +33,21 @@ first_name: [ 'required', { min_length: [10] } ] # check that the name is presen
   * max\_number
   * min\_number
   * number\_between
-* [Special Rules](/gitbook/validation-rules/special-rules.md)
+* [Special Rules](validation-rules/special-rules.md)
   * email
   * url
   * iso\_date
   * equal\_to\_field
-* [Metarules](/gitbook/validation-rules/metarules.md)
+* [Metarules](validation-rules/metarules.md)
   * nested\_object
   * list\_of
   * list\_of\_objects
   * list\_of\_different\_objects
   * or
-* [Modifiers](/gitbook/validation-rules/modifiers.md) \(previously - "Filter rules"\)
+* [Modifiers](validation-rules/modifiers.md) \(previously - "Filter rules"\)
   * trim
   * to\_lc
   * to\_uc
   * remove
   * leave\_only
   * default
-
-
-
