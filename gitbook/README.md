@@ -175,7 +175,7 @@
 * [Changes](changes.md)
 * [License](license-and-copyright.md)
 
-## Post about LIVR
+## Posts and talks about LIVR
 
 * ["LIVR - Data Validation Without Any Issues" from LIVR creator](http://blog.webbylab.com/language-independent-validation-rules-library/)
 * [Talk on LIVR 2.0 at the OSDN-UA 2017 conference (RU)](https://www.youtube.com/watch?v=QlwcG3N_rmw&feature=youtu.be)
