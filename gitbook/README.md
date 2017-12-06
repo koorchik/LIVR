@@ -22,6 +22,7 @@
 10. Multipurpose \(user input validation, configs validation, contracts programming etc\)
 11. Unicode support
 
+
 ## Try online
 
 * [Online JavaScript playground](http://webbylab.github.io/livr-playground/)
@@ -173,6 +174,13 @@
 * [How to contribute](how-to-contribute.md)
 * [Changes](changes.md)
 * [License](license-and-copyright.md)
+
+## Post about LIVR
+
+* ["LIVR - Data Validation Without Any Issues" from LIVR creator](http://blog.webbylab.com/language-independent-validation-rules-library/)
+* [Talk on LIVR 2.0 at the OSDN-UA 2017 conference (RU)](https://www.youtube.com/watch?v=QlwcG3N_rmw&feature=youtu.be)
+* [Article on LIVR & Perl implementation in the PragmaticPerl magazine (RU)](http://pragmaticperl.com/issues/05/pragmaticperl-05-livr-language-independent-validation-rules-%D0%BD%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D1%8B%D0%B5-%D0%BE%D1%82-%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0-%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0-%D0%B2%D0%B0%D0%BB%D0%B8%D0%B4%D0%B0%D1%86%D0%B8%D0%B8.html)
+
 
 ## Examples
 
