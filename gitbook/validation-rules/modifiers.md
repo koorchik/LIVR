@@ -8,7 +8,7 @@ Removes leading and trailing spaces. Skips object references.
 
 Example:
 
-```text
+```javascript
 {email: 'trim'}
 ```
 
@@ -18,7 +18,7 @@ Converts string to lower case. Skips object references.
 
 Example:
 
-```text
+```javascript
 {email: 'to_lc'}
 ```
 
@@ -28,7 +28,7 @@ Converts string to upper case. Skips object references.
 
 Example:
 
-```text
+```javascript
 {currency_code: 'to_uc'}
 ```
 
@@ -38,7 +38,7 @@ Removes characters from string
 
 Example:
 
-```text
+```javascript
 { text: { remove: '0123456789' } }  // Remove all numbers from text
 ```
 
@@ -48,7 +48,7 @@ Removes characters from string
 
 Example:
 
-```text
+```javascript
 { text: { leave_only: '0123456789' } }  // Leaves only numbers in text
 ```
 
@@ -58,11 +58,6 @@ Set value if is not present.
 
 Example:
 
-```text
+```javascript
 { age: { default: 18 } }  // Sets age to 18 if not passed
 ```
-
-## 
-
-
-

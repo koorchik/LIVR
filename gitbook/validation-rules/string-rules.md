@@ -6,10 +6,10 @@ Checks that value is primitive type and coerces it to the string. Better use mor
 
 Example:
 
-```text
+```javascript
 {
     data: 'any' // validator will pass "data" field
-    payload: ['required', 'string'] //
+    payload: ['required', 'string']
 }
 ```
 
@@ -21,7 +21,7 @@ Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
 
-```text
+```javascript
 { first_name: {'eq': 'Anton'} }
 ```
 
@@ -31,7 +31,7 @@ Error code: 'NOT\_ALLOWED\_VALUE'
 
 Example:
 
-```text
+```javascript
 // new syntax (introduced in v0.4)
 { first_name: {'one_of': ['Anton', 'Igor']} }
 
@@ -45,7 +45,7 @@ Error code: 'TOO\_LONG'
 
 Example:
 
-```text
+```javascript
 { first_name: { max_length: 10 } }
 ```
 
@@ -55,7 +55,7 @@ Error code: 'TOO\_SHORT'
 
 Example:
 
-```text
+```javascript
 { first_name: { min_length: 2 } }
 ```
 
@@ -65,7 +65,7 @@ Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
-```text
+```javascript
 { first_name: { length_between: [2, 10] }
 ```
 
@@ -75,7 +75,7 @@ Error code: 'TOO\_LONG' or 'TOO\_SHORT'
 
 Example:
 
-```text
+```javascript
 { first_name: { length_equal: 7 }
 ```
 
@@ -85,7 +85,7 @@ Error code: 'WRONG\_FORMAT'
 
 Example:
 
-```text
+```javascript
 { first_name: { like: '^\w+?$' }
 { first_name: { like: ['^\w+?$', 'i'] } // with flags
 ```
@@ -93,8 +93,3 @@ Example:
 Only 'i' flag is currently required by specification.
 
 **Be aware** that regular expressions can be language dependent. Try to use most common syntax. This rule is experimental as it requires more strict semantics.
-
-### 
-
-
-

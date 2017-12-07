@@ -4,7 +4,7 @@ With rules aliasing you can create custom rules easely and assign own error code
 
 Alias struture:
 
-```text
+```javascript
 {
     name: ALIAS_NAME,
     rules: ALIAS_RULES,
@@ -16,7 +16,7 @@ If ERROR\_CODE is empty than validator will return subrules errors.
 
 Example:
 
-```text
+```javascript
 {
     name: 'valid_address',
     rules: { nested_object: {
@@ -39,7 +39,7 @@ Moreover, you can use aliased rules in aliased rules.
 
 Let's assume that you have next data structure:
 
-```text
+```javascript
 {
     name: 'Viktor',
     age: 30,
@@ -53,7 +53,7 @@ Let's assume that you have next data structure:
 
 And you have next validation rules for it:
 
-```text
+```javascript
 {
     name: 'required',
     age: ['required', 'positive_integer', { min_number: 18 } ],
@@ -71,7 +71,7 @@ From v0.4 you have the third way - rule aliasing.
 
 You can register aliases for complex rules. The way how you register an alias depends on the implementation but the way how use and describe it is covered by the specification. This appoach allows you store aliases in serialized JSON files and then use them across different implementations.
 
-```text
+```javascript
 // Aliasing pseudo code
 validator.register_rule_alias({
     name: 'valid_address',
@@ -99,7 +99,7 @@ Moreover, you can add own error codes for the rules
 
 For example
 
-```text
+```javascript
 // Aliasing pseudo code
 validator.register_rule_alias({
     name: 'valid_address',
@@ -114,11 +114,8 @@ validator.register_rule_alias({
 
 and if validation of address fails you will have the next error
 
-```text
+```javascript
 {
     address: 'WRONG_ADDRESS'
 }
 ```
-
-
-

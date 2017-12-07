@@ -6,7 +6,7 @@ Error code: 'NOT\_INTEGER'
 
 Example:
 
-```text
+```javascript
 { age: 'integer' }
 ```
 
@@ -16,7 +16,7 @@ Error code: 'NOT\_POSITIVE\_INTEGER'
 
 Example:
 
-```text
+```javascript
 { age: 'positive_integer' }
 ```
 
@@ -26,7 +26,7 @@ Error code: 'NOT\_DECIMAL'
 
 Example:
 
-```text
+```javascript
 { price: 'decimal' }
 ```
 
@@ -36,7 +36,7 @@ Error code: 'NOT\_POSITIVE\_DECIMAL'
 
 Example:
 
-```text
+```javascript
 { price: 'positive_decimal' }
 ```
 
@@ -46,7 +46,7 @@ Error code: 'TOO\_HIGH' or 'NOT\_NUMBER'
 
 Example:
 
-```text
+```javascript
 { age: { 'max_number': 95 } }
 ```
 
@@ -56,7 +56,7 @@ Error code: 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
-```text
+```javascript
 { age: { 'min_number': 18 } }
 ```
 
@@ -66,9 +66,6 @@ Error code: 'TOO\_HIGH' or 'TOO\_LOW' or 'NOT\_NUMBER'
 
 Example:
 
-```text
+```javascript
 { age: { 'number_between': [18, 95] } }
 ```
-
-
-

@@ -10,7 +10,7 @@ Error code: depends on nested validators. If nested object is not a hash should 
 
 Example:
 
-```text
+```javascript
 address: { 'nested_object': {
     city: 'required',
     zip: ['required', 'positive_integer']
@@ -25,7 +25,7 @@ Error code: depends on nested validators. Or "FORMAT\_ERROR" in case of receivin
 
 Example:
 
-```text
+```javascript
 product: ['required', { 'variable_object': [
     product_type, {
         material: {
@@ -52,7 +52,7 @@ Error code: depends on nested validators
 
 Example:
 
-```text
+```javascript
 // new syntax (introduced in v0.4)
 { product_ids: { 'list_of': 'positive_integer' }}
 { product_ids: { 'list_of': ['required',  'positive_integer'] }} // new syntax
@@ -70,7 +70,7 @@ Error code: depends on nested validators. Or "FORMAT\_ERROR" in case of receivin
 
 Example:
 
-```text
+```javascript
 products: ['required', { 'list_of_objects': [{
     product_id: ['required','positive_integer'],
     quantity: ['required', 'positive_integer']
@@ -85,7 +85,7 @@ Error code: depends on nested validators. Or "FORMAT\_ERROR" in case of receivin
 
 Example:
 
-```text
+```javascript
 products: ['required', { 'list_of_different_objects': [
     product_type, {
         material: {
@@ -116,7 +116,7 @@ Examples:
 
 "id" should be email or positive\_integer:
 
-```text
+```javascript
 {
     id: { or: ['email', 'positive_integer' ] }
 }
@@ -124,7 +124,7 @@ Examples:
 
 Combining with other rules:
 
-```text
+```javascript
 {
     id: [{ or: ['email', 'positive_integer' ] }, 'to_lc']
 }
@@ -132,7 +132,7 @@ Combining with other rules:
 
 Set of rules in "or":
 
-```text
+```javascript
 {
     id: { or: [['email', 'to_lc'], 'positive_integer' ] }
 }
@@ -140,7 +140,7 @@ Set of rules in "or":
 
 Emulate list\_of\_different\_objects:
 
-```text
+```javascript
 {
     products: {list_of: { or: [
         {nested_object: {
@@ -160,7 +160,7 @@ Emulate list\_of\_different\_objects:
 
 is the same as
 
-```text
+```javascript
 {
     order_id: ['required', 'positive_integer'],
     products: ['required', { 'list_of_different_objects': [
@@ -181,4 +181,3 @@ is the same as
 ```
 
 _Internally there is a difference. "or" will try apply one rule after another, but "list\_of\_different\_objects" will select only one set of rules._
-
