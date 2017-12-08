@@ -1,5 +1,7 @@
 {
     "string_value": "trim",
+    "decimal_value": ["trim"],
+    "unicode_string": "trim",
     "object": {"nested_object": {"string_value": "trim"} },
     "list_of_string_values": {"list_of": "trim"}
 }

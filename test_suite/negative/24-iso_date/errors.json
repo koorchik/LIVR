@@ -2,6 +2,7 @@
     "iso_date1": "WRONG_DATE",
     "iso_date2": "WRONG_DATE",
     "iso_date3": "WRONG_DATE",
+    "like_iso_date": "WRONG_DATE",
 
     "value_is_hash":        "FORMAT_ERROR",
     "value_is_empty_hash":  "FORMAT_ERROR",

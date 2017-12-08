@@ -1,5 +1,7 @@
 {
     "string_value": "VALUE",
+    "unicode_string": "ПРИВЕТ",
+    "decimal_value": "1.2",
     "object": {"string_value": "SOME VALUE"},
     "list_of_string_values": ["VALUE1", {"key": "123"}, "VALUE2"]
 }

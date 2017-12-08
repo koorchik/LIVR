@@ -1,6 +1,8 @@
 {
     "number1": "5",
     "number2": "40",
+    "number3": -40,
+    "number4": 40,
     "empty_field": "",
     "extra_field": "100",
 
