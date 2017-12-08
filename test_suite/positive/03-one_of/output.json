@@ -4,6 +4,7 @@
     "city3": "Kiev",
     "number1": 2,
     "number2": "2",
+    "number3": 1.2,
     "boolean": true,
     "empty_city": ""
 }

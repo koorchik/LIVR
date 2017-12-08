@@ -1,6 +1,7 @@
 {
     "number1": "5",
     "number2": "-10",
+    "number3": 1.2,
     "empty_field": "",
     "extra_field": "100",
 

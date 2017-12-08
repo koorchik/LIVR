@@ -1,5 +1,7 @@
 {
     "string_value": "to_lc",
+    "decimal_value": ["to_lc"],
+    "unicode_string": "to_lc",
     "object": {"nested_object": {"string_value": "to_lc"} },
     "list_of_string_values": {"list_of": "to_lc"},
     "to_lc_with_another_rule": ["to_lc", "required"]

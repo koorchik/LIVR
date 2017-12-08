@@ -1,6 +1,8 @@
 {
     "number1": "TOO_LOW",
     "number2": "TOO_HIGH",
+    "number3": "TOO_LOW",
+    "number4": "TOO_HIGH",
 
     "value_is_string":      "NOT_NUMBER",
     "value_is_hash":        "FORMAT_ERROR",

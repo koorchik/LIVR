@@ -3,6 +3,7 @@
     "last_name": "Pupkin",
     "middle_name": "Some name",
     "number1": 1111,
+    "decimal": 1.2,
     "empty_name": "",
     "extra_name": "extra_name"
 }
