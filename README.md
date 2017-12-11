@@ -25,7 +25,8 @@
 * [Perl \(LIVR 2.0\)](https://github.com/koorchik/Validator-LIVR) available at [CPAN](https://metacpan.org/pod/Validator::LIVR), maintainer @koorchik
 * [PHP \(LIVR 2.0\)](https://github.com/WebbyLab/php-validator-livr) available at [packagist](https://packagist.org/packages/validator/livr), maintainer @WebbyLab
 * [Python \(LIVR 2.0\)](https://github.com/asholok/python-validator-livr) available at [pypi](https://pypi.python.org/pypi/LIVR), maintainer @asholok
-* [Erlang \(LIVR 2.0\)](https://github.com/Prots/olifer), maintainer @Prots
+* [Erlang, Olifer \(LIVR 2.0\)](https://github.com/Prots/olifer), maintainer @Prots
+* [Erlang, Liver \(LIVR 2.0\)](https://github.com/erlangbureau/liver), maintainer @erlangbureau
 * [Java \(LIVR 2.0\)](https://github.com/vlbaluk/java-validator-livr), maintainer @vlbaluk
 * [Ruby \(LIVR 0.4, previous version\)](https://github.com/maktwin/ruby-validator-livr) at [rubygems](https://rubygems.org/gems/livr), maintainer @maktwin
 
