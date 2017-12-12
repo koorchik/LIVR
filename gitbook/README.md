@@ -123,7 +123,7 @@
         </div>
     </div>
     <div class="langItem">
-        <a href="https://github.com/Prots/olifer">
+        <a href="https://github.com/erlangbureau/liver">
             <img src="assets/languages/erlang.png" width="100" height="100" class="icon">
         </a>
         <div class="textBlock">
