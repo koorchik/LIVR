@@ -1,5 +1,10 @@
 {
-  "plugins": ["styles-less"],
+  "plugins": ["styles-less", "ga"],
+  "pluginsConfig": {
+    "ga": {
+      "token": "UA-9638621-7"
+    }
+  },
   "styles": {
       "website": "styles/website.less"
   }

@@ -6,7 +6,7 @@ Error code: 'WRONG\_EMAIL'
 
 Example:
 
-```text
+```javascript
 { login: 'email' }
 ```
 
@@ -18,7 +18,7 @@ Error code: 'WRONG\_URL'
 
 Example:
 
-```text
+```javascript
 { url: 'url' }
 ```
 
@@ -30,7 +30,7 @@ Error code: 'WRONG\_DATE'
 
 Example:
 
-```text
+```javascript
 { date: 'iso_date' }
 ```
 
@@ -40,9 +40,6 @@ Error code: 'FIELDS\_NOT\_EQUAL'
 
 Example:
 
-```text
+```javascript
 { password2: { 'equal_to_field': 'password' } }
 ```
-
-
-

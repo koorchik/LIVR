@@ -8,19 +8,19 @@ Examples:
 
 'required' or {'required': [] } becomes:
 
-```text
+```javascript
  required();
 ```
 
 { 'max\_length': 5 } or { 'max\_length': [5] } becomes:
 
-```text
+```javascript
 max_length(5);
 ```
 
 {'length\_between': [1,10] } becomes:
 
-```text
+```javascript
 length_between(1,10);
 ```
 
@@ -32,13 +32,13 @@ one_of(['Kiev', 'Moscow']);
 
 {'one\_of': ['Kiev','Moscow'] } (supported from v0.4)  becomes:
 
-```text
+```javascript
 one_of('Kiev', 'Moscow');
 ```
 
 {'my\_own\_rule': [1, [2, 3], 'bla'] } becomes:
 
-```text
+```javascript
 my_own_rule(1, [2, 3], 'bla');
 ```
 

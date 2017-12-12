@@ -6,7 +6,7 @@ Error code: 'REQUIRED'
 
 Example:
 
-```text
+```javascript
 { first_name: 'required' }
 ```
 
@@ -16,7 +16,7 @@ Error code: 'CANNOT\_BE\_EMPTY'
 
 Example:
 
-```text
+```javascript
 { first_name: 'not_empty' }
 ```
 
@@ -28,7 +28,7 @@ Error code: 'CANNOT\_BE\_EMPTY' \(If the value is not present or list is empty\)
 
 Example:
 
-```text
+```javascript
 { products_ids: 'not_empty_list' }
 ```
 
@@ -40,9 +40,6 @@ Error code: 'FORMAT\_ERROR' if the value is not a plain object.
 
 Example:
 
-```text
+```javascript
 { address: 'any_object' }
 ```
-
-
-
