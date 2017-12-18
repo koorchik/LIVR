@@ -70,6 +70,25 @@
         </div>
     </div>
     <div class="langItem">
+        <a href="https://github.com/koorchik/perl6-livr">
+            <img src="assets/languages/perl-6.png" width="100" height="50" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/koorchik/perl6-livr">
+                <img src="https://travis-ci.org/koorchik/perl6-livr.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/koorchik/perl6-livr">
+                Perl (LIVR 2.0)
+            </a><br>
+            available at
+            <a href="https://modules.perl6.org/dist/LIVR:cpan:KOORCHIK">
+                CPAN,
+            </a><br>
+            maintainer
+            <a href="https://github.com/koorchik" rel="nofollow">@koorchik</a>
+        </div>
+    </div>
+    <div class="langItem">
         <a href="https://github.com/WebbyLab/php-validator-livr">
             <img src="assets/languages/php.png" width="100" height="50" class="icon">
         </a>
