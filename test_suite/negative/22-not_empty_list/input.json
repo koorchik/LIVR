@@ -1,6 +1,6 @@
 {
     "list1": [],
     "list2": [],
-    "not_list": {},
+    "not_list": "text",
     "empty_field": ""
 }
