@@ -180,7 +180,7 @@
                 Ruby (LIVR 2.0),
             </a><br>
             available at
-            <a href="https://rubygems.org/gems/livr2">
+            <a href="https://rubygems.org/gems/ruby-livr">
                 rubygems,
             </a><br>
             maintainer
@@ -204,6 +204,21 @@
             </a><br>
             maintainer
             <a href="https://github.com/maktwin" rel="nofollow">@maktwin</a>
+        </div>
+    </div>
+    <div class="langItem">
+        <a href="https://github.com/fperrad/lua-LIVR">
+            <img src="assets/languages/lua.png" width="100" height="88" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/fperrad/lua-LIVR">
+                <img src="https://travis-ci.org/fperrad/lua-LIVR.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/fperrad/lua-LIVR">
+                Lua (LIVR 2.0),
+            </a><br>
+            maintainer
+            <a href="https://github.com/fperrad" rel="nofollow">@fperrad</a>
         </div>
     </div>
 </div>
