@@ -6,7 +6,7 @@
     * [Core concepts](introduction/core-concepts.md)
     * [Implementations](introduction/implementations.md)
     * [Principles](introduction/principles.md)
-    * [Ecosystem](introduction/ecosystem.md)
+    * [Extensions](introduction/extensions.md)
     * [Examples](introduction/examples.md)
 * [Validation Rules](validation-rules.md)
     * [How it works](validation-rules/how-it-works.md)

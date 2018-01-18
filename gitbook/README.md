@@ -169,6 +169,25 @@
         </div>
     </div>
     <div class="langItem">
+        <a href="https://github.com/fuksito/ruby-livr/">
+            <img src="assets/languages/ruby.png" width="100" height="88" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/fuksito/ruby-livr">
+                <img src="https://travis-ci.org/fuksito/ruby-livr.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/fuksito/ruby-livr/">
+                Ruby (LIVR 2.0),
+            </a><br>
+            available at
+            <a href="https://rubygems.org/gems/ruby-livr">
+                rubygems,
+            </a><br>
+            maintainer
+            <a href="https://github.com/fuksito" rel="nofollow">@fuksito</a>
+        </div>
+    </div>
+    <div class="langItem">
         <a href="https://github.com/maktwin/ruby-validator-livr">
             <img src="assets/languages/ruby.png" width="100" height="88" class="icon">
         </a>
@@ -179,8 +198,27 @@
             <a href="https://github.com/maktwin/ruby-validator-livr">
                 Ruby (LIVR 0.4, previous version),
             </a><br>
+            available at
+            <a href="https://rubygems.org/gems/livr">
+                rubygems,
+            </a><br>
             maintainer
             <a href="https://github.com/maktwin" rel="nofollow">@maktwin</a>
+        </div>
+    </div>
+    <div class="langItem">
+        <a href="https://github.com/fperrad/lua-LIVR">
+            <img src="assets/languages/lua.png" width="100" height="88" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/fperrad/lua-LIVR">
+                <img src="https://travis-ci.org/fperrad/lua-LIVR.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/fperrad/lua-LIVR">
+                Lua (LIVR 2.0),
+            </a><br>
+            maintainer
+            <a href="https://github.com/fperrad" rel="nofollow">@fperrad</a>
         </div>
     </div>
 </div>
