@@ -169,6 +169,25 @@
         </div>
     </div>
     <div class="langItem">
+        <a href="https://github.com/fuksito/ruby-livr/">
+            <img src="assets/languages/ruby.png" width="100" height="88" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/fuksito/ruby-livr">
+                <img src="https://travis-ci.org/fuksito/ruby-livr.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/fuksito/ruby-livr/">
+                Ruby (LIVR 2.0),
+            </a><br>
+            available at
+            <a href="https://rubygems.org/gems/livr2">
+                rubygems,
+            </a><br>
+            maintainer
+            <a href="https://github.com/fuksito" rel="nofollow">@fuksito</a>
+        </div>
+    </div>
+    <div class="langItem">
         <a href="https://github.com/maktwin/ruby-validator-livr">
             <img src="assets/languages/ruby.png" width="100" height="88" class="icon">
         </a>
@@ -178,6 +197,10 @@
             </a>
             <a href="https://github.com/maktwin/ruby-validator-livr">
                 Ruby (LIVR 0.4, previous version),
+            </a><br>
+            available at
+            <a href="https://rubygems.org/gems/livr">
+                rubygems,
             </a><br>
             maintainer
             <a href="https://github.com/maktwin" rel="nofollow">@maktwin</a>
