@@ -31,8 +31,9 @@
 * [Ruby \(LIVR 2.0\)](https://github.com/fuksito/ruby-livr/) available at [rubygems](https://rubygems.org/gems/livr2), maintainer [@fuksito](https://github.com/fuksito)
 * [Ruby \(LIVR 0.4, previous version\)](https://github.com/maktwin/ruby-validator-livr) at [rubygems](https://rubygems.org/gems/livr), maintainer @maktwin
 * [Lua \(LIVR 2.0\)](https://github.com/fperrad/lua-LIVR), maintainer [@fperrad](https://github.com/fperrad)
+* [Go \(LIVR 2.0\)](https://github.com/k33nice/go-livr), maintainer [@k33nice](https://github.com/k33nice)
 
-_Latest LIVR version is 2.0_  
+_Latest LIVR version is 2.0_
 _Previous LIVR version is 0.4_
 
 
