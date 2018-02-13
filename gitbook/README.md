@@ -221,6 +221,21 @@
             <a href="https://github.com/fperrad" rel="nofollow">@fperrad</a>
         </div>
     </div>
+    <div class="langItem">
+        <a href="https://github.com/k33nice/go-livr">
+            <img src="assets/languages/go.png" width="100" height="88" class="icon">
+        </a>
+        <div class="textBlock">
+            <a href="https://travis-ci.org/k33nice/go-livr">
+                <img src="https://travis-ci.org/k33nice/go-livr.svg?branch=master"><br>
+            </a>
+            <a href="https://github.com/k33nice/go-livr">
+                Go (LIVR 2.0),
+            </a><br>
+            maintainer
+            <a href="https://github.com/k33nice" rel="nofollow">@k33nice</a>
+        </div>
+    </div>
 </div>
 
 ## Documentation {#documentation}
