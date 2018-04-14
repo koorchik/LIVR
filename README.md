@@ -39,12 +39,12 @@ _Previous LIVR version is 0.4_
 
 ## Documentation
 
-* [Introduction](gitbook/introduction.md)
-* [Validation Rules](gitbook/validation-rules.md)
-* [Rules aliasing](gitbook/rules-aliasing.md)
-* [How to contribute](gitbook/how-to-contribute.md)
-* [Changes](gitbook/changes.md)
-* [License](gitbook/license-and-copyright.md)
+* [Introduction](http://livr-spec.org/introduction.html)
+* [Validation Rules](http://livr-spec.org/validation-rules.html)
+* [Rules aliasing](http://livr-spec.org/rules-aliasing.html)
+* [How to contribute](http://livr-spec.org/how-to-contribute.html)
+* [Changes](http://livr-spec.org/changes.html)
+
 
 ## Examples
 
