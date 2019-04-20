@@ -1,6 +1,7 @@
 # Summary
 
 * [Read Me](README.md)
+* [Users](users.md)
 * [Introduction](introduction.md)
     * [Motivation](introduction/motivation.md)
     * [Core concepts](introduction/core-concepts.md)
