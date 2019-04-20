@@ -1,7 +1,6 @@
 # Summary
 
 * [Read Me](README.md)
-* [Users](users.md)
 * [Introduction](introduction.md)
     * [Motivation](introduction/motivation.md)
     * [Core concepts](introduction/core-concepts.md)
@@ -59,4 +58,5 @@
     * [Create own Plugins](how-to-contribute/create-own-plugins.md)
     * [Improve LIVR documentation (this site)](how-to-contribute/improve-livr-documentation.md)
 * [Changes](changes.md)
+* [Users](users.md)
 * [License](license-and-copyright.md)
