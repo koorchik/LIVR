@@ -14,3 +14,5 @@ Logos are submitted by company and project representatives. These companies may 
 Are you using this project? Please submit a logo!
 
 **[SUBMIT A PULL REQUEST!](https://github.com/koorchik/livr/edit/master/gitbook/users.md)**
+
+**[or create an issue with a link to logo and company/project name](https://github.com/koorchik/LIVR/issues/new)**
