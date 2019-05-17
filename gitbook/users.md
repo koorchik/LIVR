@@ -2,12 +2,16 @@
 
 Logos are submitted by company and project representatives. These companies may or may not be using LIVR on their main web properties, but they are definitely using it somewhere in their organizations 🙂
 
+<a href="https://www.templatemonster.com/" rel="noopener noreferrer"> 
+    <img src="assets/users/templatemonster.svg" alt="TemplateMonster" width="300">
+</a>
+
 <a href="https://webbylab.com" rel="noopener noreferrer">
-    <img src="assets/users/webbylab.png" alt="WebbyLab" width="200">
+    <img src="assets/users/webbylab.png" alt="WebbyLab" width="300">
 </a>
 
 <a href="https://www.cloudbeds.com/" rel="noopener noreferrer"> 
-    <img src="assets/users/cloudbeds.svg" alt="Cloudbeds" width="200">
+    <img src="assets/users/cloudbeds.svg" alt="Cloudbeds" width="300">
 </a>
 
 
