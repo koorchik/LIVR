@@ -6,9 +6,14 @@
 
 > The module contains extra rules for LIVR. It is absolutely ok for LIVR to have your own custom rules in your project. But there are some rules that are useful cross projects.
 
-* [react-livr-validation ](https://github.com/one-more/react-livr-validation) available at [npm](https://www.npmjs.com/package/react-livr-validation), maintainer [@one-more](https://github.com/one-more)
+* [react-livr-validation](https://github.com/one-more/react-livr-validation) available at [npm](https://www.npmjs.com/package/react-livr-validation), maintainer [@one-more](https://github.com/one-more)
 
 > Validation component for React with LIVR as validation engine
+
+* [confme](https://github.com/koorchik/node-confme) available at [npm](https://www.npmjs.com/package/confme), maintainer [@koorchik](https://github.com/koorchik)
+
+> Opinionated config library that allows you to have complex config and behaves according to "Twelve Factor App" rules.
+
 
 **Perl**
 
