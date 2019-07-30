@@ -14,6 +14,9 @@ Logos are submitted by company and project representatives. These companies may 
     <img src="assets/users/cloudbeds.svg" alt="Cloudbeds" height="60">
 </a>
 
+<a href="https://www.walkme.com" rel="noopener noreferrer"> 
+    <img src="assets/users/walkme.svg" alt="WalkMe" height="60">
+</a>
 
 <a href="https://itsquiz.com/" rel="noopener noreferrer"> 
     <img src="assets/users/itsquiz.png" alt="ItsQuiz" height="60">

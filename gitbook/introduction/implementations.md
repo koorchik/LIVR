@@ -12,6 +12,8 @@
 * [Ruby \(LIVR 0.4, previous version\)](https://github.com/maktwin/ruby-validator-livr) available at [rubygems](https://rubygems.org/gems/livr), maintainer [@maktwin](https://github.com/maktwin)
 * [Lua \(LIVR 2.0\)](https://github.com/fperrad/lua-LIVR), maintainer [@fperrad](https://github.com/fperrad)
 * [Go \(LIVR 2.0\)](https://github.com/k33nice/go-livr), maintainer [@k33nice](https://github.com/k33nice)
+* [Swift \(LIVR 2.0\)](https://github.com/grupozap/livr-swift-validator), maintainer [@grupozap](https://github.com/grupozap)
+
 
 _Latest LIVR version is 2.0_
 _Previous LIVR version is 0.4_
