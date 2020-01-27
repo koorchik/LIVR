@@ -2,6 +2,7 @@
     "number1": "NOT_POSITIVE_DECIMAL",
     "number2": "NOT_POSITIVE_DECIMAL",
     "number3": "NOT_POSITIVE_DECIMAL",
+    "number4": "NOT_POSITIVE_DECIMAL",
 
     "value_is_string":      "NOT_POSITIVE_DECIMAL",
     "value_is_hash":        "FORMAT_ERROR",
