@@ -14,6 +14,10 @@
 
 > Opinionated config library that allows you to have complex config and behaves according to "Twelve Factor App" rules.
 
+* [vue-livr](https://github.com/grupozap/vue-livr) available at [npm](https://www.npmjs.com/package/vue-livr), maintainer [@grupozap](https://github.com/grupozap)
+
+> Validation component for Vue.js with LIVR as validation engine
+
 
 **Perl**
 
