@@ -7,6 +7,8 @@
         "extra_field": "will be removed"
     },
 
+    "should_not_be_errored": "",
+    
     "should_be_empty": {
         "extra_field": "will be removed"
     },

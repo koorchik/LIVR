@@ -6,6 +6,7 @@
         "building": 10
     },
 
+    "should_not_be_errored": "",
     "should_be_empty": {
       
     }
