@@ -10,7 +10,7 @@
 * [Java \(LIVR 2.0\)](https://github.com/vlbaluk/java-validator-livr), maintainer [@vlbaluk](https://github.com/vlbaluk)
 * [Ruby \(LIVR 2.0\)](https://github.com/fuksito/ruby-livr/) available at [rubygems](https://rubygems.org/gems/livr2), maintainer [@fuksito](https://github.com/fuksito)
 * [Ruby \(LIVR 0.4, previous version\)](https://github.com/maktwin/ruby-validator-livr) available at [rubygems](https://rubygems.org/gems/livr), maintainer [@maktwin](https://github.com/maktwin)
-* [Lua \(LIVR 2.0\)](https://github.com/fperrad/lua-LIVR), maintainer [@fperrad](https://github.com/fperrad)
+* [Lua \(LIVR 2.0\)](https://framagit.org/fperrad/lua-LIVR), maintainer [@fperrad](https://fperrad.frama.io/)
 * [Go \(LIVR 2.0\)](https://github.com/k33nice/go-livr), maintainer [@k33nice](https://github.com/k33nice)
 * [Swift \(LIVR 2.0\)](https://github.com/grupozap/livr-swift-validator), maintainer [@grupozap](https://github.com/grupozap)
 

@@ -207,18 +207,19 @@
         </div>
     </div>
     <div class="langItem">
-        <a href="https://github.com/fperrad/lua-LIVR">
+        <a href="https://framagit.org/fperrad/lua-LIVR">
             <img src="assets/languages/lua.png" width="100" height="88" class="icon">
         </a>
         <div class="textBlock">
-            <a href="https://travis-ci.org/fperrad/lua-LIVR">
-                <img src="https://travis-ci.org/fperrad/lua-LIVR.svg?branch=master"><br>
-            </a>
-            <a href="https://github.com/fperrad/lua-LIVR">
+            <a href="https://framagit.org/fperrad/lua-LIVR">
                 Lua (LIVR 2.0),
             </a><br>
+            available at
+            <a href="https://luarocks.org/modules/fperrad/lua-livr">
+                luarocks,
+            </a><br>
             maintainer
-            <a href="https://github.com/fperrad" rel="nofollow">@fperrad</a>
+            <a href="https://fperrad.frama.io/" rel="nofollow">@fperrad</a>
         </div>
     </div>
     <div class="langItem">
