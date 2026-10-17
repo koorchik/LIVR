@@ -2,5 +2,8 @@
     "first_name": "required",
     "last_name": ["required"],
     "middle_name": [ { "required": [] } ],
-    "salary": { "required": [] }
+    "salary": { "required": [] },
+    "constructor": "required",
+    "toString": "required",
+    "hasOwnProperty": "required"
 }

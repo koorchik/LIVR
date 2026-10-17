@@ -22,5 +22,27 @@
         },
         "Some Wrong Data"
     ],
-    "users": "not an array"
+    "users": "not an array",
+    "only_wrong_items": [
+        "Some Wrong Data",
+        10,
+        {"product_type": "wrongtype"},
+        {"name": "No product type"},
+        ["material"]
+    ],
+    "valid_and_wrong_items": [
+        {"product_type": "service", "name": "Service"},
+        "Some Wrong Data"
+    ],
+    "null_item": [null],
+    "selector_is_not_string": [
+        {"product_type": ["material"], "material_id": 1},
+        {"product_type": {"material": 1}, "material_id": 1}
+    ],
+    "selector_is_builtin_property": [
+        {"product_type": "constructor"},
+        {"product_type": "toString"},
+        {"product_type": "hasOwnProperty"},
+        {"product_type": "__proto__"}
+    ]
 }

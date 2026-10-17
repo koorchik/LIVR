@@ -13,5 +13,10 @@
     "should_be_empty": [ "required", { "nested_object": {
         "country": [{ "one_of": [["Ukraine", "USA"]] } ],
         "zip": "positive_integer"
-    } } ]
+    } } ],
+
+    "builtin_names": { "nested_object": {
+        "constructor": "required",
+        "toString": "required"
+    }}
 }

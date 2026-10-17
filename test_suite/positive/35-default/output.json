@@ -8,5 +8,6 @@
 
     "string_value": "Value",
     "object": {"name": "Value"},
-    "list_of_string_values": ["value1", {"key": "123"}, "value2"]
+    "list_of_string_values": ["value1", {"key": "123"}, "value2"],
+    "constructor": "16"
 }

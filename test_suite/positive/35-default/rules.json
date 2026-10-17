@@ -8,5 +8,6 @@
 
     "string_value": {"default": 10},
     "object": {"default": 10},
-    "list_of_string_values": {"default": 10}
+    "list_of_string_values": {"default": 10},
+    "constructor": {"default": "16"}
 }

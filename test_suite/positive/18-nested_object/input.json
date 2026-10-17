@@ -13,5 +13,11 @@
         "extra_field": "will be removed"
     },
 
-    "extra_field": "will be removed"
+    "extra_field": "will be removed",
+
+    "builtin_names": {
+        "constructor": "Constructor value",
+        "toString": "ToString value",
+        "hasOwnProperty": "will be removed"
+    }
 }

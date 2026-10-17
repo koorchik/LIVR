@@ -20,5 +20,13 @@
         "name": "Wrongtype"
     },
     "product5": "Some Wrong Data",
-    "users": "not an array"
+    "users": "not an array",
+    "product_without_selector": {"name": "No product type"},
+    "product_is_array": [{"product_type": "service", "name": "Service"}],
+    "selector_is_array": {"product_type": ["material"], "material_id": 1},
+    "selector_is_object": {"product_type": {"material": 1}, "material_id": 1},
+    "selector_is_constructor": {"product_type": "constructor"},
+    "selector_is_to_string": {"product_type": "toString"},
+    "selector_is_has_own_property": {"product_type": "hasOwnProperty"},
+    "selector_is_proto": {"product_type": "__proto__"}
 }

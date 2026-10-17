@@ -11,5 +11,13 @@
         "name": "TOO_LONG"
     },
     "product4": "FORMAT_ERROR",
-    "product5": "FORMAT_ERROR"
+    "product5": "FORMAT_ERROR",
+    "product_without_selector": "FORMAT_ERROR",
+    "product_is_array": "FORMAT_ERROR",
+    "selector_is_array": "FORMAT_ERROR",
+    "selector_is_object": "FORMAT_ERROR",
+    "selector_is_constructor": "FORMAT_ERROR",
+    "selector_is_to_string": "FORMAT_ERROR",
+    "selector_is_has_own_property": "FORMAT_ERROR",
+    "selector_is_proto": "FORMAT_ERROR"
 }

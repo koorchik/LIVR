@@ -2,5 +2,8 @@
     "first_name": "Vasya",
     "last_name": "Pupkin",
     "middle_name": "Some",
-    "salary": 0
+    "salary": 0,
+    "constructor": "Constructor value",
+    "toString": "ToString value",
+    "hasOwnProperty": "HasOwnProperty value"
 }

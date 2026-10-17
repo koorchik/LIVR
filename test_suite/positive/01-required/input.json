@@ -3,5 +3,8 @@
     "last_name": "Pupkin",
     "middle_name": "Some",
     "age": "25",
-    "salary": 0
+    "salary": 0,
+    "constructor": "Constructor value",
+    "toString": "ToString value",
+    "hasOwnProperty": "HasOwnProperty value"
 }
