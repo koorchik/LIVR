@@ -1,0 +1,10 @@
+{
+    "name": "livr/conformance-php",
+    "description": "LIVR test suite harness for validator/livr",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "validator/livr": "*",
+        "sebastian/comparator": "*"
+    }
+}

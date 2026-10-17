@@ -1,0 +1,57 @@
+{
+    "erlang-liver": {
+        "notes": [
+            "Validated with liver's `rule_set => livr_spec` mode.",
+            "liver has no API for registering data-defined rule aliases, so the alias cases fail."
+        ]
+    },
+    "erlang-olifer": {
+        "notes": [
+            "Not published on hex; built from the repository with Erlang/OTP 24 (it uses http_uri, removed in OTP 25)."
+        ],
+        "cases": {
+            "positive/25-eq": "The validator never returns for this case; it is stopped after 10 seconds.",
+            "positive/29-or": "The `or` rule is not implemented.",
+            "negative/29-or": "The `or` rule is not implemented."
+        }
+    },
+    "java": {
+        "notes": [
+            "Errors are returned as {\"code\": …, \"fieldValue\": …} objects instead of plain error codes, so negative cases fail on the error format. With the codes unwrapped, 59 of 70 cases pass."
+        ]
+    },
+    "lua": {
+        "notes": [
+            "Installed with the optional lrexlib-pcre2 and luautf8 rocks, which the `like` rule and Unicode-aware to_lc/to_uc need."
+        ],
+        "cases": {
+            "negative/22-not_empty_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list. lua-LIVR's own copy of the test suite adjusts this case.",
+            "negative/27-any_object": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list. lua-LIVR's own copy of the test suite adjusts this case."
+        }
+    },
+    "php": {
+        "cases": {
+            "negative/22-not_empty_list": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list. php-validator-livr's own copy of the test suite adjusts this case.",
+            "negative/27-any_object": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list. php-validator-livr's own copy of the test suite adjusts this case."
+        }
+    },
+    "raku": {
+        "notes": [
+            "Run on Rakudo Star 2024.02: LIVR 2.1.0 no longer compiles on current Rakudo (a rx:P5 regex in LIVR::Rules::Special)."
+        ],
+        "cases": {
+            "positive/08-like": "The `like` rule accepts only Raku regex objects, not string patterns (a documented limitation; the implementation's own tests skip this case).",
+            "negative/08-like": "The `like` rule accepts only Raku regex objects, not string patterns (a documented limitation; the implementation's own tests skip this case)."
+        }
+    },
+    "ruby": {
+        "notes": [
+            "Run on Ruby 2.7: ruby-livr 2.0.0 depends on activesupport ~> 5."
+        ]
+    },
+    "swift": {
+        "notes": [
+            "Apple platforms only: it relies on NSPredicate format strings, which Foundation on Linux doesn't provide. Built from source in Swift 4.2 language mode on macOS."
+        ]
+    }
+}

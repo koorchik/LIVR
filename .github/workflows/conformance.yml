@@ -1,0 +1,68 @@
+# Runs the LIVR test suite against every known implementation and publishes the
+# merged results as the "conformance" artifact (conformance.json).
+# Called by docs.yml; can also be started by hand.
+name: Conformance
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    name: ${{ matrix.id }}
+    # livr-swift-validator only builds against Apple's Foundation.
+    runs-on: ${{ matrix.id == 'swift' && 'macos-latest' || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        id: [js, perl, raku, php, python, erlang-liver, erlang-olifer, java, ruby, lua, go, swift]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Run the test suite
+        # A broken implementation must never fail the workflow: errors end up in the JSON.
+        continue-on-error: true
+        env:
+          OUT_DIR: ${{ runner.temp }}/conformance
+          NATIVE: ${{ matrix.id == 'swift' && '1' || '' }}
+        run: conformance/run.sh "${{ matrix.id }}"
+
+      - name: Show log
+        if: always()
+        run: cat "${{ runner.temp }}/conformance/${{ matrix.id }}.log" || true
+
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: conformance-${{ matrix.id }}
+          path: ${{ runner.temp }}/conformance/${{ matrix.id }}.json
+          if-no-files-found: ignore
+          retention-days: 7
+
+  merge:
+    needs: run
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: conformance-*
+          path: ${{ runner.temp }}/results
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Merge results
+        run: node conformance/merge.mjs "${{ runner.temp }}/results" "${{ runner.temp }}/conformance.json"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: conformance
+          path: ${{ runner.temp }}/conformance.json

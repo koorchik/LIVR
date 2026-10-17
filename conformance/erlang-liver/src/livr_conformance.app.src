@@ -1,0 +1,5 @@
+{application, livr_conformance, [
+    {description, "LIVR test suite harness for liver"},
+    {vsn, "1.0.0"},
+    {applications, [kernel, stdlib, liver]}
+]}.
