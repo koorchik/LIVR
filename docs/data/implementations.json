@@ -1,0 +1,210 @@
+[
+  {
+    "id": "js",
+    "language": "JavaScript",
+    "logo": "/assets/languages/js.jpg",
+    "repo": "https://github.com/koorchik/js-validator-livr",
+    "package": {
+      "registry": "npm",
+      "name": "livr",
+      "url": "https://www.npmjs.com/package/livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    },
+    "note": "Reference implementation. Sync and async validators, TypeScript types."
+  },
+  {
+    "id": "perl",
+    "language": "Perl",
+    "logo": "/assets/languages/perl.jpg",
+    "repo": "https://github.com/koorchik/Validator-LIVR",
+    "package": {
+      "registry": "cpan",
+      "name": "Validator::LIVR",
+      "url": "https://metacpan.org/pod/Validator::LIVR"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    }
+  },
+  {
+    "id": "php",
+    "language": "PHP",
+    "logo": "/assets/languages/php.png",
+    "repo": "https://github.com/WebbyLab/php-validator-livr",
+    "package": {
+      "registry": "packagist",
+      "name": "validator/livr",
+      "url": "https://packagist.org/packages/validator/livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "WebbyLab",
+      "url": "https://github.com/WebbyLab"
+    }
+  },
+  {
+    "id": "python",
+    "language": "Python",
+    "logo": "/assets/languages/python.png",
+    "repo": "https://github.com/asholok/python-validator-livr",
+    "package": {
+      "registry": "pypi",
+      "name": "LIVR",
+      "url": "https://pypi.org/project/LIVR/"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "asholok",
+      "url": "https://github.com/asholok"
+    }
+  },
+  {
+    "id": "go",
+    "language": "Go",
+    "logo": "/assets/languages/go.png",
+    "repo": "https://github.com/k33nice/go-livr",
+    "package": {
+      "registry": "go",
+      "name": "github.com/k33nice/go-livr",
+      "url": "https://pkg.go.dev/github.com/k33nice/go-livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "k33nice",
+      "url": "https://github.com/k33nice"
+    }
+  },
+  {
+    "id": "java",
+    "language": "Java",
+    "logo": "/assets/languages/java.png",
+    "repo": "https://github.com/vlbaluk/java-validator-livr",
+    "package": {
+      "registry": "maven",
+      "name": "io.github.vlbaluk:validator-livr",
+      "url": "https://central.sonatype.com/artifact/io.github.vlbaluk/validator-livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "vlbaluk",
+      "url": "https://github.com/vlbaluk"
+    }
+  },
+  {
+    "id": "ruby",
+    "language": "Ruby",
+    "logo": "/assets/languages/ruby.png",
+    "repo": "https://github.com/fuksito/ruby-livr",
+    "package": {
+      "registry": "rubygems",
+      "name": "ruby-livr",
+      "url": "https://rubygems.org/gems/ruby-livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "fuksito",
+      "url": "https://github.com/fuksito"
+    }
+  },
+  {
+    "id": "erlang-liver",
+    "language": "Erlang",
+    "name": "Liver",
+    "logo": "/assets/languages/erlang.png",
+    "repo": "https://github.com/erlangbureau/liver",
+    "package": {
+      "registry": "hex",
+      "name": "liver",
+      "url": "https://hex.pm/packages/liver"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "erlangbureau",
+      "url": "https://github.com/erlangbureau"
+    }
+  },
+  {
+    "id": "erlang-olifer",
+    "language": "Erlang",
+    "name": "Olifer",
+    "logo": "/assets/languages/erlang.png",
+    "repo": "https://github.com/Prots/olifer",
+    "spec": "2.0",
+    "maintainer": {
+      "name": "Prots",
+      "url": "https://github.com/Prots"
+    }
+  },
+  {
+    "id": "lua",
+    "language": "Lua",
+    "logo": "/assets/languages/lua.png",
+    "repo": "https://framagit.org/fperrad/lua-LIVR",
+    "package": {
+      "registry": "luarocks",
+      "name": "lua-livr",
+      "url": "https://luarocks.org/modules/fperrad/lua-livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "fperrad",
+      "url": "https://framagit.org/fperrad"
+    }
+  },
+  {
+    "id": "raku",
+    "language": "Raku",
+    "logo": "/assets/languages/raku.png",
+    "repo": "https://github.com/koorchik/perl6-livr",
+    "package": {
+      "registry": "raku",
+      "name": "LIVR",
+      "url": "https://raku.land/cpan:KOORCHIK/LIVR"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    },
+    "note": "Formerly Perl 6."
+  },
+  {
+    "id": "swift",
+    "language": "Swift",
+    "logo": "/assets/languages/swift.png",
+    "repo": "https://github.com/olxbr/livr-swift-validator",
+    "package": {
+      "registry": "cocoapods",
+      "name": "Livr",
+      "url": "https://cocoapods.org/pods/Livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "olxbr",
+      "url": "https://github.com/olxbr"
+    }
+  },
+  {
+    "id": "ruby-legacy",
+    "language": "Ruby",
+    "logo": "/assets/languages/ruby.png",
+    "repo": "https://github.com/maktwin/ruby-validator-livr",
+    "package": {
+      "registry": "rubygems",
+      "name": "livr",
+      "url": "https://rubygems.org/gems/livr"
+    },
+    "spec": "0.4",
+    "maintainer": {
+      "name": "maktwin",
+      "url": "https://github.com/maktwin"
+    },
+    "note": "Implements the previous version of the specification."
+  }
+]

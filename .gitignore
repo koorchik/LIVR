@@ -1,3 +1,7 @@
-_book/
 node_modules/
 .DS_Store
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+docs/.vitepress/.temp/
+# Generated in CI by .github/workflows/conformance.yml
+docs/data/conformance.json

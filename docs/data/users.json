@@ -1,0 +1,7 @@
+[
+  { "name": "TemplateMonster", "url": "https://www.templatemonster.com/", "logo": "/assets/users/templatemonster.svg" },
+  { "name": "WebbyLab", "url": "https://webbylab.com", "logo": "/assets/users/webbylab.png" },
+  { "name": "Cloudbeds", "url": "https://www.cloudbeds.com/", "logo": "/assets/users/cloudbeds.svg" },
+  { "name": "WalkMe", "url": "https://www.walkme.com", "logo": "/assets/users/walkme.svg" },
+  { "name": "Axiomie", "url": "https://axiomie.com/", "logo": "/assets/users/axiomie.png" }
+]
