@@ -5,7 +5,9 @@ import LivrResult from './LivrResult.vue'
 import { readPlaygroundHash, runLivr } from '../livr'
 
 declare const __LIVR_VERSION__: string
+declare const __LIVR_EXTRA_RULES_VERSION__: string
 const livrVersion = __LIVR_VERSION__
+const extraRulesVersion = __LIVR_EXTRA_RULES_VERSION__
 
 interface Preset {
   name: string
@@ -141,6 +143,25 @@ const PRESETS: Preset[] = [
     name: 'Viktor',
     age: 16
 }`
+  },
+  {
+    name: 'Extra rules',
+    rules: `{
+    id: ['required', 'uuid'],
+    ip: 'ipv4',
+    subscribe: ['required', 'boolean'],
+    email: [{ required_if: { subscribe: true } }, 'email'],
+    tags: ['list_items_unique', { list_length: [1, 3] }],
+    birth_date: { iso_date: { max: 'current' } }
+}`,
+    data: `{
+    id: '0b9f4c2e-6a1d-4f3b-9e2a-7c5d8e1f2a3b',
+    ip: '192.168.1.300',
+    subscribe: true,
+    email: '',
+    tags: ['livr', 'validation', 'livr'],
+    birth_date: '1990-05-17'
+}`
   }
 ]
 
@@ -151,7 +172,7 @@ const showAliases = ref(false)
 const selectedPreset = ref(PRESETS[0].name)
 const copied = ref(false)
 
-const result = computed(() => runLivr(rules.value, data.value, aliases.value))
+const result = computed(() => runLivr(rules.value, data.value, aliases.value, { extraRules: true }))
 
 function applyPreset(name: string) {
   const preset = PRESETS.find((p) => p.name === name)
@@ -217,7 +238,9 @@ onMounted(() => {
         <span>Aliases</span>
       </label>
       <span class="livr-playground__spacer" />
-      <span class="livr-playground__version">livr@{{ livrVersion }} (JavaScript)</span>
+      <span class="livr-playground__version">
+        livr@{{ livrVersion }} + <a href="/introduction/extensions.html#livr-extra-rules">livr-extra-rules@{{ extraRulesVersion }}</a> (JavaScript)
+      </span>
       <button type="button" class="livr-button" @click="copyLink">{{ copied ? 'Copied!' : 'Copy link' }}</button>
     </div>
 

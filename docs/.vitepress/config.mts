@@ -4,9 +4,12 @@ import { createRequire } from 'node:module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { livrExamplePlugin } from './markdown/livr-example'
 
-// The playground shows which version of the JavaScript implementation runs the examples
-const livrEntry = createRequire(import.meta.url).resolve('livr')
-const livrVersion = JSON.parse(fs.readFileSync(path.join(path.dirname(livrEntry), '../package.json'), 'utf8')).version
+// The playground shows which versions of the JavaScript packages run the examples
+function packageVersion(name: string) {
+  let dir = path.dirname(createRequire(import.meta.url).resolve(name))
+  while (!fs.existsSync(path.join(dir, 'package.json'))) dir = path.dirname(dir)
+  return JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8')).version
+}
 
 const SITE_URL = 'https://livr-spec.org'
 const DESCRIPTION =
@@ -62,7 +65,10 @@ export default defineConfig({
   },
 
   vite: {
-    define: { __LIVR_VERSION__: JSON.stringify(livrVersion) }
+    define: {
+      __LIVR_VERSION__: JSON.stringify(packageVersion('livr')),
+      __LIVR_EXTRA_RULES_VERSION__: JSON.stringify(packageVersion('livr-extra-rules'))
+    }
   },
 
   markdown: {

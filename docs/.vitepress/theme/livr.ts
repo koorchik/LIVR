@@ -1,5 +1,13 @@
 import LIVR from 'livr'
+import allExtraRules from 'livr-extra-rules'
 import JSON5 from 'json5'
+
+// instance_of and has_methods need JavaScript classes and functions, which JSON input cannot contain
+const { instance_of, has_methods, ...extraRules } = allExtraRules
+
+// livr-extra-rules 1.6.0 assigns an undeclared `date` variable in iso_date with min or max. Bundled code is
+// strict, so it throws "date is not defined". Fixed in the repository, remove after 1.6.1 is released.
+if (!('date' in globalThis)) (globalThis as Record<string, unknown>).date = undefined
 
 export type Source = 'rules' | 'input' | 'aliases' | 'validator'
 
@@ -29,7 +37,12 @@ function parse(text: string, source: Source, fallback: unknown) {
   }
 }
 
-export function runLivr(rulesText: string, inputText: string, aliasesText = ''): RunResult {
+export interface RunOptions {
+  // Register the rules of livr-extra-rules (the playground does, the specification examples do not)
+  extraRules?: boolean
+}
+
+export function runLivr(rulesText: string, inputText: string, aliasesText = '', options: RunOptions = {}): RunResult {
   try {
     const rules = parse(rulesText, 'rules', {})
     const input = parse(inputText, 'input', {})
@@ -42,6 +55,7 @@ export function runLivr(rulesText: string, inputText: string, aliasesText = ''):
     let validator
     try {
       validator = new LIVR.Validator(rules)
+      if (options.extraRules) validator.registerRules(extraRules)
       for (const alias of aliases) validator.registerAliasedRule(alias)
       const output = validator.validate(input)
       return output ? { status: 'valid', output } : { status: 'invalid', errors: validator.getErrors() }
