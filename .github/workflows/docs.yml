@@ -1,0 +1,71 @@
+name: Docs
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    # Weekly rebuild: refreshes package versions, repository activity and test suite results
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  conformance:
+    uses: ./.github/workflows/conformance.yml
+
+  build:
+    needs: conformance
+    # Build the site even if some implementations could not be tested
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # "Last updated" dates come from git history
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check that README.md is in sync with docs/data/implementations.json
+        run: npm run readme:check
+
+      - name: Download test suite results
+        uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: conformance
+          path: docs/data
+
+      - name: Build
+        run: npm run docs:build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs/.vitepress/dist
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

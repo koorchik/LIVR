@@ -1,0 +1,20 @@
+# Link checker configuration, see https://lychee.cli.rs
+max_concurrency = 8
+timeout = 30
+max_retries = 3
+retry_wait_time = 5
+accept = ["200..=299", "429"]
+
+exclude_path = ["node_modules", "docs/.vitepress/cache", "docs/.vitepress/dist"]
+
+exclude = [
+  # Sites that block automated requests
+  '^https://www\.npmjs\.com/',
+  '^https://metacpan\.org/',
+  '^https://www\.templatemonster\.com',
+  # Links into this repository, which may only exist after a pull request is merged
+  '^https://github\.com/koorchik/LIVR/(blob|tree|edit)/',
+  '^https://github\.com/koorchik/LIVR/issues/new',
+  # Internal links of the website are checked by the VitePress build
+  '^file://',
+]
