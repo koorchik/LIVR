@@ -3,6 +3,10 @@
     "field2": { "equal_to_field": ["field1"] },
     "field3": { "equal_to_field": ["field1"] },
     "empty_field":  { "equal_to_field": "field2" },
+    "same_number_exponent":     { "equal_to_field": "number" },
+    "same_number_leading_zero": { "equal_to_field": "number" },
+    "same_number_space":        { "equal_to_field": "number" },
+    "missing_other_field":      { "equal_to_field": "missing_field" },
 
     "value_is_hash":        { "equal_to_field": "field2" },
     "value_is_empty_hash":  { "equal_to_field": "field2" },

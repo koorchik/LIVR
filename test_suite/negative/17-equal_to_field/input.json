@@ -4,6 +4,11 @@
     "field3": "some value",
     "empty_field":  "",
     "extra_field": "some value",
+    "number": "10",
+    "same_number_exponent":     "1e1",
+    "same_number_leading_zero": "010",
+    "same_number_space":        " 10",
+    "missing_other_field":      "some value",
 
     "value_is_hash":        {"test": 1},
     "value_is_empty_hash":  {},

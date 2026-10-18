@@ -2,5 +2,6 @@
     "field1": "some value",
     "field2": "some value",
     "field3": "some value",
-    "empty_field":  ""
+    "empty_field":  "",
+    "number_as_string": "10"
 }
