@@ -28,6 +28,13 @@ The site is deployed automatically from the `master` branch.
   ````
 
   An optional `// aliases` section takes a list of aliases.
-- `<TestCases rule="required" />` shows the test suite cases of a rule.
+- Every rule has its own page, `docs/validation-rules/<rule>.md`:
+  - the first paragraph after the title is the summary shown on the [rules overview](/validation-rules.html);
+  - the `Error codes:` line lists the codes, so the overview can be filtered by them;
+  - the frontmatter sets the group, the short syntax for the overview and the live example;
+  - `<RuleSandbox />` renders the live example together with the rule's test suite cases.
+
+  The groups and the order of the rules are set in `docs/data/rule-groups.json`. To add a rule, create its page and add it to a group.
+- `<TestCases suite="aliases" />` shows the alias cases of the test suite.
 - The list of implementations is generated from `docs/data/implementations.json`. After changing it, run `npm run readme` to update the repository README.
 - Set `LIVR_DOCS_OFFLINE=1` to build the site without fetching package versions and repository activity.

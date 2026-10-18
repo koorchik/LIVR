@@ -1,0 +1,44 @@
+[
+  {
+    "id": "common",
+    "title": "Common rules",
+    "link": "/validation-rules/common-rules.html",
+    "description": "Check that a value is present, or that it is an object.",
+    "rules": ["required", "not_empty", "not_empty_list", "any_object"]
+  },
+  {
+    "id": "string",
+    "title": "String rules",
+    "link": "/validation-rules/string-rules.html",
+    "description": "Compare and measure strings. Numbers are validated as strings.",
+    "rules": ["string", "eq", "one_of", "max_length", "min_length", "length_between", "length_equal", "like"]
+  },
+  {
+    "id": "numeric",
+    "title": "Numeric rules",
+    "link": "/validation-rules/numeric-rules.html",
+    "description": "Check numbers and strings that look like numbers, and return them as numbers.",
+    "rules": ["integer", "positive_integer", "decimal", "positive_decimal", "max_number", "min_number", "number_between"]
+  },
+  {
+    "id": "special",
+    "title": "Special rules",
+    "link": "/validation-rules/special-rules.html",
+    "description": "Emails, URLs, dates, and comparison with another field.",
+    "rules": ["email", "url", "iso_date", "equal_to_field"]
+  },
+  {
+    "id": "metarules",
+    "title": "Metarules",
+    "link": "/validation-rules/metarules.html",
+    "description": "Describe nested objects, lists and alternatives with other rules.",
+    "rules": ["nested_object", "variable_object", "list_of", "list_of_objects", "list_of_different_objects", "or"]
+  },
+  {
+    "id": "modifiers",
+    "title": "Modifiers",
+    "link": "/validation-rules/modifiers.html",
+    "description": "Change the data. Modifiers never return errors.",
+    "rules": ["trim", "to_lc", "to_uc", "remove", "leave_only", "default"]
+  }
+]

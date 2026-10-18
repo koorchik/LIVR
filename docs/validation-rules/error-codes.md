@@ -20,24 +20,24 @@ An alias can replace the errors of its rules with a single custom code, see [Rul
 
 | Code | Meaning | Returned by |
 |---|---|---|
-| `REQUIRED` | The value is missing, `null` or an empty string | [`required`](/validation-rules/common-rules.html#required) |
-| `CANNOT_BE_EMPTY` | The value is an empty string, or the list is empty | [`not_empty`](/validation-rules/common-rules.html#not-empty), [`not_empty_list`](/validation-rules/common-rules.html#not-empty-list) |
+| `REQUIRED` | The value is missing, `null` or an empty string | [`required`](/validation-rules/required.html) |
+| `CANNOT_BE_EMPTY` | The value is an empty string, or the list is empty | [`not_empty`](/validation-rules/not_empty.html), [`not_empty_list`](/validation-rules/not_empty_list.html) |
 | `FORMAT_ERROR` | The value has a wrong type: an object or a list where a primitive value is expected, or vice versa | Almost every rule, see below |
-| `NOT_ALLOWED_VALUE` | The value is not one of the allowed values | [`eq`](/validation-rules/string-rules.html#eq), [`one_of`](/validation-rules/string-rules.html#one-of) |
-| `TOO_LONG` | The string is too long | [`max_length`](/validation-rules/string-rules.html#max-length), [`length_between`](/validation-rules/string-rules.html#length-between), [`length_equal`](/validation-rules/string-rules.html#length-equal) |
-| `TOO_SHORT` | The string is too short | [`min_length`](/validation-rules/string-rules.html#min-length), [`length_between`](/validation-rules/string-rules.html#length-between), [`length_equal`](/validation-rules/string-rules.html#length-equal) |
-| `WRONG_FORMAT` | The string does not match the regular expression | [`like`](/validation-rules/string-rules.html#like) |
-| `NOT_INTEGER` | The value is not an integer | [`integer`](/validation-rules/numeric-rules.html#integer) |
-| `NOT_POSITIVE_INTEGER` | The value is not an integer greater than zero | [`positive_integer`](/validation-rules/numeric-rules.html#positive-integer) |
-| `NOT_DECIMAL` | The value is not a number | [`decimal`](/validation-rules/numeric-rules.html#decimal) |
-| `NOT_POSITIVE_DECIMAL` | The value is not a number greater than zero | [`positive_decimal`](/validation-rules/numeric-rules.html#positive-decimal) |
-| `NOT_NUMBER` | The value is not a number | [`max_number`](/validation-rules/numeric-rules.html#max-number), [`min_number`](/validation-rules/numeric-rules.html#min-number), [`number_between`](/validation-rules/numeric-rules.html#number-between) |
-| `TOO_HIGH` | The number is too high | [`max_number`](/validation-rules/numeric-rules.html#max-number), [`number_between`](/validation-rules/numeric-rules.html#number-between) |
-| `TOO_LOW` | The number is too low | [`min_number`](/validation-rules/numeric-rules.html#min-number), [`number_between`](/validation-rules/numeric-rules.html#number-between) |
-| `WRONG_EMAIL` | The value is not an email | [`email`](/validation-rules/special-rules.html#email) |
-| `WRONG_URL` | The value is not an http or https URL | [`url`](/validation-rules/special-rules.html#url) |
-| `WRONG_DATE` | The value is not an ISO 8601 date | [`iso_date`](/validation-rules/special-rules.html#iso-date) |
-| `FIELDS_NOT_EQUAL` | The value differs from the value of another field | [`equal_to_field`](/validation-rules/special-rules.html#equal-to-field) |
+| `NOT_ALLOWED_VALUE` | The value is not one of the allowed values | [`eq`](/validation-rules/eq.html), [`one_of`](/validation-rules/one_of.html) |
+| `TOO_LONG` | The string is too long | [`max_length`](/validation-rules/max_length.html), [`length_between`](/validation-rules/length_between.html), [`length_equal`](/validation-rules/length_equal.html) |
+| `TOO_SHORT` | The string is too short | [`min_length`](/validation-rules/min_length.html), [`length_between`](/validation-rules/length_between.html), [`length_equal`](/validation-rules/length_equal.html) |
+| `WRONG_FORMAT` | The string does not match the regular expression | [`like`](/validation-rules/like.html) |
+| `NOT_INTEGER` | The value is not an integer | [`integer`](/validation-rules/integer.html) |
+| `NOT_POSITIVE_INTEGER` | The value is not an integer greater than zero | [`positive_integer`](/validation-rules/positive_integer.html) |
+| `NOT_DECIMAL` | The value is not a number | [`decimal`](/validation-rules/decimal.html) |
+| `NOT_POSITIVE_DECIMAL` | The value is not a number greater than zero | [`positive_decimal`](/validation-rules/positive_decimal.html) |
+| `NOT_NUMBER` | The value is not a number | [`max_number`](/validation-rules/max_number.html), [`min_number`](/validation-rules/min_number.html), [`number_between`](/validation-rules/number_between.html) |
+| `TOO_HIGH` | The number is too high | [`max_number`](/validation-rules/max_number.html), [`number_between`](/validation-rules/number_between.html) |
+| `TOO_LOW` | The number is too low | [`min_number`](/validation-rules/min_number.html), [`number_between`](/validation-rules/number_between.html) |
+| `WRONG_EMAIL` | The value is not an email | [`email`](/validation-rules/email.html) |
+| `WRONG_URL` | The value is not an http or https URL | [`url`](/validation-rules/url.html) |
+| `WRONG_DATE` | The value is not an ISO 8601 date | [`iso_date`](/validation-rules/iso_date.html) |
+| `FIELDS_NOT_EQUAL` | The value differs from the value of another field | [`equal_to_field`](/validation-rules/equal_to_field.html) |
 
 ## FORMAT_ERROR
 

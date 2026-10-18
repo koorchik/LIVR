@@ -3,6 +3,8 @@ import path from 'node:path'
 import { createRequire } from 'node:module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { livrExamplePlugin } from './markdown/livr-example'
+import ruleGroups from '../data/rule-groups.json'
+import { parseRulePage, plainText } from '../data/rule-page'
 
 // The playground shows which versions of the JavaScript packages run the examples
 function packageVersion(name: string) {
@@ -15,17 +17,32 @@ const SITE_URL = 'https://livr-spec.org'
 const DESCRIPTION =
   'LIVR is a declarative, language independent format for data validation rules: one schema, the same rules and the same error codes in JavaScript, Perl, PHP, Python, Go, Erlang and more.'
 
-function ruleGroup(text: string, page: string, rules: string[]): DefaultTheme.SidebarItem {
-  return {
-    text,
-    link: page,
-    collapsed: true,
-    items: rules.map((rule) => ({
-      text: rule,
-      link: `${page}#${rule.replace(/_/g, '-')}`
+// The rules section has its own sidebar that lists every rule, grouped as in docs/data/rule-groups.json
+const rulesSidebar: DefaultTheme.SidebarItem[] = [
+  {
+    text: 'Rules',
+    items: [
+      { text: 'Overview', link: '/validation-rules.html' },
+      { text: 'How it works', link: '/validation-rules/how-it-works.html' },
+      { text: 'Types coercing', link: '/validation-rules/types-coercing.html' }
+    ]
+  },
+  ...ruleGroups.map((group) => ({
+    text: group.title,
+    link: group.link,
+    items: group.rules.map((rule) => ({
+      text: `<span class="sidebar-rule">${rule}</span>`,
+      link: `/validation-rules/${rule}.html`
     }))
+  })),
+  {
+    text: 'Reference',
+    items: [
+      { text: 'Error codes', link: '/validation-rules/error-codes.html' },
+      { text: 'Rules aliasing', link: '/rules-aliasing.html' }
+    ]
   }
-}
+]
 
 export default defineConfig({
   lang: 'en-US',
@@ -52,7 +69,17 @@ export default defineConfig({
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }]
   ],
 
-  transformPageData(pageData) {
+  transformPageData(pageData, { siteConfig }) {
+    // Rule pages are described by their summary paragraph
+    if (pageData.frontmatter.group) {
+      pageData.frontmatter.pageClass ??= 'rule-page'
+      pageData.frontmatter.aside ??= false
+      if (!pageData.frontmatter.description) {
+        const src = fs.readFileSync(path.join(siteConfig.srcDir, pageData.relativePath), 'utf8')
+        pageData.description = pageData.frontmatter.description = plainText(parseRulePage(src).summary)
+      }
+    }
+
     const title = pageData.frontmatter.title ?? pageData.title
     const description = pageData.frontmatter.description ?? DESCRIPTION
     const pagePath = pageData.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '.html')
@@ -98,72 +125,58 @@ export default defineConfig({
       }
     ],
 
-    sidebar: [
-      {
-        text: 'Introduction',
-        items: [
-          { text: 'Overview', link: '/introduction.html' },
-          { text: 'Motivation', link: '/introduction/motivation.html' },
-          { text: 'Core concepts', link: '/introduction/core-concepts.html' },
-          { text: 'Principles', link: '/introduction/principles.html' },
-          { text: 'Examples', link: '/introduction/examples.html' }
-        ]
-      },
-      {
-        text: 'Specification',
-        items: [
-          { text: 'Validation rules', link: '/validation-rules.html' },
-          { text: 'How it works', link: '/validation-rules/how-it-works.html' },
-          { text: 'Types coercing', link: '/validation-rules/types-coercing.html' },
-          ruleGroup('Common rules', '/validation-rules/common-rules.html', [
-            'required', 'not_empty', 'not_empty_list', 'any_object'
-          ]),
-          ruleGroup('String rules', '/validation-rules/string-rules.html', [
-            'string', 'eq', 'one_of', 'max_length', 'min_length', 'length_between', 'length_equal', 'like'
-          ]),
-          ruleGroup('Numeric rules', '/validation-rules/numeric-rules.html', [
-            'integer', 'positive_integer', 'decimal', 'positive_decimal', 'max_number', 'min_number', 'number_between'
-          ]),
-          ruleGroup('Special rules', '/validation-rules/special-rules.html', [
-            'email', 'url', 'iso_date', 'equal_to_field'
-          ]),
-          ruleGroup('Metarules', '/validation-rules/metarules.html', [
-            'nested_object', 'variable_object', 'list_of', 'list_of_objects', 'list_of_different_objects', 'or'
-          ]),
-          ruleGroup('Modifiers', '/validation-rules/modifiers.html', [
-            'trim', 'to_lc', 'to_uc', 'remove', 'leave_only', 'default'
-          ]),
-          { text: 'Error codes', link: '/validation-rules/error-codes.html' },
-          { text: 'Rules aliasing', link: '/rules-aliasing.html' }
-        ]
-      },
-      {
-        text: 'Ecosystem',
-        items: [
-          { text: 'Implementations', link: '/introduction/implementations.html' },
-          { text: 'Extensions', link: '/introduction/extensions.html' },
-          { text: 'Users', link: '/users.html' },
-          { text: 'Playground', link: '/playground.html' }
-        ]
-      },
-      {
-        text: 'Contributing',
-        items: [
-          { text: 'How to contribute', link: '/how-to-contribute.html' },
-          { text: 'Create own implementation', link: '/how-to-contribute/create-own-implementation.html' },
-          { text: 'Test suite', link: '/how-to-contribute/test-suite.html' },
-          { text: 'Create own plugins', link: '/how-to-contribute/create-own-plugins.html' },
-          { text: 'Improve this documentation', link: '/how-to-contribute/improve-livr-documentation.html' }
-        ]
-      },
-      {
-        text: 'About',
-        items: [
-          { text: 'Changelog', link: '/changes.html' },
-          { text: 'License', link: '/license-and-copyright.html' }
-        ]
-      }
-    ],
+    sidebar: {
+      '/validation-rules': rulesSidebar,
+      '/rules-aliasing': rulesSidebar,
+      '/': [
+        {
+          text: 'Introduction',
+          items: [
+            { text: 'Overview', link: '/introduction.html' },
+            { text: 'Motivation', link: '/introduction/motivation.html' },
+            { text: 'Core concepts', link: '/introduction/core-concepts.html' },
+            { text: 'Principles', link: '/introduction/principles.html' },
+            { text: 'Examples', link: '/introduction/examples.html' }
+          ]
+        },
+        {
+          text: 'Specification',
+          items: [
+            { text: 'Validation rules', link: '/validation-rules.html' },
+            { text: 'How it works', link: '/validation-rules/how-it-works.html' },
+            { text: 'Types coercing', link: '/validation-rules/types-coercing.html' },
+            { text: 'Error codes', link: '/validation-rules/error-codes.html' },
+            { text: 'Rules aliasing', link: '/rules-aliasing.html' }
+          ]
+        },
+        {
+          text: 'Ecosystem',
+          items: [
+            { text: 'Implementations', link: '/introduction/implementations.html' },
+            { text: 'Extensions', link: '/introduction/extensions.html' },
+            { text: 'Users', link: '/users.html' },
+            { text: 'Playground', link: '/playground.html' }
+          ]
+        },
+        {
+          text: 'Contributing',
+          items: [
+            { text: 'How to contribute', link: '/how-to-contribute.html' },
+            { text: 'Create own implementation', link: '/how-to-contribute/create-own-implementation.html' },
+            { text: 'Test suite', link: '/how-to-contribute/test-suite.html' },
+            { text: 'Create own plugins', link: '/how-to-contribute/create-own-plugins.html' },
+            { text: 'Improve this documentation', link: '/how-to-contribute/improve-livr-documentation.html' }
+          ]
+        },
+        {
+          text: 'About',
+          items: [
+            { text: 'Changelog', link: '/changes.html' },
+            { text: 'License', link: '/license-and-copyright.html' }
+          ]
+        }
+      ]
+    },
 
     outline: { level: [2, 3] },
 
