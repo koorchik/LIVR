@@ -40,14 +40,16 @@ export default defineConfig({
   sitemap: { hostname: SITE_URL },
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico', sizes: '48x48' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/favicon-32.png', sizes: '32x32' }],
+    ['link', { rel: 'icon', href: '/favicon.ico', sizes: '32x32' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
-    ['meta', { name: 'theme-color', content: '#218acc' }],
+    ['meta', { name: 'theme-color', content: '#1a7fc4' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'LIVR' }],
-    ['meta', { property: 'og:image', content: `${SITE_URL}/icon-512.png` }],
-    ['meta', { name: 'twitter:card', content: 'summary' }]
+    ['meta', { property: 'og:image', content: `${SITE_URL}/og-image.png` }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }]
   ],
 
   transformPageData(pageData) {
@@ -78,7 +80,7 @@ export default defineConfig({
   },
 
   themeConfig: {
-    logo: { src: '/logo.png', alt: 'LIVR' },
+    logo: { light: '/logo.svg', dark: '/logo-dark.svg', alt: 'LIVR' },
     siteTitle: false,
 
     nav: [

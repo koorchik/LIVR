@@ -1,5 +1,10 @@
 <p align="center">
-  <a href="https://livr-spec.org"><img src="docs/public/logo.png" alt="LIVR" width="300"></a>
+  <a href="https://livr-spec.org">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/public/logo-dark.svg">
+      <img src="docs/public/logo.svg" alt="LIVR" width="240">
+    </picture>
+  </a>
 </p>
 
 <h1 align="center">Language Independent Validation Rules (v2.0)</h1>
