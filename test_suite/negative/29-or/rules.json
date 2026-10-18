@@ -3,6 +3,7 @@
     "id2-1": [{ "or": ["email", "positive_integer" ] }, "to_lc"],
     "id3-1": { "or": [{"min_length": 15}, ["email", "to_lc"] ] },
     "id4-1": { "or": [["required", "positive_integer"], ["not_empty", "email"] ] },
+    "id4-2": { "or": [["required", "positive_integer"], ["required", "email"] ] },
 
 
     "products": {"list_of": { "or": [

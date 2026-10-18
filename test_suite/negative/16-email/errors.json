@@ -23,6 +23,9 @@
     "email22": "WRONG_EMAIL",
     "email23": "WRONG_EMAIL",
     "email24": "WRONG_EMAIL",
+    "email25": "WRONG_EMAIL",
+    "email26": "WRONG_EMAIL",
+    "email27": "WRONG_EMAIL",
 
     "value_is_hash":        "FORMAT_ERROR",
     "value_is_empty_hash":  "FORMAT_ERROR",

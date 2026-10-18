@@ -2,6 +2,7 @@
     "first_name": "",
     "last_name": null,
     "age": "25",
+    "__proto__": { "middle_name": "Some" },
 
     "value_is_hash":        {"test": 1},
     "value_is_empty_hash":  {},

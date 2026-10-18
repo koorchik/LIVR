@@ -2,12 +2,12 @@
     "address": {
         "street": "",
         "zip": -1232131,
-        "city": "Moscow"
+        "city": "Lviv"
     },
     "address_custom_error": {
         "street": "My street",
         "zip": "12312",
-        "city": "Moscow"
+        "city": "Lviv"
     },
     "extra_field": 12
 }

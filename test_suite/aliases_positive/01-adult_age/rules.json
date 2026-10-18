@@ -3,6 +3,8 @@
     "age2": ["adult_age"],
     "age3": [ { "adult_age": [] } ],
     "age4": { "adult_age": [] },
+    "empty_age": "adult_age",
+    "missed_age": "adult_age",
     "age1_custom_error": "adult_age_with_custom_error",
     "age2_custom_error": ["adult_age_with_custom_error"],
     "age3_custom_error": [ { "adult_age_with_custom_error": [] } ],

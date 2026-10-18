@@ -4,5 +4,7 @@
     "iso_date3": [ { "iso_date": [] } ],
     "iso_date4": [ { "iso_date": [] } ],
     "iso_date5": "iso_date",
+    "iso_date6": "iso_date",
+    "iso_date7": "iso_date",
     "empty_field": "iso_date"
 }

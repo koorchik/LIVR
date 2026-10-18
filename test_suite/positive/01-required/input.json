@@ -3,6 +3,7 @@
     "last_name": "Pupkin",
     "middle_name": "Some",
     "age": "25",
+    "__proto__": { "polluted": "yes" },
     "salary": 0,
     "constructor": "Constructor value",
     "toString": "ToString value",

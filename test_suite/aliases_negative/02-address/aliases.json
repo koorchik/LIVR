@@ -4,7 +4,7 @@
         "rules": { "nested_object":{
             "street": "required",
             "zip": ["required", "positive_integer"],
-            "city": {"one_of": ["Kiev", "Kharkiv"] }
+            "city": {"one_of": ["Kyiv", "Kharkiv"] }
         }}
     },
 
@@ -13,7 +13,7 @@
         "rules": { "nested_object":{
             "street": "required",
             "zip": ["required", "positive_integer"],
-            "city": {"one_of": ["Kiev", "Kharkiv"] }
+            "city": {"one_of": ["Kyiv", "Kharkiv"] }
         }},
         "error": "WRONG_ADDRESS"
     }

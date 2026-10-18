@@ -22,7 +22,10 @@
     "email21": "tester@@devoffice.com",
     "email22": "tester@tes ter.devoffice.com",
     "email23": "@enny tm.devoffice.com",
-    "email24": "онстерович@письмо.рф ",
+    "email24": "тестувальник@пошта.укр ",
+    "email25": "test@mail.com\n",
+    "email26": "te\nst@mail.com",
+    "email27": "test@ma\nil.com",
 
     "empty_field": "",
     "extra_field": "aaaa",

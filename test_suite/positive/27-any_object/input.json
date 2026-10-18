@@ -1,6 +1,6 @@
 {
     "object1": {"email": "user@mail.com"},
-    "object2": {"id": 123, "address": {"city" : "Kiev"}},
+    "object2": {"id": 123, "address": {"city" : "Kyiv"}},
     "object3": {},
     "empty_field": "",
     "object4": {"constructor": "Constructor value"}

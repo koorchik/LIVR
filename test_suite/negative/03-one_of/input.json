@@ -2,7 +2,9 @@
     "city1": "New York",
     "city2": "New York",
     "city3": "New York",
+    "city4": "New York",
     "number1": "1.0",
+    "number2": 40,
     "extra_city": "New York",
 
     "value_is_hash":        {"test": 1},

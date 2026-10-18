@@ -1,9 +1,9 @@
 {
-    "city1": { "eq": "Moscow" },
-    "city2": [{ "eq": "Kiev" }],
-    "city3": { "eq": "Kiev" },
+    "city1": { "eq": "Lviv" },
+    "city2": [{ "eq": "Kyiv" }],
+    "city3": { "eq": "Kyiv" },
     "city4": [{ "eq": ["Dnipro"] }],
     "number1": { "eq": 2 },
     "number2": { "eq": "2" },
-    "empty_city": { "eq": "Kiev" }
+    "empty_city": { "eq": "Kyiv" }
 }
