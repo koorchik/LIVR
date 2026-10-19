@@ -22,6 +22,7 @@
 12. [Open questions](#12-open-questions)
 13. [Suggested next steps](#13-suggested-next-steps)
 - [Appendix A. Sources](#appendix-a-sources)
+- [Appendix B. Probe results](#appendix-b-probe-results)
 
 ## 1. Goals
 
@@ -62,6 +63,20 @@ A rule gets into the specification if:
 
 A rule that fails 2–4 can still live in a community package or be an alias, but not in the spec.
 
+The spec should also state the data model, which LIVR 2 leaves implicit ([LIVR#66]: "it seems that
+this project is only intended to validate JSON? The documentation does not make it clear"):
+
+- The input is a JSON value, in the I-JSON profile (RFC 7493): UTF-8, no duplicate member names,
+  numbers within the double range. [LIVR#18]: Erlang proplists allowed duplicate keys, and LIVR
+  cannot see them.
+- The order of object members is not significant; the order of list items is.
+- Some languages cannot tell `{}` from `[]` (PHP, Lua, Erlang proplists), and PHP turns an object
+  with keys `"0"`…`"n-1"` into a list. Today PHP and Lua keep private copies of the test suite
+  ([LIVR#52], notes.json). Instead, a case that depends on it gets a marker in the suite (for example
+  `"needs": ["empty_object_vs_list"]`) and the conformance page shows it as "not applicable".
+- Invalid UTF-8 in byte-string languages (Erlang, PHP, Lua, Go, Perl without decoding) gives
+  `FORMAT_ERROR` ([liver#3]: `<<"Grégo">>` without `/utf8`).
+
 ## 3. Spec structure: Core and modules
 
 With 12+ implementations, a single monolithic rule set will not be implemented fully. Proposal:
@@ -78,6 +93,12 @@ With 12+ implementations, a single monolithic rule set will not be implemented f
 - An implementation declares which modules it supports. A module is all or nothing.
 - The `text` module is separate because it needs Unicode tables (`\p{L}`, normalization) that some
   languages do not have out of the box (Lua; PHP without `intl`; Go without `x/text`).
+- Name clashes. Users already register custom rules with the new standard names (`boolean`,
+  `uuid`, `required_if` from js-livr-extra-rules). The spec should say which one wins. liver
+  composes rule sets with "first entry wins on name clash" and keeps non-spec rules out of the
+  LIVR set ("This rule is not part of the original specification, so it cannot be added as is",
+  [liver PR #7]). Proposal: a rule registered by the user replaces the standard one, and the
+  migration guide lists all new reserved names.
 
 ## 4. Notation
 
@@ -182,41 +203,138 @@ js-validator-livr), which is a JS bug, not a spec question.
 ### 5.9 String length depends on the implementation
 
 `{"s": {"max_length": 1}}` with `{"s": "😀"}` gives `TOO_LONG` in JS (`"😀".length === 2`, UTF-16
-code units). go-livr counts runes (`utf8.RuneCountInString`) and accepts it. Other languages
-probably differ too (to verify with a conformance case):
+code units). go-livr counts runes (`utf8.RuneCountInString`) and accepts it. Measured with the
+conformance runners on 2026-10-19 (`{"max_length": 1}`, method in [Appendix B](#appendix-b-probe-results)):
 
-| Language | Default length | Unit |
-|---|---|---|
-| JS, Java | `.length`, `String.length()` | UTF-16 code units |
-| Go (go-livr), Python, Ruby, Perl (decoded strings) | | code points |
-| PHP | `strlen` / `mb_strlen` | bytes / code points |
-| Lua | `#s` / `utf8.len` | bytes / code points |
-| Swift, Raku | `String.count`, `.chars` | grapheme clusters |
+| Value | Code points | JS, Java | Perl, PHP, Python, Ruby, Go, Lua, both Erlangs | Raku |
+|---|---|---|---|---|
+| `"й"` (precomposed) | 1 | passes | passes | passes |
+| `"😀"` | 1 | `TOO_LONG` | passes | passes |
+| `"é"` as `e` + U+0301 | 2 | `TOO_LONG` | `TOO_LONG` | passes |
+| `"й"` as `и` + U+0306 | 2 | `TOO_LONG` | `TOO_LONG` | passes |
+| `"👍🏽"`, `"🇺🇦"` | 2 | `TOO_LONG` | `TOO_LONG` | passes |
 
-The spec does not say which unit is correct (see [10.1](#101-string-length-in-code-points)).
+So there are three units in use today: UTF-16 code units (JS, Java), code points (most), and
+grapheme clusters (Raku). Swift uses `String.count`, so it counts graphemes too (from the source,
+not run). php-validator-livr uses `mb_strlen($value, "UTF-8")`, so code points. The spec does not
+say which unit is correct (see [10.1](#101-string-length-in-code-points)).
 
 ### 5.10 Booleans
 
 `{"b": {"one_of": [true, false]}}` accepts `"true"`/`"false"` and outputs real booleans (values
 are compared as strings and the output is the value from the rule). But `1`, `0`, `"1"`, `"0"` give
-`NOT_ALLOWED_VALUE`, and the error code is not specific. There is no `boolean` rule (#22).
+`NOT_ALLOWED_VALUE`, and the error code is not specific. There is no `boolean` rule ([#22]).
 
 ### 5.11 Unknown fields
 
 `{"a": "string"}` with `{"a": "x", "b": "y"}` gives `{"a": "x"}`. Unknown fields can be neither
-rejected (#17) nor kept (#70).
+rejected ([#17]) nor kept ([#70]).
 
 ### 5.12 Other things that need custom rules today
 
-- Conditional presence: "VAT number is required for companies", "email or phone" (#58).
-- Dictionaries with arbitrary keys: `{"uk": "...", "en": "..."}`, `{"<sku>": <qty>}` (#56).
+- Conditional presence: "VAT number is required for companies", "email or phone" ([#58]).
+- Dictionaries with arbitrary keys: `{"uk": "...", "en": "..."}`, `{"<sku>": <qty>}` ([#56]).
 - Positional lists (tuples): `[lng, lat]`, `[from, to]`.
 - "Exactly one default address", "at least one admin" in a list.
 - Cross-level references: `item.currency == order.currency`, `primary_email ∈ emails`.
 - Scalar-or-list inputs from query strings: `?id=5` vs `?id=5&id=6`.
-- Date and time: datetime with offset (#19), time (#16), date bounds (#8), durations.
+- Date and time: datetime with offset ([#19]), time ([#16]), date bounds ([#8]), durations.
 - Cross-field bounds: `end_date >= start_date`, `max_price >= min_price`.
-- Error parameters for messages (#30, #31, js-validator-livr PR #7).
+- Error parameters for messages ([#30], [#31], [js-validator-livr PR #7]).
+
+### 5.13 Email: Cyrillic and other IDN domains
+
+Measured on 2026-10-19 with the conformance runners on all implementations except Swift, and on
+Chrome 155. The full tables are in [Appendix B](#appendix-b-probe-results).
+
+- `test@пошта.укр` and `test@münchen.de` are rejected by **all 11** implementations.
+- The same address in punycode, `test@xn--80a1acn3a.xn--j1amh`, is rejected by 6 of 11: JS, Raku,
+  Erlang (liver), Java, Ruby and Go. JS, Raku and liver allow only letters in the TLD
+  (`[a-zA-Z]{2,}`); Java, Ruby and Go allow only 2–6 letters. Perl, PHP, Python, Erlang (olifer)
+  and Lua accept it. So the reference implementation cannot accept an address on `.укр`, `.бг` or
+  `.中国` in any form.
+- This is exactly what browsers send. When a user types `test@пошта.укр` into
+  `<input type="email">`, Chrome converts the domain and the field value becomes
+  `test@xn--80a1acn3a.xn--j1amh`, which is valid. The form passes in the browser and fails on a
+  LIVR server.
+- The local part is the other way around. `тест@mail.com` is accepted by JS, Raku and liver and
+  rejected by the other 8 and by Chrome (the WHATWG grammar has an ASCII local part). Such an
+  address needs SMTPUTF8 (RFC 6531) on every server on the way. An IDN domain works with any server
+  once it is in punycode.
+- JS, Raku, liver and olifer accept an invisible U+200B (zero-width space) in the local part:
+  `te​st@mail.com`. liver and olifer also accept U+00A0 (no-break space).
+- TLDs longer than 6 letters fail in Java, Ruby and Go: `user@hotline.finance` (already in the test
+  suite), `test@example.photography`.
+- Everything else differs too: IP literals (rejected by Java, Ruby, Lua, Go), quoted local parts
+  (accepted only by JS, Perl, Raku, liver), the 64/254 length limits (checked only by Perl and
+  PHP), a hyphen at the start of a label (rejected by Perl, PHP, Python, Ruby, Go) or at the end
+  (rejected only by Perl, PHP, Python),
+  `test@localhost` and `test@mail.com.` (accepted by olifer and Lua).
+- Validator::LIVR 2.1 (master, not on CPAN yet) moves Perl to the JS behavior for the local part:
+  it accepts `тест@mail.com` and U+200B. It still rejects `test@пошта.укр` and still accepts the
+  punycode form.
+- The only negative case with Cyrillic, `email24` in `negative/16-email`, is
+  `"тестувальник@пошта.укр "` with a trailing space, so it does not show whether the Cyrillic part
+  is wrong.
+- liver has a second, non-LIVR rule set (`liver_standard_rules`) with internationalized email: a
+  local part without whitespace, `@` and control or format characters (`\p{C}`), and Unicode domain
+  labels ([liver#5]). Its LIVR rule set has a TODO list of addresses to support, among them
+  `用户@例子.广告`, `अजय@डाटा.भारत`, `квіточка@пошта.укр`, `θσερ@εχαμπλε.ψομ` and
+  `Dörte@Sörensen.example.com`.
+
+Popular JS validators split in the same way. Cyrillic domains are accepted by validator.js
+`isEmail`, Joi (`allowUnicode` is on by default) and fastest-validator in its default mode, and by
+Zod only with `z.regexes.unicodeEmail`. Zod `email()`, Valibot `email()`, ArkType, `email-validator`
+and fastest-validator `precise` mode reject even the punycode TLD, like LIVR. The WHATWG-based
+regexes (Zod `html5Email`, Valibot `rfcEmail`, Yup, Ajv `email`) accept punycode and reject Unicode.
+The LIVR JS regex is the same as Zod `z.regexes.rfc5322Email`.
+
+`url` has the same problem with hosts: JS accepts `https://пошта.укр/` but rejects
+`https://xn--80a1acn3a.xn--j1amh/` (the TLD again). Punycode hosts fail in JS, Java, Ruby and Go;
+Unicode hosts pass only in JS, Java, Ruby and Lua (and in Validator::LIVR 2.1 master). [liver#5]
+asked for Cyrillic in `email` and `url` in 2020. The first patch added `а-яА-Я`, which misses `і`,
+`ї`, `є`, `ґ` ([liver PR #6], not merged; the maintainer: "the basic set of rules is part of the
+specification"). In
+2026-10 it was fixed only in liver's own rule set, with `\p{L}\p{M}\p{N}` labels ("\p{M} is
+required for Indic and other scripts with combining marks"). Neither set normalizes the host, so
+the Unicode and the punycode forms of one host both pass but stay different values.
+
+### 5.14 Rule objects with several keys
+
+LIVR 2 writes a rule as `{ RULE_NAME: ARGUMENTS }`, but does not say that the object must have
+exactly one key. Measured with `{"min_length": 2, "max_length": 3}`,
+`{"max_length": 3, "error": "CUSTOM"}` and `{}`, two runs each:
+
+| Implementation | Several rule names | An unknown second key | `{}` |
+|---|---|---|---|
+| JS, PHP, Ruby, Go | Only the first key is used, the rest is ignored silently | Ignored | Exception |
+| Java | One key, in `HashMap` order | `Rule [error] not registered` | Exception |
+| Perl 2.0 (CPAN), Raku | One key, in random hash order: results changed between the two runs | Ignored or an exception, at random | Exception |
+| Perl 2.1 (master) | `Rule [max_length, min_length] should have one name` | The same error | |
+| Python, Lua | Every key is a rule | Exception | The field is dropped |
+| Erlang (liver, olifer) | Every key is a rule | Ignored: unknown rules are skipped ([olifer#1]) | liver passes, olifer throws |
+
+So a typo like `{"min_length": 1, "max_lenght": 10}` is silently lost in most implementations, and
+LIVR 2 has no room for extra keys in a rule object. This matters for the meta keys in
+[8.13](#813-meta-keys-in-rule-objects). Every implementation accepts `{"email": []}` (a rule
+without arguments in the object form).
+
+### 5.15 Other behavior LIVR 2 leaves undefined
+
+Found in the issue trackers and checked with js-validator-livr 2.11:
+
+| Behavior | JS 2.11 today | Source | See |
+|---|---|---|---|
+| Number strings | `integer` and `positive_decimal` accept `"0x10"` (→ 16), `" 5 "`, `"5."`, `"1e3"` and `true` (→ 1); `positive_decimal` accepts `"Infinity"` and outputs `null`. `decimal` rejects all of them | [js#32], [js PR #35] | [10.10](#1010-number-grammar) |
+| `default` | `{"default": 5}` turns `null` and `""` into 5, so a PATCH cannot clear a field | [LIVR#12], [js#10] | [7.4](#74-presence-and-conditions) |
+| `auto_trim` | Not in the spec. In JS it is deep: it trims inside nested objects, lists, `any_object` values and passwords. `trim` and `auto_trim` also remove U+00A0 and U+FEFF | [js#24] | [10.11](#1011-trimming) |
+| Empty rule list `"name": []` | The field is dropped. In 2015 it was the way to keep an optional field without checks | [LIVR#24], [js#5] | [8.9](#89-any) |
+| `equal_to_field` inside `or` or an alias | `{"pw2": {"or": [{"equal_to_field": "pw"}, {"eq": "x"}]}}` with `{"pw": "a", "pw2": "a"}` gives `NOT_ALLOWED_VALUE`: the branch sees only `{"pw2": ...}` | [js#25] | [8.2](#82-field-references) |
+| `variable_object` selector | `0` and `false` give `FORMAT_ERROR` even if variants `"0"` and `"false"` exist; `1`, `"0"` and `true` work | [js PR #60] | [8.3](#83-when) |
+| Unknown selector value | `FORMAT_ERROR` for the whole object. [js PR #60] proposes `{"type": "NOT_ALLOWED_VALUE"}` and `REQUIRED` under the selector | [js PR #60], [LIVR#9] | [8.3](#83-when) |
+| `or` with an empty value | Empty values reach the branches: `[{"or": ["not_empty_list"]}, {"list_of": "integer"}]` with `{}` gives `CANNOT_BE_EMPTY`. The 2017 advice in [LIVR#39] relied on the opposite | [LIVR#39] | [8.11](#811-or-defined-semantics) |
+| `not_empty_list` with `null` | `FORMAT_ERROR`, but `CANNOT_BE_EMPTY` for a missing value or `""` | | [7.5](#75-lists) |
+| Comparison "as strings" | Depends on the language: PHP `(string)false === ""`, Python `str(True) == "True"`. Old bugs: [js#6], [js#8], [js#9], [LIVR#23] (`4.00000000000001` equals `4` in PHP) | | [7.1](#71-types-and-numbers) |
 
 ## 6. Review of js-livr-extra-rules
 
@@ -231,7 +349,7 @@ rejected (#17) nor kept (#70).
 | `ipv4` | `formats`, as `ip` | `ip`, `{"ip": 4}`, `{"ip": 6}`; `cidr` as a separate rule |
 | `base64` | `formats` | Add the URL-safe alphabet; error code `WRONG_BASE64` instead of `MALFORMED_BASE64` |
 | `md5` | `formats`, as `hash` | `{"hash": "md5"}`, also `sha1`, `sha256`, `sha384`, `sha512` |
-| `credit_card` | `checksums` | Extract `luhn` as its own rule (#63). The length check (14–16) rejects valid 12–13 and 17–19 digit numbers (ISO/IEC 7812 allows up to 19) |
+| `credit_card` | `checksums` | Extract `luhn` as its own rule ([#63]). The length check (14–16) rejects valid 12–13 and 17–19 digit numbers (ISO/IEC 7812 allows up to 19) |
 | `mongo_id` | Standard alias | A 24-character hex string |
 | `is` | Reject | The same as `["required", {"eq": value}]` |
 | `instance_of`, `has_methods` | Reject | JS only. `has_methods` also puts a parameter into the error code (`NOT_HAVING_METHOD [bark]`) |
@@ -256,6 +374,26 @@ Details:
   `"false"`. Open: `"on"`/`"off"` (the default value of an HTML checkbox is `on`), `"yes"`/`"no"`,
   case-insensitivity (Q1). Perl has no native boolean; the Perl implementation must output
   `JSON::PP::true`/`false` or the equivalent, which needs a conformance check.
+- The set must be closed: everything else gives `NOT_BOOLEAN`. liver's `to_boolean` turns every
+  value except `0`, `""`, `"0"`, `"false"` and `null` into `true`, so `"off"` becomes `true`. In
+  [liver#8] a user tried `"false"`, `"0"`, `1` and `"off"` with liver's `is_boolean` and always got
+  `not_boolean` ("A boolean value must be an atom").
+- **Canonical string form.** `eq`, `one_of`, `not_one_of`, `unique_items`, `equal_to_field`,
+  `required_if`, `when` cases and `variable_object` selectors compare values "as strings". The
+  string form of a boolean or a number depends on the language today:
+  - `{"one_of": [true, false]}` with `"true"` passes in JS and gives `NOT_ALLOWED_VALUE` in Perl;
+    with `"1"` it is the other way around (JSON::PP booleans stringify to `1` and `0`).
+  - PHP `(string)false === ""` ([php#12]), Python `str(True) == "True"` ([python#3]).
+  - `"string"` on `true` gives `"true"` in JS and `FORMAT_ERROR` in Perl.
+  - [LIVR#23]: `{"one_of": [4.00000000000001]}` equals `4` in PHP, but not in JS or Python. JSON
+    `-3.00` becomes `-3` in JS and Perl and `-3.0` in Python and Erlang ([LIVR#40], [olifer#8]).
+
+  Proposal: one Core definition. Booleans are `"true"` and `"false"`; numbers use the JSON number
+  serialization of RFC 8785 (JCS), which is the ECMAScript `Number.prototype.toString` algorithm,
+  so `1.0` and `1` are both `"1"` and `-3.00` is `"-3"`. A string stays as it is, so `"1.0"` still
+  does not equal `1` (as in LIVR 2). Every implementation needs a small number formatter, but no
+  language-dependent output. The test suite gets boolean and float cases for `one_of`, `eq` and
+  `string`; today it has a single boolean case (`true` → `true`).
 - `multiple_of` uses decimal arithmetic on the decimal string forms, not floating point:
   `0.3` is a multiple of `0.1`. Non-numbers give `NOT_NUMBER`, like `min_number`.
 - `max_decimal_places` counts digits after the decimal point in the string form of the value. For
@@ -279,9 +417,9 @@ Details:
 
 | Rule | Tier | Error | Sources | Notes |
 |---|---|---|---|---|
-| `iso_datetime` | Core | `WRONG_DATETIME` | Z V J A VJ, #19 | RFC 3339 `date-time`, offset required. Output is the input string unchanged |
-| `iso_time` | Core | `WRONG_TIME` | Z V A VJ, #16 | `HH:MM`, `HH:MM:SS`, `HH:MM:SS.fff`, no offset (what `<input type=time>` sends) |
-| `min_date`, `max_date` | Core | `TOO_EARLY`, `TOO_LATE` | X J Z L A VJ, #8 | Bound is a date, a datetime, `"today"`, `"now"` or `{"field": ...}` |
+| `iso_datetime` | Core | `WRONG_DATETIME` | Z V J A VJ, [#19] | RFC 3339 `date-time`, offset required. Output is the input string unchanged |
+| `iso_time` | Core | `WRONG_TIME` | Z V A VJ, [#16] | `HH:MM`, `HH:MM:SS`, `HH:MM:SS.fff`, no offset (what `<input type=time>` sends) |
+| `min_date`, `max_date` | Core | `TOO_EARLY`, `TOO_LATE` | X J Z L A VJ, [#8] | Bound is a date, a datetime, `"today"`, `"now"` or `{"field": ...}` |
 | `iso_duration` | formats | `WRONG_DURATION` | Z J A | ISO 8601 duration as in RFC 3339 Appendix A: `P1DT2H`, `PT30M`, `P2W` |
 
 Details the spec must define:
@@ -289,7 +427,13 @@ Details the spec must define:
 - `iso_date` (LIVR 2) stays: `YYYY-MM-DD`, a valid calendar date.
 - `iso_datetime` exact grammar: `T` separator (case?), seconds required or optional, fraction
   digits limit, leap second `23:59:60` accepted or not. Open: a `local` variant without offset for
-  `<input type=datetime-local>` (Q6).
+  `<input type=datetime-local>` (Q6). [LIVR#19] asked for `"yyyy-mm-dd hh-MM-ss"`: a space instead of
+  `T` and no offset, as in SQL. RFC 3339 allows the space (section 5.6, note); decide.
+- No local time zone anywhere, not only in comparisons: date-only parsing and fixed bounds too.
+  Three bugs came from it: [js#11] (`"2015-10-10"` rejected because of `getTimezoneOffset`), [js PR #2]
+  ("Fix for unix time zero: 1970-01-01") and [js-livr-extra-rules#14]
+  (`{"iso_date": {"min": "1900-01-01"}}` throws at UTC−01:00 because of a local mean time offset in
+  1899). The conformance job should run once under a non-UTC time zone.
 - Comparison in `min_date`/`max_date`:
   - date vs date: calendar dates;
   - datetime vs datetime: instants;
@@ -310,7 +454,7 @@ Details the spec must define:
 | `required_if` | Core | `REQUIRED` | X L G | `{"required_if": {"type": "company"}}`, `{"required_if": {"type": ["company", "ngo"]}}` |
 | `required_with` | Core | `REQUIRED` | L G J A | `{"required_with": "password"}` or a list: required if any of the fields is not empty |
 | `required_without` | Core | `REQUIRED` | L G J | `email: {"required_without": "phone"}`, `phone: {"required_without": "email"}` = "email or phone" |
-| `absent` | Core | `FIELD_NOT_ALLOWED` | L J F G, #54 | The value must be empty (missing, `null` or `""`) |
+| `absent` | Core | `FIELD_NOT_ALLOWED` | L J F G, [#54] | The value must be empty (missing, `null` or `""`) |
 | `present` | Core | `REQUIRED` | L | The key must exist; `null` and `""` are allowed |
 | `not_null` | Core | `CANNOT_BE_NULL` | Z V (nullable) | The key may be missing, but not `null`. Alternative: `not_empty` rejects `null` (Q7) |
 | `when` | Core (metarule) | errors of the branch | J A L | See [8.3](#83-when) |
@@ -324,7 +468,27 @@ Details:
 - `absent`: does an empty value stay in the output (`null` stays `null`) or is it removed? Proposal:
   removed.
 - Not proposed as separate rules, because `when` covers them: `required_unless`,
-  `required_with_all`, `required_without_all`, `prohibited_if`, `prohibits`, `conflict_with` (#25).
+  `required_with_all`, `required_without_all`, `prohibited_if`, `prohibits`, `conflict_with` ([#25]).
+- "Empty" is exactly: missing, `null` or `""`. Not `0`, `false` or `[]`. [js-livr-extra-rules
+  PR #15] (`required_if_empty`, the same as `required_without`) checks `!valueToCheck`, so a
+  referenced `0` or `false` counts as empty there.
+- `required_if` on a checkbox ([LIVR#58]: "if field 4 is true, then fields 4a and 4b are required"):
+  `{"required_if": {"field4": true}}` compares `"true"` with the raw input, which may be `"1"` or
+  `"on"`. Only `when` with `"is": ["boolean", {"eq": true}]` works, and only if `is` rules may
+  convert the value (Q10). The docs should recommend it.
+- `present` and `not_null` must know whether the key exists. In the Perl and Lua rule APIs a
+  missing key and `undef`/`nil` look the same ([Validator-LIVR#12] had to add an `$exist` argument).
+  Options that drop `null` values ([Validator-LIVR PR #7] "Clear undef") must not be standard: in
+  lists they shift indexes, `[undef, '123', undef]` gives the error at index 0.
+- `default` replaces `null` and `""` too ([LIVR#12], [js#10]). With PATCH semantics a client that sends
+  `null` to clear a field gets the default instead. Options: keep it (the LIVR 2 meaning of
+  "empty"), or add a variant for missing keys only (`default_if_missing`?). `default` cannot take
+  an options object: its argument is any JSON value (Q16).
+- "Every field is required" as a schema-level switch: Swift has `validator.allRequired = true`
+  ([swift PR #30]), aegir makes every path required unless `field_is_optional: true` ([aegir PR #8]),
+  Joi has `presence: "required"`, Zod has `.required()`/`.partial()`. The use case is one schema for
+  create and PATCH. It fits the object options of [8.5](#85-unknown-fields-policy):
+  `{"presence": "required"}`.
 
 ### 7.5 Lists
 
@@ -339,6 +503,13 @@ Details:
 Details:
 
 - Non-lists give `FORMAT_ERROR`.
+- Like all rules, they skip empty values. Then `["not_empty_list", {"max_items": 10}]` and
+  `{"min_items": 1}` (optional, but not empty if given) are easy, which is what [LIVR#39] asked for.
+  The `or` workaround suggested there no longer works ([5.15](#515-other-behavior-livr-2-leaves-undefined)).
+- `not_empty_list` with `null` gives `FORMAT_ERROR` in JS, but `CANNOT_BE_EMPTY` for a missing value
+  and `""`. Pin it with a test.
+- Names used before: `min_list_length` (koorchik in [Validator-LIVR#2]), `array_length_equal`
+  ([js#20]), `list_length` (extra-rules). Input for Q4.
 - `unique_items` compares primitive items as strings (`1` and `"1"` are equal, consistent with
   `eq`/`one_of`). With a key, items are compared by the key values; items with an empty key value
   are ignored. Objects without a key give `FORMAT_ERROR` (extra-rules has a separate
@@ -354,8 +525,8 @@ Details:
 
 | Rule | Tier | Error | Sources | Notes |
 |---|---|---|---|---|
-| `dict_of` | Core (metarule) | `WRONG_KEY` + errors of values | Z V J A F G, #56 | See [8.4](#84-dict_of) |
-| `nested_object` options | Core | `FIELD_NOT_ALLOWED` | Z V J A F, #17, #70 | `unknown: strip/error/keep`, `rest`. See [8.5](#85-unknown-fields-policy) |
+| `dict_of` | Core (metarule) | `WRONG_KEY` + errors of values | Z V J A F G, [#56] | See [8.4](#84-dict_of) |
+| `nested_object` options | Core | `FIELD_NOT_ALLOWED` | Z V J A F, [#17], [#70] | `unknown: strip/error/keep`, `rest`. See [8.5](#85-unknown-fields-policy) |
 | `any` | Core | none | Z A F | Any JSON value, output unchanged. See [8.9](#89-any) |
 
 Maybe later: `min_fields` / `max_fields` for objects (Ajv `minProperties`, Joi `object.min`).
@@ -382,21 +553,56 @@ Maybe later: `min_fields` / `max_fields` for objects (Ajv `minProperties`, Joi `
 
 Changes to LIVR 2 format rules:
 
-- **`email`**: define it as the WHATWG HTML "valid e-mail address" grammar, plus at least one dot in
-  the domain, plus at most 254 characters. Then the server and `<input type=email>` accept the same
-  addresses. The same grammar exists in Zod (`html5Email`) and Valibot (`rfcEmail`). Breaking:
-  quoted local parts and IP-literal domains, which the JS regex accepts today, are rejected.
-  See js-validator-livr#28.
+- **`email`**: define the default as the WHATWG HTML "valid e-mail address" grammar, plus at least
+  one dot in the domain, plus at most 254 characters (and 64 for the local part, RFC 5321). Then
+  the server and `<input type=email>` accept the same addresses, including the punycode form that
+  Chrome sends for IDN domains ([5.13](#513-email-cyrillic-and-other-idn-domains)). The same
+  grammar exists in Zod (`html5Email`), Valibot (`rfcEmail`) and Yup. See [js-validator-livr#28].
+  - Breaking: quoted local parts, IP-literal domains and Unicode local parts, which the JS regex
+    accepts today, are rejected. In [LIVR#13] (2015) `email` was kept lenient because the RFC allows
+    such addresses (here, one-letter TLDs): "an email can never be trusted anyway, the only way to
+    check it is to send a letter to it" (translated). WHATWG reverses this
+    on purpose: the server should agree with the browser.
+  - Open: WHATWG allows an all-digit TLD (`test@mail.123`). Proposal: the last label must contain a
+    letter, as in host names (RFC 3696, section 2).
+  - Options for Unicode ([8.12](#812-rule-arguments-and-named-options)):
+    `{"email": {"unicode_domain": true}}` also accepts Unicode domain labels, and
+    `{"email": {"unicode_local": true}}` a Unicode local part (RFC 6531 syntax). They are separate
+    because an IDN domain works with any mail server once it is converted to punycode, while a
+    Unicode local part needs SMTPUTF8 on every server on the way. validator.js
+    (`allow_utf8_local_part`), Joi (`allowUnicode`) and Zod (`unicodeEmail`) have the same switch.
+  - The Unicode grammar must be exact: a domain label is letters, marks and digits (`\p{L}`,
+    `\p{M}`, `\p{N}`) or LDH, with `-` not at the start or end, at most 63 code points. The local
+    part allows any code point from U+0080 except `\p{C}` and `\p{Z}`, so U+200B, U+200E and
+    U+00A0 are rejected (JS accepts U+200B today).
+  - No IDNA processing: no mapping, no conversion to punycode, no script mixing checks. The output
+    is the input string. IDNA needs the UTS #46 tables, and languages disagree: Python's built-in
+    `idna` codec is IDNA2003 and maps `faß.de` to `fass.de`, IDNA2008 keeps `ß`. So `test@раураl.com`
+    (Cyrillic `р`, `а`, `у`) passes `unicode_domain`; homographs are a policy, not a format. A
+    `to_ascii_domain` modifier can live in an optional module later.
+  - Test cases: every row of [Appendix B](#appendix-b-probe-results), the five addresses from the
+    liver TODO list, and `email24` split into a Cyrillic case and a trailing-space case.
 - **`url`**: allow a list of schemes, `{"url": ["http", "https", "ftp"]}`, defaults to `http` and
-  `https`. Pin the grammar in the spec and add `https://www.google.` (js-validator-livr#56) to the
+  `https`. Pin the grammar in the spec and add `https://www.google.` ([js-validator-livr#56]) to the
   negative cases. Do not reference the WHATWG URL parser (Zod, Valibot): other languages do not
-  have it.
+  have it. The grammar must decide (all of these differ today, [Appendix B](#appendix-b-probe-results)):
+  - The host is a `hostname` (punycode allowed, so `https://xn--80a1acn3a.xn--j1amh/` passes; it
+    fails in JS, Java, Ruby, Go today), an IPv4 address or `[IPv6]` (accepted only by PHP and Lua
+    today).
+  - A host without a dot: `http://localhost:3000` (rejected only by Java) and
+    `https://reciepts/12345678.pdf` ([LIVR#37]).
+  - A trailing dot (`https://www.google.`) is rejected.
+  - Userinfo (`https://user:pass@example.com/`) is rejected by Perl, Raku, Python and Lua.
+  - No hidden length limit (JS has `length < 2083` in UTF-16 code units).
+  - Unicode: the default is a URI (RFC 3986, ASCII only); `{"url": {"unicode": true}}` accepts an
+    IRI (RFC 3987) with a Unicode host and path, `https://пошта.укр/шлях?q=тест`. Today JS, Java,
+    Ruby and Lua accept a Unicode host, and Python and olifer a Unicode path only.
 
 ### 7.8 Checksums (`checksums` module)
 
 | Rule | Error | Sources | Definition |
 |---|---|---|---|
-| `luhn` | `WRONG_CHECKSUM` | F VJ, #63 | ASCII digits, at least 2, Luhn mod 10 |
+| `luhn` | `WRONG_CHECKSUM` | F VJ, [#63] | ASCII digits, at least 2, Luhn mod 10 |
 | `credit_card` | `WRONG_CREDIT_CARD_NUMBER` | X Z V F L VJ | 12–19 ASCII digits plus Luhn. No card network detection: BIN ranges change |
 | `iban` | `WRONG_IBAN` | Z V VJ | 2 letters, 2 digits, 11–30 alphanumerics (15–34 total), uppercase, ISO 13616 mod-97 = 1. No per-country length table (maybe an option later, the table has about 90 entries) |
 | `isbn` | `WRONG_ISBN` | V G VJ | ISBN-10 (check character may be `X`) and ISBN-13 (`978`/`979`), no hyphens. `{"isbn": 10}`, `{"isbn": 13}` |
@@ -434,7 +640,7 @@ Values are not normalized by these rules. Use modifiers before them:
 ### 7.11 Standard aliases
 
 These need no new code. The spec can ship them as a JSON file with its own tests ("LIVR galaxy"
-from #57). They need a portable `like` ([10.2](#102-like-and-portable-regular-expressions)) and
+from [#57]). They need a portable `like` ([10.2](#102-like-and-portable-regular-expressions)) and
 `digits`/`luhn` where used.
 
 ```json
@@ -455,8 +661,22 @@ The `like` patterns are written in I-Regexp, which always matches the whole stri
 [10.2](#102-like-and-portable-regular-expressions)). Open: `port` 0–65535 or 1–65535; should every
 alias have its own error code (`"error": "WRONG_PORT"`)?
 
-Parameterized aliases (#57) would make this much more useful, for example `money(max)`. Syntax not
+Parameterized aliases ([#57]) would make this much more useful, for example `money(max)`. Syntax not
 designed yet (Q9).
+
+- Error codes: yes, every standard alias should have one. `docs/validation-rules/or.md` already
+  says "It is a good idea to define a custom error code for such an alias", and [LIVR#34] shows why
+  a `like` code is useless for users: "'First name must contain only letters, numbers, or
+  underscores' is a lot more helpful". `params.pattern` ([9.4](#94-standard-params)) does not fix
+  that; a code does. Inline `$error` ([8.13](#813-meta-keys-in-rule-objects)) is the lighter
+  option.
+- Order: in [LIVR#57] koorchik wrote "But, at first, we need to make aliases parameterized". Q9 should
+  be decided before the alias library is shipped, not after.
+- Custom rules people wrote that are aliases with parameters: liver `subset` ([liver PR #7]: a
+  scalar or a list, every item in a set) is `["to_list", {"list_of": {"one_of": [...]}}]`; aegir
+  `neq` is `not_one_of`; [LIVR#63] writes `credit_card` as an alias over `modulo10`.
+- aegir also needed `not_like`, because Go's RE2 has no lookarounds. A `not_like` rule (or a
+  generic `not` metarule) covers "must not contain".
 
 ## 8. New metarules and structural features
 
@@ -475,6 +695,8 @@ Summary:
 | Any JSON value | Dropped ([5.6](#56-arbitrary-json-values)) | `any` ([8.9](#89-any)) |
 | Root list or scalar | `FORMAT_ERROR` ([5.8](#58-root-value-is-not-an-object-js-validator-livr50)) | Root rules ([8.10](#810-root-rules)) |
 | Untagged unions | Data loss ([5.2](#52-or-silently-loses-data-in-untagged-unions)) | Strict branches, defined `or` ([8.11](#811-or-defined-semantics)) |
+| Rules with several switches | Positional arguments only | Options object ([8.12](#812-rule-arguments-and-named-options)) |
+| A custom error code for one rule | An alias with `error` | `$error` and other meta keys ([8.13](#813-meta-keys-in-rule-objects)) |
 | Scalar or list | `or` | `to_list` ([7.10](#710-modifiers)) |
 | Unique key in a list of objects | Duplicates pass ([5.5](#55-duplicates-in-lists)) | `unique_items` with a key ([7.5](#75-lists)) |
 | PATCH (`null` vs missing) | `null` passes everything except `required` ([5.7](#57-null-vs-missing-patch-semantics)) | `present`, `not_null` ([7.4](#74-presence-and-conditions)) |
@@ -494,6 +716,10 @@ Summary:
 - Alias bodies are resolved lazily, on first use. An alias may reference itself or an alias that
   is registered later.
 - Implementations must not expand aliases eagerly at build time (that is what overflows now).
+- But "lazily" applies only to the expansion. The build must still resolve the whole alias graph,
+  so that an unknown rule or alias fails at build time ([10.4](#104-schema-errors-at-build-time)).
+  [js#30]: `new Validator("I'm not a rule")` fails only in `validate()`; koorchik: `prepare()`
+  "should throw too".
 - Depth limit: an implementation option with a documented default (for example 100), so that
   untrusted input cannot exhaust the stack. Open: is exceeding it a validation error
   (`TOO_DEEP`) or an exception?
@@ -518,7 +744,16 @@ for all of them:
   `{"max_number": {"field": "balance"}}`, `{"min_date": {"field": "start_date"}}`,
   `{"one_of": {"field": "/emails"}}` (Laravel `in_array`, `Joi.in`).
 - If the referenced value is empty or has a wrong type, the rule passes: the referenced field
-  reports its own error.
+  reports its own error. **This holds only for bounds.** It contradicts LIVR 2 for equality:
+  `equal_to_field` with a missing other field gives `FIELDS_NOT_EQUAL` ("A missing field is not
+  equal to any value", case `missing_other_field` in `negative/17-equal_to_field`). [LIVR#32] relies
+  on it for two optional fields that must match:
+  `{"password": {"equal_to_field": "password2"}, "password2": {"equal_to_field": "password"}}`.
+  Presence rules need the opposite too: an empty reference makes `required_without` require the
+  field. So each rule defines what an empty reference means.
+- References resolve against the enclosing object, also inside `or`, aliases, `when` branches and
+  list items. In JS 2.11 they don't: a rule inside `or` or `list_of` sees only `{field: value}`
+  ([5.15](#515-other-behavior-livr-2-leaves-undefined), [js#25]).
 - References see the input values after `auto_trim` but before the rules of the referenced field.
   Open: should they see the output of the referenced field instead (for example after `to_lc`)?
 - Parent references: `"/currency"` covers "item currency equals order currency" when the order is
@@ -527,7 +762,15 @@ for all of them:
   (`"1/currency"`). Joi has sibling, ancestor (`...`) and root (`/`) references.
 - Implementation impact: rules that take references need the root input and the current path. This
   changes the internal rule API in every implementation (an extra context argument), but not the
-  JSON schemas.
+  JSON schemas. One context object can carry the root, the path, the clock for `now`/`today`, and
+  user data: [php-validator-livr PR #29] (open) already proposes `validate($data, $context)` passed
+  through every metarule. Swift's custom `greater_eq_than_field` needed a protocol so that the
+  validator injects the other field's value, and only at the same level.
+- Test case from [LIVR#58] and [js#29]: in `pricingInfos[]`, `period` is required only when
+  `businessType` is `"RENTAL"`, and the price bounds depend on `period`. These are two independent
+  selectors in one list item. Two `list_of_different_objects` in a row fail, because the first one
+  strips the fields of the second ("validator will remove the rest of the fields and pass it to the
+  next rule"). Two `when` rules inside `list_of_objects` work.
 
 ### 8.3 `when`
 
@@ -566,9 +809,24 @@ Semantics:
   values. Joi avoids the same trap by adding `required` to `is` automatically.
 - Without `is`, the condition is "the referenced field is not empty".
 - `cases` keys are compared with the referenced value as strings, like `variable_object`.
+- `cases` keys and `variable_object` selectors use the canonical string form
+  ([7.1](#71-types-and-numbers)). In JS 2.11 a selector `0` or `false` gives `FORMAT_ERROR` even
+  when the variants `"0"` and `"false"` exist.
+- A value that matches no case (Q21). `variable_object` gives `FORMAT_ERROR` for the whole object
+  today, and koorchik's 2015 prototype `dynamic_object` in [LIVR#9] put `NOT_SUPPORTED` under the
+  selector field. [js PR #60] proposes `NOT_ALLOWED_VALUE` under the selector and `REQUIRED` for a
+  missing selector; in
+  [js#18] koorchik said "FORMAT_ERROR - in most cases is related to developers error, not to users
+  input error", and a selector is user input. Proposal: an optional `"default"` case; without it,
+  `when` gives `NOT_ALLOWED_VALUE` with `params.allowed` = the case keys, and `variable_object`
+  does the same under its selector field.
 - `then`, `else` and the cases are ordinary rule lists. A missing branch means no rules. Open:
   should a missing branch keep the value (like `any`) or drop it (like a field with no rules)?
-- `when` covers: `required_unless`, `prohibited_if`, `conflict_with` (#25), "all or nothing",
+  A real case from [js#25]: `{"email": "em@a.il", "use_email": false}`, "validate email only if it
+  is used".
+- [LIVR#9] has a ready test for sibling fields: `type_of_data` is `"digital"` → `value` is
+  `{"number_between": [1, 100]}`, `"string"` → `{"length_between": [1, 3]}`.
+- `when` covers: `required_unless`, `prohibited_if`, `conflict_with` ([#25]), "all or nothing",
   "exactly one of" (with `absent`).
 - Errors of the chosen branch are reported as usual, on the field itself. No object-level errors
   are needed.
@@ -591,6 +849,16 @@ Semantics:
   goes to the error details as `params.key_error`.
 - Open: may key rules modify keys (`to_lc`)? Then two keys can collide. Proposal: key rules only
   check, their output is ignored.
+- In [LIVR#56] koorchik proposed two composable rules instead: `{"object_keys": [{"like":
+  "^[0-9a-f]+$"}]}` and `{"object_values": ["required", {"max_length": 10}]}`. The user proposed
+  jq-like `to_entries`/`from_entries` modifiers. The example from that issue (commit hashes as
+  keys, `{"6d12ba9": "Add foo to bar"}`) is a ready test.
+- The short form needs care: [LIVR#21] rejected a `nested_object` shorthand because `{"min_length":
+  10}` and `{"city": "required"}` look the same. Here `{"dict_of": "string"}` is safe (a string
+  or a list), but `{"dict_of": {"max_length": 10}}` would be ambiguous with the long form. So the
+  short form is only a string or a list.
+- PHP turns `{"0": ..., "1": ...}` into a list, so a dictionary keyed by numeric IDs needs care in
+  PHP ([2](#2-principles-for-standard-rules)).
 - Non-objects give `FORMAT_ERROR`. An empty object passes (use `not_empty` semantics for objects?
   Open).
 - Similar: Zod and Valibot `record`, Joi `object.pattern`, Ajv `propertyNames` +
@@ -610,8 +878,25 @@ Semantics:
 - `FIELD_NOT_ALLOWED` per key is more precise than one `unrecognized_keys` error with a key list
   (Zod) and fits the LIVR error tree. Valibot `strictObject` also reports one issue per key.
 - The root object uses the same options through root rules ([8.10](#810-root-rules)) or a validator
-  option. This closes #17 and #70.
+  option. This closes [#17] and [#70].
 - The same options for `variable_object`, `list_of_objects`, `list_of_different_objects`.
+- Error code: three names are already in use: `EXTRA_FIELD` ([Validator-LIVR PR #13]), `UNKNOWN_FIELD`
+  ([Validator-LIVR#12]) and `unknown_field` (liver's `strict` option). `FIELD_NOT_ALLOWED` is also
+  the code of `absent`; a separate `UNKNOWN_FIELD` would tell "a field you sent that is forbidden
+  here" from "a field I don't know" (Q19).
+- Prefer schema-level options to a validator option. [Validator-LIVR PR #13] adds a strict flag
+  that works only at the root: nested validators are built with the package default. [LIVR#17]
+  (DanielHreben): validator options that only one implementation has "make the validator more
+  complex and harder to maintain and to update to new versions of the spec" (translated).
+- Prefer `rest` with rules to `keep`. Removing unknown fields is a security property: "It is a
+  security related issue" ([js#17]), "This guarantees that everything is validated" ([js#29]), and in
+  [LIVR#17] keeping them was rejected "because of possible security problems" (translated). `keep` and
+  `any` should say so in the docs.
+- Another object option: `{"presence": "required"}` makes every field required
+  ([7.4](#74-presence-and-conditions)).
+- [Validator-LIVR#12] used a reserved field name `'?' => 'not_present'` with the comment "TODO: Allow
+  '?' to be an ordinary field?". Reserved field names clash with data; options in the rule object
+  ([8.13](#813-meta-keys-in-rule-objects)) do not.
 
 ### 8.6 `tuple`
 
@@ -622,6 +907,10 @@ Semantics:
 - One rule list per position. Errors are a list, like `list_of`: `[null, "NOT_DECIMAL"]`.
 - A shorter list is validated as if the missing positions were empty, so `required` catches them.
 - A longer list gives `TOO_MANY_ITEMS` for the whole field. Open: a `rest` option for extra items.
+- Arguments: with LIVR 2 argument spreading ([8.12](#812-rule-arguments-and-named-options)),
+  `{"tuple": [["required", "decimal"]]}` is ambiguous: one position with two rules, or the old
+  "single list argument" form. `tuple` needs the explicit object form:
+  `{"tuple": {"items": [["required", "decimal"], ["required", "decimal"]]}}`.
 - Similar: Zod and Valibot `tuple`, Joi `array.ordered`, Ajv `prefixItems`, fastest-validator
   `tuple`.
 
@@ -673,9 +962,26 @@ others.
 output unchanged. Useful on its own, in `when` branches and as `dict_of` values. Similar: Zod
 `json`, `true` as a JSON Schema, fastest-validator `any`.
 
+- History: the spec had `any` in 2015 ([LIVR commit 4dccffb]); 2.0 replaced it with `string` and
+  `any_object`. The objection then ([LIVR#24]): "in most cases developers want any string but not
+  array or hash"; [js#5]: "fields without validation are a rare case" (translated). The docs should say: `string` for
+  strings, `any` for JSON blobs.
+- Unchanged means unchanged: `auto_trim` must not trim inside `any` (JS trims inside
+  `any_object` today, [5.15](#515-other-behavior-livr-2-leaves-undefined)). PHP turns an empty
+  `{}` into `[]` on output, which the PHP docs must mention.
+- Limits: `any` on untrusted input has no depth or size limit. [LIVR#7] asked for
+  `max_fileds_count`, `max_key_length`, `max_nesting_level` and `max_total_size` on `any_object`;
+  koorchik answered that the total size is easier to check outside LIVR. Proposal: the depth limit
+  of [8.1](#81-recursive-aliases) applies to `any` too; sizes stay out of scope.
+- An empty rule list, `"name": []`, is not the same as `any`. Today JS drops such a field, and
+  `{"list_of": []}` turns `[1, {"x": 1}]` into `[null, null]`. In 2015 `[]` was the way to keep an
+  optional field without checks ([js#5]), and PHP threw `Rule [] not registered` ([LIVR#24]). Proposal:
+  `[]` is a schema error ([10.4](#104-schema-errors-at-build-time)), and `any` is the explicit
+  form (Q20).
+
 ### 8.10 Root rules
 
-Validation of a value that is not an object (js-validator-livr#50): a list of objects in a bulk
+Validation of a value that is not an object ([js-validator-livr#50]): a list of objects in a bulk
 API, a scalar, or the root object with `unknown: "error"`.
 
 - API: a separate constructor or an option, for example
@@ -696,12 +1002,167 @@ API, a scalar, or the root object with `unknown: "error"`.
 - Errors: the tree keeps the errors of the last branch (LIVR 2). The error details get the errors of
   all branches, for example `params.branches` (Zod `invalid_union.errors`). Alternative from Zod: if
   only one branch passed the type check, report the errors of that branch. Open.
+- Empty values are passed to the branches, like to any other rule. JS changed this in 2019
+  ([js-validator-livr 996c964], "Fix OR rule"), and `negative/29-or` pins it (missing → `REQUIRED`).
+  The spec text must say it.
+- Tests for Q14: the spec's own `or` example (it emulates `list_of_different_objects`) expects,
+  for a `material` item with a bad `warehouse_id`, `{"name": "REQUIRED", "product_type":
+  "NOT_ALLOWED_VALUE"}`, the errors of the `service` branch. The Swift copy of the suite expects
+  a different `or` error ([LIVR#60]), so "last branch" is not uniform today.
+- Untagged unions are real: the fstab schema in [LIVR#14] has `diskDevice` and `diskUUID` with the
+  same `"type": "disk"`, so neither `variable_object` nor `when` can tell them apart. Only strict
+  `or` branches can.
+- Exporters: liver's OpenAPI export ([liver PR #9]) maps `or` to `oneOf`, but first-match `or` is
+  closer to `anyOf`. A mapping table to JSON Schema would help such tools (see also the notes on
+  `like`, coercion and `equal_to_field` there).
 
-### 8.12 Out of scope: expressions
+### 8.12 Rule arguments and named options
+
+LIVR 2 spreads a JSON list into positional arguments ([LIVR#47], "How it works"):
+`{"length_between": [1, 3]}` → `length_between(1, 3)`, `{"one_of": ["aa", "bb"]}` →
+`one_of("aa", "bb")`. A single list argument needs double brackets,
+`{"some_rule": [["aa", "bb"], 123]}`, and a scalar is passed as is (`{"one_of": "value"}`, [LIVR#6]).
+Problems:
+
+- A list value is cut silently: `{"default": [1, 2]}` outputs `1` in JS and Perl;
+  `{"default": [[1, 2]]}` outputs `[1, 2]`.
+- Every new rule that takes a list really takes a variable number of arguments: `{"uuid": [4, 7]}`,
+  `{"url": ["http", "https", "ftp"]}`, `{"unique_items": ["country", "zip"]}`. [10.5](#105-remove-the-old-syntax)
+  removes `[[...]]` for `one_of` and `list_of`, but today it is the only way to pass one list. PHP's
+  `or` took its first list as the list of branches ([php PR #31]), and the test suite itself has
+  `{"eq": ["Dnipro"]}`.
+- Rules with several independent switches do not fit positions: `email` with two Unicode
+  switches, `url` with schemes and Unicode, `iso_datetime` with offset, seconds and separator.
+
+Proposal:
+
+1. The spec gives the signature of every rule after spreading.
+2. A rule with switches takes one options object as its only argument. Every option has a default,
+   so `"email"` equals `{"email": {}}`:
+
+   ```json
+   { "email": { "unicode_domain": true } }
+   { "url": { "schemes": ["http", "https", "ftp"], "unicode": true } }
+   { "uuid": { "versions": [4, 7] } }
+   { "iso_datetime": { "offset": "optional", "separator": ["T", " "] } }
+   { "tuple": { "items": [["required", "decimal"], ["required", "decimal"]] } }
+   ```
+
+3. A scalar short form can stay for the most common option: `{"uuid": 7}`, `{"ip": 6}`. No list
+   short forms, because of spreading.
+4. Option names are snake_case. An unknown option or a wrong option value is a schema error at
+   build time ([10.4](#104-schema-errors-at-build-time)), so `{"email": {"unicod_domain": true}}`
+   is not ignored.
+5. Rules whose argument is any JSON value (`eq`, `one_of`, `default`) or an object of fields
+   (`nested_object`, `variable_object`) cannot take an options object in the same place. They get
+   options through a separate rule (`default_if_missing`), the `[fields, options]` list form
+   ([8.5](#85-unknown-fields-policy)), or meta keys ([8.13](#813-meta-keys-in-rule-objects)).
+
+Candidates:
+
+| Rule | Options | See |
+|---|---|---|
+| `email` | `unicode_domain`, `unicode_local` | [7.7](#77-formats-formats-module) |
+| `url` | `schemes`, `unicode`; maybe `allow_ip`, `allow_single_label` | [7.7](#77-formats-formats-module), [LIVR#37] |
+| `hostname` | `unicode` | [7.7](#77-formats-formats-module) |
+| `uuid` | `versions` | [7.7](#77-formats-formats-module) |
+| `ip`, `cidr` | `version` | [7.7](#77-formats-formats-module) |
+| `base64` | `alphabet` (`"standard"`, `"url"`), `padding` | [7.7](#77-formats-formats-module) |
+| `iso_datetime` | `offset` (`"required"`, `"optional"`, `"forbidden"`), `seconds`, `separator` | [7.3](#73-dates-and-times), [LIVR#19] |
+| `like` | `flags` | [10.2](#102-like-and-portable-regular-expressions) |
+| `nested_object` and other object rules | `unknown`, `rest`, `presence` | [8.5](#85-unknown-fields-policy) |
+
+Similar: validator.js `isEmail(s, {allow_utf8_local_part, require_tld, allow_ip_domain})` and
+`isURL(s, {protocols, require_tld, allow_underscores})`, Joi `email({tlds, allowUnicode,
+minDomainSegments})`, Zod `z.url({protocol, hostname})` and `z.email({pattern})`,
+fastest-validator `{type: "email", mode: "precise"}`.
+
+### 8.13 Meta keys in rule objects
+
+A rule object may hold reserved keys next to the rule name. They are not arguments: the same keys
+work for every rule, standard or custom, and they change how the result of the rule is reported,
+not what the rule accepts.
+
+```json
+{
+  "password": ["required", { "min_length": 10, "$error": "PASSWORD_TOO_SHORT" }],
+  "login": ["required", { "email": [], "$error": "WRONG_LOGIN" }],
+  "nickname": {
+    "like": "^[a-z0-9_]+$",
+    "$error": "WRONG_NICKNAME",
+    "$params": { "hint": "nickname_chars" },
+    "$meta": { "description": "Lowercase letters, digits and _" }
+  }
+}
+```
+
+Rules:
+
+- A rule object has exactly one rule name and any number of meta keys. Meta keys start with `$`;
+  rule and alias names cannot.
+- LIVR 2 gives no meaning to a second key ([5.14](#514-rule-objects-with-several-keys)), so this
+  is new syntax, not a changed meaning. LIVR 2 implementations ignore the extra key or fail,
+  depending on the key order, so schemas with meta keys need LIVR 3 implementations.
+- An unknown `$` key is a schema error, like a second rule name. Ajv's strict mode does the same
+  for unknown keywords (`strict mode: unknown keyword: "x-ui"`); JSON Schema itself ignores them.
+- A rule without arguments uses an empty list: `{"email": [], "$error": "..."}`. Every
+  implementation accepts `{"email": []}` today.
+- Meta keys never change the rule's output. Otherwise they would be arguments.
+
+Candidate keys:
+
+| Key | Meaning | Similar |
+|---|---|---|
+| `$error` | Replaces the error code of this rule. A string replaces every code of the rule; an object maps codes, `{"TOO_SHORT": "PASSWORD_TOO_SHORT"}`, and leaves the others (`FORMAT_ERROR`) as they are. On `nested_object` or `list_of` a string replaces the whole error tree, like an alias with `error` | Alias `error`; Zod `{error}` on every check; Valibot's message argument of every action; Joi `.rule({message})` and `.messages({"string.min": ...})`; class-validator `{message}`; ajv-errors `errorMessage: {minLength: ...}`; fastest-validator `messages: {stringMin: ...}`; liver `custom_error/2` (global) |
+| `$params` | Extra data merged into the error details of this rule: an i18n key, a UI hint, a legacy numeric code. Never into the error tree | class-validator `{context}` (returned as `contexts`); Zod refine `{params}`; Yup `test({params})` |
+| `$meta` | Anything; ignored by validation. Descriptions, examples, hints for form generators and OpenAPI export | JTD `metadata` (RFC 8927); Zod `.meta()`; Valibot `title()`, `description()`, `metadata()`; Joi `.description()`, `.note()`, `.example()`, `.meta()`; Yup `.meta()`; JSON Schema `title`, `description`, `examples`, `$comment`; OpenAPI `x-*`; aegir keeps a human `description` with each rule |
+| `$warn` (later) | A failure is reported as a warning and the value passes | Joi `.rule({warn: true})`, `.warn()` |
+
+Details:
+
+- With error details ([9.3](#93-proposal-error-details)): `code` is the new code, `rule` is still
+  the real rule name, and `params` keep the rule's params (`{"min": 10}` is still there for the
+  message) plus `$params`. Open: also `params.original_code`, the same question as for aliases.
+- `$error` is an inline alias with `error`, for a rule that is used once. [LIVR#34] asks for exactly
+  this: a code that says what is wrong with a `like` field.
+- Not needed in LIVR:
+  - `$abort`/`$bail` (Zod `abort`, Valibot `abortPipeEarly`, Laravel `bail`): LIVR already stops at
+    the first failing rule of a field.
+  - `$label` (Joi, Yup, fastest-validator): they build messages; LIVR returns codes, and labels
+    belong to the translation layer.
+  - `$when` on a single rule (Zod `when`, Joi `when`, class-validator `ValidateIf`): `when`
+    ([8.3](#83-when)) covers it, and two ways to write a condition are one too many.
+  - `$groups` (class-validator): separate schemas or `when`.
+  - `$default`, `$optional`, `$nullable` (fastest-validator, Joi, Yup): LIVR has rules for this.
+- A rule list cannot have meta keys, because it is a list. A wrapper like
+  `{"$rules": [...], "$error": "..."}` would be an anonymous alias. Open (Q15).
+- Alias definitions could accept `$params` and `$meta` too; their `error` stays.
+- The prefix: `$` is used by JSON Schema (`$ref`, `$id`, `$comment`), Ajv (`$data`),
+  fastest-validator (`$$root`, `$$strict`) and MongoDB. Alternatives: `@error`, `x-error`
+  (OpenAPI style). Open (Q15).
+
+### 8.14 Out of scope: expressions
 
 "The sum of percentages is 100", "total equals the sum of item prices", "end - start <= 30 days".
 These need an expression language (Joi `x`, JSON Logic). It is a big spec on its own and risky for
 schemas from untrusted sources. Such checks stay custom rules.
+
+### 8.15 Evaluation order and async validation
+
+The spec has no async rules, and [js#16] kept it so: async needs the engine and a separate API. The
+JS `AsyncValidator` validates fields in parallel and the rules of one field one after another. New
+features must give the same result in that model:
+
+- Standard rules stay synchronous and pure: no I/O, no clock except `now`/`today`.
+- `or` branches, `when` (`is` first, then the branch) and `list_contains` run in a defined order.
+- Field references see input values (the Q10 proposal). If they saw the output of the referenced
+  field, fields would depend on each other, and async validation would need an order.
+- No "abort early" across fields (Joi `abortEarly`): LIVR returns the errors of all fields. Inside
+  a field it already stops at the first error; in [js#16] koorchik gave the reason: "there is no point
+  in loading the database with more queries" (translated).
+- One error per field stays ([LIVR#57]): "rules work like a pipe", because rules like `trim` and
+  `to_lc` change the value for the next rule. Use cases that want all errors of a field can use a
+  custom `apply_all` metarule, as suggested there.
 
 ## 9. Errors
 
@@ -720,14 +1181,20 @@ schemas from untrusted sources. Such checks stay custom rules.
 
 ### 9.2 What to take
 
-1. **Params.** Every validator above has them, LIVR does not (#30, #31, js-validator-livr PR #7).
+1. **Params.** Every validator above has them, LIVR does not ([#30], [#31], [js-validator-livr PR #7]).
    Even the i18n example in js-validator-livr `docs/DESIGN.md` (`"Must be at least {min}
    characters"`) cannot be implemented today: there is no `min` to take.
 2. **Path as a JSON Pointer** (Ajv `instancePath`, RFC 6901). It does not depend on the language.
    The example in RFC 9457 (Problem Details for HTTP APIs) uses a `pointer` member in `errors`.
 3. **Both views**, like Zod: a tree for forms, a flat list for APIs and logs.
 4. **No input values in errors.** Joi (`context.value`) and fastest-validator (`actual`) put them
-   there, and passwords end up in logs.
+   there, and passwords end up in logs. [java-validator-livr PR #8] (merged) turned every error leaf
+   into `{"code": ..., "fieldValue": ...}`; for an alias error the value is the whole nested
+   object. Java edited its copy of the test suite to match and fails conformance since
+   (notes.json). With error details it can drop that. A count is different from a value: [Swift#33]
+   asked for "TOO_LONG - 30", where 30 is how many characters are over the limit. An optional
+   `actual` length or count in params does not leak the value (for a password it leaks only the
+   length; open).
 5. **Errors of every `or` branch** (Zod `invalid_union.errors`) and the **duplicate index** (Joi
    `dupePos`, Ajv `{i, j}`).
 
@@ -758,7 +1225,21 @@ validator.getErrorDetails()
 - How a rule returns params is an implementation detail. In JS it should be a dedicated type (for
   example an `ErrorDetail` class), not a plain `{code, params}` object: a nested object error may
   contain a field named `code`. The spec defines only the result.
-- Method names follow each language's conventions; the spec defines the data.
+- Method names follow each language's conventions; the spec defines the data. In [js PR #7]
+  koorchik suggested the name `getDetailedErrors()`.
+- One error per field, as in LIVR 2: rules run like a pipe and stop at the first error
+  ([8.15](#815-evaluation-order-and-async-validation)). So there is at most one detail per leaf
+  path; the errors of `or` branches go into `params`.
+- `rule` is the canonical snake_case name. JS also accepts camelCase names (`maxLength`), so "as
+  written in the schema" is ambiguous.
+- Prefer a result object to getters on the validator. Errors stored on the validator instance
+  forced locks in Java ([java PR #6], "Reentrant usage") and Swift ([swift#34], "Add thread safety"),
+  and a second stateful getter makes it worse. PHP rebuilds validators on every request, so a
+  validator that is built once and shared matters there too ([php PR #32]).
+- Migration: [js PR #7] (`getDeepErrors()`, open since 2015) and the workaround in
+  js-validator-livr `t/tests-sync/05-rules_replacement.js` produce leaves like
+  `{"code": "TOO_LONG", "rule": {"max_length": [10]}}`: the rejected shape below. Their users need a
+  note in the migration guide.
 
 Rejected alternative: `{code, params}` objects as tree leaves. It breaks every consumer of the tree,
 and such a leaf cannot be told apart from the errors of a nested object with fields `code` and
@@ -802,6 +1283,10 @@ Maybe later: exclusive bounds (`greater_than`, `less_than`; Zod `gt`/`lt`, JSON 
 - A bound: `TOO_*` (`TOO_LONG`, `TOO_EARLY`, `TOO_MANY_ITEMS`).
 - No parameters inside codes (not `NOT_HAVING_METHOD [bark]`).
 - Existing LIVR 2 codes are not renamed: that would break every translation file for cosmetics.
+- `WRONG_DATE` is a known weak spot. In [LIVR#35] koorchik kept it for compatibility: "is feb 30
+  wrong date or wrong format? ... maybe in future versions of the spec we will introduce additional
+  error codes for the date related rules (but firstly we should move to semver)". LIVR 3 is that
+  version: keep `WRONG_DATE` and add params, or split it. Decide explicitly.
 - Codes from js-livr-extra-rules that move into the spec are renamed:
 
 | extra-rules | LIVR 3 |
@@ -821,6 +1306,12 @@ Maybe later: exclusive bounds (`greater_than`, `less_than`; Zod `gt`/`lt`, JSON 
 - The details are compared as a set (sorted by `path`, then `code`).
 - A new category for schema errors (see [10.4](#104-schema-errors-at-build-time)): a schema and the
   expectation that building the validator fails.
+- Say whether extra members in an error detail are tolerated (Java adds `fieldValue` today).
+  Proposal: the suite compares `path`, `code`, `rule` and the listed `params`; extra `params` are
+  allowed.
+- Capability markers for cases that some languages cannot run ({} vs [], see
+  [2](#2-principles-for-standard-rules)), instead of private copies of the suite.
+- One conformance run under a non-UTC time zone ([7.3](#73-dates-and-times)).
 
 ## 10. Other breaking changes
 
@@ -870,12 +1361,27 @@ with `..`.
 ### 10.4 Schema errors at build time
 
 An unknown rule, wrong arguments or an unknown alias must fail when the validator is built, in all
-implementations (#36). JS already throws `Rule [no_such_rule] not registered`. The test suite gets
+implementations ([#36]). JS already throws `Rule [no_such_rule] not registered`. The test suite gets
 a category of invalid schemas.
+
+- Also schema errors: a rule object with several rule names or with no key (`{}`), an empty rule
+  list (`[]`, Q20), an unknown meta key or option, a `like` pattern that is not a string or does
+  not compile. Today aegir silently replaces an invalid regex with `.*`, and olifer and liver skip
+  unknown rule names ([olifer#1], [5.14](#514-rule-objects-with-several-keys)).
+- Regexes are strings. koorchik in [Validator-LIVR#5]: "a regex must be passed as a string, for
+  compatibility" (translated); Raku accepts only regex objects today (notes.json).
+- The tests assert "building fails", not the mechanism. In [LIVR#36] koorchik wrote "Every
+  implementation can decide but its own how report about syntax errors in validation rules", and an
+  Erlang implementation may return an error tuple instead of throwing.
+- [Validator-LIVR#11] is an example of a misuse that passed silently: `{like: '..', max_length: 20}`
+  was checked depending on the hash order. koorchik in [LIVR#57]: "It is not the first situation of
+  misuse of the syntax".
 
 ### 10.5 Remove the old syntax
 
-`{"one_of": [["a", "b"]]}` and `{"list_of": [["rules"]]}` (from LIVR 0.3) are removed.
+`{"one_of": [["a", "b"]]}` and `{"list_of": [["rules"]]}` (from LIVR 0.3) are removed. The spec
+then needs one normative argument rule, because `[[...]]` is also how a single list argument is
+passed today ([8.12](#812-rule-arguments-and-named-options)).
 
 ### 10.6 Safe integer range
 
@@ -890,14 +1396,66 @@ rejects `null`, `not_null` is not needed.
 
 ### 10.8 `email` grammar
 
-See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains are rejected.
+See [7.7](#77-formats-formats-module): quoted local parts, IP-literal domains and Unicode local
+parts (accepted by JS, Raku, liver and Validator::LIVR 2.1 today) are rejected by default. Fixed:
+punycode TLDs are accepted everywhere ([5.13](#513-email-cyrillic-and-other-idn-domains)). The
+punycode fixes do not need LIVR 3: they can go into the LIVR 2 test suite now.
 
 ### 10.9 What is not changed
 
-- No strict typing (#22, #62). Perl and partially PHP cannot tell `"1"` from `1`, so strict type
-  rules are not portable. Real booleans come with the `boolean` rule.
+- No strict typing ([#22], [#62]). Perl and partially PHP cannot tell `"1"` from `1`, so strict type
+  rules are not portable. Real booleans come with the `boolean` rule. The strongest argument for
+  [#62] is koorchik's own, about configs in [LIVR#11]: "it is better to restrict the allowed type
+  explicitly than to convert it" (translated). The answer to [#62] should address it.
 - Existing error codes keep their names.
 - Unknown fields are still removed by default.
+
+### 10.10 Number grammar
+
+LIVR 2 says only "strings that look like integers". JS 2.11 is not consistent with itself
+([5.15](#515-other-behavior-livr-2-leaves-undefined)): `integer` and `positive_decimal` accept
+`"0x10"`, `" 5 "`, `"5."`, `"1e3"` and `true`, while `decimal` rejects them. In [js#32] koorchik wrote
+"Scientific notation is not supported due to multi-language nature of LIVR", and [js PR #35], merged
+the same day, replaced the regex in `positive_decimal` with `+value <= 0`. Other implementations
+use `is_numeric` (PHP, accepts `"1e3"`), `filter_var` (PHP, rejected `0` and `"0"` in `decimal`,
+[php PR #25]) or their own regexes.
+
+Proposal, one grammar for all numeric rules:
+
+- Strings: an integer is `-?(0|[1-9][0-9]*)`, a decimal adds an optional `\.[0-9]+`. No `+`, no
+  leading zeros (`"04"` stays rejected, [LIVR#33]; `digits` is for codes), no exponent, no
+  whitespace (use `trim`), no hex, no `Infinity` or `NaN`.
+- JSON numbers are judged by value, not by the language's string form: a JSON `0.0000001` is a
+  number, though JS prints it as `1e-7`. A JSON number is an integer if its fractional part is
+  zero, as in JSON Schema, so `1.0` passes `integer`.
+- Booleans are not numbers: `true` gives `NOT_INTEGER` (JS outputs `1` today).
+- Test cases: `3`, `0`, `"0"`, `"0.00"`, `-0`, `"1e3"`, `"0x10"`, `" 5 "`, `"5."`, `".5"`,
+  `"+5"`, `true`, `"Infinity"`, JSON `1e-7`, JSON `1.0`. And JSON `-3.00` for `decimal`: it decodes
+  to `-3` in JS and Perl and to `-3.0` in Python and Erlang ([LIVR#40], [olifer#8]), and liver's LIVR
+  set rejects the number `3` in `decimal` while it accepts the string `"3"`.
+- Big integers: [10.6](#106-safe-integer-range).
+
+### 10.11 Trimming
+
+- `trim` "removes leading and trailing whitespace", but the set differs: JS `.trim()` removes
+  Unicode white space and U+FEFF, PHP `trim()` removes ASCII space, `\t`, `\n`, `\r`, `\0` and
+  `\x0B`. The spec should list the code points: the Unicode `White_Space` property is 25 code
+  points and fits in the spec text. Decide whether U+FEFF is included.
+- `auto_trim` is not in the spec, but implementations have it and [8.2](#82-field-references)
+  relies on it. In JS it is deep: it trims inside nested objects, lists and `any_object` values
+  ([js#24] found it trimming by default in nested objects). Proposal: define it as a standard option
+  that trims only strings that rules look at, never inside `any`.
+- Modifiers pass non-strings unchanged (the spec says so for modifiers), but PHP 8 throws a
+  `TypeError` in `trim`, `to_lc` and `to_uc` on `["a", ["b"]]` (fixed in [php PR #32]). A test case
+  with nested lists pins it.
+
+### 10.12 One rule name per rule object
+
+A rule object has exactly one rule name; other keys must be meta keys
+([8.13](#813-meta-keys-in-rule-objects)). Several rule names are a schema error. Today most
+implementations use one key silently, some apply all keys, and Perl and Raku pick one at random
+([5.14](#514-rule-objects-with-several-keys)). Validator::LIVR 2.1 already dies with
+`Rule [max_length, min_length] should have one name`.
 
 ## 11. Rejected ideas
 
@@ -914,7 +1472,11 @@ See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains
 | `timezone` (IANA names) | Needs the tz database; Go and Python get it from a separate package on some platforms. Maybe later as an optional module |
 | WHATWG URL parsing for `url` | Not available outside browsers and JS runtimes |
 | Strict types | Not portable to Perl and PHP (see [10.9](#109-what-is-not-changed)) |
-| Expressions across fields | See [8.12](#812-out-of-scope-expressions) |
+| Expressions across fields | See [8.14](#814-out-of-scope-expressions) |
+| Several errors per field (run all rules) | Rules work like a pipe ([LIVR#57]), see [8.15](#815-evaluation-order-and-async-validation) |
+| IDNA processing in `email`, `url`, `hostname` (mapping, punycode conversion, script checks) | Needs the UTS #46 tables; IDNA2003 and IDNA2008 give different results ([7.7](#77-formats-formats-module)) |
+| Meta keys `$abort`, `$label`, `$when`, `$groups`, `$default` | See [8.13](#813-meta-keys-in-rule-objects) |
+| Reserved field names (`'?'` in [Validator-LIVR#12], `$root`) | Field names can be anything; options go into rule objects ([8.13](#813-meta-keys-in-rule-objects)) |
 
 ## 12. Open questions
 
@@ -928,16 +1490,33 @@ See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains
 | Q6 | `datetime-local` (no offset, maybe no seconds) as an `iso_datetime` option? | Probably `{"iso_datetime": "local"}` |
 | Q7 | `not_empty` rejects `null`, or a separate `not_null`? | Undecided |
 | Q8 | `like`: which option from [10.2](#102-like-and-portable-regular-expressions)? | Undecided |
-| Q9 | Parameterized aliases (#57): syntax | Not designed |
+| Q9 | Parameterized aliases ([#57]): syntax | Not designed |
 | Q10 | Field references: do they see input values or validated output? Parent references syntax | Input values; parent syntax undecided |
 | Q11 | `unique_items` error: one code for the field or errors at duplicate positions? | One code plus `index` in details |
 | Q12 | Recursion depth limit: error code or exception? | Undecided |
 | Q13 | Specific codes for the codes module (`WRONG_COUNTRY_CODE`) or `NOT_ALLOWED_VALUE`? | `NOT_ALLOWED_VALUE` |
 | Q14 | `or` errors in the tree: last branch, or Zod-like "the only branch that passed the type check"? | Last branch in the tree, all branches in details |
+| Q15 | Meta keys in rule objects: the prefix (`$`, `@`, `x-`), the set for 3.0, a wrapper for whole rule lists | `$`; `$error`, `$params`, `$meta`; no wrapper |
+| Q16 | `default` on `null` and `""`: keep LIVR 2, or fill only missing keys (`default_if_missing`)? | Undecided |
+| Q17 | `email` and Unicode: option names, the default, an all-digit TLD | ASCII by default; `unicode_domain` and `unicode_local`; the TLD must contain a letter |
+| Q18 | An options object for rules with several switches; which short forms stay? | Yes; scalar short forms only |
+| Q19 | Unknown fields: `FIELD_NOT_ALLOWED` or `UNKNOWN_FIELD` (`EXTRA_FIELD` and `unknown_field` are also in use)? | Undecided |
+| Q20 | An empty rule list `[]`: a schema error or "no rules"? | Schema error; `any` is the explicit form |
+| Q21 | `when` cases and `variable_object`: a value that matches no case | An optional `default` case, otherwise `NOT_ALLOWED_VALUE` with `allowed` |
+| Q22 | The canonical string form for comparisons | Numbers as in RFC 8785 (JCS), booleans `"true"`/`"false"` |
 
 ## 13. Suggested next steps
 
-1. Decide Q2, Q3, Q8: they shape everything else.
+0. Fix what does not need LIVR 3, in the LIVR 2 test suite and the implementations:
+   - positive cases for punycode in `email` (`test@xn--80a1acn3a.xn--j1amh`, `test@mail.xn--j1amh`)
+     and `url` (`https://xn--80a1acn3a.xn--j1amh/`), and report the TLD bugs: letters-only TLDs in
+     JS, Raku and liver; 2–6 letters in Java, Ruby and Go;
+   - split `email24` into a Cyrillic case and a trailing-space case;
+   - `decimal` cases with integers and zero, boolean cases for `one_of` and `eq`
+     ([10.10](#1010-number-grammar), [7.1](#71-types-and-numbers));
+   - a rule object with several rule names is an error (Validator::LIVR 2.1 already does it).
+1. Decide Q2, Q3, Q8: they shape everything else. Q15 and Q18 (meta keys and options) shape the
+   syntax of most new rules, so decide them early too.
 2. Add test_suite cases that expose current differences between implementations (string length,
    `email`, `url`, `iso_date` edge cases) and run conformance. This shows what "breaking" really
    breaks.
@@ -965,6 +1544,11 @@ See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains
 | go-playground/validator | 10.30 | Documentation |
 | validator.js | 13.15 | Documentation |
 | go-livr | current master | `text.go` (string length) |
+| validator.js, Zod, Valibot, Joi, Yup, Ajv + ajv-formats, fastest-validator, ArkType, email-validator | 13.15.35, 4.6.7, 1.5.0, 18.3.0, 1.7.1, 8.20.0 + 3.0.1, 1.19.1, 2.2.8, 2.0.4 | Run on the `email`/`url` cases of [Appendix B](#appendix-b-probe-results), 2026-10-19 |
+| Zod, Valibot (+ @valibot/i18n 1.3.0), Joi, Yup, class-validator 0.15.1, ajv-errors 3.0.0, fastest-validator, ArkType, Effect 4.0.5 | | Run: per-rule messages, params, abort, warnings and metadata ([8.13](#813-meta-keys-in-rule-objects)) |
+| Chrome | 155 | `<input type="email">` and `type="url"`: values set by script and typed by a user (puppeteer) |
+| All LIVR implementations except Swift | The versions on the conformance page; Validator::LIVR 2.0 (CPAN) and 2.1 (master) | Conformance runners with the probe cases of [Appendix B](#appendix-b-probe-results) |
+| Issue trackers | All issues and PRs, open and closed | The 14 GitHub repositories of the implementations, js-livr-extra-rules and aegir; lua-LIVR on framagit has no issues |
 
 ### Standards
 
@@ -979,6 +1563,19 @@ See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains
 - [RFC 9485](https://www.rfc-editor.org/rfc/rfc9485): I-Regexp.
 - [RFC 9535](https://www.rfc-editor.org/rfc/rfc9535): JSONPath (`match()` and `search()`).
 - [RFC 9562](https://www.rfc-editor.org/rfc/rfc9562): UUIDs, versions 1–8, nil and max.
+- [RFC 3492](https://www.rfc-editor.org/rfc/rfc3492): Punycode.
+- [RFC 3696](https://www.rfc-editor.org/rfc/rfc3696): checking names, section 2 (TLDs are not
+  all-numeric).
+- [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986), [RFC 3987](https://www.rfc-editor.org/rfc/rfc3987):
+  URI and IRI.
+- [RFC 5321](https://www.rfc-editor.org/rfc/rfc5321): SMTP, length limits of addresses.
+- [RFC 5890](https://www.rfc-editor.org/rfc/rfc5890): IDNA2008.
+- [RFC 6531](https://www.rfc-editor.org/rfc/rfc6531): SMTPUTF8 (internationalized email).
+- [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785): JSON Canonicalization Scheme (number
+  serialization).
+- [RFC 8927](https://www.rfc-editor.org/rfc/rfc8927): JSON Type Definition (`metadata`).
+- [UTS #46](https://www.unicode.org/reports/tr46/): Unicode IDNA compatibility processing.
+- [WHATWG URL](https://url.spec.whatwg.org/).
 - [WHATWG HTML, valid e-mail address](https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address).
 - [Semantic Versioning 2.0.0](https://semver.org/).
 - ISO 3166-1 (countries), ISO 4217 (currencies), ISO 639-1 (languages), ISO 13616 (IBAN),
@@ -1005,9 +1602,247 @@ See [7.7](#77-formats-formats-module): quoted local parts and IP-literal domains
 | [#63](https://github.com/koorchik/LIVR/issues/63) | `modulo10` (Luhn) | [7.8](#78-checksums-checksums-module) |
 | [#64](https://github.com/koorchik/LIVR/issues/64) | Recursive structures | [8.1](#81-recursive-aliases) |
 | [#70](https://github.com/koorchik/LIVR/issues/70) | Keep unknown fields | [8.5](#85-unknown-fields-policy) |
+| [#5](https://github.com/koorchik/LIVR/issues/5) | Bound rules check the type (`number_between` rejects strings) | [7.1](#71-types-and-numbers) |
+| [#23](https://github.com/koorchik/LIVR/issues/23), [#40](https://github.com/koorchik/LIVR/issues/40) | Comparison as strings, floats, `decimal` with `-3.00` | [7.1](#71-types-and-numbers), [10.10](#1010-number-grammar) |
+| [#7](https://github.com/koorchik/LIVR/issues/7) | Any objects, size limits | [8.9](#89-any) |
+| [#9](https://github.com/koorchik/LIVR/issues/9) | Dynamic validation, `dynamic_object` | [8.3](#83-when) |
+| [#11](https://github.com/koorchik/LIVR/issues/11) | Type conversion for primitives, configs | [10.9](#109-what-is-not-changed) |
+| [#12](https://github.com/koorchik/LIVR/issues/12) | `default` | [7.4](#74-presence-and-conditions) |
+| [#13](https://github.com/koorchik/LIVR/issues/13) | Email: one-letter TLDs | [7.7](#77-formats-formats-module) |
+| [#18](https://github.com/koorchik/LIVR/issues/18), [#52](https://github.com/koorchik/LIVR/issues/52), [#66](https://github.com/koorchik/LIVR/issues/66) | The data model: duplicate keys, `{}` vs `[]` in Lua, "only JSON?" | [2](#2-principles-for-standard-rules) |
+| [#21](https://github.com/koorchik/LIVR/issues/21) | A `nested_object` shorthand (rejected) | [8.4](#84-dict_of) |
+| [#24](https://github.com/koorchik/LIVR/issues/24) | Fields without rules, `string` instead of `any` | [8.9](#89-any) |
+| [#32](https://github.com/koorchik/LIVR/issues/32) | `equal_to_field` for optional fields | [8.2](#82-field-references) |
+| [#33](https://github.com/koorchik/LIVR/issues/33) | Integers with leading zeros | [10.10](#1010-number-grammar) |
+| [#35](https://github.com/koorchik/LIVR/issues/35) | `WRONG_DATE` | [9.5](#95-error-code-naming) |
+| [#37](https://github.com/koorchik/LIVR/issues/37) | `url` tests, single-label hosts | [7.7](#77-formats-formats-module) |
+| [#39](https://github.com/koorchik/LIVR/issues/39) | `not_empty_list` and optional lists | [7.5](#75-lists) |
+| [#6](https://github.com/koorchik/LIVR/issues/6), [#47](https://github.com/koorchik/LIVR/issues/47) | `eq`, a scalar argument, argument spreading | [8.12](#812-rule-arguments-and-named-options) |
+| [#60](https://github.com/koorchik/LIVR/issues/60) | Swift: a different `or` error in its suite | [8.11](#811-or-defined-semantics) |
+
+Implementation trackers: js-validator-livr (js), js-livr-extra-rules, Validator-LIVR (Perl),
+php-validator-livr (php), python-validator-livr (python), java-validator-livr (java),
+livr-swift-validator (swift), liver, olifer and aegir. References like [js#25] or [liver PR #7] in
+this file link to them.
 
 js-validator-livr:
 [#28](https://github.com/koorchik/js-validator-livr/issues/28) (email vs RFC 822),
 [#50](https://github.com/koorchik/js-validator-livr/issues/50) (root lists),
 [#56](https://github.com/koorchik/js-validator-livr/issues/56) (`https://www.google.` passes `url`),
 [PR #7](https://github.com/koorchik/js-validator-livr/pull/7) (detailed errors).
+
+## Appendix B. Probe results
+
+### B.1 How the probes were run
+
+- 49 positive cases with one value each (`{"v": <rule>}` and `{"v": <value>}`), run on 2026-10-19
+  with the runners from `conformance/` on a separate copy of the test suite, two runs. ✓ means the
+  value passes, ✗ a validation error, E an exception while building or validating.
+- Implementations: livr 2.11.0 (JS), Validator::LIVR 2.0 from CPAN (Perl), LIVR 2.2.0 (Raku),
+  validator/livr dev-master (PHP), LIVR 2.0.1 (Python), liver 1.1.0, olifer 2.0.2, validator-livr
+  2.0.0 (Java), ruby-livr 2.0.0, lua-livr 0.5.1, go-livr 2.0.0. Swift was not run: it needs macOS.
+  Validator::LIVR 2.1 from master was checked separately ([5.13](#513-email-cyrillic-and-other-idn-domains)).
+- The string length and rule object results are in [5.9](#59-string-length-depends-on-the-implementation)
+  and [5.14](#514-rule-objects-with-several-keys).
+- JS validators: the versions from [Appendix A](#appendix-a-sources), default options unless the
+  column says otherwise.
+- Chrome 155: "set by script" is `input.value = ...` and `input.validity.valid`. A value typed by
+  a user is converted first: `test@пошта.укр` → `test@xn--80a1acn3a.xn--j1amh` (valid),
+  `test@münchen.de` → `test@xn--mnchen-3ya.de`, `test@раураl.com` → `test@xn--l-7sba6dbr.com`.
+  `тест@mail.com` and `用户@例子.广告` stay as typed and are invalid. A typed `https://пошта.укр/шлях`
+  stays Unicode and is valid.
+
+### B.2 `email` in LIVR implementations
+
+| Case | Value | JS | Perl | Raku | PHP | Py | liver | olifer | Java | Ruby | Lua | Go |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ascii | `test@mail.com` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| upper | `TEST@MAIL.COM` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| cyr_local | `тест@mail.com` | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| cyr_domain | `test@пошта.укр` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| cyr_both | `тестувальник@пошта.укр` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| puny_domain | `test@xn--80a1acn3a.xn--j1amh` | ✗ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| puny_tld | `test@mail.xn--j1amh` | ✗ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| puny_label | `test@xn--mnchen-3ya.de` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| umlaut_domain | `test@münchen.de` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| cjk | `用户@例子.广告` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| tld_7 | `user@hotline.finance` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| tld_11 | `test@example.photography` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| ip_literal | `test@[127.0.0.1]` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| quoted | `"john doe"@mail.com` | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| local_65 | `a×65@mail.com` | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| label_64 | `test@a×64.com` | ✓ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| total_255 | `a×60@b×60.b×60.b×60.c×10.com` | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| hyphen_start | `test@-mail.com` | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ | ✓ | ✗ |
+| hyphen_end | `test@mail-.com` | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| trailing_dot | `test@mail.com.` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| digit_tld | `test@mail.123` | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| single_label | `test@localhost` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| fullwidth_at | `test＠mail.com` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| zero_width | `te\u200bst@mail.com` | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| nbsp_local | `te\u00a0st@mail.com` | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| homograph | `test@раураl.com` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+
+### B.3 `url` in LIVR implementations
+
+| Case | Value | JS | Perl | Raku | PHP | Py | liver | olifer | Java | Ruby | Lua | Go |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ascii | `https://example.com/path?q=1` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| cyr_host | `https://пошта.укр/` | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ |
+| puny_host | `https://xn--80a1acn3a.xn--j1amh/` | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ |
+| cyr_path | `https://example.com/шлях?q=тест` | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| google_dot | `https://www.google.` | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ |
+| localhost_port | `http://localhost:3000/` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ |
+| tld_11 | `https://example.photography/` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| upper | `HTTPS://EXAMPLE.COM/` | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| ipv6 | `https://[::1]/` | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ |
+| userinfo | `https://user:pass@example.com/` | ✓ | ✗ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| ftp | `ftp://example.com/` | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ |
+
+### B.4 `email` in JS validators
+
+| Case | LIVR JS | validator.js | validator.js, no UTF-8 local | Zod `email()` | Zod `html5Email` | Zod `unicodeEmail` | Valibot `email` | Valibot `rfcEmail` | Joi | Joi, no Unicode | Yup | Ajv `email` | fastest-v. | fastest-v. precise | ArkType | email-validator | Chrome, set by script |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ascii | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| upper | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| cyr_local | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ |
+| cyr_domain | ✗ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| cyr_both | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| puny_domain | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ |
+| puny_tld | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ |
+| puny_label | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| umlaut_domain | ✗ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| cjk | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| tld_7 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| tld_11 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| ip_literal | ✓ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ |
+| quoted | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ |
+| local_65 | ✓ | ✗ | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| label_64 | ✓ | ✗ | ✗ | ✓ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ |
+| total_255 | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ |
+| hyphen_start | ✓ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ | ✗ |
+| hyphen_end | ✓ | ✗ | ✗ | ✓ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ | ✗ |
+| trailing_dot | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+| digit_tld | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ |
+| single_label | ✗ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ |
+| fullwidth_at | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| zero_width | ✓ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ | ✗ | ✗ |
+| nbsp_local | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ |
+| homograph | ✗ | ✓ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✓ | ✗ | ✗ | ✗ | ✗ |
+
+### B.5 `url` in JS validators
+
+| Case | LIVR JS | validator.js | Zod `url()` | Zod `httpUrl()` | Valibot | Joi `uri()` | Yup | Ajv `uri` | fastest-v. | ArkType | `new URL()` | Chrome |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ascii | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| cyr_host | ✓ | ✓ | ✓ | ✗ | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ |
+| puny_host | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| cyr_path | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ |
+| google_dot | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| localhost_port | ✓ | ✗ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| tld_11 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| upper | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ |
+| ipv6 | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| userinfo | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| ftp | ✗ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ | ✓ | ✗ | ✓ | ✓ | ✓ |
+
+<!-- Links to issues, pull requests and commits -->
+
+[#8]: https://github.com/koorchik/LIVR/issues/8
+[#16]: https://github.com/koorchik/LIVR/issues/16
+[#17]: https://github.com/koorchik/LIVR/issues/17
+[#19]: https://github.com/koorchik/LIVR/issues/19
+[#22]: https://github.com/koorchik/LIVR/issues/22
+[#25]: https://github.com/koorchik/LIVR/issues/25
+[#30]: https://github.com/koorchik/LIVR/issues/30
+[#31]: https://github.com/koorchik/LIVR/issues/31
+[#36]: https://github.com/koorchik/LIVR/issues/36
+[#54]: https://github.com/koorchik/LIVR/issues/54
+[#56]: https://github.com/koorchik/LIVR/issues/56
+[#57]: https://github.com/koorchik/LIVR/issues/57
+[#58]: https://github.com/koorchik/LIVR/issues/58
+[#62]: https://github.com/koorchik/LIVR/issues/62
+[#63]: https://github.com/koorchik/LIVR/issues/63
+[#70]: https://github.com/koorchik/LIVR/issues/70
+[LIVR#6]: https://github.com/koorchik/LIVR/issues/6
+[LIVR#7]: https://github.com/koorchik/LIVR/issues/7
+[LIVR#9]: https://github.com/koorchik/LIVR/issues/9
+[LIVR#11]: https://github.com/koorchik/LIVR/issues/11
+[LIVR#12]: https://github.com/koorchik/LIVR/issues/12
+[LIVR#13]: https://github.com/koorchik/LIVR/issues/13
+[LIVR#14]: https://github.com/koorchik/LIVR/issues/14
+[LIVR#17]: https://github.com/koorchik/LIVR/issues/17
+[LIVR#18]: https://github.com/koorchik/LIVR/issues/18
+[LIVR#19]: https://github.com/koorchik/LIVR/issues/19
+[LIVR#21]: https://github.com/koorchik/LIVR/issues/21
+[LIVR#23]: https://github.com/koorchik/LIVR/issues/23
+[LIVR#24]: https://github.com/koorchik/LIVR/issues/24
+[LIVR#32]: https://github.com/koorchik/LIVR/issues/32
+[LIVR#33]: https://github.com/koorchik/LIVR/issues/33
+[LIVR#34]: https://github.com/koorchik/LIVR/issues/34
+[LIVR#35]: https://github.com/koorchik/LIVR/issues/35
+[LIVR#36]: https://github.com/koorchik/LIVR/issues/36
+[LIVR#37]: https://github.com/koorchik/LIVR/issues/37
+[LIVR#39]: https://github.com/koorchik/LIVR/issues/39
+[LIVR#40]: https://github.com/koorchik/LIVR/issues/40
+[LIVR#47]: https://github.com/koorchik/LIVR/issues/47
+[LIVR#52]: https://github.com/koorchik/LIVR/issues/52
+[LIVR#56]: https://github.com/koorchik/LIVR/issues/56
+[LIVR#57]: https://github.com/koorchik/LIVR/issues/57
+[LIVR#58]: https://github.com/koorchik/LIVR/issues/58
+[LIVR#60]: https://github.com/koorchik/LIVR/issues/60
+[LIVR#63]: https://github.com/koorchik/LIVR/issues/63
+[LIVR#66]: https://github.com/koorchik/LIVR/issues/66
+[LIVR commit 4dccffb]: https://github.com/koorchik/LIVR/commit/4dccffb
+[Swift#33]: https://github.com/olxbr/livr-swift-validator/issues/33
+[Validator-LIVR#2]: https://github.com/koorchik/Validator-LIVR/issues/2
+[Validator-LIVR#5]: https://github.com/koorchik/Validator-LIVR/issues/5
+[Validator-LIVR#11]: https://github.com/koorchik/Validator-LIVR/issues/11
+[Validator-LIVR#12]: https://github.com/koorchik/Validator-LIVR/issues/12
+[Validator-LIVR PR #7]: https://github.com/koorchik/Validator-LIVR/pull/7
+[Validator-LIVR PR #13]: https://github.com/koorchik/Validator-LIVR/pull/13
+[aegir PR #8]: https://github.com/olxbr/aegir/pull/8
+[java PR #6]: https://github.com/vlbaluk/java-validator-livr/pull/6
+[java-validator-livr PR #8]: https://github.com/vlbaluk/java-validator-livr/pull/8
+[js#5]: https://github.com/koorchik/js-validator-livr/issues/5
+[js#6]: https://github.com/koorchik/js-validator-livr/issues/6
+[js#8]: https://github.com/koorchik/js-validator-livr/issues/8
+[js#9]: https://github.com/koorchik/js-validator-livr/issues/9
+[js#10]: https://github.com/koorchik/js-validator-livr/issues/10
+[js#11]: https://github.com/koorchik/js-validator-livr/issues/11
+[js#16]: https://github.com/koorchik/js-validator-livr/issues/16
+[js#17]: https://github.com/koorchik/js-validator-livr/issues/17
+[js#18]: https://github.com/koorchik/js-validator-livr/issues/18
+[js#20]: https://github.com/koorchik/js-validator-livr/issues/20
+[js#24]: https://github.com/koorchik/js-validator-livr/issues/24
+[js#25]: https://github.com/koorchik/js-validator-livr/issues/25
+[js#29]: https://github.com/koorchik/js-validator-livr/issues/29
+[js#30]: https://github.com/koorchik/js-validator-livr/issues/30
+[js#32]: https://github.com/koorchik/js-validator-livr/issues/32
+[js PR #2]: https://github.com/koorchik/js-validator-livr/pull/2
+[js PR #7]: https://github.com/koorchik/js-validator-livr/pull/7
+[js PR #35]: https://github.com/koorchik/js-validator-livr/pull/35
+[js PR #60]: https://github.com/koorchik/js-validator-livr/pull/60
+[js-livr-extra-rules#14]: https://github.com/koorchik/js-livr-extra-rules/issues/14
+[js-livr-extra-rules PR #15]: https://github.com/koorchik/js-livr-extra-rules/pull/15
+[js-validator-livr#28]: https://github.com/koorchik/js-validator-livr/issues/28
+[js-validator-livr#50]: https://github.com/koorchik/js-validator-livr/issues/50
+[js-validator-livr#56]: https://github.com/koorchik/js-validator-livr/issues/56
+[js-validator-livr 996c964]: https://github.com/koorchik/js-validator-livr/commit/996c964
+[js-validator-livr PR #7]: https://github.com/koorchik/js-validator-livr/pull/7
+[liver#3]: https://github.com/erlangbureau/liver/issues/3
+[liver#5]: https://github.com/erlangbureau/liver/issues/5
+[liver#8]: https://github.com/erlangbureau/liver/issues/8
+[liver PR #6]: https://github.com/erlangbureau/liver/pull/6
+[liver PR #7]: https://github.com/erlangbureau/liver/pull/7
+[liver PR #9]: https://github.com/erlangbureau/liver/pull/9
+[olifer#1]: https://github.com/Prots/olifer/issues/1
+[olifer#8]: https://github.com/Prots/olifer/issues/8
+[php#12]: https://github.com/WebbyLab/php-validator-livr/issues/12
+[php PR #25]: https://github.com/WebbyLab/php-validator-livr/pull/25
+[php PR #31]: https://github.com/WebbyLab/php-validator-livr/pull/31
+[php PR #32]: https://github.com/WebbyLab/php-validator-livr/pull/32
+[php-validator-livr PR #29]: https://github.com/WebbyLab/php-validator-livr/pull/29
+[python#3]: https://github.com/asholok/python-validator-livr/issues/3
+[swift#34]: https://github.com/olxbr/livr-swift-validator/issues/34
+[swift PR #30]: https://github.com/olxbr/livr-swift-validator/pull/30
