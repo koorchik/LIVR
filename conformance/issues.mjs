@@ -40,6 +40,9 @@ const API = `${process.env.GITHUB_API_URL || 'https://api.github.com'}/repos/${R
 const RUN_URL = process.env.GITHUB_RUN_ID && `${REPO_URL}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const MARKER = /<!-- livr-conformance (.*?) -->/;
 const KINDS = ['regression', 'new', 'changed', 'suite', 'failing'];
+const RESULTS_URL = `${SITE}/introduction/implementations.html`;
+// Every issue, comment and closing comment says where the results are published
+const RESULTS_NOTE = `The test suite results of all implementations are published on the official LIVR site, [livr-spec.org/introduction/implementations.html](${RESULTS_URL}), and updated automatically every week and whenever the specification changes.`;
 
 const readJson = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const implementations = new Map(
@@ -173,6 +176,8 @@ export function issueBody(action) {
         '',
         intro.join('\n\n'),
         '',
+        RESULTS_NOTE,
+        '',
         '### Failing cases',
         '',
         caseList(cases, messages),
@@ -211,12 +216,14 @@ export function announceComment(action) {
         caseList(cases),
         '',
         'The description above lists all failing cases.',
+        '',
+        RESULTS_NOTE,
     ].join('\n');
 }
 
 export function closeComment(action) {
     const { pkg, version } = describe(action.id, action.result);
-    return `All test suite cases pass in **${pkg} ${version}** now, closing.`;
+    return `All test suite cases pass in **${pkg} ${version}** now, closing.\n\n${RESULTS_NOTE}`;
 }
 
 // The footer changes on every run, so it doesn't count as a change of the description.

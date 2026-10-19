@@ -77,6 +77,9 @@ implementation, labeled `test suite`, that mentions its maintainer:
 
 The issue lists the failing cases, explains how to get the current test suite, and links
 to a prefilled issue for asking to remove an unmaintained implementation from the site.
+The issue and every comment on it say that the results on
+[livr-spec.org](https://livr-spec.org/introduction/implementations.html) are updated
+automatically every week.
 While it's open, new failures are announced in a comment. It's closed automatically when
 all cases pass. Failures explained in `notes.json` are not counted. A case that starts
 failing with the same version and unchanged case files points at the runner, so it only
