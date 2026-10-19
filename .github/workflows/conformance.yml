@@ -1,5 +1,6 @@
 # Runs the LIVR test suite against every known implementation and publishes the
-# merged results as the "conformance" artifact (conformance.json).
+# merged results as the "conformance" artifact (conformance.json), and the results of
+# the previous run, which conformance/issues.mjs compares them with, as "previous-conformance".
 # Called by docs.yml; can also be started by hand.
 name: Conformance
 
@@ -59,10 +60,30 @@ jobs:
         with:
           node-version: 24
 
+      - name: Download the previous results
+        # livr-spec.org publishes the results of the last deployed run. A 404 means there are
+        # none yet ({}); if they can't be downloaded, previous.json is left out and
+        # issues.mjs leaves the issues alone.
+        run: |
+          file="${{ runner.temp }}/previous.json"
+          status=$(curl -sSL --retry 3 -o "$file" -w '%{http_code}' https://livr-spec.org/conformance.json) || status=000
+          case "$status" in
+            200) node -e 'JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"))' "$file" \
+                   || { rm -f "$file"; echo "::warning::The previous results are not valid JSON"; } ;;
+            404) echo '{}' >"$file" ;;
+            *)   rm -f "$file"; echo "::warning::Couldn't download the previous results (HTTP $status)" ;;
+          esac
+
       - name: Merge results
-        run: node conformance/merge.mjs "${{ runner.temp }}/results" "${{ runner.temp }}/conformance.json"
+        run: node conformance/merge.mjs "${{ runner.temp }}/results" "${{ runner.temp }}/conformance.json" "${{ runner.temp }}/previous.json"
 
       - uses: actions/upload-artifact@v7
         with:
           name: conformance
           path: ${{ runner.temp }}/conformance.json
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: previous-conformance
+          path: ${{ runner.temp }}/previous.json
+          if-no-files-found: ignore

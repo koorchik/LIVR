@@ -30,6 +30,15 @@ Each case is a directory named `NN-rule_name`:
 | `errors.json` | *negative cases:* the expected errors |
 | `aliases.json` | *alias cases:* a list of [aliases](/rules-aliasing.html) to register before validation |
 
+## Getting the cases
+
+Copy the `test_suite` directory into your implementation's repository and update it when the specification changes. To replace your copy with the current one, run this in the directory that contains it:
+
+```sh
+rm -rf test_suite
+curl -fsSL https://github.com/koorchik/LIVR/archive/refs/heads/master.tar.gz | tar -xz --strip-components=1 LIVR-master/test_suite
+```
+
 ## Running the cases
 
 For every case:
@@ -63,6 +72,8 @@ Every rule page of this site shows the test suite cases of that rule, and you ca
 ## Conformance results
 
 The [`conformance/`](https://github.com/koorchik/LIVR/tree/master/conformance) directory contains a small test suite runner for each implementation. CI runs them against the latest version of every implementation, and the results are published on the [implementations page](/introduction/implementations.html#test-suite-results).
+
+When an implementation starts failing cases, because of a regression in a new release or because the test suite got new cases, CI opens an [issue](https://github.com/koorchik/LIVR/issues?q=label%3A%22test+suite%22) that mentions its maintainer. The issue closes by itself once all cases pass.
 
 ## Adding cases
 

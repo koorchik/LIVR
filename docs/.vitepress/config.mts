@@ -93,6 +93,12 @@ export default defineConfig({
     )
   },
 
+  // Publish the test suite results as /conformance.json: the next CI run compares its results with them
+  buildEnd({ srcDir, outDir }) {
+    const results = path.join(srcDir, 'data/conformance.json')
+    if (fs.existsSync(results)) fs.copyFileSync(results, path.join(outDir, 'conformance.json'))
+  },
+
   vite: {
     define: {
       __LIVR_VERSION__: JSON.stringify(packageVersion('livr')),

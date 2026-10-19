@@ -20,6 +20,44 @@ jobs:
   conformance:
     uses: ./.github/workflows/conformance.yml
 
+  issues:
+    # Opens, updates and closes the issues of implementations that fail the test suite
+    # (see conformance/issues.mjs). Pull requests and other branches only show in the job
+    # summary what would happen.
+    needs: conformance
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: conformance
+          path: ${{ runner.temp }}/current
+
+      - uses: actions/download-artifact@v8
+        # Missing when livr-spec.org couldn't be reached: issues.mjs then fails without touching the issues
+        continue-on-error: true
+        with:
+          name: previous-conformance
+          path: ${{ runner.temp }}/previous
+
+      - name: Update the issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          node conformance/issues.mjs
+          "${{ runner.temp }}/current/conformance.json"
+          "${{ runner.temp }}/previous/previous.json"
+          ${{ (github.event_name == 'pull_request' || github.ref != 'refs/heads/master') && '--dry-run' || '' }}
+
   build:
     needs: conformance
     # Build the site even if some implementations could not be tested
