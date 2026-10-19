@@ -17,7 +17,7 @@
     },
     "java": {
         "notes": [
-            "Errors are returned as {\"code\": …, \"fieldValue\": …} objects instead of plain error codes, so negative cases fail on the error format. With the codes unwrapped, 59 of 70 cases pass."
+            "Errors are returned as {\"code\": …, \"fieldValue\": …} objects instead of plain error codes (the library adds the invalid value to every error), so only the codes are compared."
         ]
     },
     "lua": {

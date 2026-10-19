@@ -3,6 +3,9 @@
 // allowed, array order ignored). This harness is stricter on structure, because
 // dropping unknown fields and keeping list order are part of the specification,
 // but compares numbers by value (json-simple parses 1 as Long and 1.0 as Double).
+// The library returns every error as {"code": …, "fieldValue": …} instead of a plain
+// error code, and its own copy of the test suite expects that format, so the harness
+// compares only the codes.
 import livr.LIVR;
 import livr.Validator;
 import org.json.simple.JSONArray;
@@ -51,6 +54,25 @@ public class Harness {
         return a.equals(b);
     }
 
+    // Replaces {"code": …, "fieldValue": …} errors, also nested ones, with their codes.
+    static Object codes(Object errors) {
+        if (errors instanceof Map) {
+            Map<?, ?> map = (Map<?, ?>) errors;
+            if (map.size() == 2 && map.containsKey("fieldValue") && map.get("code") instanceof String) {
+                return map.get("code");
+            }
+            JSONObject result = new JSONObject();
+            for (Map.Entry<?, ?> e : map.entrySet()) result.put(e.getKey(), codes(e.getValue()));
+            return result;
+        }
+        if (errors instanceof List) {
+            JSONArray result = new JSONArray();
+            for (Object item : (List<?>) errors) result.add(codes(item));
+            return result;
+        }
+        return errors;
+    }
+
     static String show(Object value) {
         String s = JSONValue.toJSONString(value);
         return s.length() > 300 ? s.substring(0, 300) + "…" : s;
@@ -67,8 +89,8 @@ public class Harness {
         }
 
         JSONObject output = validator.validate(input);
-        JSONObject errors = validator.getErrors();
-        boolean hasErrors = errors != null && !errors.isEmpty();
+        Object errors = codes(validator.getErrors());
+        boolean hasErrors = errors != null && !((Map<?, ?>) errors).isEmpty();
 
         if (suite.endsWith("positive")) {
             Object expected = readJson(dir, "output");

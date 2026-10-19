@@ -95,7 +95,8 @@
     "maintainer": {
       "name": "vlbaluk",
       "url": "https://github.com/vlbaluk"
-    }
+    },
+    "note": "Returns the standard error codes, but wraps each one together with the invalid value: {\"code\": \"REQUIRED\", \"fieldValue\": …}."
   },
   {
     "id": "ruby",
