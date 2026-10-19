@@ -29,7 +29,8 @@ const rows = implementations.map((item) => {
   const pkg = item.package
     ? `[${REGISTRY_LABELS[item.package.registry] ?? item.package.registry}: \`${item.package.name}\`](${item.package.url})`
     : '—'
-  return `| ${name} | [${repo}](${item.repo}) | ${pkg} | ${item.spec} | [@${item.maintainer.name}](${item.maintainer.url}) |`
+  const links = item.site ? `[${repo}](${item.repo}), [docs](${item.site})` : `[${repo}](${item.repo})`
+  return `| ${name} | ${links} | ${pkg} | ${item.spec} | [@${item.maintainer.name}](${item.maintainer.url}) |`
 })
 
 const table = [

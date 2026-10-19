@@ -239,7 +239,7 @@ onMounted(() => {
       </label>
       <span class="livr-playground__spacer" />
       <span class="livr-playground__version">
-        livr@{{ livrVersion }} + <a href="/introduction/extensions.html#livr-extra-rules">livr-extra-rules@{{ extraRulesVersion }}</a> (JavaScript)
+        <a href="https://js.livr-spec.org">livr@{{ livrVersion }}</a> + <a href="/introduction/extensions.html#livr-extra-rules">livr-extra-rules@{{ extraRulesVersion }}</a> (JavaScript)
       </span>
       <button type="button" class="livr-button" @click="copyLink">{{ copied ? 'Copied!' : 'Copy link' }}</button>
     </div>

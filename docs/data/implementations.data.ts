@@ -13,6 +13,7 @@ export interface Implementation {
   name?: string
   logo?: string
   repo: string
+  site?: string // documentation site of the implementation, if it has one
   package?: { registry: string; name: string; url: string }
   spec: string
   maintainer: { name: string; url: string }

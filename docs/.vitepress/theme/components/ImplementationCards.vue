@@ -26,6 +26,7 @@ const items = computed(() => {
 
 const title = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
 const initials = (item: Implementation) => item.language.replace(/[^A-Za-z#+]/g, '').slice(0, 2)
+const host = (url: string) => new URL(url).host
 
 function activity(item: Implementation) {
   if (!item.live.lastActivity) return ''
@@ -45,7 +46,7 @@ function conformance(item: Implementation) {
 
 <template>
   <div v-if="props.compact" class="impl-tiles">
-    <a v-for="item in items" :key="item.id" class="impl-tile" :href="item.repo" target="_blank" rel="noopener">
+    <a v-for="item in items" :key="item.id" class="impl-tile" :href="item.site ?? item.repo" target="_blank" rel="noopener">
       <img v-if="item.logo" :src="item.logo" :alt="`${item.language} logo`" loading="lazy" />
       <span v-else class="impl-fallback">{{ initials(item) }}</span>
       <span class="impl-tile__name">{{ title(item) }}</span>
@@ -81,6 +82,10 @@ function conformance(item: Implementation) {
             <a :href="item.package.url" target="_blank" rel="noopener"><code>{{ item.package.name }}</code></a>
             <span v-if="item.live.version" class="impl-card__version">{{ item.live.version.startsWith('v') ? '' : 'v' }}{{ item.live.version }}</span>
           </dd>
+        </template>
+        <template v-if="item.site">
+          <dt>Docs</dt>
+          <dd><a :href="item.site" target="_blank" rel="noopener">{{ host(item.site) }}</a></dd>
         </template>
         <dt>Maintainer</dt>
         <dd><a :href="item.maintainer.url" target="_blank" rel="noopener">@{{ item.maintainer.name }}</a></dd>

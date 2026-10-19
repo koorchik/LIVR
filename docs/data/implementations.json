@@ -4,6 +4,7 @@
     "language": "JavaScript",
     "logo": "/assets/languages/js.jpg",
     "repo": "https://github.com/koorchik/js-validator-livr",
+    "site": "https://js.livr-spec.org",
     "package": {
       "registry": "npm",
       "name": "livr",
@@ -14,7 +15,7 @@
       "name": "koorchik",
       "url": "https://github.com/koorchik"
     },
-    "note": "Reference implementation. Sync and async validators, TypeScript types."
+    "note": "Reference implementation. Sync and async validators, TypeScript type inference."
   },
   {
     "id": "perl",
