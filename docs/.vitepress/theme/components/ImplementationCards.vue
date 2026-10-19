@@ -34,12 +34,23 @@ function activity(item: Implementation) {
   return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })
 }
 
+// Registries and the conformance runners write the same version differently (v2.0.0+incompatible
+// vs 2.0.0, 1.0.5@a362353 for a repository checkout)
+const plainVersion = (version: string) => version.replace(/^v/, '').replace(/\+incompatible$/, '').replace(/@.*$/, '')
+
 function conformance(item: Implementation) {
   const c = item.conformance
   if (!c) return null
   if (c.error) return { tone: 'muted', text: 'Test suite: not run', title: c.error }
   const tone = c.passed === c.total ? 'ok' : c.passed / c.total >= 0.9 ? 'warn' : 'fail'
   const tested = c.version ? `Tested version: ${c.version}` : ''
+  // The card shows the latest release, but the runner may have tested another version: the
+  // registry index it installs from can lag behind, or it tests the repository
+  const version = c.version && plainVersion(c.version)
+  if (version && item.live.version && version !== plainVersion(item.live.version)) {
+    const label = /^\d/.test(version) ? `v${version}` : version
+    return { tone, text: `Test suite: ${c.passed}/${c.total} (${label})`, title: `${tested}, the latest release is ${item.live.version}` }
+  }
   return { tone, text: `Test suite: ${c.passed}/${c.total}`, title: tested }
 }
 </script>
