@@ -3,5 +3,6 @@
   { "name": "WebbyLab", "url": "https://webbylab.com", "logo": "/assets/users/webbylab.png" },
   { "name": "Cloudbeds", "url": "https://www.cloudbeds.com/", "logo": "/assets/users/cloudbeds.svg" },
   { "name": "WalkMe", "url": "https://www.walkme.com", "logo": "/assets/users/walkme.svg" },
-  { "name": "Axiomie", "url": "https://axiomie.com/", "logo": "/assets/users/axiomie.png" }
+  { "name": "Axiomie", "url": "https://axiomie.com/", "logo": "/assets/users/axiomie.png" },
+  { "name": "Wordfully", "url": "https://wordfully.ai", "logo": "/assets/users/wordfully.png" }
 ]
