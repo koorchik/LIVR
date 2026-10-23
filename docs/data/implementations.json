@@ -191,5 +191,16 @@
       "name": "olxbr",
       "url": "https://github.com/olxbr"
     }
+  },
+  {
+    "id": "dart",
+    "language": "Dart",
+    "repo": "https://github.com/koorchik/dart-livr",
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    },
+    "note": "Not on pub.dev yet: the test suite runs against the default branch of the repository."
   }
 ]

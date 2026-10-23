@@ -16,7 +16,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$HERE")"
 OUT_DIR="${OUT_DIR:-$HERE/out}"
 
-IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift)
+IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift dart)
 
 image_for() {
     case "$1" in
@@ -32,6 +32,7 @@ image_for() {
         lua)           echo "alpine:3.20" ;;
         go)            echo "golang:1.23" ;;
         swift)         echo "swift:5.10" ;;
+        dart)          echo "dart:3" ;;
         *)             return 1 ;;
     esac
 }
