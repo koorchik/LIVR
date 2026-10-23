@@ -64,6 +64,7 @@ const registryVersion: Record<string, (name: string) => Promise<string | undefin
   pypi: async (name) => (await getJson(`https://pypi.org/pypi/${name}/json`)).info.version,
   rubygems: async (name) => (await getJson(`https://rubygems.org/api/v1/gems/${name}.json`)).version,
   hex: async (name) => (await getJson(`https://hex.pm/api/packages/${name}`)).latest_stable_version,
+  pub: async (name) => (await getJson(`https://pub.dev/api/packages/${name}`)).latest.version,
   go: async (name) =>
     (await getJson(`https://proxy.golang.org/${name.toLowerCase()}/@latest`)).Version.replace(/^v/, '').replace('+incompatible', ''),
   maven: async (name) => {

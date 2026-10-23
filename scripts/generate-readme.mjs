@@ -18,7 +18,8 @@ const REGISTRY_LABELS = {
   hex: 'Hex',
   luarocks: 'LuaRocks',
   raku: 'raku.land',
-  cocoapods: 'CocoaPods'
+  cocoapods: 'CocoaPods',
+  pub: 'pub.dev'
 }
 
 const implementations = JSON.parse(fs.readFileSync(DATA, 'utf8'))

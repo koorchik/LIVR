@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        id: [js, perl, raku, php, python, erlang-liver, erlang-olifer, java, ruby, lua, go, swift]
+        id: [js, perl, raku, php, python, erlang-liver, erlang-olifer, java, ruby, lua, go, swift, dart]
     steps:
       - uses: actions/checkout@v7
 

@@ -191,5 +191,20 @@
       "name": "olxbr",
       "url": "https://github.com/olxbr"
     }
+  },
+  {
+    "id": "dart",
+    "language": "Dart",
+    "repo": "https://github.com/koorchik/dart-livr",
+    "package": {
+      "registry": "pub",
+      "name": "livr",
+      "url": "https://pub.dev/packages/livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    }
   }
 ]
