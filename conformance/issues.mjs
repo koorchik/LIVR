@@ -19,10 +19,21 @@
 //
 // While an issue is open, its description lists all failing cases, and newly failing cases
 // are announced in a comment (editing the description doesn't notify anybody). The issue is
-// closed once all cases pass. Issues are found by the "test suite" label and a hidden marker
-// with the implementation id; an issue closed by hand isn't reopened.
+// closed once all cases pass. Issues are found by a hidden marker with the implementation id;
+// an issue closed by hand isn't reopened.
 //
-// Needs GITHUB_TOKEN and GITHUB_REPOSITORY. With --dry-run nothing is written to GitHub.
+// The issue is opened in the GitHub repository of the implementation (`repo` in
+// docs/data/implementations.json), so that it lands in the maintainer's own tracker. When
+// that's impossible (the repository isn't on GitHub, is archived or has issues turned off),
+// it's opened in this repository and mentions the maintainer. Only repositories where the
+// token can push get the "test suite" label. An open issue found in another repository than
+// the one it belongs to (opened before issues went to the implementations' repositories, or
+// the implementation moved) is moved: a new one is opened where it belongs, and the old one
+// is closed with a link to it.
+//
+// Needs GITHUB_TOKEN that can open issues in other people's repositories (a classic token
+// with the public_repo scope) and GITHUB_REPOSITORY. With --dry-run nothing is written to
+// GitHub, and the workflow's own token is enough.
 // When GITHUB_STEP_SUMMARY is set, the report is appended to it.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,7 +47,7 @@ const BRANCH = 'master';
 const SITE = 'https://livr-spec.org';
 const REPO = process.env.GITHUB_REPOSITORY || 'koorchik/LIVR';
 const REPO_URL = `${process.env.GITHUB_SERVER_URL || 'https://github.com'}/${REPO}`;
-const API = `${process.env.GITHUB_API_URL || 'https://api.github.com'}/repos/${REPO}`;
+const API = process.env.GITHUB_API_URL || 'https://api.github.com';
 const RUN_URL = process.env.GITHUB_RUN_ID && `${REPO_URL}/actions/runs/${process.env.GITHUB_RUN_ID}`;
 const MARKER = /<!-- livr-conformance (.*?) -->/;
 const KINDS = ['regression', 'new', 'changed', 'suite', 'failing'];
@@ -50,13 +61,15 @@ const implementations = new Map(
 );
 
 // Decides what happens to the issue of every implementation.
-// `issues` maps implementation ids to their open issues: { number, url, body, cases }.
-export function plan(current, previous, issues) {
+// `issues` maps implementation ids to their open issues: { repo, number, url, body, cases }.
+// `targets` maps them to the repositories their issues belong in: { repo, push, reason, error }.
+export function plan(current, previous, issues, targets = new Map()) {
     const actions = [];
     for (const [id, result] of Object.entries(current.results)) {
         const issue = issues.get(id);
-        if (result.error) {
-            actions.push({ id, result, type: 'skip', issue, unexplained: [] });
+        const target = targets.get(id) ?? { repo: REPO, push: true };
+        if (result.error || target.error) {
+            actions.push({ id, result, target, type: 'skip', issue, unexplained: [], reason: result.error || target.error });
             continue;
         }
 
@@ -79,9 +92,10 @@ export function plan(current, previous, issues) {
             failing.map(f => [f.case, found[f.case] ?? issue?.cases[f.case] ?? { kind: 'failing' }])
         );
         const announce = Object.keys(found).filter(name => !issue?.cases[name]);
-        const action = { id, result, issue, cases, announce, unexplained };
+        const action = { id, result, target, issue, cases, announce, unexplained };
 
         if (!failing.length) action.type = issue ? 'close' : 'none';
+        else if (issue && issue.repo !== target.repo) action.type = 'move';
         else if (issue) action.type = 'update';
         else action.type = announce.length ? 'open' : 'none';
         actions.push(action);
@@ -203,7 +217,7 @@ export function issueBody(action) {
         '',
         `If ${pkg} is no longer maintained, please [open an issue](${REPO_URL}/issues/new?${removal}) to remove it from the [implementations list](${SITE}/introduction/implementations.html) on livr-spec.org.`,
         '',
-        `<sub>Updated by the ${RUN_URL ? `[test suite run](${RUN_URL})` : 'test suite run'} on ${new Date().toISOString().slice(0, 10)}.</sub>`,
+        `<sub>Updated by the ${RUN_URL ? `[test suite run](${RUN_URL})` : 'test suite run'} of [${REPO}](${REPO_URL}) on ${new Date().toISOString().slice(0, 10)}.</sub>`,
     ].join('\n');
 }
 
@@ -226,6 +240,11 @@ export function closeComment(action) {
     return `All test suite cases pass in **${pkg} ${version}** now, closing.\n\n${RESULTS_NOTE}`;
 }
 
+export function moveComment(action, url) {
+    const { pkg } = describe(action.id, action.result);
+    return `Moved to ${url}, the issue tracker of ${pkg}.\n\n${RESULTS_NOTE}`;
+}
+
 // The footer changes on every run, so it doesn't count as a change of the description.
 const withoutFooter = body => body.replace(/\n<sub>[^\n]*<\/sub>\s*$/, '');
 
@@ -241,36 +260,105 @@ async function github(method, url, body) {
         },
         body: body && JSON.stringify(body),
     });
-    if (!res.ok) throw new Error(`${method} ${url}: ${res.status} ${await res.text()}`);
+    if (!res.ok) throw Object.assign(new Error(`${method} ${url}: ${res.status} ${await res.text()}`), { status: res.status });
     return res.status === 204 ? null : res.json();
 }
 
-async function openIssues() {
+// The account the token belongs to, which opens the issues. null for the workflow's own token.
+async function login() {
+    try {
+        return (await github('GET', '/user')).login;
+    } catch {
+        return null;
+    }
+}
+
+// Where the issue of every implementation belongs: { repo, push } for its GitHub repository,
+// or REPO with the `reason` when issues can't be opened there. `error` means it's unknown.
+async function targets(ids) {
+    const result = new Map();
+    for (const id of ids) {
+        const url = implementations.get(id)?.repo;
+        const name = url?.match(/^https:\/\/github\.com\/([\w.-]+\/[\w.-]+?)(?:\.git)?\/?$/)?.[1];
+        let reason;
+        if (!name) {
+            reason = `${url || 'its repository'} isn't on GitHub`;
+        } else {
+            try {
+                const repo = await github('GET', `/repos/${name}`);
+                if (repo.archived) reason = `${repo.full_name} is archived`;
+                else if (!repo.has_issues) reason = `${repo.full_name} has issues turned off`;
+                else {
+                    result.set(id, { repo: repo.full_name, push: Boolean(repo.permissions?.push) });
+                    continue;
+                }
+            } catch (e) {
+                if (e.status !== 404) {
+                    result.set(id, { error: `couldn't read ${name}: ${e.message}` });
+                    continue;
+                }
+                reason = `${name} doesn't exist`;
+            }
+        }
+        result.set(id, { repo: REPO, push: true, reason });
+    }
+    return result;
+}
+
+// Finds the open issues in this repository and in the repositories of the implementations.
+// When one of the latter can't be read, its implementations get an `error`, so that no
+// second issue is opened there.
+async function openIssues(targets, author) {
     const issues = new Map();
-    const list = await github('GET', `/issues?state=open&labels=${encodeURIComponent(LABEL)}&per_page=100`);
-    for (const issue of list) {
-        const match = !issue.pull_request && issue.body?.match(MARKER);
-        if (!match) continue;
+    const repos = new Set([REPO, ...[...targets.values()].map(t => t.repo).filter(Boolean)]);
+    for (const repo of repos) {
+        // Only this repository surely has the label; elsewhere the issues are found by their author
+        const filter = repo === REPO
+            ? `&labels=${encodeURIComponent(LABEL)}`
+            : author ? `&creator=${encodeURIComponent(author)}` : '';
+        let list;
         try {
-            const { id, cases } = JSON.parse(match[1]);
-            if (!issues.has(id)) issues.set(id, { number: issue.number, url: issue.html_url, body: issue.body, cases: cases || {} });
-        } catch {
-            console.error(`Ignoring a broken marker in ${issue.html_url}`);
+            list = await github('GET', `/repos/${repo}/issues?state=open&per_page=100${filter}`);
+        } catch (e) {
+            if (repo === REPO) throw e;
+            for (const target of targets.values()) {
+                if (target.repo === repo) target.error = `couldn't read the issues of ${repo}: ${e.message}`;
+            }
+            continue;
+        }
+        for (const issue of list) {
+            const match = !issue.pull_request && issue.body?.match(MARKER);
+            if (!match) continue;
+            try {
+                const { id, cases } = JSON.parse(match[1]);
+                const known = issues.get(id);
+                // An issue in the repository it belongs in wins over one that has to be moved
+                if (known && (known.repo === targets.get(id)?.repo || repo !== targets.get(id)?.repo)) continue;
+                issues.set(id, { repo, number: issue.number, url: issue.html_url, body: issue.body, cases: cases || {} });
+            } catch {
+                console.error(`Ignoring a broken marker in ${issue.html_url}`);
+            }
         }
     }
     return issues;
 }
 
-async function ensureLabel() {
+async function ensureLabel(repo) {
     try {
-        await github('GET', `/labels/${encodeURIComponent(LABEL)}`);
+        await github('GET', `/repos/${repo}/labels/${encodeURIComponent(LABEL)}`);
     } catch {
-        await github('POST', '/labels', {
+        await github('POST', `/repos/${repo}/labels`, {
             name: LABEL,
             color: '1a7fc4',
             description: 'An implementation fails the LIVR test suite (managed by CI)',
         });
     }
+}
+
+// Only collaborators can label issues.
+async function createIssue({ repo, push }, title, body) {
+    if (push) await ensureLabel(repo);
+    return github('POST', `/repos/${repo}/issues`, { title, body, ...(push && { labels: [LABEL] }) });
 }
 
 // Returns a line for the report.
@@ -280,21 +368,28 @@ async function apply(action, dryRun) {
     const count = Object.keys(action.cases || {}).length;
     const failing = `${count} failing case${count === 1 ? '' : 's'}`;
 
-    if (type === 'skip') return `not run (${action.result.error})${issue ? `, left ${issue.url} as is` : ''}`;
+    if (type === 'skip') return `${action.result.error ? 'not run' : 'skipped'} (${action.reason})${issue ? `, left ${issue.url} as is` : ''}`;
     if (type === 'none') return count ? `${failing}, no new failures, no issue` : 'all cases pass';
 
     if (type === 'open') {
         const title = issueTitle(action);
-        if (dryRun) return `would open "${title}" (${failing})`;
-        await ensureLabel();
-        const created = await github('POST', '/issues', { title, body: issueBody(action), labels: [LABEL] });
+        if (dryRun) return `would open "${title}" in ${action.target.repo} (${failing})`;
+        const created = await createIssue(action.target, title, issueBody(action));
         return `opened ${created.html_url} (${failing})`;
+    }
+
+    if (type === 'move') {
+        if (dryRun) return `would move ${issue.url} to ${action.target.repo} (${failing})`;
+        const created = await createIssue(action.target, issueTitle(action), issueBody(action));
+        await github('POST', `/repos/${issue.repo}/issues/${issue.number}/comments`, { body: moveComment(action, created.html_url) });
+        await github('PATCH', `/repos/${issue.repo}/issues/${issue.number}`, { state: 'closed', state_reason: 'not_planned' });
+        return `moved ${issue.url} to ${created.html_url} (${failing})`;
     }
 
     if (type === 'close') {
         if (!dryRun) {
-            await github('POST', `/issues/${issue.number}/comments`, { body: closeComment(action) });
-            await github('PATCH', `/issues/${issue.number}`, { state: 'closed', state_reason: 'completed' });
+            await github('POST', `/repos/${issue.repo}/issues/${issue.number}/comments`, { body: closeComment(action) });
+            await github('PATCH', `/repos/${issue.repo}/issues/${issue.number}`, { state: 'closed', state_reason: 'completed' });
         }
         return `${verb('close', 'closed')} ${issue.url}: all cases pass`;
     }
@@ -302,8 +397,8 @@ async function apply(action, dryRun) {
     const body = issueBody(action);
     const edit = withoutFooter(body) !== withoutFooter(issue.body);
     if (!dryRun) {
-        if (action.announce.length) await github('POST', `/issues/${issue.number}/comments`, { body: announceComment(action) });
-        if (edit) await github('PATCH', `/issues/${issue.number}`, { body });
+        if (action.announce.length) await github('POST', `/repos/${issue.repo}/issues/${issue.number}/comments`, { body: announceComment(action) });
+        if (edit) await github('PATCH', `/repos/${issue.repo}/issues/${issue.number}`, { body });
     }
     const what = [
         action.announce.length && `${verb('comment on', 'commented on')} new failures (${action.announce.join(', ')})`,
@@ -331,9 +426,10 @@ async function main() {
     const report = [];
     if (!previous.results) report.push('There are no previous results, so every failing implementation gets an issue.', '');
 
+    const where = await targets(Object.keys(current.results));
     let issues;
     try {
-        issues = await openIssues();
+        issues = await openIssues(where, await login());
     } catch (e) {
         if (!dryRun) throw e;
         console.error(`Couldn't read the open issues, assuming there are none: ${e.message}`);
@@ -342,7 +438,7 @@ async function main() {
 
     let failed = false;
     const rows = [];
-    for (const action of plan(current, previous, issues)) {
+    for (const action of plan(current, previous, issues, where)) {
         let line;
         try {
             line = await apply(action, dryRun);
@@ -352,6 +448,11 @@ async function main() {
         }
         rows.push(`| ${action.id} | ${line.replaceAll('|', '\\|')} |`);
         console.log(`${action.id}: ${line}`);
+        if (action.target.reason) {
+            const note = `${action.id}: issues go to ${REPO}, because ${action.target.reason}.`;
+            report.push(`- ${note}`);
+            console.log(note);
+        }
         for (const name of action.unexplained) {
             const warning = `${action.id}: ${name} fails now, but the case and ${action.result.package} ${action.result.version} are the same as in the previous run. Check the runner.`;
             report.push(`- ⚠️ ${warning}`);
