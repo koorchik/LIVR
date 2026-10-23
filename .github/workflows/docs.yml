@@ -22,8 +22,10 @@ jobs:
 
   issues:
     # Opens, updates and closes the issues of implementations that fail the test suite
-    # (see conformance/issues.mjs). Pull requests and other branches only show in the job
-    # summary what would happen.
+    # (see conformance/issues.mjs) in the implementations' own repositories. That needs the
+    # ISSUES_TOKEN secret: a classic personal access token with the public_repo scope, since
+    # the workflow's token can't write to other repositories. Pull requests and other branches
+    # only show in the job summary what would happen.
     needs: conformance
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
@@ -51,7 +53,7 @@ jobs:
 
       - name: Update the issues
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ISSUES_TOKEN || secrets.GITHUB_TOKEN }}
         run: >-
           node conformance/issues.mjs
           "${{ runner.temp }}/current/conformance.json"

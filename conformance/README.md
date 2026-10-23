@@ -68,7 +68,8 @@ The site publishes the merged file as
 
 After every run on `master`, [`issues.mjs`](issues.mjs) compares the results with the
 previous ones (the published `conformance.json`) and keeps one issue per failing
-implementation, labeled `test suite`, that mentions its maintainer:
+implementation, in the implementation's own GitHub repository (`repo` in
+[`implementations.json`](../docs/data/implementations.json)), that mentions its maintainer:
 
 - **Regression:** a case that passed before fails in a new version of the implementation.
 - **Test suite update:** a new or changed case fails. Without previous results for an
@@ -85,6 +86,17 @@ all cases pass. Failures explained in `notes.json` are not counted. A case that 
 failing with the same version and unchanged case files points at the runner, so it only
 shows up as a warning in the job summary. In pull requests the script runs with
 `--dry-run` and only reports in the job summary what it would do.
+
+When the implementation's repository isn't on GitHub, is archived or has issues turned
+off, the issue is opened in this repository instead. Only repositories where the token can
+push get the `test suite` label; elsewhere the script finds its issues by their author and
+a hidden marker. An open issue found in the wrong repository (opened in this one before, or
+the implementation moved) is moved: a new issue is opened where it belongs, and the old one
+is closed with a link to it.
+
+Opening issues in other people's repositories needs the `ISSUES_TOKEN` secret: a classic
+personal access token with the `public_repo` scope (fine-grained tokens and the workflow's
+own token can't do it). The issues are opened on behalf of the token's account.
 
 ```sh
 node conformance/issues.mjs conformance/out/conformance.json previous.json --dry-run

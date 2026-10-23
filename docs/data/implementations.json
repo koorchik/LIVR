@@ -191,22 +191,5 @@
       "name": "olxbr",
       "url": "https://github.com/olxbr"
     }
-  },
-  {
-    "id": "ruby-legacy",
-    "language": "Ruby",
-    "logo": "/assets/languages/ruby.png",
-    "repo": "https://github.com/maktwin/ruby-validator-livr",
-    "package": {
-      "registry": "rubygems",
-      "name": "livr",
-      "url": "https://rubygems.org/gems/livr"
-    },
-    "spec": "0.4",
-    "maintainer": {
-      "name": "maktwin",
-      "url": "https://github.com/maktwin"
-    },
-    "note": "Implements the previous version of the specification."
   }
 ]
