@@ -12,6 +12,8 @@ exclude = [
   '^https://www\.npmjs\.com/',
   '^https://metacpan\.org/',
   '^https://www\.templatemonster\.com',
+  # Shows up in the API, but its page is 404 for anonymous visitors
+  '^https://github\.com/WebbyLab/php-validator-livr/pull/29$',
   # Links into this repository, which may only exist after a pull request is merged
   '^https://github\.com/koorchik/LIVR/(blob|tree|edit)/',
   '^https://github\.com/koorchik/LIVR/issues/new',

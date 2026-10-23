@@ -305,9 +305,24 @@ async function targets(ids) {
     return result;
 }
 
+// The cases of a marker are written back into the description, so only case names, known
+// kinds and plain versions are kept.
+function markerCases(cases) {
+    const clean = {};
+    for (const [name, entry] of Object.entries(cases && typeof cases === 'object' ? cases : {})) {
+        if (!/^[\w-]+\/[\w.-]+$/.test(name)) continue;
+        const kind = KINDS.includes(entry?.kind) ? entry.kind : 'failing';
+        const passedIn = typeof entry?.passedIn === 'string' && /^[\w.+@-]{1,100}$/.test(entry.passedIn) && entry.passedIn;
+        clean[name] = passedIn ? { kind, passedIn } : { kind };
+    }
+    return clean;
+}
+
 // Finds the open issues in this repository and in the repositories of the implementations.
 // When one of the latter can't be read, its implementations get an `error`, so that no
-// second issue is opened there.
+// second issue is opened there. In other people's repositories only issues opened by
+// `author` count; without it (a dry run with the workflow's token) any issue with a marker
+// does.
 async function openIssues(targets, author) {
     const issues = new Map();
     const repos = new Set([REPO, ...[...targets.values()].map(t => t.repo).filter(Boolean)]);
@@ -328,13 +343,15 @@ async function openIssues(targets, author) {
         }
         for (const issue of list) {
             const match = !issue.pull_request && issue.body?.match(MARKER);
-            if (!match) continue;
+            if (!match || (repo !== REPO && author && issue.user?.login !== author)) continue;
             try {
                 const { id, cases } = JSON.parse(match[1]);
+                // Another repository can't hold the issue of an implementation that isn't its own
+                if (repo !== REPO && repo !== targets.get(id)?.repo) continue;
                 const known = issues.get(id);
                 // An issue in the repository it belongs in wins over one that has to be moved
                 if (known && (known.repo === targets.get(id)?.repo || repo !== targets.get(id)?.repo)) continue;
-                issues.set(id, { repo, number: issue.number, url: issue.html_url, body: issue.body, cases: cases || {} });
+                issues.set(id, { repo, number: issue.number, url: issue.html_url, body: issue.body, cases: markerCases(cases) });
             } catch {
                 console.error(`Ignoring a broken marker in ${issue.html_url}`);
             }
@@ -427,9 +444,12 @@ async function main() {
     if (!previous.results) report.push('There are no previous results, so every failing implementation gets an issue.', '');
 
     const where = await targets(Object.keys(current.results));
+    const author = await login();
+    // Without it, issues anybody opened in an implementation's repository would count as ours
+    if (!author && !dryRun) throw new Error("Couldn't find out whose token GITHUB_TOKEN is (GET /user)");
     let issues;
     try {
-        issues = await openIssues(where, await login());
+        issues = await openIssues(where, author);
     } catch (e) {
         if (!dryRun) throw e;
         console.error(`Couldn't read the open issues, assuming there are none: ${e.message}`);
