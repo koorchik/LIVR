@@ -127,14 +127,14 @@ void main() {
     }
   }
 
-  // A version from git also has the commit: 0.1.0@abc1234
+  // A version from a repository checkout also has the commit: 0.1.0@abc1234
   final rev = Platform.environment['LIVR_REV'] ?? '';
   final version = packageVersion();
   final result = {
     'id': 'dart',
     'package': 'livr',
     'version': version == null || rev.isEmpty ? version : '$version@$rev',
-    'source': Platform.environment['SOURCE'] ?? 'git',
+    'source': Platform.environment['SOURCE'] ?? 'pub',
     'total': total,
     'passed': total - failures.length,
     'failures': failures,

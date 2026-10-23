@@ -16,7 +16,8 @@ const REGISTRY_LABELS: Record<string, string> = {
   hex: 'Hex',
   luarocks: 'LuaRocks',
   raku: 'raku.land',
-  cocoapods: 'CocoaPods'
+  cocoapods: 'CocoaPods',
+  pub: 'pub.dev'
 }
 
 const items = computed(() => {

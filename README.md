@@ -63,7 +63,7 @@ LIVR is a specification for describing data validation rules as plain data. Writ
 | Lua | [fperrad/lua-LIVR](https://framagit.org/fperrad/lua-LIVR) | [LuaRocks: `lua-livr`](https://luarocks.org/modules/fperrad/lua-livr) | 2.0 | [@fperrad](https://framagit.org/fperrad) |
 | Raku | [koorchik/perl6-livr](https://github.com/koorchik/perl6-livr) | [raku.land: `LIVR`](https://raku.land/cpan:KOORCHIK/LIVR) | 2.0 | [@koorchik](https://github.com/koorchik) |
 | Swift | [olxbr/livr-swift-validator](https://github.com/olxbr/livr-swift-validator) | [CocoaPods: `Livr`](https://cocoapods.org/pods/Livr) | 2.0 | [@olxbr](https://github.com/olxbr) |
-| Dart | [koorchik/dart-livr](https://github.com/koorchik/dart-livr) | — | 2.0 | [@koorchik](https://github.com/koorchik) |
+| Dart | [koorchik/dart-livr](https://github.com/koorchik/dart-livr) | [pub.dev: `livr`](https://pub.dev/packages/livr) | 2.0 | [@koorchik](https://github.com/koorchik) |
 <!-- implementations:end -->
 
 The latest LIVR version is 2.0, the previous one is 0.4. Test suite results for every implementation are on the [implementations page](https://livr-spec.org/introduction/implementations.html#test-suite-results).
