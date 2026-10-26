@@ -43,16 +43,18 @@ function conformance(item: Implementation) {
   const c = item.conformance
   if (!c) return null
   if (c.error) return { tone: 'muted', text: 'Test suite: not run', title: c.error }
-  const tone = c.passed === c.total ? 'ok' : c.passed / c.total >= 0.9 ? 'warn' : 'fail'
+  const tone = c.passed === c.counted ? 'ok' : c.passed / c.counted >= 0.9 ? 'warn' : 'fail'
   const tested = c.version ? `Tested version: ${c.version}` : ''
+  const notCounted = c.notCounted.length ? `${c.notCounted.length} of ${c.total} cases not counted (platform limitations)` : ''
+  const title = (...parts: string[]) => parts.filter(Boolean).join('. ')
   // The card shows the latest release, but the runner may have tested another version: the
   // registry index it installs from can lag behind, or it tests the repository
   const version = c.version && plainVersion(c.version)
   if (version && item.live.version && version !== plainVersion(item.live.version)) {
     const label = /^\d/.test(version) ? `v${version}` : version
-    return { tone, text: `Test suite: ${c.passed}/${c.total} (${label})`, title: `${tested}, the latest release is ${item.live.version}` }
+    return { tone, text: `Test suite: ${c.passed}/${c.counted} (${label})`, title: title(`${tested}, the latest release is ${item.live.version}`, notCounted) }
   }
-  return { tone, text: `Test suite: ${c.passed}/${c.total}`, title: tested }
+  return { tone, text: `Test suite: ${c.passed}/${c.counted}`, title: title(tested, notCounted) }
 }
 </script>
 

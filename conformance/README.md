@@ -56,7 +56,11 @@ each harness explains its comparison rules.
 `error` is set when the implementation couldn't be installed or built. `merge.mjs`
 combines all results into `{ generatedAt, testSuite: { total, cases }, results: { <id>: … } }`
 and adds the explanations from [`notes.json`](notes.json): `notes` per implementation
-and `note` on individual failures (for example, platform limitations). `testSuite.cases`
+and `note` on individual failures. A failure gets a note only when the implementation
+can't pass the case because of its language (for example, PHP and Lua decode `{}` and
+`[]` to the same value), not for bugs. Such cases are not counted: the site shows PHP
+with two of them as 68/68, and an implementation that passes everything else gets a
+green badge. `testSuite.cases`
 maps every case to a hash of its files, so the next run can tell which cases changed.
 When an implementation couldn't be installed, its last successful run is carried over
 from the previous results into `lastSuccessful`.

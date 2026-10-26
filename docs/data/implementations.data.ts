@@ -34,6 +34,11 @@ export interface Conformance {
   failures: { case: string; message?: string; note?: string }[]
   notes?: string[]
   error?: string | null
+  // Added by the loader. Failures explained in conformance/notes.json (platform limitations)
+  // are not counted: an implementation that passes everything else gets passed === counted.
+  counted: number
+  failing: { case: string; message?: string }[]
+  notCounted: { case: string; note: string }[]
 }
 
 export interface ImplementationsData {
@@ -114,6 +119,18 @@ function readJson(file: string | undefined) {
   return file && fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : undefined
 }
 
+function withCounted(conformance: Omit<Conformance, 'counted' | 'failing' | 'notCounted'> | undefined): Conformance | undefined {
+  if (!conformance) return undefined
+  const failures = conformance.failures ?? []
+  const notCounted = failures.filter((f) => f.note).map((f) => ({ case: f.case, note: f.note! }))
+  return {
+    ...conformance,
+    counted: conformance.total - notCounted.length,
+    failing: failures.filter((f) => !f.note),
+    notCounted
+  }
+}
+
 async function loadLive(items: Omit<Implementation, 'live'>[], cacheFile: string) {
   if (process.env.LIVR_DOCS_OFFLINE) return {}
 
@@ -143,7 +160,7 @@ export default defineLoader({
       implementations: items.map((item) => ({
         ...item,
         live: live[item.id] ?? {},
-        conformance: conformance?.results?.[item.id]
+        conformance: withCounted(conformance?.results?.[item.id])
       })),
       conformanceGeneratedAt: conformance?.generatedAt,
       testSuiteTotal: conformance?.testSuite?.total

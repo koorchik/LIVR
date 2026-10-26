@@ -8,12 +8,7 @@
     "erlang-olifer": {
         "notes": [
             "Not published on hex; built from the repository with Erlang/OTP 24 (it uses http_uri, removed in OTP 25)."
-        ],
-        "cases": {
-            "positive/25-eq": "The validator never returns for this case; it is stopped after 10 seconds.",
-            "positive/29-or": "The `or` rule is not implemented.",
-            "negative/29-or": "The `or` rule is not implemented."
-        }
+        ]
     },
     "java": {
         "notes": [
@@ -38,11 +33,7 @@
     "raku": {
         "notes": [
             "Run on Rakudo Star 2024.02: LIVR 2.1.0 no longer compiles on current Rakudo (a rx:P5 regex in LIVR::Rules::Special)."
-        ],
-        "cases": {
-            "positive/08-like": "The `like` rule accepts only Raku regex objects, not string patterns (a documented limitation; the implementation's own tests skip this case).",
-            "negative/08-like": "The `like` rule accepts only Raku regex objects, not string patterns (a documented limitation; the implementation's own tests skip this case)."
-        }
+        ]
     },
     "ruby": {
         "notes": [
