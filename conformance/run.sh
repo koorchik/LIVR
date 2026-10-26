@@ -26,9 +26,9 @@ image_for() {
         php)           echo "composer:2" ;;
         python)        echo "python:3.13-slim" ;;
         erlang-liver)  echo "erlang:27" ;;
-        erlang-olifer) echo "erlang:24" ;;  # olifer uses http_uri, removed in OTP 25
+        erlang-olifer) echo "erlang:29" ;;
         java)          echo "maven:3-eclipse-temurin-21" ;;
-        ruby)          echo "ruby:2.7" ;;
+        ruby)          echo "ruby:4.0" ;;
         lua)           echo "alpine:3.20" ;;
         go)            echo "golang:1.23" ;;
         swift)         echo "swift:5.10" ;;
