@@ -77,8 +77,13 @@ console.log(`Wrote ${outFile} (${Object.keys(results).length} implementations, $
 
 if (process.env.GITHUB_STEP_SUMMARY) {
     const rows = Object.values(results).map(r => {
-        const score = r.error ? `⚠️ ${r.error}` : `${r.passed}/${r.total}`;
-        const failing = r.failures.map(f => `\`${f.case}\``).join(', ') || '—';
+        // Failures explained in notes.json (platform limitations) are not counted, as on the site
+        const notCounted = r.failures.filter(f => f.note).map(f => `\`${f.case}\``);
+        const score = r.error ? `⚠️ ${r.error}` : `${r.passed}/${r.total - notCounted.length}`;
+        const failing = [
+            r.failures.filter(f => !f.note).map(f => `\`${f.case}\``).join(', '),
+            notCounted.length ? `not counted: ${notCounted.join(', ')}` : '',
+        ].filter(Boolean).join('; ') || '—';
         return `| ${r.id} | ${r.package ?? ''} ${r.version ?? ''} | ${score} | ${failing} |`;
     });
     const table = [

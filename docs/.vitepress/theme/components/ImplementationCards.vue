@@ -20,9 +20,16 @@ const REGISTRY_LABELS: Record<string, string> = {
   pub: 'pub.dev'
 }
 
+// Cards go by test suite result: all cases pass first, failing ones last. Implementations
+// with the same result keep the order of implementations.json
+const TONE_ORDER: Record<string, number> = { ok: 0, warn: 1, muted: 2, fail: 3 }
+const rank = (item: Implementation) => TONE_ORDER[conformance(item)?.tone ?? 'muted']
+
 const items = computed(() => {
   const list = data.implementations
-  return props.compact ? list.filter((item) => item.spec === '2.0' && !item.live.archived) : list
+  return props.compact
+    ? list.filter((item) => item.spec === '2.0' && !item.live.archived)
+    : [...list].sort((a, b) => rank(a) - rank(b))
 })
 
 const title = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
@@ -43,16 +50,18 @@ function conformance(item: Implementation) {
   const c = item.conformance
   if (!c) return null
   if (c.error) return { tone: 'muted', text: 'Test suite: not run', title: c.error }
-  const tone = c.passed === c.total ? 'ok' : c.passed / c.total >= 0.9 ? 'warn' : 'fail'
+  const tone = c.passed === c.counted ? 'ok' : c.passed / c.counted >= 0.9 ? 'warn' : 'fail'
   const tested = c.version ? `Tested version: ${c.version}` : ''
+  const notCounted = c.notCounted.length ? `${c.notCounted.length} of ${c.total} cases not counted (platform limitations)` : ''
+  const title = (...parts: string[]) => parts.filter(Boolean).join('. ')
   // The card shows the latest release, but the runner may have tested another version: the
   // registry index it installs from can lag behind, or it tests the repository
   const version = c.version && plainVersion(c.version)
   if (version && item.live.version && version !== plainVersion(item.live.version)) {
     const label = /^\d/.test(version) ? `v${version}` : version
-    return { tone, text: `Test suite: ${c.passed}/${c.total} (${label})`, title: `${tested}, the latest release is ${item.live.version}` }
+    return { tone, text: `Test suite: ${c.passed}/${c.counted} (${label})`, title: title(`${tested}, the latest release is ${item.live.version}`, notCounted) }
   }
-  return { tone, text: `Test suite: ${c.passed}/${c.total}`, title: tested }
+  return { tone, text: `Test suite: ${c.passed}/${c.counted}`, title: title(tested, notCounted) }
 }
 </script>
 

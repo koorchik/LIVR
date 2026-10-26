@@ -12,7 +12,7 @@ const rows = computed(() =>
 // Implementations that could not be run go to the end
 function score(item: Implementation) {
   const c = item.conformance!
-  return c.error || !c.total ? -1 : c.passed / c.total
+  return c.error || !c.counted ? -1 : c.passed / c.counted
 }
 
 const generatedAt = computed(() =>
@@ -51,22 +51,33 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
             <span
               v-else
               class="livr-badge"
-              :class="item.conformance!.passed === item.conformance!.total ? 'livr-badge--ok' : 'livr-badge--warn'"
-            >{{ item.conformance!.passed }} / {{ item.conformance!.total }}</span>
+              :class="item.conformance!.passed === item.conformance!.counted ? 'livr-badge--ok' : 'livr-badge--warn'"
+              :title="item.conformance!.notCounted.length ? `${item.conformance!.notCounted.length} of ${item.conformance!.total} cases not counted` : undefined"
+            >{{ item.conformance!.passed }} / {{ item.conformance!.counted }}</span>
           </td>
           <td>
             <p v-if="item.conformance!.error" class="conformance__note">{{ item.conformance!.error }}</p>
             <p v-for="note in item.conformance!.notes ?? []" :key="note" class="conformance__note">{{ note }}</p>
-            <span v-if="!item.conformance!.error && !item.conformance!.failures.length" class="conformance__note">All cases pass</span>
-            <details v-else-if="item.conformance!.failures.length">
+            <span v-if="!item.conformance!.error && !item.conformance!.failing.length" class="conformance__note">All cases pass</span>
+            <details v-else-if="item.conformance!.failing.length">
               <summary>
-                {{ item.conformance!.failures.length }} failing case{{ item.conformance!.failures.length > 1 ? 's' : '' }}
+                {{ item.conformance!.failing.length }} failing case{{ item.conformance!.failing.length > 1 ? 's' : '' }}
               </summary>
               <ul>
-                <li v-for="failure in item.conformance!.failures" :key="failure.case">
+                <li v-for="failure in item.conformance!.failing" :key="failure.case">
                   <a :href="caseUrl(failure.case)" target="_blank" rel="noopener"><code>{{ failure.case }}</code></a>
-                  <div v-if="failure.note" class="conformance__note">{{ failure.note }}</div>
-                  <div v-else-if="failure.message" class="conformance__message">{{ truncate(failure.message) }}</div>
+                  <div v-if="failure.message" class="conformance__message">{{ truncate(failure.message) }}</div>
+                </li>
+              </ul>
+            </details>
+            <details v-if="item.conformance!.notCounted.length">
+              <summary>
+                {{ item.conformance!.notCounted.length }} case{{ item.conformance!.notCounted.length > 1 ? 's' : '' }} not counted
+              </summary>
+              <ul>
+                <li v-for="failure in item.conformance!.notCounted" :key="failure.case">
+                  <a :href="caseUrl(failure.case)" target="_blank" rel="noopener"><code>{{ failure.case }}</code></a>
+                  <div class="conformance__note">{{ failure.note }}</div>
                 </li>
               </ul>
             </details>
@@ -79,6 +90,8 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
       against the latest version of each implementation: the published package, or the default branch when it is not published<template v-if="generatedAt">. Checked on {{ generatedAt }}</template>.
       The runners live in the <a href="https://github.com/koorchik/LIVR/tree/master/conformance" target="_blank" rel="noopener"><code>conformance/</code></a> directory.
       Some failures come from newer test cases that were added after an implementation's last release.
+      Cases that an implementation can't pass because of its language (for example, PHP and Lua decode <code>{}</code> and <code>[]</code>
+      to the same value) are not counted, so its score is out of the remaining cases.
     </p>
   </div>
   <p v-else class="conformance__note">
