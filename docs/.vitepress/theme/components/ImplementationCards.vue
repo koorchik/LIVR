@@ -20,9 +20,16 @@ const REGISTRY_LABELS: Record<string, string> = {
   pub: 'pub.dev'
 }
 
+// Cards go by test suite result: all cases pass first, failing ones last. Implementations
+// with the same result keep the order of implementations.json
+const TONE_ORDER: Record<string, number> = { ok: 0, warn: 1, muted: 2, fail: 3 }
+const rank = (item: Implementation) => TONE_ORDER[conformance(item)?.tone ?? 'muted']
+
 const items = computed(() => {
   const list = data.implementations
-  return props.compact ? list.filter((item) => item.spec === '2.0' && !item.live.archived) : list
+  return props.compact
+    ? list.filter((item) => item.spec === '2.0' && !item.live.archived)
+    : [...list].sort((a, b) => rank(a) - rank(b))
 })
 
 const title = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
