@@ -7,7 +7,7 @@
     },
     "erlang-olifer": {
         "notes": [
-            "Not published on hex; built from the repository with Erlang/OTP 24 (it uses http_uri, removed in OTP 25)."
+            "Not published on hex; built from the repository."
         ]
     },
     "java": {
@@ -33,11 +33,6 @@
     "raku": {
         "notes": [
             "Run on Rakudo Star 2024.02: LIVR 2.1.0 no longer compiles on current Rakudo (a rx:P5 regex in LIVR::Rules::Special)."
-        ]
-    },
-    "ruby": {
-        "notes": [
-            "Run on Ruby 2.7: ruby-livr 2.0.0 depends on activesupport ~> 5."
         ]
     },
     "swift": {
