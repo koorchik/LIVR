@@ -17,6 +17,8 @@ example:
 
 Checks that the value matches a regular expression.
 
+`^` and `$` match only at the start and the end of the value, as in JavaScript without the `m` flag. `{ like: '^\\d{5}$' }` rejects `"12345\n"` and `"12345\n<script>"`. In languages where `$` also matches before a trailing newline (Perl, PHP, Python, Ruby and others), implementations use `\z` or a similar option.
+
 Error codes: `WRONG_FORMAT`, `FORMAT_ERROR`
 
 <RuleSandbox />

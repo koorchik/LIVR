@@ -5,6 +5,11 @@
     "age": [{ "like": "^[a-z]+$" }],
     "empty_name":   { "like": "[A-Za-z]" },
 
+    "zip_trailing_newline":   { "like": "^[0-9]{5}$" },
+    "zip_text_after_newline": { "like": "^[0-9]{5}$" },
+    "zip_text_before_newline": { "like": "^[0-9]{5}$" },
+    "code_trailing_newline":  { "like": ["^[a-z]+$", "i"] },
+
     "value_is_hash":        { "like": "[0-9]+" },
     "value_is_empty_hash":  { "like": "[0-9]+" },
     "value_is_array":       { "like": "[0-9]+" },
