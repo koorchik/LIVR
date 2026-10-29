@@ -19,7 +19,8 @@ const REGISTRY_LABELS = {
   luarocks: 'LuaRocks',
   raku: 'raku.land',
   cocoapods: 'CocoaPods',
-  pub: 'pub.dev'
+  pub: 'pub.dev',
+  crates: 'crates.io'
 }
 
 const implementations = JSON.parse(fs.readFileSync(DATA, 'utf8'))

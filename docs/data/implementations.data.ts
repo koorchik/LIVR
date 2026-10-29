@@ -70,6 +70,8 @@ const registryVersion: Record<string, (name: string) => Promise<string | undefin
   rubygems: async (name) => (await getJson(`https://rubygems.org/api/v1/gems/${name}.json`)).version,
   hex: async (name) => (await getJson(`https://hex.pm/api/packages/${name}`)).latest_stable_version,
   pub: async (name) => (await getJson(`https://pub.dev/api/packages/${name}`)).latest.version,
+  // crates.io refuses requests without a User-Agent (getJson sends one)
+  crates: async (name) => (await getJson(`https://crates.io/api/v1/crates/${name}`)).crate.max_stable_version,
   go: async (name) =>
     (await getJson(`https://proxy.golang.org/${name.toLowerCase()}/@latest`)).Version.replace(/^v/, '').replace('+incompatible', ''),
   maven: async (name) => {
