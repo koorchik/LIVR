@@ -210,6 +210,7 @@
   {
     "id": "rust",
     "language": "Rust",
+    "logo": "/assets/languages/rust.png",
     "repo": "https://github.com/koorchik/rust-livr",
     "package": {
       "registry": "crates",
