@@ -206,5 +206,20 @@
       "name": "koorchik",
       "url": "https://github.com/koorchik"
     }
+  },
+  {
+    "id": "rust",
+    "language": "Rust",
+    "repo": "https://github.com/koorchik/rust-livr",
+    "package": {
+      "registry": "crates",
+      "name": "livr",
+      "url": "https://crates.io/crates/livr"
+    },
+    "spec": "2.0",
+    "maintainer": {
+      "name": "koorchik",
+      "url": "https://github.com/koorchik"
+    }
   }
 ]
