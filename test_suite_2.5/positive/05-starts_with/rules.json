@@ -1,0 +1,21 @@
+{
+    "website1": {"starts_with": ["https://", "http://"]},
+    "website2": [{"starts_with": ["https://", "http://"]}],
+    "single_prefix": {"starts_with": "ID-"},
+    "single_prefix_in_list": {"starts_with": ["ID-"]},
+    "number": {"starts_with": "12"},
+    "number_with_trailing_zero": {"starts_with": "1.5"},
+    "boolean": {"starts_with": "tr"},
+    "unicode": {"starts_with": "При"},
+    "one_point_zero": {"starts_with": "1"},
+    "exponent": {"starts_with": "1000"},
+    "fraction": {"starts_with": "0.1"},
+    "negative_fraction": {"starts_with": "-12.2"},
+    "big_integer": {"starts_with": "1234567890"},
+    "minus_zero": {"starts_with": "0"},
+    "number_argument": {"starts_with": 1},
+    "number_argument_number_value": {"starts_with": [2, 1]},
+    "empty_field": {"starts_with": ["https://", "http://"]},
+    "null_field": {"starts_with": ["https://", "http://"]},
+    "missing_field": {"starts_with": ["https://", "http://"]}
+}

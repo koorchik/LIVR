@@ -8,6 +8,7 @@
     "iso_date7": "iso_date",
     "iso_date8": "iso_date",
     "iso_date9": "iso_date",
+    "iso_date10": "iso_date",
     "like_iso_date": [ { "iso_date": [] } ],
     "empty_field": "iso_date",
 

@@ -27,7 +27,9 @@ const generatedAt = computed(() =>
 )
 
 const label = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
-const caseUrl = (name: string) => `https://github.com/koorchik/LIVR/tree/master/test_suite/${name}`
+const caseUrl = (name: string, dir = 'test_suite') => `https://github.com/koorchik/LIVR/tree/master/${dir}/${name}`
+// The LIVR 2.5 draft column is shown once the draft suite has results
+const has25 = computed(() => data.implementations.some((item) => item.conformance25))
 const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice(0, max)}…` : text)
 </script>
 
@@ -39,6 +41,7 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
           <th>Implementation</th>
           <th>Tested version</th>
           <th>Passed</th>
+          <th v-if="has25" title="The LIVR 2.5 draft suite: new rules, not counted in the score">2.5 draft</th>
           <th>Details</th>
         </tr>
       </thead>
@@ -55,6 +58,15 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
               :title="item.conformance!.notCounted.length ? `${item.conformance!.notCounted.length} of ${item.conformance!.total} cases not counted` : undefined"
             >{{ item.conformance!.passed }} / {{ item.conformance!.counted }}</span>
           </td>
+          <td v-if="has25">
+            <span v-if="!item.conformance25" class="conformance__note">—</span>
+            <span v-else-if="item.conformance25.error" class="livr-badge livr-badge--muted">not run</span>
+            <span
+              v-else
+              class="livr-badge"
+              :class="item.conformance25.passed === item.conformance25.counted ? 'livr-badge--ok' : 'livr-badge--muted'"
+            >{{ item.conformance25.passed }} / {{ item.conformance25.counted }}</span>
+          </td>
           <td>
             <p v-if="item.conformance!.error" class="conformance__note">{{ item.conformance!.error }}</p>
             <p v-for="note in item.conformance!.notes ?? []" :key="note" class="conformance__note">{{ note }}</p>
@@ -66,6 +78,17 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
               <ul>
                 <li v-for="failure in item.conformance!.failing" :key="failure.case">
                   <a :href="caseUrl(failure.case)" target="_blank" rel="noopener"><code>{{ failure.case }}</code></a>
+                  <div v-if="failure.message" class="conformance__message">{{ truncate(failure.message) }}</div>
+                </li>
+              </ul>
+            </details>
+            <details v-if="item.conformance25?.failing.length">
+              <summary>
+                {{ item.conformance25.failing.length }} failing 2.5 draft case{{ item.conformance25.failing.length > 1 ? 's' : '' }}
+              </summary>
+              <ul>
+                <li v-for="failure in item.conformance25.failing" :key="failure.case">
+                  <a :href="caseUrl(failure.case, 'test_suite_2.5')" target="_blank" rel="noopener"><code>{{ failure.case }}</code></a>
                   <div v-if="failure.message" class="conformance__message">{{ truncate(failure.message) }}</div>
                 </li>
               </ul>
@@ -92,6 +115,10 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
       Some failures come from newer test cases that were added after an implementation's last release.
       Cases that an implementation can't pass because of its language (for example, PHP and Lua decode <code>{}</code> and <code>[]</code>
       to the same value) are not counted, so its score is out of the remaining cases.
+      <template v-if="has25">
+        The "2.5 draft" column runs the draft <a href="https://github.com/koorchik/LIVR/tree/master/test_suite_2.5" target="_blank" rel="noopener">LIVR 2.5 suite</a>
+        ({{ data.testSuite25Total }} cases). LIVR 2.5 is not released yet, so implementations are not expected to pass it.
+      </template>
     </p>
   </div>
   <p v-else class="conformance__note">

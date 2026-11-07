@@ -1,0 +1,17 @@
+{
+    "too_short": "WRONG_MONGO_ID",
+    "too_long": "WRONG_MONGO_ID",
+    "not_hex": "WRONG_MONGO_ID",
+    "with_space": "WRONG_MONGO_ID",
+    "object_id_call": "WRONG_MONGO_ID",
+    "number": "WRONG_MONGO_ID",
+    "trailing_newline": "WRONG_MONGO_ID",
+    "arabic_indic_digit": "WRONG_MONGO_ID",
+    "fullwidth_letter": "WRONG_MONGO_ID",
+    "boolean_true": "WRONG_MONGO_ID",
+    "boolean_false": "WRONG_MONGO_ID",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

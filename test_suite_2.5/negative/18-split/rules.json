@@ -1,0 +1,16 @@
+{
+    "ids": [{"split": ","}, {"list_of": "positive_integer"}],
+    "ids_wrong_item": [{"split": ","}, {"list_of": "positive_integer"}],
+    "ids_empty_part": [{"split": ","}, {"list_of": ["required", "positive_integer"]}],
+    "ids_trailing_separator": [{"split": ","}, {"list_of": ["required", "positive_integer"]}],
+    "ids_list_kept": [{"split": ","}, {"list_of": "positive_integer"}],
+    "ids_list_not_split": [{"split": ","}, {"list_of": "positive_integer"}],
+    "number_one_item": [{"split": ","}, {"list_of": {"min_number": 10}}],
+    "object_kept": [{"split": ","}, {"list_of": "string"}],
+    "empty_kept": [{"split": ","}, "required"],
+    "null_kept": [{"split": ","}, "required"],
+    "missing_kept": [{"split": ","}, "required"],
+    "too_few_parts": [{"split": ","}, {"list_length": 3}],
+    "multi_char_separator": [{"split": ", "}, {"list_length": 3}],
+    "regexp_char_separator": [{"split": "."}, {"list_length": 3}]
+}

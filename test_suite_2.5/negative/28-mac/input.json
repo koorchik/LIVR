@@ -1,0 +1,43 @@
+{
+    "mixed_separators": "00:1a-2b:3c:4d:5e",
+    "mixed_separators_last": "00:1a:2b:3c:4d-5e",
+    "dots": "001a.2b3c.4d5e",
+    "without_separators": "001a2b3c4d5e",
+    "five_pairs": "00:1a:2b:3c:4d",
+    "seven_pairs": "00:1a:2b:3c:4d:5e:6f",
+    "single_digit": "0:1a:2b:3c:4d:5e",
+    "three_digits": "000:1a:2b:3c:4d:5e",
+    "not_hex": "00:1a:2b:3c:4d:5g",
+    "trailing_separator": "00:1a:2b:3c:4d:5e:",
+    "space_separator": "00 1a 2b 3c 4d 5e",
+    "number": 1,
+    "trailing_newline": "00:1a:2b:3c:4d:5e\n",
+    "eui64_trailing_newline": "00:1a:2b:3c:4d:5e:6f:70\n",
+    "arabic_indic_digit": "00:1a:2b:3c:4d:5١",
+    "fullwidth_letter": "00:1a:2b:3c:4d:5ｅ",
+    "big_integer": 123456789012345,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {
+        "test": 1
+    },
+    "value_is_empty_hash": {},
+    "value_is_array": [
+        "test",
+        1
+    ],
+    "value_is_empty_array": [],
+    "mac48_given_eui64": "00:1a:2b:3c:4d:5e:6f:70",
+    "eui64_given_mac48": "00:1a:2b:3c:4d:5e",
+    "eui64_seven_pairs": "00:1a:2b:3c:4d:5e:6f",
+    "eui64_nine_pairs": "00:1a:2b:3c:4d:5e:6f:70:81",
+    "eui64_mixed_separators": "00:1a:2b:3c-4d:5e:6f:70",
+    "eui64_without_separators": "001a2b3c4d5e6f70",
+    "eui64_value_is_array": [
+        "00:1a:2b:3c:4d:5e:6f:70"
+    ],
+    "boolean_true": true,
+    "eui64_boolean_false": false,
+    "string_argument": "00:1a:2b:3c:4d:5e"
+}

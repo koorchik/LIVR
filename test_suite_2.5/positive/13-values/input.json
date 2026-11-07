@@ -1,0 +1,14 @@
+{
+    "stock": {"sku-1": "5", "sku-2": 10},
+    "single_rule": {"a": "1"},
+    "single_list_form": {"a": "1", "b": 2},
+    "prototype_keys": {"__proto__": "1", "constructor": "2", "toString": "3"},
+    "rule_object": {"a": "abc", "b": ""},
+    "modifier": {"en": "hello", "de": "hallo"},
+    "empty_values_inside": {"a": "", "b": null},
+    "nested_objects": {"u1": {"name": "Jane Doe", "password": "x"}, "u2": {"name": "John Doe"}},
+    "lists": {"a": ["1", 2], "b": []},
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

@@ -1,0 +1,19 @@
+{
+    "gb": "GB82WEST12345698765432",
+    "de": "DE89370400440532013000",
+    "fr": "FR1420041010050500013M02606",
+    "nl": "NL91ABNA0417164300",
+    "be": "BE68539007547034",
+    "ua": "UA213223130000026007233566001",
+    "no_shortest_15": "NO9386011117947",
+    "mt": "MT84MALT011000012345MTLCAST001S",
+    "lc": "LC55HEMM000100010012001200023015",
+    "synthetic_15": "DE5112345678901",
+    "synthetic_34": "GB16AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "synthetic_34_mixed": "FR09ABCDEFGHIJ1234567890XYZ0123456",
+    "unknown_country": "XX461234567890A",
+    "with_modifiers": "gb82 west 1234-5698-7654-32",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

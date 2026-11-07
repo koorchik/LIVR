@@ -1,0 +1,23 @@
+{
+    "capitalized_true": "boolean",
+    "uppercase_false": "boolean",
+    "yes_string": "boolean",
+    "on_string": "boolean",
+    "two_number": "boolean",
+    "minus_one_number": "boolean",
+    "decimal_string": "boolean",
+    "one_with_space": "boolean",
+    "true_with_space": "boolean",
+    "space_string": "boolean",
+    "null_string": "boolean",
+    "required_missing": ["required", "boolean"],
+    "fraction_number": "boolean",
+    "thousand_exponent": "boolean",
+    "trailing_newline": "boolean",
+    "empty_field": "boolean",
+    "null_field": "boolean",
+    "value_is_hash": "boolean",
+    "value_is_empty_hash": "boolean",
+    "value_is_array": "boolean",
+    "value_is_empty_array": "boolean"
+}

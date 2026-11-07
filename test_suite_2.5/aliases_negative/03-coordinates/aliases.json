@@ -1,0 +1,13 @@
+[
+    {
+        "name": "point",
+        "rules": [{ "list_length": 2 }, { "list_of": ["required", "decimal"] }]
+    },
+    {
+        "name": "coordinates",
+        "rules": { "nested_object": {
+            "lat": ["required", "decimal", { "number_between": [-90, 90] }],
+            "lng": ["required", "decimal", { "number_between": [-180, 180] }]
+        } }
+    }
+]

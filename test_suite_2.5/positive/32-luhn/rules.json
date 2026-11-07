@@ -1,0 +1,13 @@
+{
+    "classic": "luhn",
+    "card": ["luhn"],
+    "two_digits": {"luhn": []},
+    "two_zeros": "luhn",
+    "long": "luhn",
+    "number": "luhn",
+    "exponent_number": "luhn",
+    "one_point_zero_number": "luhn",
+    "empty_field": "luhn",
+    "null_field": "luhn",
+    "missing_field": "luhn"
+}

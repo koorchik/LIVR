@@ -1,0 +1,11 @@
+[
+    {
+        "name": "password_confirmation",
+        "rules": ["required", { "equal_to_field": "password" }]
+    },
+    {
+        "name": "same_as_password",
+        "rules": { "equal_to_field": "password" },
+        "error": "PASSWORDS_DIFFER"
+    }
+]

@@ -1,0 +1,13 @@
+{
+    "stock": {"sku-1": "NOT_POSITIVE_INTEGER"},
+    "several_failing": {"a": "NOT_POSITIVE_INTEGER", "b": "REQUIRED"},
+    "null_inside": {"a": "REQUIRED"},
+    "single_list_form": {"a": "REQUIRED"},
+    "prototype_keys": {"__proto__": "NOT_POSITIVE_INTEGER", "hasOwnProperty": "REQUIRED"},
+    "nested_objects": {"u2": {"name": "REQUIRED"}},
+    "lists": {"a": [null, "NOT_POSITIVE_INTEGER"], "b": "FORMAT_ERROR"},
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_string": "FORMAT_ERROR",
+    "value_is_number": "FORMAT_ERROR",
+    "value_is_boolean": "FORMAT_ERROR"
+}

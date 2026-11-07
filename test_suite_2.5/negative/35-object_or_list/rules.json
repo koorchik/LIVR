@@ -1,0 +1,11 @@
+{
+    "values_empty_list": {"values": ["required", "positive_integer"]},
+    "keys_empty_list": [{"keys": {"one_of": ["uk", "en", "de"]}}, {"values": ["required", "string", {"max_length": 200}]}],
+    "list_length_empty_list": {"list_length": [1, 10]},
+    "list_length_min_empty_list": {"list_length": {"min": 1}},
+    "list_length_empty_object": {"list_length": [1, 10]},
+    "unique_empty_object": "unique",
+    "unique_with_key_empty_object": {"unique": "id"},
+    "keys_numeric_keys": {"keys": "positive_integer"},
+    "required_if_digit_key_note": {"required_if": {"required_if_codes/0": "UA"}}
+}

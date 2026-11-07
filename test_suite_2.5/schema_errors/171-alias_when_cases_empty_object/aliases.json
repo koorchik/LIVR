@@ -1,0 +1,6 @@
+[
+    {
+        "name": "payment_data",
+        "rules": { "when": ["pay_type", {}] }
+    }
+]

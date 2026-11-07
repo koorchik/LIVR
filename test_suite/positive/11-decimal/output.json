@@ -3,5 +3,9 @@
     "number2": 0.55,
     "number3": -1.10,
     "number4":  -3.00,    
-    "empty_field": ""
+    "empty_field": "",
+    "negative_integer_string": -200,
+    "negative_integer": -200,
+    "zero": 0,
+    "null_value": null
 }

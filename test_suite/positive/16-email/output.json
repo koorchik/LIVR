@@ -30,5 +30,6 @@
     "email29": "t@devoffice.com",
     "email30": "ennytesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@te1.com",
     "email31": "er@enny.devoffice.com",
-    "empty_field": ""
+    "empty_field": "",
+    "null_value": null
 }

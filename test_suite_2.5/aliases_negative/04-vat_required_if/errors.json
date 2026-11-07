@@ -1,0 +1,8 @@
+{
+    "vat_number": "REQUIRED",
+    "strict_vat_number": "REQUIRED",
+    "bad_strict_vat_number": "WRONG_FORMAT",
+    "person": { "vat_number": "REQUIRED" },
+    "company": { "vat_number": "REQUIRED" },
+    "members": [{ "vat_number": "VAT_REQUIRED" }, null, { "vat_number": "VAT_REQUIRED" }]
+}

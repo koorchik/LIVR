@@ -1,0 +1,16 @@
+{
+    "md5": "5d41402abc4b2a76b9719d911017c592",
+    "md5_uppercase": "5D41402ABC4B2A76B9719D911017C592",
+    "sha1": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+    "sha256": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+    "sha384": "59e1748777448c69de6b800d7a33bbfb9ff1b463e44354c3553bcdb9c666fa90125a3c79f90397bdf5f6a13de828684f",
+    "sha512": "9b71d224bd62f3785d96d46ad3ea3d73319bfbc2890caadae2dff72519673ca72323c3d99ba5c11d7c7acc6e14b8c5da0c4663475c2e5c3adef46f73bcdec043",
+    "md5_in_list": "5d41402abc4b2a76b9719d911017c592",
+    "md5_or_sha1_1": "5d41402abc4b2a76b9719d911017c592",
+    "md5_or_sha1_2": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+    "sha_any": "59e1748777448c69de6b800d7a33bbfb9ff1b463e44354c3553bcdb9c666fa90125a3c79f90397bdf5f6a13de828684f",
+    "sha256_uppercase": "2CF24DBA5FB0A30E26E83B2AC5B9E29E1B161E5C1FA7425E73043362938B9824",
+    "all_algorithms": "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+    "empty_field": "",
+    "null_field": null
+}

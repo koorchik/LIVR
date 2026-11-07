@@ -18,5 +18,6 @@
     "builtin_names": { "nested_object": {
         "constructor": "required",
         "toString": "required"
-    }}
+    }},
+    "null_value": { "nested_object": { "zip": "required" } }
 }

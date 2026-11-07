@@ -1,0 +1,15 @@
+[
+    {
+        "name": "vat",
+        "rules": { "required_if": { "type": "company" } }
+    },
+    {
+        "name": "strict_vat",
+        "rules": ["vat", { "like": "^[A-Z]{2}[0-9]{8,12}$" }]
+    },
+    {
+        "name": "vat_with_custom_error",
+        "rules": { "required_if": { "type": "company" } },
+        "error": "VAT_REQUIRED"
+    }
+]

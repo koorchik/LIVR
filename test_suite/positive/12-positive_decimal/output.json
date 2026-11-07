@@ -3,5 +3,6 @@
     "number2": 120.11,
     "number3": 99999.9999,
     "number4": 0.01,
-    "empty_field": ""
+    "empty_field": "",
+    "integer_number": 5
 }

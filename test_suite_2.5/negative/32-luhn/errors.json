@@ -1,0 +1,22 @@
+{
+    "wrong_checksum": "WRONG_CHECKSUM",
+    "one_digit": "WRONG_CHECKSUM",
+    "spaces": "WRONG_CHECKSUM",
+    "dashes": "WRONG_CHECKSUM",
+    "letter": "WRONG_CHECKSUM",
+    "leading_space": "WRONG_CHECKSUM",
+    "non_ascii_digits": "WRONG_CHECKSUM",
+    "negative_number": "WRONG_CHECKSUM",
+    "number": "WRONG_CHECKSUM",
+    "trailing_newline": "WRONG_CHECKSUM",
+    "fullwidth_digits": "WRONG_CHECKSUM",
+    "arabic_indic_digit_mixed": "WRONG_CHECKSUM",
+    "fraction_number": "WRONG_CHECKSUM",
+    "minus_zero_number": "WRONG_CHECKSUM",
+    "boolean_true": "WRONG_CHECKSUM",
+    "boolean_false": "WRONG_CHECKSUM",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

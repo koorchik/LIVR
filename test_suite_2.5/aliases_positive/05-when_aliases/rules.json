@@ -1,0 +1,14 @@
+{
+    "type": "string",
+    "vat_number": "vat_by_type",
+    "mode": "string",
+    "title": "case_by_mode",
+    "subtitle": ["trim", "case_by_mode"],
+    "pay_type": ["required", { "one_of": ["card", "bank"] }],
+    "data": "required_payment_data",
+    "person": { "nested_object": { "type": "required", "vat_number": "vat_by_type" } },
+    "sections": { "list_of_objects": { "mode": "required", "title": "case_by_mode" } },
+    "items": { "list_of": "case_by_mode" },
+    "labels": { "values": "case_by_mode" },
+    "either": { "or": [["required", { "eq": "none" }], "case_by_mode"] }
+}

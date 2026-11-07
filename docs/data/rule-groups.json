@@ -3,42 +3,63 @@
     "id": "common",
     "title": "Common rules",
     "link": "/validation-rules/common-rules.html",
-    "description": "Check that a value is present, or that it is an object.",
-    "rules": ["required", "not_empty", "not_empty_list", "any_object"]
+    "description": "Check that a value is present, or that it is an object or a boolean.",
+    "rules": ["required", "not_empty", "not_empty_list", "any_object", "required_if", "any", "boolean"]
   },
   {
     "id": "string",
     "title": "String rules",
     "link": "/validation-rules/string-rules.html",
     "description": "Compare and measure strings. Numbers are validated as strings.",
-    "rules": ["string", "eq", "one_of", "max_length", "min_length", "length_between", "length_equal", "like"]
+    "rules": ["string", "eq", "one_of", "max_length", "min_length", "length_between", "length_equal", "like", "not_one_of", "digits", "starts_with", "ends_with", "contains"]
   },
   {
     "id": "numeric",
     "title": "Numeric rules",
     "link": "/validation-rules/numeric-rules.html",
     "description": "Check numbers and strings that look like numbers, and return them as numbers.",
-    "rules": ["integer", "positive_integer", "decimal", "positive_decimal", "max_number", "min_number", "number_between"]
+    "rules": ["integer", "positive_integer", "decimal", "positive_decimal", "max_number", "min_number", "number_between", "max_decimals"]
   },
   {
     "id": "special",
     "title": "Special rules",
     "link": "/validation-rules/special-rules.html",
-    "description": "Emails, URLs, dates, and comparison with another field.",
-    "rules": ["email", "url", "iso_date", "equal_to_field"]
+    "description": "Emails, URLs, dates and times, and comparison with another field.",
+    "rules": ["email", "url", "iso_date", "iso_datetime", "equal_to_field", "iso_time"]
   },
   {
     "id": "metarules",
     "title": "Metarules",
     "link": "/validation-rules/metarules.html",
-    "description": "Describe nested objects, lists and alternatives with other rules.",
-    "rules": ["nested_object", "variable_object", "list_of", "list_of_objects", "list_of_different_objects", "or"]
+    "description": "Describe nested objects, lists, conditions and alternatives with other rules.",
+    "rules": ["nested_object", "variable_object", "list_of", "list_of_objects", "list_of_different_objects", "or", "when", "values", "keys"]
+  },
+  {
+    "id": "list",
+    "title": "List rules",
+    "link": "/validation-rules/list-rules.html",
+    "description": "Check the length of a list and that its items are unique.",
+    "rules": ["list_length", "unique"]
+  },
+  {
+    "id": "format",
+    "title": "Format rules",
+    "link": "/validation-rules/format-rules.html",
+    "description": "Identifiers, network addresses, encodings and other common string formats.",
+    "rules": ["uuid", "ip", "cidr", "hostname", "base64", "hex", "digest", "mongo_id", "hex_color", "mac", "e164", "semver", "jwt"]
+  },
+  {
+    "id": "checksum",
+    "title": "Checksum rules",
+    "link": "/validation-rules/checksum-rules.html",
+    "description": "Numbers with a check digit: Luhn, payment cards and IBANs.",
+    "rules": ["luhn", "credit_card", "iban"]
   },
   {
     "id": "modifiers",
     "title": "Modifiers",
     "link": "/validation-rules/modifiers.html",
     "description": "Change the data. Modifiers never return errors.",
-    "rules": ["trim", "to_lc", "to_uc", "remove", "leave_only", "default"]
+    "rules": ["trim", "to_lc", "to_uc", "remove", "leave_only", "default", "split"]
   }
 ]

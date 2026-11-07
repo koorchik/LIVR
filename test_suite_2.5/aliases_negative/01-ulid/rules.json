@@ -1,0 +1,5 @@
+{
+    "id1": "ulid",
+    "id2": ["required", "ulid"],
+    "empty_id": "ulid"
+}

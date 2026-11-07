@@ -14,5 +14,6 @@
         },
         "Some Wrong Data"
     ],
-    "users": "not an array"
+    "users": "not an array",
+    "object_value": { "a": 1 }
 }

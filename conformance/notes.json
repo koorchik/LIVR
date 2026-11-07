@@ -22,12 +22,20 @@
         "cases": {
             "negative/22-not_empty_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list. lua-LIVR's own copy of the test suite adjusts this case.",
             "negative/27-any_object": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list. lua-LIVR's own copy of the test suite adjusts this case."
+        },
+        "cases_2.5": {
+            "positive/35-object_or_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list.",
+            "negative/35-object_or_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list."
         }
     },
     "php": {
         "cases": {
             "negative/22-not_empty_list": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list. php-validator-livr's own copy of the test suite adjusts this case.",
             "negative/27-any_object": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list. php-validator-livr's own copy of the test suite adjusts this case."
+        },
+        "cases_2.5": {
+            "positive/35-object_or_list": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list.",
+            "negative/35-object_or_list": "PHP decodes {} and [] to the same array, so an empty object can't be told apart from an empty list."
         }
     },
     "raku": {

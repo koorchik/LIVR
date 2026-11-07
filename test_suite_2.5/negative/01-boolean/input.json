@@ -1,0 +1,23 @@
+{
+    "capitalized_true": "True",
+    "uppercase_false": "FALSE",
+    "yes_string": "yes",
+    "on_string": "on",
+    "two_number": 2,
+    "minus_one_number": -1,
+    "decimal_string": "1.0",
+    "one_with_space": " 1",
+    "true_with_space": "true ",
+    "space_string": " ",
+    "null_string": "null",
+    "fraction_number": 0.1,
+    "thousand_exponent": 1e3,
+    "trailing_newline": "true\n",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}

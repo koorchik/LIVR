@@ -1,0 +1,22 @@
+{
+    "prefix": "WRONG_HEX",
+    "uppercase_prefix": "WRONG_HEX",
+    "not_hex": "WRONG_HEX",
+    "g_letter": "WRONG_HEX",
+    "space": "WRONG_HEX",
+    "dash": "WRONG_HEX",
+    "hash_sign": "WRONG_HEX",
+    "trailing_newline": "WRONG_HEX",
+    "negative_number": "WRONG_HEX",
+    "decimal_number": "WRONG_HEX",
+    "boolean": "WRONG_HEX",
+    "boolean_false": "WRONG_HEX",
+    "fraction_number": "WRONG_HEX",
+    "negative_fraction_number": "WRONG_HEX",
+    "arabic_indic_digits": "WRONG_HEX",
+    "fullwidth_letters": "WRONG_HEX",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

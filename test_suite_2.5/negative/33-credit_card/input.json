@@ -1,0 +1,23 @@
+{
+    "wrong_checksum": "4111111111111112",
+    "eleven_digits": "40000000006",
+    "twenty_digits": "50000000000000000009",
+    "spaces": "4111 1111 1111 1111",
+    "dashes": "4111-1111-1111-1111",
+    "letter": "411111111111111a",
+    "number": 4111111111111112,
+    "trailing_newline": "4111111111111111\n",
+    "leading_space": " 4111111111111111",
+    "arabic_indic_digits": "٤١١١١١١١١١١١١١١١",
+    "fullwidth_digit": "411111111111111１",
+    "fraction_number": 4111111111111.5,
+    "boolean_true": true,
+    "boolean_false": false,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}

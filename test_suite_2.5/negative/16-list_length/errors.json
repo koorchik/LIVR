@@ -1,0 +1,16 @@
+{
+    "tags_too_many": "TOO_MANY_ITEMS",
+    "pair_one": "TOO_FEW_ITEMS",
+    "pair_three": "TOO_MANY_ITEMS",
+    "pair_in_list": "TOO_MANY_ITEMS",
+    "exact_zero": "TOO_MANY_ITEMS",
+    "items_max": "TOO_MANY_ITEMS",
+    "min_and_max_object_low": "TOO_FEW_ITEMS",
+    "min_and_max_object_high": "TOO_MANY_ITEMS",
+    "string_argument": "TOO_FEW_ITEMS",
+    "string_option": "TOO_MANY_ITEMS",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_string": "FORMAT_ERROR",
+    "value_is_number": "FORMAT_ERROR",
+    "value_is_boolean": "FORMAT_ERROR"
+}

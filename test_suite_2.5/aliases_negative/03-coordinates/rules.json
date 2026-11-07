@@ -1,0 +1,9 @@
+{
+    "point1": "point",
+    "point2": ["required", "point"],
+    "point3": "point",
+    "path": { "list_of": "point" },
+    "place1": "coordinates",
+    "place2": ["required", "coordinates"],
+    "places": { "list_of": "coordinates" }
+}

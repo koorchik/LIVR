@@ -1,0 +1,13 @@
+{
+    "visa": "4111111111111111",
+    "mastercard": "5555555555554444",
+    "amex": "378282246310005",
+    "discover": "6011111111111117",
+    "twelve_digits": "500000000009",
+    "fourteen_digits": "40000000000002",
+    "nineteen_digits": "6000000000000000004",
+    "number": 4111111111111111,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

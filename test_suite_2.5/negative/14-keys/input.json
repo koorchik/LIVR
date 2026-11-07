@@ -1,0 +1,13 @@
+{
+    "translations": {"uk": "Привіт", "fr": "Bonjour"},
+    "keys_before_values": {"fr": "Bonjour", "en": ""},
+    "values_after_keys": {"uk": "Привіт", "en": ""},
+    "like_keys": {"firstName": 1, "last_name": 2},
+    "empty_key": {"": 1, "a": 2},
+    "value_is_array": ["uk"],
+    "value_is_string": "uk",
+    "value_is_number": 5,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

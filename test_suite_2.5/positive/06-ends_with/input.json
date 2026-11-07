@@ -1,0 +1,15 @@
+{
+    "file": "report.pdf",
+    "file_in_list": ".pdf",
+    "image1": "photo.jpg",
+    "image2": "photo.png",
+    "number": 100,
+    "boolean": false,
+    "exponent": 1e3,
+    "minus_zero": -0.0,
+    "negative_fraction": -12.25,
+    "big_integer": 123456789012345,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

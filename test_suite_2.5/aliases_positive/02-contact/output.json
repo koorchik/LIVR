@@ -1,0 +1,5 @@
+{
+    "contact1": { "email": "user@example.com" },
+    "contact2": { "phone": "+15550100123" },
+    "contact3": { "email": "user@example.com", "phone": "+15550100123" }
+}

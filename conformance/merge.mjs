@@ -9,6 +9,10 @@
 // can't be installed now, its last successful run is carried over from it, so that
 // issues.mjs still has something to compare the next run with.
 // When GITHUB_STEP_SUMMARY is set, a Markdown table is appended to it.
+//
+// Results of the LIVR 2.5 draft suite (<id>.v2.5.json, SUITE=2.5 conformance/run.sh) go to
+// suites["2.5"]: { testSuite, results }. The top level stays the 2.0 suite, so issues.mjs,
+// which reads only the top level, opens no issues for 2.5 until it is released.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +27,8 @@ const notes = JSON.parse(fs.readFileSync(path.join(here, 'notes.json'), 'utf8'))
 
 const suiteCases = testSuiteCases(path.join(here, '..', 'test_suite'));
 const suiteTotal = Object.keys(suiteCases).length;
+const suite25Dir = path.join(here, '..', 'test_suite_2.5');
+const suite25Cases = fs.existsSync(suite25Dir) ? testSuiteCases(suite25Dir) : {};
 
 let previous = null;
 if (previousFile && fs.existsSync(previousFile)) {
@@ -45,6 +51,7 @@ function findResultFiles(dir) {
 }
 
 const results = {};
+const results25 = {};
 for (const file of findResultFiles(resultsDir).sort()) {
     let result;
     try {
@@ -56,11 +63,15 @@ for (const file of findResultFiles(resultsDir).sort()) {
     if (!result || typeof result.id !== 'string') continue;
 
     const extra = notes[result.id] || {};
+    const is25 = file.endsWith('.v2.5.json');
+    // The suites have their own case names, so each has its own notes
+    const caseNotes = (is25 ? extra['cases_2.5'] : extra.cases) || {};
     result.notes = extra.notes || [];
     result.failures = (result.failures || []).map(f =>
-        extra.cases && extra.cases[f.case] ? { ...f, note: extra.cases[f.case] } : f
+        caseNotes[f.case] ? { ...f, note: caseNotes[f.case] } : f
     );
-    results[result.id] = result;
+    if (is25) results25[result.id] = result;
+    else results[result.id] = result;
 }
 
 const lastSuccessful = {};
@@ -71,11 +82,27 @@ for (const [id, result] of Object.entries(results)) {
 
 const merged = { generatedAt: new Date().toISOString(), testSuite: { total: suiteTotal, cases: suiteCases }, results };
 if (Object.keys(lastSuccessful).length) merged.lastSuccessful = lastSuccessful;
+if (Object.keys(results25).length) {
+    merged.suites = {
+        '2.5': { testSuite: { total: Object.keys(suite25Cases).length, cases: suite25Cases }, results: results25 },
+    };
+}
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, JSON.stringify(merged, null, 2) + '\n');
 console.log(`Wrote ${outFile} (${Object.keys(results).length} implementations, ${suiteTotal} test cases)`);
+if (merged.suites) {
+    console.log(`  2.5 draft: ${Object.keys(results25).length} implementations, ${merged.suites['2.5'].testSuite.total} test cases`);
+}
 
 if (process.env.GITHUB_STEP_SUMMARY) {
+    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryTable('LIVR test suite conformance', results, suiteTotal));
+    if (merged.suites) {
+        const { testSuite } = merged.suites['2.5'];
+        fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryTable('LIVR 2.5 draft suite', results25, testSuite.total));
+    }
+}
+
+function summaryTable(title, results, total) {
     const rows = Object.values(results).map(r => {
         // Failures explained in notes.json (platform limitations) are not counted, as on the site
         const notCounted = r.failures.filter(f => f.note).map(f => `\`${f.case}\``);
@@ -87,12 +114,12 @@ if (process.env.GITHUB_STEP_SUMMARY) {
         return `| ${r.id} | ${r.package ?? ''} ${r.version ?? ''} | ${score} | ${failing} |`;
     });
     const table = [
-        `### LIVR test suite conformance (${suiteTotal} cases)`,
+        `### ${title} (${total} cases)`,
         '',
         '| Implementation | Package | Passed | Failing cases |',
         '| --- | --- | --- | --- |',
         ...rows,
         '',
     ].join('\n');
-    fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, table + '\n');
+    return table + '\n';
 }

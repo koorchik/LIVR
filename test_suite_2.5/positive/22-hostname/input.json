@@ -1,0 +1,21 @@
+{
+    "domain": "example.com",
+    "single_label": "localhost",
+    "single_char": "a",
+    "subdomains": "a.b.c.example.org",
+    "hyphens": "my-host--1.example-site.com",
+    "uppercase": "WWW.Example.COM",
+    "punycode": "xn--80ak6aa92e.com",
+    "digit_labels": "123.example",
+    "digit_labels_except_last": "192.0.2.example",
+    "labels_with_digits": "a1.b2c",
+    "last_label_ends_with_digit": "x.y1",
+    "last_label_starts_with_digit": "example.1a",
+    "true_string": "true",
+    "label_starts_with_digit": "1password.example",
+    "label_63": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+    "total_253": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

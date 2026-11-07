@@ -1,0 +1,6 @@
+[
+    {
+        "name": "vat",
+        "rules": { "required_if": { "type": "" } }
+    }
+]

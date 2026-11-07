@@ -44,5 +44,6 @@
         {"product_type": "toString"},
         {"product_type": "hasOwnProperty"},
         {"product_type": "__proto__"}
-    ]
+    ],
+    "object_value": { "type": "a" }
 }

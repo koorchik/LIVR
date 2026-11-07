@@ -1,0 +1,36 @@
+{
+    "one_segment": "abc",
+    "two_segments": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+    "four_segments": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "jwe": "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.a2tra2tra2tra2tra2tra2tra2tra2tra2tra2tra2s.aXZpdml2aXZpdml2.Y2lwaGVydGV4dCE.dHR0dHR0dHR0dHR0dHR0dA",
+    "empty_header": ".eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "empty_payload_segment": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "padding": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4=",
+    "standard_base64_alphabet": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ+iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "segment_length_mod_1": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4AA",
+    "leading_space": " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "bearer_prefix": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "none_two_segments": "eyJhbGciOiJub25lIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+    "number": 123,
+    "arabic_indic_digit_in_signature": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.١VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "non_ascii_letter_in_payload": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0é.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4",
+    "trailing_crlf": "eyJhbGciOiJIUzI1NiJ9.e30.XmNK3GpH3Ys_7wsYBfq4C3M6goz71I7dTgUkuIa5lyQ\r\n",
+    "unsecured_trailing_newline": "eyJhbGciOiJub25lIn0.e30.\n",
+    "empty_field": "",
+    "null_field": null,
+    "value_is_hash": {
+        "test": 1
+    },
+    "value_is_empty_hash": {},
+    "value_is_array": [
+        "test",
+        1
+    ],
+    "value_is_empty_array": [],
+    "dots_only": "..",
+    "space_inside": "a.b.c d",
+    "trailing_newline": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkphbmUgRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.1VAmegkQOBsQ-iSZU96z6c8NY7QR9OhhYWYHwHTeGT4\n",
+    "boolean": true,
+    "extra_field": "extra",
+    "boolean_false": false
+}

@@ -1,0 +1,19 @@
+{
+    "gb": "iban",
+    "de": ["iban"],
+    "fr": {"iban": []},
+    "nl": "iban",
+    "be": "iban",
+    "ua": "iban",
+    "no_shortest_15": "iban",
+    "mt": "iban",
+    "lc": "iban",
+    "synthetic_15": "iban",
+    "synthetic_34": "iban",
+    "synthetic_34_mixed": "iban",
+    "unknown_country": "iban",
+    "with_modifiers": [{"remove": " -"}, "to_uc", "iban"],
+    "empty_field": "iban",
+    "null_field": "iban",
+    "missing_field": "iban"
+}

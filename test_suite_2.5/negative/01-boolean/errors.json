@@ -1,0 +1,21 @@
+{
+    "capitalized_true": "NOT_BOOLEAN",
+    "uppercase_false": "NOT_BOOLEAN",
+    "yes_string": "NOT_BOOLEAN",
+    "on_string": "NOT_BOOLEAN",
+    "two_number": "NOT_BOOLEAN",
+    "minus_one_number": "NOT_BOOLEAN",
+    "decimal_string": "NOT_BOOLEAN",
+    "one_with_space": "NOT_BOOLEAN",
+    "true_with_space": "NOT_BOOLEAN",
+    "space_string": "NOT_BOOLEAN",
+    "null_string": "NOT_BOOLEAN",
+    "required_missing": "REQUIRED",
+    "fraction_number": "NOT_BOOLEAN",
+    "thousand_exponent": "NOT_BOOLEAN",
+    "trailing_newline": "NOT_BOOLEAN",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

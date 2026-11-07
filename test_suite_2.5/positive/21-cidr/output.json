@@ -1,0 +1,16 @@
+{
+    "ipv4": "192.0.2.0/24",
+    "ipv4_host_bits": "10.0.0.1/8",
+    "ipv4_zero_prefix": "0.0.0.0/0",
+    "ipv4_host": "192.0.2.1/32",
+    "ipv6": "2001:db8::/32",
+    "ipv6_zero_prefix": "::/0",
+    "ipv6_host": "2001:db8::1/128",
+    "ipv6_host_bits": "2001:DB8::1/64",
+    "ipv6_embedded_ipv4": "::ffff:192.0.2.0/120",
+    "only_ipv4": "192.0.2.0/24",
+    "only_ipv6": "2001:db8::/48",
+    "only_ipv6_in_list": "2001:db8::/100",
+    "empty_field": "",
+    "null_field": null
+}

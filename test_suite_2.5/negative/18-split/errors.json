@@ -1,0 +1,15 @@
+{
+    "ids_wrong_item": [null, "NOT_POSITIVE_INTEGER", null],
+    "ids_empty_part": [null, "REQUIRED", null],
+    "ids_trailing_separator": [null, null, "REQUIRED"],
+    "ids_list_kept": [null, "NOT_POSITIVE_INTEGER"],
+    "ids_list_not_split": ["NOT_POSITIVE_INTEGER"],
+    "number_one_item": ["TOO_LOW"],
+    "object_kept": "FORMAT_ERROR",
+    "empty_kept": "REQUIRED",
+    "null_kept": "REQUIRED",
+    "missing_kept": "REQUIRED",
+    "too_few_parts": "TOO_FEW_ITEMS",
+    "multi_char_separator": "TOO_FEW_ITEMS",
+    "regexp_char_separator": "TOO_FEW_ITEMS"
+}

@@ -1,0 +1,11 @@
+{
+    "values_empty_list": "FORMAT_ERROR",
+    "keys_empty_list": "FORMAT_ERROR",
+    "list_length_empty_list": "TOO_FEW_ITEMS",
+    "list_length_min_empty_list": "TOO_FEW_ITEMS",
+    "list_length_empty_object": "FORMAT_ERROR",
+    "unique_empty_object": "FORMAT_ERROR",
+    "unique_with_key_empty_object": "FORMAT_ERROR",
+    "keys_numeric_keys": {"0": "WRONG_KEY", "a": "WRONG_KEY"},
+    "required_if_digit_key_note": "REQUIRED"
+}

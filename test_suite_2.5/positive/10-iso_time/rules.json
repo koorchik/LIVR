@@ -1,0 +1,105 @@
+{
+    "opens_at": "iso_time",
+    "midnight": [
+        "iso_time"
+    ],
+    "last_minute": {
+        "iso_time": []
+    },
+    "with_seconds": "iso_time",
+    "one_fraction_digit": "iso_time",
+    "nine_fraction_digits": "iso_time",
+    "empty_options_with_seconds": {"iso_time": {}},
+    "max_with_nine_digits": {"iso_time": {"max": "18:00:00.123456789"}},
+    "min_with_fraction": {"iso_time": {"min": "09:00:00.500000000"}},
+    "night_spec_example": {"iso_time": {"min": "22:00", "max": "06:00"}},
+    "night_spec_example_late": {"iso_time": {"min": "22:00", "max": "06:00"}},
+    "empty_field": "iso_time",
+    "null_field": "iso_time",
+    "missing_field": "iso_time",
+    "bounds_min_equal": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_min_equal_with_seconds": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_inside": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_max_equal": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "only_min": {
+        "iso_time": {
+            "min": "09:00"
+        }
+    },
+    "only_max": {
+        "iso_time": {
+            "max": "18:00:00.5"
+        }
+    },
+    "empty_options": {
+        "iso_time": {}
+    },
+    "same_min_and_max": {
+        "iso_time": {
+            "min": "12:00",
+            "max": "12:00:00"
+        }
+    },
+    "night_after_min": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_at_min": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_midnight": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_at_max": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_before_max": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "bounds_empty_value": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_null_value": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    }
+}

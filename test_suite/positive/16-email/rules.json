@@ -30,5 +30,6 @@
     "email29": "email",
     "email30": "email",
     "email31": "email",
-    "empty_field": "email"
+    "empty_field": "email",
+    "null_value": "email"
 }

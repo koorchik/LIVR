@@ -1,0 +1,10 @@
+{
+    "translations": {"fr": "WRONG_KEY"},
+    "keys_before_values": {"fr": "WRONG_KEY"},
+    "values_after_keys": {"en": "REQUIRED"},
+    "like_keys": {"firstName": "WRONG_KEY"},
+    "empty_key": {"": "WRONG_KEY"},
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_string": "FORMAT_ERROR",
+    "value_is_number": "FORMAT_ERROR"
+}

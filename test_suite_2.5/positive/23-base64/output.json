@@ -1,0 +1,19 @@
+{
+    "standard": "SGVsbG8=",
+    "standard_no_padding_needed": "SGVsbG8h",
+    "standard_double_padding": "SA==",
+    "standard_alphabet": "+/AZaz09",
+    "unused_bits_not_checked": "SB==",
+    "number": "1234",
+    "url": "-_-_",
+    "url_no_padding": "SGVsbG8",
+    "url_with_padding": "SGVsbG8=",
+    "url_short": "a-_",
+    "url_double_padding": "a-==",
+    "url_no_double_padding": "SA",
+    "url_number": "123",
+    "true_string": "true",
+    "exponent_number": "1000",
+    "empty_field": "",
+    "null_field": null
+}

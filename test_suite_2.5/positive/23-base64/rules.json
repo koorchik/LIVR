@@ -1,0 +1,20 @@
+{
+    "standard": "base64",
+    "standard_no_padding_needed": ["base64"],
+    "standard_double_padding": {"base64": []},
+    "standard_alphabet": "base64",
+    "unused_bits_not_checked": "base64",
+    "number": "base64",
+    "url": {"base64": "url"},
+    "url_no_padding": {"base64": "url"},
+    "url_with_padding": {"base64": "url"},
+    "url_short": {"base64": "url"},
+    "url_double_padding": {"base64": ["url"]},
+    "url_no_double_padding": {"base64": "url"},
+    "url_number": {"base64": "url"},
+    "true_string": "base64",
+    "exponent_number": "base64",
+    "empty_field": "base64",
+    "null_field": "base64",
+    "missing_field": "base64"
+}

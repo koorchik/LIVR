@@ -1,0 +1,11 @@
+{
+    "values_empty_object": {"values": ["required", "positive_integer"]},
+    "values_required_empty_object": ["required", {"values": ["required", "positive_integer"]}],
+    "keys_empty_object": {"keys": "positive_integer"},
+    "list_length_exact_zero": {"list_length": 0},
+    "list_length_min_zero": {"list_length": [0, 2]},
+    "list_length_max_only": {"list_length": {"max": 100}},
+    "unique_empty_list": "unique",
+    "unique_with_key_empty_list": {"unique": "id"},
+    "keys_numeric_keys_unchanged": {"keys": "positive_integer"}
+}

@@ -1,0 +1,5 @@
+{
+    "contact1": "contact",
+    "contact2": ["required", "contact"],
+    "contact3": "contact_with_custom_error"
+}

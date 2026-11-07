@@ -1,0 +1,22 @@
+{
+    "wrong_checksum": "credit_card",
+    "eleven_digits": ["credit_card"],
+    "twenty_digits": {"credit_card": []},
+    "spaces": "credit_card",
+    "dashes": "credit_card",
+    "letter": "credit_card",
+    "number": "credit_card",
+    "trailing_newline": "credit_card",
+    "leading_space": "credit_card",
+    "arabic_indic_digits": "credit_card",
+    "fullwidth_digit": "credit_card",
+    "fraction_number": "credit_card",
+    "boolean_true": "credit_card",
+    "boolean_false": "credit_card",
+    "empty_field": "credit_card",
+    "null_field": "credit_card",
+    "value_is_hash": "credit_card",
+    "value_is_empty_hash": "credit_card",
+    "value_is_array": "credit_card",
+    "value_is_empty_array": "credit_card"
+}

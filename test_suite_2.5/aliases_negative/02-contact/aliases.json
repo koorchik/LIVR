@@ -1,0 +1,14 @@
+[
+    {
+        "name": "contact",
+        "rules": { "nested_object": {
+            "email": { "when": ["phone", "not_empty", "email", ["required", "email"]] },
+            "phone": { "when": ["email", "not_empty", "e164", ["required", "e164"]] }
+        } }
+    },
+    {
+        "name": "contact_with_custom_error",
+        "rules": "contact",
+        "error": "WRONG_CONTACT"
+    }
+]

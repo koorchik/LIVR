@@ -1,0 +1,3 @@
+{
+    "starts_at": {"iso_datetime": {"min": "tomorrow", "max": "today"}}
+}

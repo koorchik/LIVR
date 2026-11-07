@@ -3,5 +3,6 @@
     "last_name": "Pupkin",
     "middle_name": "Ivanovich",
     "age": "35",
+    "price": "$10",
     "empty_name": ""
 }

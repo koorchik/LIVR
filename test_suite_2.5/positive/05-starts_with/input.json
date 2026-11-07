@@ -1,0 +1,21 @@
+{
+    "website1": "https://example.com",
+    "website2": "http://example.com",
+    "single_prefix": "ID-123",
+    "single_prefix_in_list": "ID-",
+    "number": 123,
+    "number_with_trailing_zero": 1.50,
+    "boolean": true,
+    "unicode": "Привіт",
+    "one_point_zero": 1.0,
+    "exponent": 1e3,
+    "fraction": 0.1,
+    "negative_fraction": -12.25,
+    "big_integer": 123456789012345,
+    "minus_zero": -0.0,
+    "number_argument": "123",
+    "number_argument_number_value": 15,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

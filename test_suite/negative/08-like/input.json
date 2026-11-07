@@ -7,6 +7,11 @@
     "extra_name": "extra_name",
 
 
+    "zip_trailing_newline":    "12345\n",
+    "zip_text_after_newline":  "12345\n<script>",
+    "zip_text_before_newline": "<script>\n12345",
+    "code_trailing_newline":   "Abc\n",
+
     "value_is_hash":        {"test": 1},
     "value_is_empty_hash":  {},
     "value_is_array":       ["test", 1],

@@ -1,0 +1,9 @@
+{
+    "point1": "TOO_FEW_ITEMS",
+    "point2": "TOO_MANY_ITEMS",
+    "point3": [null, "NOT_DECIMAL"],
+    "path": [null, [null, "REQUIRED"], "FORMAT_ERROR"],
+    "place1": { "lat": "TOO_HIGH" },
+    "place2": { "lat": "REQUIRED", "lng": "TOO_LOW" },
+    "places": [null, "FORMAT_ERROR"]
+}

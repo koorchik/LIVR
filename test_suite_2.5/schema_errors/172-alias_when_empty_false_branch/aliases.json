@@ -1,0 +1,6 @@
+[
+    {
+        "name": "vat_for_company",
+        "rules": { "when": ["type", { "eq": "company" }, "required", []] }
+    }
+]

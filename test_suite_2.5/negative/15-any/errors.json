@@ -1,0 +1,10 @@
+{
+    "required_missing": "REQUIRED",
+    "required_null": "REQUIRED",
+    "required_empty": "REQUIRED",
+    "empty_kept_for_next_rule": "REQUIRED",
+    "null_kept_for_next_rule": "REQUIRED",
+    "object_to_nested_object": {"a": "REQUIRED"},
+    "list_to_list_of": [null, "NOT_POSITIVE_INTEGER"],
+    "object_to_string": "FORMAT_ERROR"
+}

@@ -1,0 +1,19 @@
+{
+    "other_extension": "report.doc",
+    "uppercase": "report.PDF",
+    "trailing_space": "report.pdf ",
+    "suffix_in_the_middle": "report.pdf.exe",
+    "image": "photo.gif",
+    "number_string_form": 1.50,
+    "boolean": true,
+    "one_point_zero": 1.0,
+    "exponent": 1e3,
+    "trailing_newline": "report.pdf\n",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}

@@ -32,15 +32,27 @@ jobs:
           NATIVE: ${{ matrix.id == 'swift' && '1' || '' }}
         run: conformance/run.sh "${{ matrix.id }}"
 
+      - name: Run the LIVR 2.5 draft suite
+        continue-on-error: true
+        env:
+          OUT_DIR: ${{ runner.temp }}/conformance
+          NATIVE: ${{ matrix.id == 'swift' && '1' || '' }}
+          SUITE: '2.5'
+        run: conformance/run.sh "${{ matrix.id }}"
+
       - name: Show log
         if: always()
-        run: cat "${{ runner.temp }}/conformance/${{ matrix.id }}.log" || true
+        run: |
+          cat "${{ runner.temp }}/conformance/${{ matrix.id }}.log" || true
+          cat "${{ runner.temp }}/conformance/${{ matrix.id }}.v2.5.log" || true
 
       - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: conformance-${{ matrix.id }}
-          path: ${{ runner.temp }}/conformance/${{ matrix.id }}.json
+          path: |
+            ${{ runner.temp }}/conformance/${{ matrix.id }}.json
+            ${{ runner.temp }}/conformance/${{ matrix.id }}.v2.5.json
           if-no-files-found: ignore
           retention-days: 7
 

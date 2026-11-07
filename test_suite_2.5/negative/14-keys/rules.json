@@ -1,0 +1,36 @@
+{
+    "translations": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "keys_before_values": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "values_after_keys": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "like_keys": [{"keys": {"like": "^[a-z_]+$"}}],
+    "empty_key": {"keys": "required"},
+    "value_is_array": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "value_is_string": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "value_is_number": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "empty_field": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "null_field": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ]
+}

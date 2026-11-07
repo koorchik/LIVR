@@ -23,5 +23,6 @@
             "product_type": ["required", {"eq": "service"}],
             "name": ["required", {"max_length": 20} ]
         }}
-    ]}}
+    ]}},
+    "missing_with_modifier": { "or": [ ["to_lc", "integer"], "string" ] }
 }

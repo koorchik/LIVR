@@ -25,6 +25,8 @@ export interface Implementation {
     archived?: boolean
   }
   conformance?: Conformance
+  // Result of the LIVR 2.5 draft suite (test_suite_2.5), if it was run
+  conformance25?: Conformance
 }
 
 export interface Conformance {
@@ -45,6 +47,7 @@ export interface ImplementationsData {
   implementations: Implementation[]
   conformanceGeneratedAt?: string
   testSuiteTotal?: number
+  testSuite25Total?: number
 }
 
 declare const data: ImplementationsData
@@ -162,10 +165,12 @@ export default defineLoader({
       implementations: items.map((item) => ({
         ...item,
         live: live[item.id] ?? {},
-        conformance: withCounted(conformance?.results?.[item.id])
+        conformance: withCounted(conformance?.results?.[item.id]),
+        conformance25: withCounted(conformance?.suites?.['2.5']?.results?.[item.id])
       })),
       conformanceGeneratedAt: conformance?.generatedAt,
-      testSuiteTotal: conformance?.testSuite?.total
+      testSuiteTotal: conformance?.testSuite?.total,
+      testSuite25Total: conformance?.suites?.['2.5']?.testSuite?.total
     }
   }
 })

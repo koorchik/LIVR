@@ -1,0 +1,9 @@
+{
+    "phone": "e164",
+    "min_length": ["e164"],
+    "max_length": {"e164": []},
+    "zeros_after_first": "e164",
+    "empty_field": "e164",
+    "null_field": "e164",
+    "missing_field": "e164"
+}

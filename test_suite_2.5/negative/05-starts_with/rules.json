@@ -1,0 +1,20 @@
+{
+    "other_scheme": {"starts_with": ["https://", "http://"]},
+    "uppercase": [{"starts_with": ["https://", "http://"]}],
+    "leading_space": {"starts_with": ["https://", "http://"]},
+    "shorter_than_prefix": {"starts_with": ["https://", "http://"]},
+    "prefix_in_the_middle": {"starts_with": "ID-"},
+    "number": {"starts_with": "12"},
+    "number_string_form": {"starts_with": "1.0"},
+    "boolean": {"starts_with": "tr"},
+    "minus_zero": {"starts_with": "-"},
+    "exponent": {"starts_with": "1e"},
+    "fraction_without_leading_zero": {"starts_with": "."},
+    "number_argument": {"starts_with": 1},
+    "empty_field": {"starts_with": ["https://", "http://"]},
+    "null_field": {"starts_with": ["https://", "http://"]},
+    "value_is_hash": {"starts_with": ["https://", "http://"]},
+    "value_is_empty_hash": {"starts_with": ["https://", "http://"]},
+    "value_is_array": {"starts_with": ["https://", "http://"]},
+    "value_is_empty_array": {"starts_with": ["https://", "http://"]}
+}

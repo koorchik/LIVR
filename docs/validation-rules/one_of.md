@@ -21,6 +21,8 @@ Error codes: `NOT_ALLOWED_VALUE`, `FORMAT_ERROR`
 
 <RuleSandbox />
 
+Booleans are compared as strings too: `{ one_of: [true, false] }` also accepts `"true"` and `"false"`.
+
 The values were wrapped in an extra list before v0.4. Both syntaxes are supported:
 
 ```js

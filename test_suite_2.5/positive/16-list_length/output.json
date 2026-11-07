@@ -1,0 +1,16 @@
+{
+    "tags": ["a", "b", "c"],
+    "tags_min": ["a"],
+    "tags_max": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "pair": [1, 2],
+    "pair_in_list": ["a", "b"],
+    "min_max_equal": [1, 2, 3],
+    "items_max_equal": [{"a": 1}, {"b": 2}],
+    "photos": ["photo.jpg"],
+    "min_and_max_object": [null, "", 3],
+    "string_argument": ["a", "b"],
+    "string_arguments_min_max": ["a"],
+    "string_option": ["a"],
+    "empty_field": "",
+    "null_field": null
+}

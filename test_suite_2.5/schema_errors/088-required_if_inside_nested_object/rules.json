@@ -1,0 +1,3 @@
+{
+    "company": {"nested_object": {"vat": {"required_if": {"type~3": "company"}}}}
+}

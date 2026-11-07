@@ -1,0 +1,11 @@
+{
+    "values_empty_object": {},
+    "values_required_empty_object": {},
+    "keys_empty_object": {},
+    "list_length_exact_zero": [],
+    "list_length_min_zero": [],
+    "list_length_max_only": [],
+    "unique_empty_list": [],
+    "unique_with_key_empty_list": [],
+    "keys_numeric_keys_unchanged": {"1": "a", "20": "b"}
+}

@@ -1,0 +1,6 @@
+[
+    {
+        "name": "datetime",
+        "rules": { "iso_date": { "format": "datetime" } }
+    }
+]

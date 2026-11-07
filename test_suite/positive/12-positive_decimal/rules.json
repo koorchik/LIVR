@@ -3,5 +3,6 @@
     "number2": ["positive_decimal"],
     "number3": [ { "positive_decimal": [] } ],
     "number4": "positive_decimal",
-    "empty_field": "positive_decimal"
+    "empty_field": "positive_decimal",
+    "integer_number": "positive_decimal"
 }

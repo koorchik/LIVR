@@ -1,0 +1,19 @@
+{
+    "username": {"not_one_of": ["admin", "root"]},
+    "status": {"not_one_of": "deleted"},
+    "rule_in_list": [{"not_one_of": ["admin", "root"]}],
+    "case_sensitive": {"not_one_of": ["admin", "root"]},
+    "number_value": {"not_one_of": [1, "3"]},
+    "number_arguments": {"not_one_of": [1, 2, 3]},
+    "decimal_string_vs_number": {"not_one_of": [1]},
+    "leading_zero_vs_number": {"not_one_of": [1]},
+    "boolean_value": {"not_one_of": ["true"]},
+    "true_vs_one": {"not_one_of": [1]},
+    "one_vs_true": {"not_one_of": [true]},
+    "with_spaces": {"not_one_of": ["admin"]},
+    "exponent_vs_exponent_string": {"not_one_of": ["1e3", "1000.0"]},
+    "minus_zero_vs_minus_zero_string": {"not_one_of": ["-0", "-0.0"]},
+    "empty_field": {"not_one_of": ["admin", "root"]},
+    "null_field": {"not_one_of": ["admin", "root"]},
+    "missing_field": {"not_one_of": ["admin", "root"]}
+}

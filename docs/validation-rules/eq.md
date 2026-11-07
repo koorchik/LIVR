@@ -21,4 +21,4 @@ Error codes: `NOT_ALLOWED_VALUE`, `FORMAT_ERROR`
 
 <RuleSandbox />
 
-See [Types coercing](/validation-rules/types-coercing.html) for how values are compared.
+Booleans are compared as strings too: `{ eq: true }` accepts `true` and `"true"`. See [Types coercing](/validation-rules/types-coercing.html) for how values are compared.

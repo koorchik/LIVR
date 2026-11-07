@@ -19,5 +19,6 @@
         "constructor": "Constructor value",
         "toString": "ToString value",
         "hasOwnProperty": "will be removed"
-    }
+    },
+    "null_value": null
 }

@@ -1,0 +1,10 @@
+{
+    "type": "string",
+    "vat_number": "vat_by_type",
+    "pay_type": ["required", { "one_of": ["card", "bank"] }],
+    "data": "required_payment_data",
+    "person": { "nested_object": { "type": "required", "vat_number": "vat_by_type" } },
+    "orders": { "list_of_objects": { "data": "payment_data" } },
+    "payments": { "list_of": "payment_data" },
+    "either": { "or": [["required", { "eq": "none" }], "vat_by_type"] }
+}

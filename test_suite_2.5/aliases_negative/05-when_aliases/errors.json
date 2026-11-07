@@ -1,0 +1,8 @@
+{
+    "vat_number": "REQUIRED",
+    "data": { "number": "WRONG_CREDIT_CARD_NUMBER" },
+    "person": { "vat_number": "NOT_ALLOWED_VALUE" },
+    "orders": [{ "data": "NOT_ALLOWED_VALUE" }, null],
+    "payments": ["NOT_ALLOWED_VALUE"],
+    "either": "REQUIRED"
+}

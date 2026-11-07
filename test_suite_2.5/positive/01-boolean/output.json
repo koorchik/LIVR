@@ -1,0 +1,16 @@
+{
+    "true_value": true,
+    "false_value": false,
+    "one_number": true,
+    "zero_number": false,
+    "one_string": true,
+    "zero_string": false,
+    "true_string": true,
+    "false_string": false,
+    "required_false": false,
+    "required_zero_string": false,
+    "one_point_zero_number": true,
+    "minus_zero_number": false,
+    "empty_field": "",
+    "null_field": null
+}

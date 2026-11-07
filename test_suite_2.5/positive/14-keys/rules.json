@@ -1,0 +1,22 @@
+{
+    "translations": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "like_keys": {"keys": {"like": "^[a-z_]+$"}},
+    "modifier_output_ignored": {"keys": "to_uc"},
+    "rule_list": {"keys": ["required", {"max_length": 2}]},
+    "values_not_validated": {"keys": "string"},
+    "empty_field": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "null_field": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ],
+    "missing_field": [
+        {"keys": {"one_of": ["uk", "en", "de"]}},
+        {"values": ["required", "string", {"max_length": 200}]}
+    ]
+}

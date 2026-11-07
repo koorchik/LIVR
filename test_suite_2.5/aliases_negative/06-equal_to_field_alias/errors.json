@@ -1,0 +1,11 @@
+{
+    "password2": "FIELDS_NOT_EQUAL",
+    "password3": "PASSWORDS_DIFFER",
+    "password4": "REQUIRED",
+    "either": "FIELDS_NOT_EQUAL",
+    "account": { "password2": "FIELDS_NOT_EQUAL" },
+    "users": [null, { "password2": "PASSWORDS_DIFFER" }],
+    "copies": ["FIELDS_NOT_EQUAL", null],
+    "alias_copies": ["PASSWORDS_DIFFER"],
+    "value_copies": { "password": "FIELDS_NOT_EQUAL", "other": "FIELDS_NOT_EQUAL" }
+}

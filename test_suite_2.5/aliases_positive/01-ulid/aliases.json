@@ -1,0 +1,7 @@
+[
+    {
+        "name": "ulid",
+        "rules": { "like": "^[0-7][0-9A-HJKMNP-TV-Z]{25}$" },
+        "error": "WRONG_ULID"
+    }
+]

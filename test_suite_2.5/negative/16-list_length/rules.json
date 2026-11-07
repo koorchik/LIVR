@@ -1,0 +1,18 @@
+{
+    "tags_too_many": [{"list_length": [1, 10]}],
+    "pair_one": {"list_length": 2},
+    "pair_three": {"list_length": 2},
+    "pair_in_list": {"list_length": [2]},
+    "exact_zero": {"list_length": 0},
+    "items_max": {"list_length": {"max": 2}},
+    "min_and_max_object_low": {"list_length": {"min": 2, "max": 3}},
+    "min_and_max_object_high": {"list_length": {"min": 2, "max": 3}},
+    "string_argument": {"list_length": "2"},
+    "string_option": {"list_length": {"max": "1"}},
+    "value_is_hash": {"list_length": [1, 10]},
+    "value_is_string": {"list_length": [1, 10]},
+    "value_is_number": {"list_length": [1, 10]},
+    "value_is_boolean": {"list_length": [1, 10]},
+    "empty_field": {"list_length": [1, 10]},
+    "null_field": {"list_length": [1, 10]}
+}

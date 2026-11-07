@@ -1,0 +1,53 @@
+{
+    "mixed_separators": "mac",
+    "mixed_separators_last": [
+        "mac"
+    ],
+    "dots": {
+        "mac": []
+    },
+    "without_separators": "mac",
+    "five_pairs": "mac",
+    "seven_pairs": "mac",
+    "single_digit": "mac",
+    "three_digits": "mac",
+    "not_hex": "mac",
+    "trailing_separator": "mac",
+    "space_separator": "mac",
+    "number": "mac",
+    "trailing_newline": "mac",
+    "eui64_trailing_newline": {"mac": 64},
+    "arabic_indic_digit": "mac",
+    "fullwidth_letter": "mac",
+    "big_integer": "mac",
+    "empty_field": "mac",
+    "null_field": "mac",
+    "value_is_hash": "mac",
+    "value_is_empty_hash": "mac",
+    "value_is_array": "mac",
+    "value_is_empty_array": "mac",
+    "mac48_given_eui64": "mac",
+    "eui64_given_mac48": {
+        "mac": 64
+    },
+    "eui64_seven_pairs": {
+        "mac": 64
+    },
+    "eui64_nine_pairs": {
+        "mac": 64
+    },
+    "eui64_mixed_separators": {
+        "mac": 64
+    },
+    "eui64_without_separators": {
+        "mac": 64
+    },
+    "eui64_value_is_array": {
+        "mac": 64
+    },
+    "boolean_true": "mac",
+    "eui64_boolean_false": {
+        "mac": 64
+    },
+    "string_argument": {"mac": "64"}
+}
