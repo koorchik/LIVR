@@ -2,5 +2,6 @@
     "product_ids1": [ -10, "", 50, 120 ],
     "product_ids2": [ -10, "", 50, 120 ],
     "product_ids3": [ -10, "", 50, 120 ],
-    "user_ids": "not an array"
+    "user_ids": "not an array",
+    "object_value": { "a": 1 }
 }

@@ -4,6 +4,11 @@
     "middle_name": "WRONG_FORMAT",
     "age": "WRONG_FORMAT",
 
+    "zip_trailing_newline":    "WRONG_FORMAT",
+    "zip_text_after_newline":  "WRONG_FORMAT",
+    "zip_text_before_newline": "WRONG_FORMAT",
+    "code_trailing_newline":   "WRONG_FORMAT",
+
     "value_is_hash":        "FORMAT_ERROR",
     "value_is_empty_hash":  "FORMAT_ERROR",
     "value_is_array":       "FORMAT_ERROR",

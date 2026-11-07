@@ -32,5 +32,6 @@
     "email31": "er@enny.devoffice.com",
 
     "empty_field": "",
-    "extra_field": "aaaa"
+    "extra_field": "aaaa",
+    "null_value": null
 }

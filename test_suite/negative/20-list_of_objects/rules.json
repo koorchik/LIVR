@@ -3,5 +3,6 @@
         "product_id": [ "required","positive_integer" ],
         "quantity": [ "required", "positive_integer" ]
     }}],
-    "users": {"list_of_objects" : {"name": "required"} }
+    "users": {"list_of_objects" : {"name": "required"} },
+    "object_value": { "list_of_objects": { "a": "integer" } }
 }

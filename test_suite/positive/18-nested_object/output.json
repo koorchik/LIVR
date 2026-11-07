@@ -13,5 +13,6 @@
     "builtin_names": {
         "constructor": "Constructor value",
         "toString": "ToString value"
-    }
+    },
+    "null_value": null
 }

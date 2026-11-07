@@ -18,5 +18,6 @@
     "valid_and_wrong_items": [null, "FORMAT_ERROR"],
     "null_item": ["FORMAT_ERROR"],
     "selector_is_not_string": ["FORMAT_ERROR", "FORMAT_ERROR"],
-    "selector_is_builtin_property": ["FORMAT_ERROR", "FORMAT_ERROR", "FORMAT_ERROR", "FORMAT_ERROR"]
+    "selector_is_builtin_property": ["FORMAT_ERROR", "FORMAT_ERROR", "FORMAT_ERROR", "FORMAT_ERROR"],
+    "object_value": "FORMAT_ERROR"
 }

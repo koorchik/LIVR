@@ -48,5 +48,6 @@
             "material": { "product_type": "required", "material_id": "positive_integer" },
             "service": { "product_type": "required", "name": "required" }
         }
-    ]}
+    ]},
+    "object_value": { "list_of_different_objects": [ "type", { "a": { "type": "required" } } ] }
 }

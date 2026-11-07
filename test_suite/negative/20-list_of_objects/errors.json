@@ -10,5 +10,6 @@
         },
         "FORMAT_ERROR"
     ],
-    "users": "FORMAT_ERROR"
+    "users": "FORMAT_ERROR",
+    "object_value": "FORMAT_ERROR"
 }
