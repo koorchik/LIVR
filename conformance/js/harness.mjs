@@ -1,16 +1,21 @@
 // Runs the LIVR test suite against the npm "livr" package.
 // Comparison mirrors js-validator-livr's own tests (ava t.deepEqual):
 // strict deep equality, value types matter, key order does not.
+// LIVR_MODULE runs it against another copy of the package, e.g. a local checkout:
+//   LIVR_MODULE=../../../js-validator-livr TEST_SUITE_DIR=../../test_suite_2.5 node harness.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const LIVR = require('livr');
-const { version } = JSON.parse(fs.readFileSync('node_modules/livr/package.json', 'utf8'));
+const LIVR_MODULE = process.env.LIVR_MODULE ? path.resolve(process.env.LIVR_MODULE) : 'livr';
+const LIVR = require(LIVR_MODULE);
+const { version } = JSON.parse(fs.readFileSync(require.resolve(`${LIVR_MODULE}/package.json`), 'utf8'));
 
 const SUITE_DIR = process.env.TEST_SUITE_DIR || '../../test_suite';
 const SUITES = ['positive', 'negative', 'aliases_positive', 'aliases_negative'];
+// LIVR 2.5: schemas that must not build
+const SCHEMA_ERRORS = 'schema_errors';
 
 function readJson(dir, name) {
     const file = path.join(dir, `${name}.json`);
@@ -34,11 +39,41 @@ function show(value) {
     return s === undefined ? String(value) : s.length > 300 ? `${s.slice(0, 300)}…` : s;
 }
 
+// LIVR 2.5: options.json {"now": "..."} is the current time for the bounds today, yesterday and
+// tomorrow. livr reads the system clock, Date.now(), so it is stubbed for the case and restored
+function withClock(options, fn) {
+    if (!options || options.now === undefined) return fn();
+    const now = Date.parse(options.now);
+    if (!Number.isFinite(now)) throw new Error(`options.json: a wrong "now": ${show(options.now)}`);
+    const realNow = Date.now;
+    Date.now = () => now;
+    try {
+        return fn();
+    } finally {
+        Date.now = realNow;
+    }
+}
+
+function runSchemaErrorCase(dir) {
+    try {
+        const validator = new LIVR.Validator(readJson(dir, 'rules'));
+        for (const alias of readJson(dir, 'aliases') || []) validator.registerAliasedRule(alias);
+        validator.prepare();
+    } catch (e) {
+        return null;
+    }
+    return 'expected building the validator to fail';
+}
+
 function runCase(suite, dir) {
+    const run = suite === SCHEMA_ERRORS ? () => runSchemaErrorCase(dir) : () => runValidationCase(suite, dir);
+    return withClock(readJson(dir, 'options'), run);
+}
+
+function runValidationCase(suite, dir) {
     const rules = readJson(dir, 'rules');
     const input = readJson(dir, 'input');
     const aliases = readJson(dir, 'aliases') || [];
-
     const validator = new LIVR.Validator(rules);
     for (const alias of aliases) validator.registerAliasedRule(alias);
 
@@ -59,9 +94,12 @@ function runCase(suite, dir) {
 
 const result = { id: 'js', package: 'livr', version, source: 'npm', total: 0, passed: 0, failures: [], error: null };
 
-for (const suite of SUITES) {
+const suites = fs.existsSync(path.join(SUITE_DIR, SCHEMA_ERRORS)) ? [...SUITES, SCHEMA_ERRORS] : SUITES;
+
+for (const suite of suites) {
     const suiteDir = path.join(SUITE_DIR, suite);
-    for (const name of fs.readdirSync(suiteDir).filter(n => !n.startsWith('.')).sort()) {
+    const names = fs.readdirSync(suiteDir).filter(n => !n.startsWith('.')).sort();
+    for (const name of names.filter(n => fs.statSync(path.join(suiteDir, n)).isDirectory())) {
         result.total++;
         let message;
         try {

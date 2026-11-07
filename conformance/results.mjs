@@ -4,13 +4,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const list = dir => fs.readdirSync(dir).filter(name => !name.startsWith('.')).sort();
+// Only directories: a suite may have a README next to its cases
+const listDirs = dir => list(dir).filter(name => fs.statSync(path.join(dir, name)).isDirectory());
 
 // { "positive/01-required": "<hash of the case files>", … }. The hash tells whether a case
 // changed between two runs.
 export function testSuiteCases(suiteDir) {
     const cases = {};
-    for (const suite of list(suiteDir)) {
-        for (const name of list(path.join(suiteDir, suite))) {
+    for (const suite of listDirs(suiteDir)) {
+        for (const name of listDirs(path.join(suiteDir, suite))) {
             const dir = path.join(suiteDir, suite, name);
             const hash = crypto.createHash('sha256');
             for (const file of list(dir)) {

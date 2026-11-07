@@ -7,9 +7,11 @@
 #   OUT_DIR=/tmp/results conformance/run.sh perl
 #   NATIVE=1 conformance/run.sh swift  # no Docker: use the host toolchain
 #                                      # (livr-swift-validator needs macOS)
+#   SUITE=2.5 conformance/run.sh js    # the LIVR 2.5 draft suite (test_suite_2.5)
 #
 # Results are written to $OUT_DIR/<id>.json (default: conformance/out),
-# the container log to $OUT_DIR/<id>.log.
+# the container log to $OUT_DIR/<id>.log. With SUITE=2.5 the files are
+# $OUT_DIR/<id>.v2.5.json and $OUT_DIR/<id>.v2.5.log.
 set -uo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,6 +19,17 @@ ROOT="$(dirname "$HERE")"
 OUT_DIR="${OUT_DIR:-$HERE/out}"
 
 IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift dart)
+
+# Harnesses that fix the clock from options.json (the current time), the way the tests of their
+# implementation do. The other implementations get a copy of the 2.5 suite without such cases.
+CLOCK_IDS=" js "
+
+SUITE="${SUITE:-2.0}"
+case "$SUITE" in
+    2.0) SUITE_DIR="test_suite"; SUFFIX="" ;;
+    2.5) SUITE_DIR="test_suite_2.5"; SUFFIX=".v2.5" ;;
+    *)   echo "Unknown SUITE: $SUITE (known: 2.0, 2.5)" >&2; exit 2 ;;
+esac
 
 image_for() {
     case "$1" in
@@ -38,43 +51,72 @@ image_for() {
 }
 
 run_one() {
-    local id="$1" image
+    local id="$1" image suite_dir mount=() out="$id$SUFFIX"
     if ! image="$(image_for "$id")"; then
         echo "Unknown implementation id: $id (known: ${IDS[*]})" >&2
         return 2
     fi
 
     mkdir -p "$OUT_DIR"
-    rm -f "$OUT_DIR/$id.json"
+    rm -f "$OUT_DIR/$out.json"
+
+    suite_dir="$ROOT/$SUITE_DIR"
+    if [ "$SUITE" != "2.0" ] && [[ "$CLOCK_IDS" != *" $id "* ]]; then
+        # Outside OUT_DIR: merge.mjs reads every JSON file there
+        suite_dir="$(mktemp -d "${TMPDIR:-/tmp}/livr-suite.XXXXXX")"
+        copy_without_clock_cases "$ROOT/$SUITE_DIR" "$suite_dir"
+    fi
 
     if [ "${NATIVE:-}" = "1" ]; then
-        echo "==> $id (native)"
-        REPO_DIR="$ROOT" ID="$id" TEST_SUITE_DIR="$ROOT/test_suite" OUT_FILE="$OUT_DIR/$id.json" \
+        echo "==> $id (native, suite $SUITE)"
+        REPO_DIR="$ROOT" ID="$id" TEST_SUITE_DIR="$suite_dir" OUT_FILE="$OUT_DIR/$out.json" \
             WORK_ROOT="${RUNNER_TEMP:-${TMPDIR:-/tmp}}" \
-            sh "$HERE/lib/entry.sh" >"$OUT_DIR/$id.log" 2>&1
-        report "$id" $?
+            sh "$HERE/lib/entry.sh" >"$OUT_DIR/$out.log" 2>&1
+        report "$id" "$out" $?
+        cleanup_suite "$suite_dir"
         return
     fi
 
-    echo "==> $id ($image)"
+    if [ "$suite_dir" = "$ROOT/$SUITE_DIR" ]; then
+        mount=(-e "TEST_SUITE_DIR=/repo/$SUITE_DIR")
+    else
+        mount=(-v "$suite_dir:/suite:ro" -e "TEST_SUITE_DIR=/suite")
+    fi
+
+    echo "==> $id ($image, suite $SUITE)"
     docker run --rm \
         -v "$ROOT:/repo:ro" \
         -v "$OUT_DIR:/out" \
+        "${mount[@]}" \
         -e "ID=$id" \
-        -e "TEST_SUITE_DIR=/repo/test_suite" \
-        -e "OUT_FILE=/out/$id.json" \
+        -e "OUT_FILE=/out/$out.json" \
         -e "HOST_UID=$(id -u)" \
         -e "HOST_GID=$(id -g)" \
-        "$image" sh /repo/conformance/lib/entry.sh >"$OUT_DIR/$id.log" 2>&1
-    report "$id" $?
+        "$image" sh /repo/conformance/lib/entry.sh >"$OUT_DIR/$out.log" 2>&1
+    report "$id" "$out" $?
+    cleanup_suite "$suite_dir"
+}
+
+cleanup_suite() {
+    [ "$1" != "$ROOT/$SUITE_DIR" ] && rm -rf "$1"
+    return 0
+}
+
+# A copy of a suite without the cases that have options.json
+copy_without_clock_cases() {
+    local from="$1" to="$2" dir
+    cp -R "$from"/. "$to"
+    for dir in "$to"/*/*/; do
+        [ -f "$dir/options.json" ] && rm -rf "$dir"
+    done
 }
 
 report() {
-    local id="$1" rc="$2"
-    if [ ! -s "$OUT_DIR/$id.json" ]; then
+    local id="$1" out="$2" rc="$3"  # out: the name of the result file, <id> or <id>.v2.5
+    if [ ! -s "$OUT_DIR/$out.json" ]; then
         # The container never got as far as writing a result (e.g. image pull failed).
         printf '{"id":"%s","package":null,"version":null,"source":null,"total":0,"passed":0,"failures":[],"error":"runner failed with exit code %s before producing results"}\n' \
-            "$id" "$rc" >"$OUT_DIR/$id.json"
+            "$id" "$rc" >"$OUT_DIR/$out.json"
     fi
 
     # shellcheck disable=SC2016  # JavaScript template literals, not shell expansions
@@ -83,7 +125,7 @@ report() {
         console.log(r.error
             ? `    error: ${r.error}`
             : `    ${r.package} ${r.version}: ${r.passed}/${r.total} passed`);
-    ' "$OUT_DIR/$id.json" 2>/dev/null || cat "$OUT_DIR/$id.json"
+    ' "$OUT_DIR/$out.json" 2>/dev/null || cat "$OUT_DIR/$out.json"
 }
 
 if [ $# -ne 1 ]; then
