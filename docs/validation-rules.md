@@ -6,11 +6,13 @@ aside: false
 
 The standard rules that every implementation supports. Open a rule to see how it works and to try it live, or filter the list by an error code to find the rule that returns it.
 
+Rules marked <span class="livr-badge livr-badge--warn">2.5 draft</span> are part of the [draft LIVR 2.5](/changes.html#v2-5-draft). They can change before the release, and implementations do not support them yet.
+
 <RulesOverview />
 
 ## Empty values are skipped
 
-All standard rules skip empty values: a missing field, `null` and an empty string `""`. Only [`required`](/validation-rules/required.html), [`not_empty`](/validation-rules/not_empty.html) and [`not_empty_list`](/validation-rules/not_empty_list.html) check that a value is present. So the same rules work for optional fields:
+All standard rules skip empty values: a missing field, `null` and an empty string `""`. Only [`required`](/validation-rules/required.html), [`not_empty`](/validation-rules/not_empty.html) and [`not_empty_list`](/validation-rules/not_empty_list.html) check that a value is present (in the 2.5 draft also [`required_if`](/validation-rules/required_if.html)). So the same rules work for optional fields:
 
 ```js
 first_name: { min_length: 10 }               // optional: the length is checked only if "first_name" is passed

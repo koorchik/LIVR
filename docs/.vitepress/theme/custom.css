@@ -895,6 +895,13 @@
   background: none;
 }
 
+.rule-tile__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
 .vp-doc .rule-tile .rule-tile__name {
   font-size: 15px;
   font-weight: 600;
@@ -970,6 +977,10 @@
   color: var(--vp-c-brand-1);
 }
 
+.rule-breadcrumb__since {
+  margin-left: 4px;
+}
+
 .rule-page .vp-doc h1 {
   font-family: var(--vp-font-family-mono);
   letter-spacing: -0.02em;
@@ -1015,6 +1026,14 @@
 .sidebar-rule {
   font-family: var(--vp-font-family-mono);
   font-size: 13px;
+}
+
+/* Rules of a draft version: "2.5" after the name */
+.sidebar-since {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vp-c-yellow-1);
 }
 
 .VPSidebarItem.level-1:has(.sidebar-rule) .text {

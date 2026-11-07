@@ -9,6 +9,7 @@ export interface RuleInfo {
   summary: string // first paragraph of the page, markdown
   syntax: string
   errors: string[]
+  since?: string // the LIVR version that adds the rule, set only for draft versions (frontmatter `since`)
 }
 
 export interface RuleGroup {
@@ -27,9 +28,16 @@ export default createContentLoader('validation-rules/*.md', {
   transform(pages): RuleGroup[] {
     const rules = new Map<string, RuleInfo>()
     for (const page of pages) {
-      const { group, syntax, title } = page.frontmatter
+      const { group, syntax, title, since } = page.frontmatter
       if (!group) continue
-      rules.set(title, { name: title, group, url: page.url, syntax, ...parseRulePage(page.src ?? '') })
+      rules.set(title, {
+        name: title,
+        group,
+        url: page.url,
+        syntax,
+        ...parseRulePage(page.src ?? ''),
+        ...(since ? { since: String(since) } : {})
+      })
     }
 
     return groups.map((group) => ({

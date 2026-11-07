@@ -8,6 +8,10 @@ import { data as testCases, type TestCase } from '../../../data/test-suite.data'
 // The live example of a rule page: the example from the frontmatter and the rule's test suite cases
 const { frontmatter } = useData()
 
+// The examples run on the livr npm package, which implements LIVR 2.0. Pages of rules from a draft
+// version (frontmatter `since: '2.5'`) show a notice instead.
+const draft = computed(() => frontmatter.value.since)
+
 interface Option {
   id: string
   label: string
@@ -43,7 +47,15 @@ const expected = computed(() => {
 </script>
 
 <template>
-  <div class="rule-sandbox">
+  <div v-if="draft" class="warning custom-block">
+    <p class="custom-block-title">LIVR {{ draft }} draft</p>
+    <p>
+      This rule is part of the <a href="/changes.html#v2-5-draft">draft LIVR {{ draft }} specification</a> and can
+      change before the release. There is no live example yet: the JavaScript implementation that runs the examples
+      does not support the rule.
+    </p>
+  </div>
+  <div v-else class="rule-sandbox">
     <div v-if="options.length > 1" class="rule-sandbox__tabs" role="tablist" aria-label="Examples">
       <button
         v-for="option in options"
