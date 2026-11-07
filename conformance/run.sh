@@ -52,7 +52,8 @@ image_for() {
 }
 
 run_one() {
-    local id="$1" image suite_dir mount=() out="$id$SUFFIX"
+    local id="$1" image suite_dir mount=() out
+    out="$id$SUFFIX"
     if ! image="$(image_for "$id")"; then
         echo "Unknown implementation id: $id (known: ${IDS[*]})" >&2
         return 2
