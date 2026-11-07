@@ -120,7 +120,7 @@ If validation of the address fails, you get this error:
 
 ## Recipe: ulid {#recipe-ulid}
 
-[ULID](https://github.com/ulid/spec) is not a standard rule, it was left out of the [draft LIVR 2.5](/changes.html#v2-5-draft). An alias with `like` and its own error code covers it. A ULID is 26 characters of Crockford's Base32 in uppercase, and the first one is `0`–`7`:
+[ULID](https://github.com/ulid/spec) is not a standard rule, it was left out of [LIVR 2.5](/changes.html#v2-5). An alias with `like` and its own error code covers it. A ULID is 26 characters of Crockford's Base32 in uppercase, and the first one is `0`–`7`:
 
 ```livr
 // aliases

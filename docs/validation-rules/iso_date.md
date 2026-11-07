@@ -21,10 +21,10 @@ Error codes: `WRONG_DATE`, `FORMAT_ERROR`
 
 <RuleSandbox />
 
-## Options form <Badge type="warning" text="LIVR 2.5 draft" /> {#options-form}
+## Options form <Badge type="info" text="LIVR 2.5" /> {#options-form}
 
-::: warning LIVR 2.5 draft
-This form is part of the [draft LIVR 2.5](/changes.html#v2-5-draft) and can change before the release. Implementations do not support it yet, and the live example above uses the 2.0 form.
+::: info LIVR 2.5
+This form was added in [LIVR 2.5](/changes.html#v2-5). Implementations of LIVR 2.0 do not support it.
 :::
 
 The 2.0 forms `'iso_date'` and `{ iso_date: [] }` do not change: they accept only `YYYY-MM-DD`, a valid date in the proleptic Gregorian calendar (`1582-10-10` is valid, `1500-02-29` is not), and do not change the value. `{ iso_date: null }` is the plain `iso_date` too.

@@ -1,10 +1,10 @@
 # Changelog
 
-## v2.5 (draft) {#v2-5-draft}
+<a id="v2-5-draft"></a>
 
-::: warning Draft
-LIVR 2.5 is not released yet. Everything in this section can change before the release, and implementations do not support it yet.
-:::
+## v2.5 {#v2-5}
+
+Released on 2026-11-07. The specification is in [`drafts/v2.5.md`](https://github.com/koorchik/LIVR/blob/master/drafts/v2.5.md), and the [conformance table](/introduction/implementations.html#test-suite-results) shows which implementations pass the 2.5 test suite.
 
 LIVR 2.5 only adds rules. Every LIVR 2.0 schema gives the same result in a 2.5 implementation, except for the fixes below: they change only schemas that never worked as written.
 
@@ -70,7 +70,7 @@ The 2.5 cases are a separate test suite in `test_suite_2.5/`, next to `test_suit
 - `schema_errors/` holds schemas that must not build: `rules.json`, and `aliases.json` when the error is in an alias. A case passes when building the validator (with the aliases registered) fails, however the implementation reports it.
 - Checks that need to tell `{}` from `[]` (`values`, `keys`, `list_length` and `unique` on an empty object or list) are in their own cases, `positive/` and `negative/` `NN-object_or_list`. PHP and Lua decode both to the same value, so the conformance page does not count these cases for them, as in 2.0.
 - A number in `output.json` is written the way it comes in the input (`10.0` gives `10.0`, `"5.000"` gives `5.000`), and objects in the cases have no keys `"0"`, `"1"`, …, because PHP and Lua cannot tell such an object from a list.
-- The conformance page will show a separate 2.5 result for every implementation. Issues for 2.5 failures are not opened until 2.5 is released.
+- The conformance page shows a separate 2.5 result for every implementation.
 
 ### Not in 2.5
 

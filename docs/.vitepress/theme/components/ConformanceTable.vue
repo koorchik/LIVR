@@ -28,7 +28,7 @@ const generatedAt = computed(() =>
 
 const label = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
 const caseUrl = (name: string, dir = 'test_suite') => `https://github.com/koorchik/LIVR/tree/master/${dir}/${name}`
-// The LIVR 2.5 draft column is shown once the draft suite has results
+// The LIVR 2.5 column is shown once the 2.5 suite has results
 const has25 = computed(() => data.implementations.some((item) => item.conformance25))
 const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice(0, max)}…` : text)
 </script>
@@ -41,7 +41,7 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
           <th>Implementation</th>
           <th>Tested version</th>
           <th>Passed</th>
-          <th v-if="has25" title="The LIVR 2.5 draft suite: new rules, not counted in the score">2.5 draft</th>
+          <th v-if="has25" title="The LIVR 2.5 suite: the rules added in LIVR 2.5, shown separately from the score">2.5</th>
           <th>Details</th>
         </tr>
       </thead>
@@ -84,7 +84,7 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
             </details>
             <details v-if="item.conformance25?.failing.length">
               <summary>
-                {{ item.conformance25.failing.length }} failing 2.5 draft case{{ item.conformance25.failing.length > 1 ? 's' : '' }}
+                {{ item.conformance25.failing.length }} failing 2.5 case{{ item.conformance25.failing.length > 1 ? 's' : '' }}
               </summary>
               <ul>
                 <li v-for="failure in item.conformance25.failing" :key="failure.case">
@@ -116,8 +116,8 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
       Cases that an implementation can't pass because of its language (for example, PHP and Lua decode <code>{}</code> and <code>[]</code>
       to the same value) are not counted, so its score is out of the remaining cases.
       <template v-if="has25">
-        The "2.5 draft" column runs the draft <a href="https://github.com/koorchik/LIVR/tree/master/test_suite_2.5" target="_blank" rel="noopener">LIVR 2.5 suite</a>
-        ({{ data.testSuite25Total }} cases). LIVR 2.5 is not released yet, so implementations are not expected to pass it.
+        The "2.5" column runs the <a href="https://github.com/koorchik/LIVR/tree/master/test_suite_2.5" target="_blank" rel="noopener">LIVR 2.5 suite</a>
+        ({{ data.testSuite25Total }} cases) with the rules added in LIVR 2.5. It is shown separately and is not part of the score.
       </template>
     </p>
   </div>

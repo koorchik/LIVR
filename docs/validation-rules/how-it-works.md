@@ -52,9 +52,9 @@ That's all: a tiny core that is easy to extend with new rules.
 
 In lists, the errors of valid items are `null`, so the position of every error is preserved.
 
-## Conventions of the 2.5 rules <Badge type="warning" text="LIVR 2.5 draft" /> {#conventions-2-5}
+## Conventions of the 2.5 rules <Badge type="info" text="LIVR 2.5" /> {#conventions-2-5}
 
-The rules of the [draft LIVR 2.5](/changes.html#v2-5-draft) follow these conventions, unless the rule page says otherwise. They match how the LIVR 2.0 rules behave, but are written down explicitly, because 2.0 leaves some of them implicit.
+The rules added in [LIVR 2.5](/changes.html#v2-5) follow these conventions, unless the rule page says otherwise. They match how the LIVR 2.0 rules behave, but are written down explicitly, because 2.0 leaves some of them implicit.
 
 ### Empty values
 

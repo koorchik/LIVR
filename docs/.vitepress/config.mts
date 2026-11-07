@@ -17,7 +17,7 @@ const SITE_URL = 'https://livr-spec.org'
 const DESCRIPTION =
   'LIVR is a declarative, language independent format for data validation rules: one schema, the same rules and the same error codes in JavaScript, Perl, PHP, Python, Go, Erlang and more.'
 
-// Rules of a draft version have `since: '2.5'` in the frontmatter of their page
+// Rules added after LIVR 2.0 have `since: '2.5'` in the frontmatter of their page
 function ruleSince(rule: string) {
   const src = fs.readFileSync(new URL(`../validation-rules/${rule}.md`, import.meta.url), 'utf8')
   const frontmatter = src.match(/^---\n([\s\S]*?)\n---/)?.[1] ?? ''
@@ -26,7 +26,7 @@ function ruleSince(rule: string) {
 
 function sidebarRuleText(rule: string) {
   const since = ruleSince(rule)
-  const badge = since ? `<span class="sidebar-since" title="LIVR ${since} draft">${since}</span>` : ''
+  const badge = since ? `<span class="sidebar-since" title="Added in LIVR ${since}">${since}</span>` : ''
   return `<span class="sidebar-rule">${rule}</span>${badge}`
 }
 

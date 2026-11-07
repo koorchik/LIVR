@@ -17,7 +17,7 @@ const cases = computed(() =>
 const expected = (c: (typeof data)[number]) =>
   c.output !== undefined ? { output: JSON5.parse(c.output) } : { errors: JSON5.parse(c.errors ?? '{}') }
 
-const repoUrl = (c: (typeof data)[number]) => `https://github.com/koorchik/LIVR/tree/master/test_suite/${c.suite}/${c.name}`
+const repoUrl = (c: (typeof data)[number]) => `https://github.com/koorchik/LIVR/tree/master/${c.dir}/${c.suite}/${c.name}`
 </script>
 
 <template>
@@ -31,7 +31,7 @@ const repoUrl = (c: (typeof data)[number]) => `https://github.com/koorchik/LIVR/
       <a href="/how-to-contribute/test-suite.html">LIVR test suite</a> that every implementation runs.
       Edit them to see how the rule behaves.
     </p>
-    <div v-for="c in cases" :key="`${c.suite}/${c.name}`" class="livr-tests__case">
+    <div v-for="c in cases" :key="`${c.dir}/${c.suite}/${c.name}`" class="livr-tests__case">
       <LivrExample
         :title="`${c.suite}/${c.name}`"
         :rules="c.rules"

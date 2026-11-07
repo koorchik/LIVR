@@ -39,9 +39,9 @@ An alias can replace the errors of its rules with a single custom code, see [Rul
 | `WRONG_DATE` | The value is not an ISO 8601 date | [`iso_date`](/validation-rules/iso_date.html) |
 | `FIELDS_NOT_EQUAL` | The value differs from the value of another field | [`equal_to_field`](/validation-rules/equal_to_field.html) |
 
-## LIVR 2.5 draft codes <Badge type="warning" text="LIVR 2.5 draft" /> {#codes-2-5}
+## LIVR 2.5 codes <Badge type="info" text="LIVR 2.5" /> {#codes-2-5}
 
-The rules of the [draft LIVR 2.5](/changes.html#v2-5-draft) add these codes:
+The rules added in [LIVR 2.5](/changes.html#v2-5) add these codes:
 
 | Code | Meaning | Returned by |
 |---|---|---|
@@ -100,4 +100,4 @@ Naming: `NOT_<TYPE>` for a wrong type, `WRONG_<FORMAT>` for a wrong format, `TOO
 
 [Modifiers](/validation-rules/modifiers.html) never return errors. All rules except `required`, `not_empty` and `not_empty_list` skip empty values (missing, `null` or `""`), so for them an empty value never causes `FORMAT_ERROR`.
 
-In the 2.5 draft, the rules that expect a primitive value return `FORMAT_ERROR` for objects and lists (a boolean is a primitive value, so [format](/validation-rules/format-rules.html) and [checksum](/validation-rules/checksum-rules.html) rules return their own code for it, and `iso_date` returns `WRONG_DATE`, not `FORMAT_ERROR`); `list_length` and `unique` return it for anything that is not a list, and `values` and `keys` for anything that is not an object. See [Conventions of the 2.5 rules](/validation-rules/how-it-works.html#conventions-2-5).
+In LIVR 2.5, the rules that expect a primitive value return `FORMAT_ERROR` for objects and lists (a boolean is a primitive value, so [format](/validation-rules/format-rules.html) and [checksum](/validation-rules/checksum-rules.html) rules return their own code for it, and `iso_date` returns `WRONG_DATE`, not `FORMAT_ERROR`); `list_length` and `unique` return it for anything that is not a list, and `values` and `keys` for anything that is not an object. See [Conventions of the 2.5 rules](/validation-rules/how-it-works.html#conventions-2-5).

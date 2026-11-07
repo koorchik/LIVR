@@ -3,7 +3,12 @@ import allExtraRules from 'livr-extra-rules'
 import JSON5 from 'json5'
 
 // instance_of and has_methods need JavaScript classes and functions, which JSON input cannot contain
-const { instance_of, has_methods, ...extraRules } = allExtraRules
+const { instance_of, has_methods, ...otherExtraRules } = allExtraRules
+
+// Rules of livr-extra-rules with the name of a LIVR 2.5 rule (uuid, boolean, iso_date, ...) would replace the
+// built-in rule, so the playground has only the extra rules that LIVR does not define
+const builtInRules = LIVR.Validator.getDefaultRules()
+const extraRules = Object.fromEntries(Object.entries(otherExtraRules).filter(([name]) => !(name in builtInRules)))
 
 export type Source = 'rules' | 'input' | 'aliases' | 'validator'
 

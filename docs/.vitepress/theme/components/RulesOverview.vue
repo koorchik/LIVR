@@ -10,7 +10,7 @@ const router = useRouter()
 const query = ref('')
 
 const matches = (rule: RuleInfo, q: string) =>
-  [rule.name, rule.summary, rule.syntax, ...rule.errors, rule.since ? `${rule.since} draft` : '']
+  [rule.name, rule.summary, rule.syntax, ...rule.errors, rule.since ? `LIVR ${rule.since}` : '']
     .some((text) => text.toLowerCase().includes(q))
 
 const visibleGroups = computed(() => {
@@ -71,7 +71,7 @@ onMounted(() => {
         <a v-for="rule in group.rules" :key="rule.name" :href="rule.url" class="rule-tile">
           <span class="rule-tile__head">
             <code class="rule-tile__name">{{ rule.name }}</code>
-            <span v-if="rule.since" class="livr-badge livr-badge--warn">{{ rule.since }} draft</span>
+            <span v-if="rule.since" class="livr-badge livr-badge--muted" :title="`Added in LIVR ${rule.since}`">{{ rule.since }}</span>
           </span>
           <span class="rule-tile__summary" v-html="inlineMarkdown(rule.summary)" />
           <code class="rule-tile__syntax">{{ rule.syntax }}</code>
