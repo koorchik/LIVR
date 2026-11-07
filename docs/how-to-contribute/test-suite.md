@@ -2,6 +2,8 @@
 
 The [`test_suite`](https://github.com/koorchik/LIVR/tree/master/test_suite) directory is the executable part of the specification. Every implementation runs it, and an implementation that passes it behaves like all the others. The cases are plain JSON files, so any language can read them.
 
+`test_suite` has the cases of LIVR 2.0. The rules added in [LIVR 2.5](/changes.html#v2-5) have their own suite, [`test_suite_2.5`](https://github.com/koorchik/LIVR/tree/master/test_suite_2.5), see [The LIVR 2.5 suite](#the-livr-2-5-suite).
+
 ## Layout
 
 ```text
@@ -67,13 +69,22 @@ for (const dir of listDirs('test_suite/negative')) {
 }
 ```
 
+## The LIVR 2.5 suite
+
+An implementation of LIVR 2.5 runs [`test_suite_2.5`](https://github.com/koorchik/LIVR/tree/master/test_suite_2.5) too. It is a separate directory, because implementations copy `test_suite` into their repositories and some of their runners read every directory in it. It has the same layout and files as `test_suite`, and a few additions:
+
+- `schema_errors/` holds schemas that must not build: `rules.json`, and `aliases.json` when the error is in an alias. A case passes when creating the validator (with the aliases registered) fails, however the implementation reports it.
+- A case may have an `options.json`, `{ "now": "2026-10-18T12:00:00Z" }`: the current time for `today`, `yesterday` and `tomorrow`. Fix the clock the way the tests of your implementation do; a runner that cannot fix it skips such cases.
+
+To get it, run the command above with `test_suite_2.5` in place of `test_suite`. See the [changelog](/changes.html#test-suite) for the details.
+
 Every rule page of this site shows the test suite cases of that rule, and you can edit and run them in the browser. Look for the "Test suite cases" block below each rule.
 
 ## Conformance results
 
-The [`conformance/`](https://github.com/koorchik/LIVR/tree/master/conformance) directory contains a small test suite runner for each implementation. CI runs them against the latest version of every implementation, and the results are published on the [implementations page](/introduction/implementations.html#test-suite-results).
+The [`conformance/`](https://github.com/koorchik/LIVR/tree/master/conformance) directory contains a small test suite runner for each implementation. CI runs them against the latest version of every implementation, and the results are published on the [implementations page](/introduction/implementations.html#test-suite-results). The score counts the cases of `test_suite`; the result of the LIVR 2.5 suite is shown separately and is not part of the score.
 
-When an implementation starts failing cases, because of a regression in a new release or because the test suite got new cases, CI opens an [issue](https://github.com/koorchik/LIVR/issues?q=label%3A%22test+suite%22) that mentions its maintainer. The issue closes by itself once all cases pass.
+When an implementation starts failing cases of `test_suite`, because of a regression in a new release or because the test suite got new cases, CI opens an [issue](https://github.com/koorchik/LIVR/issues?q=label%3A%22test+suite%22) that mentions its maintainer. The issue closes by itself once all cases pass.
 
 ## Adding cases
 

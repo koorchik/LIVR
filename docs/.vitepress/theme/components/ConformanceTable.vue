@@ -109,7 +109,7 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
       </tbody>
     </table>
     <p class="conformance__note">
-      Results of running the <a href="/how-to-contribute/test-suite.html">LIVR test suite</a> ({{ data.testSuiteTotal }} cases)
+      Results of running the <a href="/how-to-contribute/test-suite.html">LIVR 2.0 test suite</a> ({{ data.testSuiteTotal }} cases)
       against the latest version of each implementation: the published package, or the default branch when it is not published<template v-if="generatedAt">. Checked on {{ generatedAt }}</template>.
       The runners live in the <a href="https://github.com/koorchik/LIVR/tree/master/conformance" target="_blank" rel="noopener"><code>conformance/</code></a> directory.
       Some failures come from newer test cases that were added after an implementation's last release.

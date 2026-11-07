@@ -64,4 +64,4 @@ The differences that matter for input validation:
 | Data cleanup | Modifiers: `trim`, `to_lc`, `default`, … | Not part of the standard |
 | Values from forms and query strings | `positive_integer` accepts `"25"` and returns `25` | `"type": "integer"` rejects the string `"25"` |
 
-Some things that need a dedicated keyword in JSON Schema are just one more rule in LIVR. For example, the number of list items is checked by the `list_length` rule from [livr-extra-rules](https://github.com/koorchik/js-livr-extra-rules).
+Some things that need a dedicated keyword in JSON Schema are just one more rule in LIVR. For example, the number of list items is checked by the [`list_length`](/validation-rules/list_length.html) rule (a standard rule since LIVR 2.5).

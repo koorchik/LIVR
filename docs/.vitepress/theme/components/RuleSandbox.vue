@@ -67,8 +67,14 @@ const expected = computed(() => {
       :title="selected.testCase ? selected.id : undefined"
     />
     <p v-if="selected.testCase" class="rule-sandbox__note">
-      This case comes from the <a href="/how-to-contribute/test-suite.html">LIVR test suite</a> that every implementation
-      runs.
+      <template v-if="selected.id.startsWith('test_suite_2.5/')">
+        This case comes from the <a href="/how-to-contribute/test-suite.html#the-livr-2-5-suite">LIVR 2.5 test suite</a> that
+        every implementation of LIVR 2.5 runs.
+      </template>
+      <template v-else>
+        This case comes from the <a href="/how-to-contribute/test-suite.html">LIVR test suite</a> that every implementation
+        runs.
+      </template>
       <a :href="`https://github.com/koorchik/LIVR/tree/master/${selected.id}`" target="_blank" rel="noopener">
         View the files on GitHub</a
       >

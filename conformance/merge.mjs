@@ -10,7 +10,7 @@
 // issues.mjs still has something to compare the next run with.
 // When GITHUB_STEP_SUMMARY is set, a Markdown table is appended to it.
 //
-// Results of the LIVR 2.5 draft suite (<id>.v2.5.json, SUITE=2.5 conformance/run.sh) go to
+// Results of the LIVR 2.5 suite (<id>.v2.5.json, SUITE=2.5 conformance/run.sh) go to
 // suites["2.5"]: { testSuite, results }. The top level stays the 2.0 suite, so issues.mjs,
 // which reads only the top level, opens no issues for 2.5 until it is released.
 import fs from 'node:fs';
@@ -91,14 +91,14 @@ fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, JSON.stringify(merged, null, 2) + '\n');
 console.log(`Wrote ${outFile} (${Object.keys(results).length} implementations, ${suiteTotal} test cases)`);
 if (merged.suites) {
-    console.log(`  2.5 draft: ${Object.keys(results25).length} implementations, ${merged.suites['2.5'].testSuite.total} test cases`);
+    console.log(`  2.5: ${Object.keys(results25).length} implementations, ${merged.suites['2.5'].testSuite.total} test cases`);
 }
 
 if (process.env.GITHUB_STEP_SUMMARY) {
     fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryTable('LIVR test suite conformance', results, suiteTotal));
     if (merged.suites) {
         const { testSuite } = merged.suites['2.5'];
-        fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryTable('LIVR 2.5 draft suite', results25, testSuite.total));
+        fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryTable('LIVR 2.5 suite', results25, testSuite.total));
     }
 }
 

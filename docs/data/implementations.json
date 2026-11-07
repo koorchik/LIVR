@@ -10,7 +10,7 @@
       "name": "livr",
       "url": "https://www.npmjs.com/package/livr"
     },
-    "spec": "2.0",
+    "spec": "2.5",
     "maintainer": {
       "name": "koorchik",
       "url": "https://github.com/koorchik"
@@ -27,7 +27,7 @@
       "name": "Validator::LIVR",
       "url": "https://metacpan.org/pod/Validator::LIVR"
     },
-    "spec": "2.0",
+    "spec": "2.5",
     "maintainer": {
       "name": "koorchik",
       "url": "https://github.com/koorchik"
@@ -169,7 +169,7 @@
       "name": "LIVR",
       "url": "https://raku.land/cpan:KOORCHIK/LIVR"
     },
-    "spec": "2.0",
+    "spec": "2.5",
     "maintainer": {
       "name": "koorchik",
       "url": "https://github.com/koorchik"
@@ -201,7 +201,7 @@
       "name": "livr",
       "url": "https://pub.dev/packages/livr"
     },
-    "spec": "2.0",
+    "spec": "2.5",
     "maintainer": {
       "name": "koorchik",
       "url": "https://github.com/koorchik"
@@ -217,7 +217,7 @@
       "name": "livr",
       "url": "https://crates.io/crates/livr"
     },
-    "spec": "2.0",
+    "spec": "2.5",
     "maintainer": {
       "name": "koorchik",
       "url": "https://github.com/koorchik"

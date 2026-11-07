@@ -31,7 +31,7 @@ The site is deployed automatically from the `master` branch.
 - Every rule has its own page, `docs/validation-rules/<rule>.md`:
   - the first paragraph after the title is the summary shown on the [rules overview](/validation-rules.html);
   - the `Error codes:` line lists the codes, so the overview can be filtered by them;
-  - the frontmatter sets the group, the short syntax for the overview and the live example;
+  - the frontmatter sets the group, the short syntax for the overview and the live example; a rule added in LIVR 2.5 has `since: '2.5'`, which shows the 2.5 badge, and its test suite cases come from `test_suite_2.5`;
   - `<RuleSandbox />` renders the live example together with the rule's test suite cases.
 
   The groups and the order of the rules are set in `docs/data/rule-groups.json`. To add a rule, create its page and add it to a group.
