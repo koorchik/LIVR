@@ -1,0 +1,15 @@
+{
+    "stock": {"values": ["required", "positive_integer"]},
+    "several_failing": [{"values": ["required", "positive_integer"]}],
+    "null_inside": {"values": ["required", "positive_integer"]},
+    "single_list_form": {"values": [["required", "positive_integer"]]},
+    "prototype_keys": {"values": ["required", "positive_integer"]},
+    "nested_objects": {"values": {"nested_object": {"name": "required"}}},
+    "lists": {"values": {"list_of": "positive_integer"}},
+    "value_is_array": {"values": ["required", "positive_integer"]},
+    "value_is_string": {"values": ["required", "positive_integer"]},
+    "value_is_number": {"values": ["required", "positive_integer"]},
+    "value_is_boolean": {"values": ["required", "positive_integer"]},
+    "empty_field": {"values": ["required", "positive_integer"]},
+    "null_field": {"values": ["required", "positive_integer"]}
+}

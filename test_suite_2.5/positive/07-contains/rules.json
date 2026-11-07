@@ -1,0 +1,15 @@
+{
+    "comment": {"contains": "@"},
+    "comment_in_list": [{"contains": "@"}],
+    "one_of_several": {"contains": ["foo", "bar"]},
+    "number": {"contains": "234"},
+    "number_fraction": {"contains": "."},
+    "boolean": {"contains": "ru"},
+    "fraction": {"contains": "."},
+    "big_integer": {"contains": "6789"},
+    "exponent": {"contains": "00"},
+    "negative_fraction": {"contains": "2.2"},
+    "empty_field": {"contains": "@"},
+    "null_field": {"contains": "@"},
+    "missing_field": {"contains": "@"}
+}

@@ -1,0 +1,17 @@
+{
+    "zip": "01001",
+    "leading_zeros": "007",
+    "number": "7",
+    "zero_string": "0",
+    "zero_number": "0",
+    "all_digits": "0123456789",
+    "otp": "000123",
+    "otp_number": "123456",
+    "one_point_zero": "1",
+    "minus_zero": "0",
+    "hundred": "100",
+    "exponent": "1000",
+    "big_integer": "123456789012345",
+    "empty_field": "",
+    "null_field": null
+}

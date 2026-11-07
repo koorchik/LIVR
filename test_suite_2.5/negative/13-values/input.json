@@ -1,0 +1,16 @@
+{
+    "stock": {"sku-1": "-5", "sku-2": 10},
+    "several_failing": {"a": "x", "b": "", "c": 3},
+    "null_inside": {"a": null},
+    "single_list_form": {"a": "", "b": 2},
+    "prototype_keys": {"__proto__": "x", "constructor": "2", "hasOwnProperty": ""},
+    "nested_objects": {"u1": {"name": "Jane Doe"}, "u2": {"email": "user@example.com"}},
+    "lists": {"a": ["1", "x"], "b": "y"},
+    "value_is_array": ["5", "6"],
+    "value_is_string": "abc",
+    "value_is_number": 5,
+    "value_is_boolean": true,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

@@ -1,0 +1,16 @@
+{
+    "missing_at": {"contains": "@"},
+    "none_of_several": [{"contains": ["foo", "bar"]}],
+    "case_sensitive": {"contains": ["foo", "bar"]},
+    "number": {"contains": "."},
+    "boolean": {"contains": "ru"},
+    "exponent": {"contains": "e"},
+    "minus_zero": {"contains": "-"},
+    "one_point_zero": {"contains": "."},
+    "empty_field": {"contains": "@"},
+    "null_field": {"contains": "@"},
+    "value_is_hash": {"contains": "@"},
+    "value_is_empty_hash": {"contains": "@"},
+    "value_is_array": {"contains": "@"},
+    "value_is_empty_array": {"contains": "@"}
+}

@@ -1,0 +1,11 @@
+{
+    "metadata": "any",
+    "required_missing": ["required", "any"],
+    "required_null": ["required", "any"],
+    "required_empty": ["required", "any"],
+    "empty_kept_for_next_rule": ["any", "required"],
+    "null_kept_for_next_rule": ["any", "required"],
+    "object_to_nested_object": ["any", {"nested_object": {"a": "required"}}],
+    "list_to_list_of": ["any", {"list_of": "positive_integer"}],
+    "object_to_string": ["any", "string"]
+}

@@ -1,0 +1,14 @@
+{
+    "missing_at": "WRONG_FORMAT",
+    "none_of_several": "WRONG_FORMAT",
+    "case_sensitive": "WRONG_FORMAT",
+    "number": "WRONG_FORMAT",
+    "boolean": "WRONG_FORMAT",
+    "exponent": "WRONG_FORMAT",
+    "minus_zero": "WRONG_FORMAT",
+    "one_point_zero": "WRONG_FORMAT",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

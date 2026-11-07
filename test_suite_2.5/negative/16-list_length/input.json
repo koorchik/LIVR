@@ -1,0 +1,19 @@
+{
+    "tags_too_many": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "pair_one": [1],
+    "pair_three": [1, 2, 3],
+    "pair_in_list": [1, 2, 3],
+    "exact_zero": [1],
+    "items_max": [1, 2, 3],
+    "min_and_max_object_low": [1],
+    "min_and_max_object_high": [1, 2, 3, 4],
+    "string_argument": [1],
+    "string_option": [1, 2],
+    "value_is_hash": {"test": 1},
+    "value_is_string": "abc",
+    "value_is_number": 5,
+    "value_is_boolean": true,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

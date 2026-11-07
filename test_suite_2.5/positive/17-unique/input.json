@@ -1,0 +1,43 @@
+{
+    "tags": ["a", "b", "c"],
+    "tags_rule_list": ["a", "A"],
+    "tags_empty_arguments": [1, 2, "3"],
+    "decimal_string_vs_number": ["1.0", 1],
+    "true_vs_one": [true, 1, "false", 0],
+    "empty_items_ignored": ["a", "", null, "", null, "b"],
+    "users": [{"id": 1, "name": "Jane Doe"}, {"id": 2, "name": "Jane Doe"}],
+    "users_key_in_list": [{"id": "1"}, {"id": "01"}],
+    "addresses": [
+        {"country": "UA", "zip": "01001"},
+        {"country": "UA", "zip": "01002"},
+        {"country": "PL", "zip": "01001"}
+    ],
+    "empty_key_values_ignored": [
+        {"id": 1},
+        {"id": ""},
+        {"id": ""},
+        {"name": "x"},
+        {"name": "y"},
+        {"id": null},
+        {"id": null}
+    ],
+    "empty_items_with_keys_ignored": [{"id": 1}, null, "", null, "", {"id": 2}],
+    "empty_one_of_keys_ignored": [
+        {"country": "UA", "zip": ""},
+        {"country": "UA", "zip": ""},
+        {"country": "UA"},
+        {"country": "UA"}
+    ],
+    "composite_pipe_not_joined": [{"a": "a|b", "b": "c"}, {"a": "a", "b": "b|c"}],
+    "composite_comma_not_joined": [{"a": "a,b", "b": "c"}, {"a": "a", "b": "b,c"}],
+    "composite_null_char_not_joined": [{"a": "a\u0000b", "b": "c"}, {"a": "a", "b": "b\u0000c"}],
+    "composite_json_like_not_joined": [{"a": "x\",\"y", "b": "z"}, {"a": "x", "b": "y\",\"z"}],
+    "composite_swapped_values": [{"a": "1", "b": "2"}, {"a": "2", "b": "1"}],
+    "fraction_vs_trailing_zero_string": [0.1, "0.10"],
+    "exponent_vs_exponent_string": [1e3, "1e3"],
+    "separator_in_items": ["a,b", "a", "b"],
+    "true_vs_one_key": [{"id": true}, {"id": 1}],
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

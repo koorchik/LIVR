@@ -1,0 +1,15 @@
+{
+    "metadata": {"a": {"b": [1, {"c": null}]}, "d": ""},
+    "empty_object": {},
+    "list": [1, "two", {"three": 3}, [4], null],
+    "empty_list": [],
+    "string": "text",
+    "number": 1.5,
+    "number_string": "1.50",
+    "boolean": false,
+    "zero": 0,
+    "required_any": {"x": 1},
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

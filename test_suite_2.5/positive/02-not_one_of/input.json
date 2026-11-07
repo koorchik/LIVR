@@ -1,0 +1,19 @@
+{
+    "username": "user",
+    "status": "active",
+    "rule_in_list": "guest",
+    "case_sensitive": "Admin",
+    "number_value": 2,
+    "number_arguments": "4",
+    "decimal_string_vs_number": "1.0",
+    "leading_zero_vs_number": "01",
+    "boolean_value": false,
+    "true_vs_one": true,
+    "one_vs_true": 1,
+    "with_spaces": " admin",
+    "exponent_vs_exponent_string": 1e3,
+    "minus_zero_vs_minus_zero_string": -0.0,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

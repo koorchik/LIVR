@@ -1,0 +1,12 @@
+{
+    "password": "s3cret",
+    "password2": "s3cret!",
+    "password3": "S3CRET",
+    "password4": "",
+    "either": "other",
+    "account": { "password": "abc", "password2": "s3cret" },
+    "users": [{ "password": "x1", "password2": "x1" }, { "password": "y2", "password2": "s3cret" }],
+    "copies": ["s3cret", ""],
+    "alias_copies": ["s3cret"],
+    "value_copies": { "password": "s3cret", "other": "s3cret" }
+}

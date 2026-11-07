@@ -1,0 +1,17 @@
+{
+    "ipv4": "cidr",
+    "ipv4_host_bits": ["cidr"],
+    "ipv4_zero_prefix": {"cidr": []},
+    "ipv4_host": "cidr",
+    "ipv6": "cidr",
+    "ipv6_zero_prefix": "cidr",
+    "ipv6_host": "cidr",
+    "ipv6_host_bits": "cidr",
+    "ipv6_embedded_ipv4": "cidr",
+    "only_ipv4": {"cidr": "v4"},
+    "only_ipv6": {"cidr": "v6"},
+    "only_ipv6_in_list": {"cidr": ["v6"]},
+    "empty_field": "cidr",
+    "null_field": "cidr",
+    "missing_field": "cidr"
+}

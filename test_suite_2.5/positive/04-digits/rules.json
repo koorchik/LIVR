@@ -1,0 +1,18 @@
+{
+    "zip": "digits",
+    "leading_zeros": ["digits"],
+    "number": {"digits": []},
+    "zero_string": "digits",
+    "zero_number": "digits",
+    "all_digits": "digits",
+    "otp": ["digits", {"length_equal": 6}],
+    "otp_number": ["digits", {"length_equal": 6}],
+    "one_point_zero": "digits",
+    "minus_zero": "digits",
+    "hundred": "digits",
+    "exponent": "digits",
+    "big_integer": "digits",
+    "empty_field": "digits",
+    "null_field": "digits",
+    "missing_field": "digits"
+}

@@ -1,0 +1,93 @@
+{
+    "contact_email_only": {
+        "email": "user@example.com"
+    },
+    "contact_phone_only": {
+        "phone": "+15555550100"
+    },
+    "contact_both": {
+        "email": "user@example.com",
+        "phone": "+15555550100"
+    },
+    "customer_type": "company",
+    "vat_number": "UA12345678",
+    "person_type": "person",
+    "person_vat_empty": "",
+    "person_vat_null": null,
+    "subscribe": true,
+    "newsletter_email": "user@example.com",
+    "email_true_string": "user@example.com",
+    "unsubscribed": false,
+    "to_upper": "ABC",
+    "to_lower": "abc",
+    "three_args_true": 42,
+    "three_args_false": "abc",
+    "any_true_branch": "AbC",
+    "any_false_branch": "AbC",
+    "required_condition": "ABC",
+    "required_condition_empty_ref": "abc",
+    "contact_required_condition": {"phone": "+15555550100"},
+    "seller_country": "UA",
+    "buyer": {"country": "UA", "seller_country": "PL"},
+    "buyer_vat": "UA12345678",
+    "cond_empty_ref": "abc",
+    "cond_null_ref": "abc",
+    "cond_missing_ref": "abc",
+    "count_ref": "5",
+    "count_check": "ABC",
+    "address": {
+        "country": "UA"
+    },
+    "zip": "01001",
+    "pickup_point": "Point 1",
+    "cond_default": 10,
+    "pay_type": "card",
+    "data": {
+        "number": "4111111111111111"
+    },
+    "pay_type_bank": "bank",
+    "data_bank": {
+        "iban": "GB82WEST12345698765432"
+    },
+    "level_case": "ABC",
+    "level_one_point_zero_case": "abc",
+    "admin_case": "ABC",
+    "admin_false_case": "abc",
+    "switch_eq_empty_empty": "",
+    "switch_default": "dflt",
+    "switch_rule_list": "ABC",
+    "kind": "str",
+    "entries": [
+        {
+            "kind": "num",
+            "value": 5
+        },
+        {
+            "kind": "str",
+            "value": "abc"
+        }
+    ],
+    "switch_missing_ref_empty_value": "",
+    "switch_empty_ref_null_value": null,
+    "switch_null_ref_empty_value": "",
+    "switch_unknown_ref_empty_value": "",
+    "switch_unknown_ref_null_value": null,
+    "switch_object_ref_empty_value": "",
+    "data_type_missing_empty": "",
+    "switch_any_case": {"a": [1], "b": null},
+    "level_minus_zero_case": "ABC",
+    "level_exponent_case": "ABC",
+    "mode_padded": "upper",
+    "mode_padded_case": "abc",
+    "pay_type_mixed": "card",
+    "pay_type_mixed_case": "abc",
+    "or_when": "ABC",
+    "or_when_switch": 5,
+    "nested_no_root": {"v": "abc"},
+    "variable_entry": {"kind": "num", "value": 7},
+    "different_entries": [{"kind": "num", "value": 8}],
+    "list_cases": ["abc"],
+    "list_cases_index": ["abc", "upper"],
+    "value_cases": {"a": "abc", "mode_upper": "upper"},
+    "key_cases": {"a": 1}
+}

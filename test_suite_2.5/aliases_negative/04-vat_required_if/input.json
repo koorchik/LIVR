@@ -1,0 +1,8 @@
+{
+    "type": "company",
+    "strict_vat_number": "",
+    "bad_strict_vat_number": "ua12345678",
+    "person": { "type": "company", "vat_number": null },
+    "company": { "type": "company" },
+    "members": [{ "type": "company" }, { "type": "person" }, { "type": "company", "vat_number": "" }]
+}

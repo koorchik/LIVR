@@ -1,0 +1,28 @@
+{
+    "colons": "mac",
+    "dashes": [
+        "mac"
+    ],
+    "uppercase": {
+        "mac": []
+    },
+    "empty_field": "mac",
+    "null_field": "mac",
+    "missing_field": "mac",
+    "mac48_explicit": {
+        "mac": 48
+    },
+    "eui64_colons": {
+        "mac": 64
+    },
+    "eui64_dashes": [
+        {
+            "mac": 64
+        }
+    ],
+    "eui64_empty": {
+        "mac": 64
+    },
+    "string_argument": {"mac": "64"},
+    "string_argument_48": {"mac": "48"}
+}

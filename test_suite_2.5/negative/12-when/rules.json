@@ -1,0 +1,249 @@
+{
+    "contact_none": {
+        "nested_object": {
+            "email": {"when": ["phone", "not_empty", "email", ["required", "email"]]},
+            "phone": {"when": ["email", "not_empty", "string", ["required", "string"]]}
+        }
+    },
+    "contact_bad_email": {
+        "nested_object": {
+            "email": {"when": ["phone", "not_empty", "email", ["required", "email"]]},
+            "phone": {"when": ["email", "not_empty", "string", ["required", "string"]]}
+        }
+    },
+    "contact_empty_values": {
+        "nested_object": {
+            "email": {"when": ["phone", "not_empty", "email", ["required", "email"]]},
+            "phone": {"when": ["email", "not_empty", "string", ["required", "string"]]}
+        }
+    },
+    "customer_type": "string",
+    "vat_missing": {
+        "when": [
+            "customer_type",
+            {"eq": "company"},
+            ["required", {"like": "^[A-Z]{2}[0-9]{8,12}$"}],
+            {"eq": ""}
+        ]
+    },
+    "vat_bad": {
+        "when": [
+            "customer_type",
+            {"eq": "company"},
+            ["required", {"like": "^[A-Z]{2}[0-9]{8,12}$"}],
+            {"eq": ""}
+        ]
+    },
+    "person_type": "string",
+    "person_vat": {
+        "when": ["person_type", {"eq": "company"}, ["required", {"like": "^[A-Z]{2}[0-9]{8,12}$"}], {"eq": ""}]
+    },
+    "person_vat_zero": {
+        "when": ["person_type", {"eq": "company"}, ["required", {"like": "^[A-Z]{2}[0-9]{8,12}$"}], {"eq": ""}]
+    },
+    "missing_type_vat": {
+        "when": [
+            "no_such_field",
+            {"eq": "company"},
+            ["required", {"like": "^[A-Z]{2}[0-9]{8,12}$"}],
+            {"eq": ""}
+        ]
+    },
+    "email_subscribe": ["email", {"when": ["subscribe", ["boolean", {"eq": true}], "required"]}],
+    "email_subscribe_bad": ["email", {"when": ["subscribe", ["boolean", {"eq": true}], "required"]}],
+    "email_subscribe_true": ["email", {"when": ["subscribe_true", ["boolean", {"eq": true}], "required"]}],
+    "email_subscribe_true_string": [
+        "email",
+        {"when": ["subscribe_true_string", ["boolean", {"eq": true}], "required"]}
+    ],
+    "pipe_false": {"when": ["flag_zero", ["boolean", {"eq": true}], "to_uc", "required"]},
+    "cond_empty_ref": {"when": ["empty_ref", "string", "to_uc", "required"]},
+    "cond_missing_ref": {"when": ["no_such_field", "string", "to_uc", "required"]},
+    "cond_true_error": {"when": ["mode_num", {"eq": "num"}, "positive_integer", "email"]},
+    "cond_false_error": {"when": ["mode_other", {"eq": "num"}, "positive_integer", "email"]},
+    "zip": {"when": ["address/country", {"eq": "UA"}, ["required", "digits"], {"eq": ""}]},
+    "zip_bad": {"when": ["address/country", {"eq": "UA"}, ["required", "digits"], {"eq": ""}]},
+    "zip_us": {"when": ["address_us/country", {"eq": "UA"}, ["required", "digits"], {"eq": ""}]},
+    "data_cash": [
+        "required",
+        {
+            "when": [
+                "pay_cash",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_upper": [
+        "required",
+        {
+            "when": [
+                "pay_upper",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_object": [
+        "required",
+        {
+            "when": [
+                "pay_object",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_list": [
+        "required",
+        {
+            "when": [
+                "pay_list",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_constructor": [
+        "required",
+        {
+            "when": [
+                "pay_constructor",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_to_string": [
+        "required",
+        {
+            "when": [
+                "pay_to_string",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_proto": [
+        "required",
+        {
+            "when": [
+                "pay_proto",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_card": [
+        "required",
+        {
+            "when": [
+                "pay_card",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_card_empty": [
+        "required",
+        {
+            "when": [
+                "pay_card",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_card_missing": [
+        "required",
+        {
+            "when": [
+                "pay_card",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "data_card_not_object": [
+        "required",
+        {
+            "when": [
+                "pay_card",
+                {
+                    "card": {"nested_object": {"number": ["required", "credit_card"]}},
+                    "bank": {"nested_object": {"iban": ["required", "iban"]}}
+                }
+            ]
+        }
+    ],
+    "level_decimal_string_case": {"when": ["level_decimal_string", {"-1": "to_lc", "-2": "to_uc"}]},
+    "level_minus_zero_switch": {"when": ["level_minus_zero", {"-0": "to_lc"}]},
+    "required_condition": {"when": ["mode_num", "required", "required"]},
+    "seller_country": "string",
+    "buyer": "any",
+    "buyer_vat": {"when": ["buyer/country", {"equal_to_field": "seller_country"}, "required", {"eq": ""}]},
+    "buyer_ua": "any",
+    "buyer_ua_vat": {"when": ["buyer_ua/country", {"equal_to_field": "seller_country"}, "required", {"eq": ""}]},
+    "switch_eq_empty": {"when": ["kind_x", {"x": {"eq": ""}, "y": "required"}]},
+    "switch_required": {"when": ["kind_y", {"x": {"eq": ""}, "y": "required"}]},
+    "switch_required_missing": {"when": ["kind_y", {"x": {"eq": ""}, "y": "required"}]},
+    "kind": "string",
+    "entries": {
+        "list_of_objects": {
+            "kind": "required",
+            "value": {"when": ["kind", {"num": "positive_integer", "str": "string"}]}
+        }
+    },
+    "switch_missing_ref": {"when": ["no_such_field", {"a": "positive_integer"}]},
+    "switch_empty_ref": {"when": ["empty_ref", {"a": "positive_integer"}]},
+    "null_ref": "string",
+    "switch_null_ref": {"when": ["null_ref", {"a": "positive_integer"}]},
+    "switch_empty_ref_zero": {"when": ["empty_ref", {"a": "positive_integer"}]},
+    "switch_empty_ref_false": {"when": ["empty_ref", {"a": "positive_integer"}]},
+    "switch_missing_ref_empty_object": {"when": ["no_such_field", {"a": "positive_integer"}]},
+    "switch_missing_ref_empty_list": {"when": ["no_such_field", {"a": "any"}]},
+    "switch_unknown_ref_any_case": {"when": ["kind_y", {"x": "any"}]},
+    "data_type_missing": ["required", {"when": ["no_such_type", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]}],
+    "data_type_missing_without_required": {"when": ["no_such_type", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]},
+    "data_type_empty": ["required", {"when": ["empty_ref", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]}],
+    "data_type_null": {"when": ["null_ref", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]},
+    "data_type_missing_data_missing": ["required", {"when": ["no_such_type", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]}],
+    "data_type_missing_data_empty": ["required", {"when": ["no_such_type", {"card": {"nested_object": {"number": ["required", "credit_card"]}}, "bank": {"nested_object": {"iban": ["required", "iban"]}}}]}],
+    "mode_padded": "trim",
+    "mode_padded_switch": {"when": ["mode_padded", {"num": "positive_integer"}]},
+    "mode_upper": "to_lc",
+    "mode_upper_switch": {"when": ["mode_upper", {"num": "positive_integer"}]},
+    "letters": {"list_of": "string"},
+    "index_leading_zero_switch": {"when": ["letters/01", {"b": "string"}]},
+    "index_switch": {"when": ["letters/1", {"b": "positive_integer"}]},
+    "or_switch": {"or": [["required", {"eq": "none"}], {"when": ["kind", {"str": "positive_integer"}]}]},
+    "or_condition": {"or": [["required", {"eq": "none"}], {"when": ["mode_num", {"eq": "num"}, ["required", "positive_integer"]]}]},
+    "list_switch": {"list_of": {"when": ["kind", {"str": "string"}]}},
+    "value_switch": {"values": {"when": ["kind", {"str": "string"}]}},
+    "key_switch": {"keys": {"when": ["kind", {"str": "string"}]}},
+    "list_switch_index": {"list_of": {"when": ["1", {"str": "string"}]}},
+    "list_condition": {"list_of": {"when": ["kind", {"eq": "str"}, "string", {"eq": ""}]}},
+    "nested_no_root": {"nested_object": {"v": {"when": ["kind", {"str": "string"}]}}},
+    "variable_entry": {"variable_object": ["kind", {"num": {"kind": "required", "value": {"when": ["kind", {"num": "positive_integer", "str": "string"}]}}}]},
+    "different_entries": {"list_of_different_objects": ["kind", {"num": {"kind": "required", "value": {"when": ["kind", {"num": "positive_integer", "str": "string"}]}}, "str": {"kind": "required", "value": {"when": ["kind", {"num": "positive_integer", "str": "string"}]}}}]}
+}

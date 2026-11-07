@@ -1,0 +1,15 @@
+{
+    "metadata": "any",
+    "empty_object": ["any"],
+    "list": {"any": []},
+    "empty_list": "any",
+    "string": "any",
+    "number": "any",
+    "number_string": "any",
+    "boolean": "any",
+    "zero": "any",
+    "required_any": ["required", "any"],
+    "empty_field": "any",
+    "null_field": "any",
+    "missing_field": "any"
+}

@@ -1,0 +1,19 @@
+{
+    "too_short": "mongo_id",
+    "too_long": ["mongo_id"],
+    "not_hex": {"mongo_id": []},
+    "with_space": "mongo_id",
+    "object_id_call": "mongo_id",
+    "number": "mongo_id",
+    "trailing_newline": "mongo_id",
+    "arabic_indic_digit": "mongo_id",
+    "fullwidth_letter": "mongo_id",
+    "boolean_true": "mongo_id",
+    "boolean_false": "mongo_id",
+    "empty_field": "mongo_id",
+    "null_field": "mongo_id",
+    "value_is_hash": "mongo_id",
+    "value_is_empty_hash": "mongo_id",
+    "value_is_array": "mongo_id",
+    "value_is_empty_array": "mongo_id"
+}

@@ -1,0 +1,7 @@
+[
+    {
+        "name": "uuid_v4",
+        "rules": { "uuid": 4 },
+        "error": "WRONG_ID"
+    }
+]

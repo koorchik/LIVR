@@ -1,0 +1,20 @@
+{
+    "too_short": "507f1f77bcf86cd79943901",
+    "too_long": "507f1f77bcf86cd7994390111",
+    "not_hex": "507f1f77bcf86cd79943901z",
+    "with_space": " 507f1f77bcf86cd799439011",
+    "object_id_call": "ObjectId(\"507f1f77bcf86cd799439011\")",
+    "number": 123,
+    "trailing_newline": "507f1f77bcf86cd799439011\n",
+    "arabic_indic_digit": "507f1f77bcf86cd79943901١",
+    "fullwidth_letter": "507ｆ1f77bcf86cd799439011",
+    "boolean_true": true,
+    "boolean_false": false,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}

@@ -1,0 +1,9 @@
+{
+    "type": ["required", { "one_of": ["person", "company", "ngo"] }],
+    "vat_number": "vat",
+    "strict_vat_number": "strict_vat",
+    "bad_strict_vat_number": "strict_vat",
+    "person": { "nested_object": { "type": "required", "vat_number": "vat" } },
+    "company": { "nested_object": { "type": "required", "vat_number": "strict_vat" } },
+    "members": { "list_of_objects": { "type": "required", "vat_number": "vat_with_custom_error" } }
+}

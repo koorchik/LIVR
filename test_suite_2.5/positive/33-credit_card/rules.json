@@ -1,0 +1,13 @@
+{
+    "visa": "credit_card",
+    "mastercard": ["credit_card"],
+    "amex": {"credit_card": []},
+    "discover": "credit_card",
+    "twelve_digits": "credit_card",
+    "fourteen_digits": "credit_card",
+    "nineteen_digits": "credit_card",
+    "number": "credit_card",
+    "empty_field": "credit_card",
+    "null_field": "credit_card",
+    "missing_field": "credit_card"
+}

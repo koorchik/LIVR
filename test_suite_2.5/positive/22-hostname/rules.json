@@ -1,0 +1,21 @@
+{
+    "domain": "hostname",
+    "single_label": ["hostname"],
+    "single_char": {"hostname": []},
+    "subdomains": "hostname",
+    "hyphens": "hostname",
+    "uppercase": "hostname",
+    "punycode": "hostname",
+    "digit_labels": "hostname",
+    "digit_labels_except_last": "hostname",
+    "labels_with_digits": "hostname",
+    "last_label_ends_with_digit": "hostname",
+    "last_label_starts_with_digit": "hostname",
+    "true_string": "hostname",
+    "label_starts_with_digit": "hostname",
+    "label_63": "hostname",
+    "total_253": "hostname",
+    "empty_field": "hostname",
+    "null_field": "hostname",
+    "missing_field": "hostname"
+}

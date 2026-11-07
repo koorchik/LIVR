@@ -1,0 +1,11 @@
+{
+    "metadata": {"a": {"b": [1]}},
+    "required_null": null,
+    "required_empty": "",
+    "empty_kept_for_next_rule": "",
+    "null_kept_for_next_rule": null,
+    "object_to_nested_object": {"b": 1},
+    "list_to_list_of": [1, "x"],
+    "object_to_string": {"a": 1},
+    "extra_field": "extra"
+}

@@ -1,0 +1,128 @@
+{
+    "hour_24": "iso_time",
+    "one_digit_hour": [
+        "iso_time"
+    ],
+    "minute_60": "iso_time",
+    "second_60": "iso_time",
+    "one_digit_second": "iso_time",
+    "ten_fraction_digits": "iso_time",
+    "dot_without_digits": "iso_time",
+    "fraction_without_seconds": "iso_time",
+    "utc_offset": "iso_time",
+    "numeric_offset": "iso_time",
+    "without_colon": "iso_time",
+    "dot_separator": "iso_time",
+    "t_prefix": "iso_time",
+    "hour_only": "iso_time",
+    "trailing_space": "iso_time",
+    "trailing_newline": "iso_time",
+    "datetime": "iso_time",
+    "number": "iso_time",
+    "decimal_number": "iso_time",
+    "boolean": "iso_time",
+    "boolean_false_empty_options": {"iso_time": {}},
+    "boolean_with_bounds": {"iso_time": {"min": "09:00", "max": "18:00"}},
+    "arabic_indic_digits": "iso_time",
+    "arabic_indic_digit_in_minutes": "iso_time",
+    "fullwidth_digits": "iso_time",
+    "arabic_indic_fraction": "iso_time",
+    "arabic_indic_digits_with_bounds": {"iso_time": {"min": "09:00", "max": "18:00"}},
+    "trailing_newline_with_bounds": {"iso_time": {"min": "09:00", "max": "18:00"}},
+    "trailing_newline_after_seconds": "iso_time",
+    "leading_newline": "iso_time",
+    "empty_field": "iso_time",
+    "null_field": "iso_time",
+    "value_is_hash": "iso_time",
+    "value_is_empty_hash": "iso_time",
+    "value_is_array": "iso_time",
+    "value_is_empty_array": "iso_time",
+    "bounds_before_min": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_after_max": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "only_min_before": {
+        "iso_time": {
+            "min": "09:00"
+        }
+    },
+    "only_max_after": {
+        "iso_time": {
+            "max": "18:00"
+        }
+    },
+    "same_min_and_max_other": {
+        "iso_time": {
+            "min": "12:00",
+            "max": "12:00"
+        }
+    },
+    "night_just_after_max": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_near_max": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_near_min": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_middle_of_gap": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_just_before_middle": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_just_after_middle": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_middle_with_fraction": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "night_just_before_min": {
+        "iso_time": {
+            "min": "22:00",
+            "max": "06:00"
+        }
+    },
+    "bounds_wrong_time": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    },
+    "bounds_value_is_hash": {
+        "iso_time": {
+            "min": "09:00",
+            "max": "18:00"
+        }
+    }
+}

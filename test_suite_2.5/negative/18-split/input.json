@@ -1,0 +1,16 @@
+{
+    "ids": "1,2",
+    "ids_wrong_item": "1,x,3",
+    "ids_empty_part": "1,,2",
+    "ids_trailing_separator": "1,2,",
+    "ids_list_kept": ["1", "x"],
+    "ids_list_not_split": ["1,2"],
+    "number_one_item": 5,
+    "object_kept": {"a": "1,2"},
+    "empty_kept": "",
+    "null_kept": null,
+    "too_few_parts": "a,b",
+    "multi_char_separator": "a, b,c",
+    "regexp_char_separator": "abc",
+    "extra_field": "extra"
+}

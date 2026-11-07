@@ -1,0 +1,10 @@
+{
+    "type": "company",
+    "vat_number": "UA1",
+    "strict_vat_number": "UA12345678",
+    "person": { "type": "person" },
+    "company": { "type": "company", "vat_number": "PL1234567890" },
+    "members": [{ "type": "person", "vat_number": "" }, { "type": "company", "vat_number": "DE1" }],
+    "notes": ["", "x"],
+    "extra_field": "x"
+}

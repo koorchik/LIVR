@@ -1,0 +1,21 @@
+{
+    "other_scheme": "ftp://example.com",
+    "uppercase": "HTTPS://example.com",
+    "leading_space": " https://example.com",
+    "shorter_than_prefix": "http",
+    "prefix_in_the_middle": "X-ID-1",
+    "number": 312,
+    "number_string_form": 1.0,
+    "boolean": false,
+    "minus_zero": -0.0,
+    "exponent": 1e3,
+    "fraction_without_leading_zero": 0.1,
+    "number_argument": "21",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}

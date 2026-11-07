@@ -1,0 +1,11 @@
+{
+    "password": "s3cret",
+    "password2": "s3cret",
+    "password3": "s3cret",
+    "either": "s3cret",
+    "either_alias": "s3cret",
+    "account": { "password": "abc", "password2": "abc" },
+    "users": [{ "password": "x1", "password2": "x1" }, { "password": "y2", "password2": "y2" }],
+    "empty_copies": [""],
+    "extra_field": "x"
+}

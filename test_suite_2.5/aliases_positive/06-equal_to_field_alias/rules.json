@@ -1,0 +1,10 @@
+{
+    "password": "required",
+    "password2": "password_confirmation",
+    "password3": "same_as_password",
+    "either": { "or": [["required", { "eq": "none" }], { "equal_to_field": "password" }] },
+    "either_alias": { "or": [["required", { "eq": "none" }], "same_as_password"] },
+    "account": { "nested_object": { "password": "required", "password2": "password_confirmation" } },
+    "users": { "list_of_objects": { "password": "required", "password2": "same_as_password" } },
+    "empty_copies": { "list_of": "same_as_password" }
+}

@@ -1,0 +1,14 @@
+{
+    "comment": "user@example.com",
+    "comment_in_list": "@",
+    "one_of_several": "a bar b",
+    "number": "12345",
+    "number_fraction": "0.5",
+    "boolean": "true",
+    "fraction": "0.1",
+    "big_integer": "123456789012345",
+    "exponent": "1000",
+    "negative_fraction": "-12.25",
+    "empty_field": "",
+    "null_field": null
+}

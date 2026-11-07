@@ -1,0 +1,18 @@
+{
+    "other_scheme": "WRONG_FORMAT",
+    "uppercase": "WRONG_FORMAT",
+    "leading_space": "WRONG_FORMAT",
+    "shorter_than_prefix": "WRONG_FORMAT",
+    "prefix_in_the_middle": "WRONG_FORMAT",
+    "number": "WRONG_FORMAT",
+    "number_string_form": "WRONG_FORMAT",
+    "boolean": "WRONG_FORMAT",
+    "minus_zero": "WRONG_FORMAT",
+    "exponent": "WRONG_FORMAT",
+    "fraction_without_leading_zero": "WRONG_FORMAT",
+    "number_argument": "WRONG_FORMAT",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

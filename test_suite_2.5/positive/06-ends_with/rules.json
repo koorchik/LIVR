@@ -1,0 +1,15 @@
+{
+    "file": {"ends_with": ".pdf"},
+    "file_in_list": [{"ends_with": ".pdf"}],
+    "image1": {"ends_with": [".jpg", ".png"]},
+    "image2": {"ends_with": [".jpg", ".png"]},
+    "number": {"ends_with": "00"},
+    "boolean": {"ends_with": "se"},
+    "exponent": {"ends_with": "000"},
+    "minus_zero": {"ends_with": "0"},
+    "negative_fraction": {"ends_with": ".25"},
+    "big_integer": {"ends_with": "012345"},
+    "empty_field": {"ends_with": ".pdf"},
+    "null_field": {"ends_with": ".pdf"},
+    "missing_field": {"ends_with": ".pdf"}
+}

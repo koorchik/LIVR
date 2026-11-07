@@ -1,0 +1,3 @@
+{
+    "username": {"not_one_of": [["admin", "root"]]}
+}

@@ -1,0 +1,10 @@
+{
+    "translations": {"uk": "Привіт", "en": "Hello"},
+    "like_keys": {"first_name": 1, "last_name": {"x": [1]}},
+    "modifier_output_ignored": {"ab": "cd"},
+    "rule_list": {"uk": 1, "en": 2},
+    "values_not_validated": {"a": {"b": "c"}, "d": null},
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

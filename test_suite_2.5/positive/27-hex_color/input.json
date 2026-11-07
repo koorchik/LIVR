@@ -1,0 +1,9 @@
+{
+    "three": "#fff",
+    "four": "#FFFA",
+    "six": "#a1b2c3",
+    "eight": "#A1B2c3D4",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

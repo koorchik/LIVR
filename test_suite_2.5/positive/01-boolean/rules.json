@@ -1,0 +1,17 @@
+{
+    "true_value": "boolean",
+    "false_value": ["boolean"],
+    "one_number": {"boolean": []},
+    "zero_number": "boolean",
+    "one_string": "boolean",
+    "zero_string": "boolean",
+    "true_string": "boolean",
+    "false_string": "boolean",
+    "required_false": ["required", "boolean"],
+    "required_zero_string": ["required", "boolean"],
+    "one_point_zero_number": "boolean",
+    "minus_zero_number": "boolean",
+    "empty_field": "boolean",
+    "null_field": "boolean",
+    "missing_field": "boolean"
+}

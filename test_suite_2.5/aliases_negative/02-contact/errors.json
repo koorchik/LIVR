@@ -1,0 +1,5 @@
+{
+    "contact1": { "email": "REQUIRED", "phone": "REQUIRED" },
+    "contact2": { "phone": "WRONG_E164" },
+    "contact3": "WRONG_CONTACT"
+}

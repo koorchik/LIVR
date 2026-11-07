@@ -1,0 +1,8 @@
+{
+    "id": "mongo_id",
+    "uppercase": ["mongo_id"],
+    "zeros": {"mongo_id": []},
+    "empty_field": "mongo_id",
+    "null_field": "mongo_id",
+    "missing_field": "mongo_id"
+}

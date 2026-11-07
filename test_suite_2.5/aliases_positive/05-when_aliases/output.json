@@ -1,0 +1,14 @@
+{
+    "type": "company",
+    "vat_number": "UA12345678",
+    "mode": "upper",
+    "title": "ABC",
+    "subtitle": "ABC",
+    "pay_type": "bank",
+    "data": { "iban": "GB82WEST12345698765432" },
+    "person": { "type": "person" },
+    "sections": [{ "mode": "lower", "title": "abc" }, { "mode": "upper", "title": "ABC" }],
+    "items": ["abc"],
+    "labels": { "mode": "upper", "a": "abc" },
+    "either": "ABC"
+}

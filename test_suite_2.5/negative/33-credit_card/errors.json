@@ -1,0 +1,20 @@
+{
+    "wrong_checksum": "WRONG_CREDIT_CARD_NUMBER",
+    "eleven_digits": "WRONG_CREDIT_CARD_NUMBER",
+    "twenty_digits": "WRONG_CREDIT_CARD_NUMBER",
+    "spaces": "WRONG_CREDIT_CARD_NUMBER",
+    "dashes": "WRONG_CREDIT_CARD_NUMBER",
+    "letter": "WRONG_CREDIT_CARD_NUMBER",
+    "number": "WRONG_CREDIT_CARD_NUMBER",
+    "trailing_newline": "WRONG_CREDIT_CARD_NUMBER",
+    "leading_space": "WRONG_CREDIT_CARD_NUMBER",
+    "arabic_indic_digits": "WRONG_CREDIT_CARD_NUMBER",
+    "fullwidth_digit": "WRONG_CREDIT_CARD_NUMBER",
+    "fraction_number": "WRONG_CREDIT_CARD_NUMBER",
+    "boolean_true": "WRONG_CREDIT_CARD_NUMBER",
+    "boolean_false": "WRONG_CREDIT_CARD_NUMBER",
+    "value_is_hash": "FORMAT_ERROR",
+    "value_is_empty_hash": "FORMAT_ERROR",
+    "value_is_array": "FORMAT_ERROR",
+    "value_is_empty_array": "FORMAT_ERROR"
+}

@@ -1,0 +1,9 @@
+{
+    "three": "hex_color",
+    "four": ["hex_color"],
+    "six": {"hex_color": []},
+    "eight": "hex_color",
+    "empty_field": "hex_color",
+    "null_field": "hex_color",
+    "missing_field": "hex_color"
+}

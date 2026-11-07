@@ -1,0 +1,15 @@
+{
+    "mixed_case": "deadBEEF",
+    "single_digit": "0",
+    "all_digits": "0123456789abcdefABCDEF",
+    "odd_length": "abc",
+    "number": 123,
+    "one_point_zero_number": 1.0,
+    "minus_zero_number": -0.0,
+    "hundred_number": 100,
+    "exponent_number": 1e3,
+    "big_integer": 123456789012345,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

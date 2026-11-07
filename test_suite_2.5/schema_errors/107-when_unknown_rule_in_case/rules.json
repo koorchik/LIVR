@@ -1,0 +1,3 @@
+{
+    "data": {"when": ["type", {"card": "required", "bank": "no_such_rule"}]}
+}

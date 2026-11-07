@@ -1,0 +1,15 @@
+{
+    "mixed_case": "hex",
+    "single_digit": ["hex"],
+    "all_digits": {"hex": []},
+    "odd_length": "hex",
+    "number": "hex",
+    "one_point_zero_number": "hex",
+    "minus_zero_number": "hex",
+    "hundred_number": "hex",
+    "exponent_number": "hex",
+    "big_integer": "hex",
+    "empty_field": "hex",
+    "null_field": "hex",
+    "missing_field": "hex"
+}

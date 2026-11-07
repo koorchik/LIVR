@@ -1,0 +1,3 @@
+{
+    "zip": {"when": ["address//country", {"eq": "UA"}, "required"]}
+}

@@ -1,0 +1,14 @@
+{
+    "type": "company",
+    "vat_number": "UA12345678",
+    "mode": "upper",
+    "title": "AbC",
+    "subtitle": " AbC ",
+    "pay_type": "bank",
+    "data": { "iban": "GB82WEST12345698765432", "holder": "Jane Doe" },
+    "person": { "type": "person" },
+    "sections": [{ "mode": "lower", "title": "AbC" }, { "mode": "upper", "title": "AbC" }],
+    "items": ["AbC"],
+    "labels": { "mode": "upper", "a": "AbC" },
+    "either": "AbC"
+}

@@ -1,0 +1,18 @@
+{
+    "other_extension": {"ends_with": ".pdf"},
+    "uppercase": [{"ends_with": ".pdf"}],
+    "trailing_space": {"ends_with": ".pdf"},
+    "suffix_in_the_middle": {"ends_with": ".pdf"},
+    "image": {"ends_with": [".jpg", ".png"]},
+    "number_string_form": {"ends_with": "0"},
+    "boolean": {"ends_with": "se"},
+    "one_point_zero": {"ends_with": ".0"},
+    "exponent": {"ends_with": "e3"},
+    "trailing_newline": {"ends_with": ".pdf"},
+    "empty_field": {"ends_with": ".pdf"},
+    "null_field": {"ends_with": ".pdf"},
+    "value_is_hash": {"ends_with": ".pdf"},
+    "value_is_empty_hash": {"ends_with": ".pdf"},
+    "value_is_array": {"ends_with": ".pdf"},
+    "value_is_empty_array": {"ends_with": ".pdf"}
+}

@@ -1,0 +1,9 @@
+{
+    "phone": "+15555550100",
+    "min_length": "+1234567",
+    "max_length": "+123456789012345",
+    "zeros_after_first": "+10000000",
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra"
+}

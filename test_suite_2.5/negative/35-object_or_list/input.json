@@ -1,0 +1,12 @@
+{
+    "values_empty_list": [],
+    "keys_empty_list": [],
+    "list_length_empty_list": [],
+    "list_length_min_empty_list": [],
+    "list_length_empty_object": {},
+    "unique_empty_object": {},
+    "unique_with_key_empty_object": {},
+    "keys_numeric_keys": {"0": 1, "a": 2, "5": 3},
+    "required_if_codes": {"0": "UA", "1": "PL"},
+    "extra_field": "extra"
+}

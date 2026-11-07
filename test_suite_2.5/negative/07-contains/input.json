@@ -1,0 +1,17 @@
+{
+    "missing_at": "user.example.com",
+    "none_of_several": "baz",
+    "case_sensitive": "FOO",
+    "number": 2.0,
+    "boolean": false,
+    "exponent": 1e3,
+    "minus_zero": -0.0,
+    "one_point_zero": 1.0,
+    "empty_field": "",
+    "null_field": null,
+    "extra_field": "extra",
+    "value_is_hash": {"test": 1},
+    "value_is_empty_hash": {},
+    "value_is_array": ["test", 1],
+    "value_is_empty_array": []
+}
