@@ -17,7 +17,8 @@ const REGISTRY_LABELS: Record<string, string> = {
   luarocks: 'LuaRocks',
   raku: 'raku.land',
   cocoapods: 'CocoaPods',
-  pub: 'pub.dev'
+  pub: 'pub.dev',
+  crates: 'crates.io'
 }
 
 // Cards go by test suite result: all cases pass first, failing ones last. Implementations

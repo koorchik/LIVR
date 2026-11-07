@@ -1,1 +1,4 @@
 out/
+# Built by "cargo run" in conformance/rust; no Cargo.lock, so every run gets the latest livr 0.1.x
+rust/target/
+rust/Cargo.lock

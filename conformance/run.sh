@@ -18,7 +18,7 @@ HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(dirname "$HERE")"
 OUT_DIR="${OUT_DIR:-$HERE/out}"
 
-IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift dart)
+IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift dart rust)
 
 # Harnesses that fix the clock from options.json (the current time), the way the tests of their
 # implementation do. The other implementations get a copy of the 2.5 suite without such cases.
@@ -46,6 +46,7 @@ image_for() {
         go)            echo "golang:1.23" ;;
         swift)         echo "swift:5.10" ;;
         dart)          echo "dart:3" ;;
+        rust)          echo "rust:1-slim" ;;
         *)             return 1 ;;
     esac
 }
