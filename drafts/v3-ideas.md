@@ -5,6 +5,9 @@
 > Everything here is a proposal: nothing is decided unless it is marked as decided.
 >
 > Started: 2026-10-18.
+>
+> Many new rules from sections 6–8 moved to the LIVR 2.5 draft, [v2.5.md](v2.5.md), sometimes
+> with other names or syntax. Where the two files differ, v2.5.md wins.
 
 ## Contents
 
@@ -336,7 +339,56 @@ Found in the issue trackers and checked with js-validator-livr 2.11:
 | `not_empty_list` with `null` | `FORMAT_ERROR`, but `CANNOT_BE_EMPTY` for a missing value or `""` | | [7.5](#75-lists) |
 | Comparison "as strings" | Depends on the language: PHP `(string)false === ""`, Python `str(True) == "True"`. Old bugs: [js#6], [js#8], [js#9], [LIVR#23] (`4.00000000000001` equals `4` in PHP) | | [7.1](#71-types-and-numbers) |
 
+### 5.16 Types inferred from a schema: output and input
+
+Two implementations infer static types from a schema: js-validator-livr (`InferFromSchema`, in
+TypeScript) and rust-livr (`schema!`, not published yet). Both infer the type of the **output**.
+The spec says nothing about types, so each implementation decides how a rule changes the type and
+whether it makes the field present, and they already differ. Checked with js-validator-livr 2.12.1
+and rust-livr on 2026-10-27:
+
+| Rules | Valid input | Output | js-validator-livr 2.12.1 | rust-livr |
+|---|---|---|---|---|
+| `["positive_integer", {"default": 1}]` | missing, `null`, `""`, `25`, `"25"` | a number, always | `number`, present | `i64`, present |
+| `"positive_integer"` | also `""` and `null` | `""` and `null` stay as they are | `number \| undefined`: `""` and `null` are not in the type | `Option<i64>`: empty values are `None` |
+| `["required", "trim", "positive_integer"]` | `"   "`: `trim` leaves `""`, `positive_integer` skips it | `""` | `number`: `""` is not in the type | `Option<i64>`: `trim` makes the field optional again |
+| `{"eq": 1}` | `1` and `"1"` | `1`, the argument | `1 \| undefined` | `Option<i64>` |
+| `[{"one_of": ["a", "b"]}, "to_uc"]` | `"a"`, `"b"` | `"A"`, `"B"` | `"A" \| "B" \| undefined` | `Option<String>` |
+
+There are two problems.
+
+**The output type is not the type of a valid input.** `default` makes the field present in the
+output, but a client may leave it out. Numeric rules accept `"25"`, `one_of` and `eq` compare as
+strings. A typed client that takes the output type as the type of its requests (for example
+through OpenAPI generated from the types) has to send every field with a `default`, and cannot send
+what a form gives (`"25"`). For a client that the team controls, the stricter type is usually what
+it wants: numbers as numbers, values in their canonical form. `default` is the exception: the client
+has to know and send the default, which is a decision of the server.
+
+**Output types that do not match the output.** Rules skip empty values, so `""` and `null` reach
+the output of optional fields and of fields emptied by a modifier, where js-validator-livr types a
+number (the second and the third rows). rust-livr turns empty values of optional fields into
+`None`, and `trim`, `remove` and `leave_only` make a field optional again, since they can leave
+`""`. The price: `["required", "trim"]` is optional in the type, and `["trim", "required"]` is the
+order that gives a required string.
+
+Proposal:
+
+- For every rule, the spec defines its effect on the type: the output type (from the arguments and
+  the type before the rule) and whether the rule makes the field present. Typed implementations
+  then agree, and test_suite cases can carry the expected type next to the output.
+- The spec defines two types of a schema:
+  - **output**: what validation returns, with the empty values of optional fields (`""`, `null`)
+    in it, or with a rule that typed implementations make them absent;
+  - **strict input**: what a typed client sends. It has the output types (`25`, not `"25"`; the
+    values of `one_of`), and a field is present only through `required` or `not_empty_list`, not
+    through `default`.
+- Modifiers that can empty a value (`trim`, `remove`, `leave_only`) make the field optional again,
+  or the spec recommends putting them before `required`.
+
 ## 6. Review of js-livr-extra-rules
+
+Decided for LIVR 2.5: see [v2.5.md, section 5](v2.5.md#5-migration-from-js-livr-extra-rules).
 
 | Rule | Proposal | Changes needed |
 |---|---|---|
@@ -492,6 +544,9 @@ Details:
 
 ### 7.5 Lists
 
+LIVR 2.5: `list_length` takes `{"min"}`/`{"max"}` instead of `min_items`/`max_items`, and
+`unique_items` is `unique`; `list_contains` is not in 2.5.
+
 | Rule | Tier | Error | Sources | Example |
 |---|---|---|---|---|
 | `list_length` | Core | `TOO_FEW_ITEMS`, `TOO_MANY_ITEMS` | X Z V J A F L G | `{"list_length": 3}`, `{"list_length": [1, 5]}` |
@@ -612,6 +667,9 @@ Values are not normalized by these rules. Use modifiers before them:
 `[{"remove": " -"}, "to_uc", "iban"]`.
 
 ### 7.9 Codes (`codes` module)
+
+**Rejected** (2026-10-29): `one_of` with a list from a library of the language does the same, and
+the spec would have to keep the ISO tables up to date. See [11](#11-rejected-ideas).
 
 | Rule | Error | Sources | Data |
 |---|---|---|---|
@@ -774,6 +832,10 @@ for all of them:
 
 ### 8.3 `when`
 
+LIVR 2.5 has only a positional form: `{"when": [field, condition, rules_if_true, rules_if_false]}`
+and `{"when": [field, cases]}` ([v2.5.md, 3.5](v2.5.md#35-metarules)). The object form below is
+kept for history.
+
 Condition form:
 
 ```json
@@ -832,6 +894,9 @@ Semantics:
   are needed.
 
 ### 8.4 `dict_of`
+
+LIVR 2.5: two rules, `keys` and `values`, as koorchik proposed in [LIVR#56]
+([v2.5.md, 3.5](v2.5.md#35-metarules)).
 
 ```json
 {
@@ -900,6 +965,10 @@ Semantics:
 
 ### 8.6 `tuple`
 
+Not in LIVR 2.5: postponed to 3.0, where the argument form is decided (positions as the
+arguments, `{"tuple": [["required", "decimal"], "decimal"]}`, or `{"items": [...]}`, below).
+A fixed-length list in 2.5 is `list_of` with `list_length` ([v2.5.md, 7](v2.5.md#7-not-in-25)).
+
 ```json
 { "location": { "tuple": [["required", "decimal"], ["required", "decimal"]] } }
 ```
@@ -957,6 +1026,8 @@ Alternative: a generic `all_of` that merges object outputs (Joi `match: "all"`, 
 others.
 
 ### 8.9 `any`
+
+In LIVR 2.5 as `any`.
 
 `"metadata": "any"` accepts any JSON value, including objects and lists, and copies it to the
 output unchanged. Useful on its own, in `when` branches and as `dict_of` values. Similar: Zod
@@ -1476,6 +1547,7 @@ implementations use one key silently, some apply all keys, and Perl and Raku pic
 | Several errors per field (run all rules) | Rules work like a pipe ([LIVR#57]), see [8.15](#815-evaluation-order-and-async-validation) |
 | IDNA processing in `email`, `url`, `hostname` (mapping, punycode conversion, script checks) | Needs the UTS #46 tables; IDNA2003 and IDNA2008 give different results ([7.7](#77-formats-formats-module)) |
 | Meta keys `$abort`, `$label`, `$when`, `$groups`, `$default` | See [8.13](#813-meta-keys-in-rule-objects) |
+| `country_code`, `currency_code`, `language_code` ([7.9](#79-codes-codes-module)) | `one_of` with a list from a library of the language; no ISO tables to maintain in the spec |
 | Reserved field names (`'?'` in [Validator-LIVR#12], `$root`) | Field names can be anything; options go into rule objects ([8.13](#813-meta-keys-in-rule-objects)) |
 
 ## 12. Open questions
@@ -1504,6 +1576,7 @@ implementations use one key silently, some apply all keys, and Perl and Raku pic
 | Q20 | An empty rule list `[]`: a schema error or "no rules"? | Schema error; `any` is the explicit form |
 | Q21 | `when` cases and `variable_object`: a value that matches no case | An optional `default` case, otherwise `NOT_ALLOWED_VALUE` with `allowed` |
 | Q22 | The canonical string form for comparisons | Numbers as in RFC 8785 (JCS), booleans `"true"`/`"false"` |
+| Q23 | Types of rules: does the spec define the output type and the presence effect of every rule, and a strict input type of a schema ([5.16](#516-types-inferred-from-a-schema-output-and-input))? | Yes, both; test_suite cases carry the types |
 
 ## 13. Suggested next steps
 
