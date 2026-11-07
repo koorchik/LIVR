@@ -7,7 +7,7 @@
 #   OUT_DIR=/tmp/results conformance/run.sh perl
 #   NATIVE=1 conformance/run.sh swift  # no Docker: use the host toolchain
 #                                      # (livr-swift-validator needs macOS)
-#   SUITE=2.5 conformance/run.sh js    # the LIVR 2.5 draft suite (test_suite_2.5)
+#   SUITE=2.5 conformance/run.sh js    # the LIVR 2.5 suite (test_suite_2.5)
 #
 # Results are written to $OUT_DIR/<id>.json (default: conformance/out),
 # the container log to $OUT_DIR/<id>.log. With SUITE=2.5 the files are

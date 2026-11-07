@@ -26,10 +26,14 @@ const REGISTRY_LABELS: Record<string, string> = {
 const TONE_ORDER: Record<string, number> = { ok: 0, warn: 1, muted: 2, fail: 3 }
 const rank = (item: Implementation) => TONE_ORDER[conformance(item)?.tone ?? 'muted']
 
+// LIVR 2.5 only adds rules to 2.0, so implementations of both are current
+const CURRENT_SPECS = ['2.0', '2.5']
+const isCurrent = (item: Implementation) => CURRENT_SPECS.includes(item.spec)
+
 const items = computed(() => {
   const list = data.implementations
   return props.compact
-    ? list.filter((item) => item.spec === '2.0' && !item.live.archived)
+    ? list.filter((item) => isCurrent(item) && !item.live.archived)
     : [...list].sort((a, b) => rank(a) - rank(b))
 })
 
@@ -76,7 +80,7 @@ function conformance(item: Implementation) {
   </div>
 
   <div v-else class="impl-cards">
-    <article v-for="item in items" :key="item.id" class="impl-card" :class="{ 'impl-card--muted': item.live.archived || item.spec !== '2.0' }">
+    <article v-for="item in items" :key="item.id" class="impl-card" :class="{ 'impl-card--muted': item.live.archived || !isCurrent(item) }">
       <header class="impl-card__head">
         <img v-if="item.logo" class="impl-card__logo" :src="item.logo" :alt="`${item.language} logo`" loading="lazy" />
         <span v-else class="impl-card__logo impl-fallback">{{ initials(item) }}</span>
@@ -85,7 +89,7 @@ function conformance(item: Implementation) {
             <a :href="item.repo" target="_blank" rel="noopener">{{ title(item) }}</a>
           </h3>
           <div class="impl-card__tags">
-            <span class="livr-badge" :class="item.spec === '2.0' ? 'livr-badge--brand' : 'livr-badge--warn'">LIVR {{ item.spec }}</span>
+            <span class="livr-badge" :class="isCurrent(item) ? 'livr-badge--brand' : 'livr-badge--warn'">LIVR {{ item.spec }}</span>
             <span v-if="item.live.archived" class="livr-badge livr-badge--muted">archived</span>
             <span
               v-if="conformance(item)"

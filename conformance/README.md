@@ -21,21 +21,21 @@ node conformance/merge.mjs   # merge conformance/out/*.json into conformance/out
 Each run writes `conformance/out/<id>.json` and the full install/run log to
 `conformance/out/<id>.log`.
 
-### LIVR 2.5 draft suite
+### LIVR 2.5 suite
 
 ```sh
 SUITE=2.5 conformance/run.sh js   # runs test_suite_2.5, writes conformance/out/js.v2.5.json
 ```
 
-The draft suite has the same layout as `test_suite`. A case may have `options.json` with
+The 2.5 suite has the same layout as `test_suite`. A case may have `options.json` with
 `{"now": "…"}`, the current time for `iso_date` bounds. Only harnesses listed in `CLOCK_IDS` in
 `run.sh` fix the clock to it, the way the tests of the implementation do (the JavaScript harness
 stubs `Date.now()` for the case); the other implementations run a copy of the suite without such
-cases. The draft suite also has `schema_errors/`: schemas that must not build, a case passes
+cases. The 2.5 suite also has `schema_errors/`: schemas that must not build, a case passes
 when creating the validator (with its aliases registered) fails. Only the JavaScript harness runs
 them for now; the other harnesses read the four usual directories. `merge.mjs` puts the 2.5 results into `suites["2.5"]` of `conformance.json`, and the site shows
-them in a separate column. `issues.mjs` reads only the top level (the 2.0 suite), so no issues are
-opened for 2.5 until it is released.
+them in a separate column. `issues.mjs` reads only the top level (the 2.0 suite), so issues are opened only for the
+2.0 suite: most implementations don't have the 2.5 rules yet.
 
 To run the JavaScript harness against a local checkout of js-validator-livr, without Docker:
 
@@ -83,7 +83,7 @@ and `note` on individual failures. A failure gets a note only when the implement
 can't pass the case because of its language (for example, PHP and Lua decode `{}` and
 `[]` to the same value), not for bugs. Such cases are not counted: the site shows PHP
 with two of them as 68/68, and an implementation that passes everything else gets a
-green badge. Notes for the cases of the 2.5 draft suite go under `cases_2.5`, because
+green badge. Notes for the cases of the 2.5 suite go under `cases_2.5`, because
 the two suites have different case names. `testSuite.cases`
 maps every case to a hash of its files, so the next run can tell which cases changed.
 When an implementation couldn't be installed, its last successful run is carried over

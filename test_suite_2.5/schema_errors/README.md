@@ -1,6 +1,6 @@
 # Schema errors
 
-Schemas that must not build (LIVR 2.5 draft, sections 2.5, 2.6, 3.3 and 6). Building the
+Schemas that must not build (LIVR 2.5, sections 2.5, 2.6, 3.3 and 6). Building the
 validator fails when a rule gets arguments that do not match its signature: a wrong type, an
 unknown option or value, a missing required argument, an argument for a rule that takes none, an
 empty rule list `[]` where a new rule takes rules, bounds that no value could pass, or an invalid

@@ -32,7 +32,7 @@ jobs:
           NATIVE: ${{ matrix.id == 'swift' && '1' || '' }}
         run: conformance/run.sh "${{ matrix.id }}"
 
-      - name: Run the LIVR 2.5 draft suite
+      - name: Run the LIVR 2.5 suite
         continue-on-error: true
         env:
           OUT_DIR: ${{ runner.temp }}/conformance

@@ -135,7 +135,7 @@ export default defineConfig({
       { text: 'Implementations', link: '/introduction/implementations.html' },
       { text: 'Playground', link: '/playground.html' },
       {
-        text: 'v2.0',
+        text: 'v2.5',
         items: [
           { text: 'Changelog', link: '/changes.html' },
           { text: 'Test suite', link: '/how-to-contribute/test-suite.html' },

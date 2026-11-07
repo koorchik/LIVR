@@ -1,6 +1,6 @@
 # Implementations
 
-LIVR is a specification, so you need an implementation for your language. All of them use the same rules format and return the same error codes. The latest version of the specification is **2.0**; the previous one was 0.4.
+LIVR is a specification, so you need an implementation for your language. All of them use the same rules format and return the same error codes. The latest version of the specification is **2.5**: it [adds rules](/changes.html#v2-5) to 2.0, the previous one, so an implementation of LIVR 2.0 has every rule except the new ones. The version before 2.0 was 0.4.
 
 <ImplementationCards />
 
@@ -8,7 +8,7 @@ Package versions and repository activity are refreshed every time the site is bu
 
 ## Test suite results
 
-Every implementation is checked against the shared [test suite](/how-to-contribute/test-suite.html). Every week, and whenever the specification changes, CI installs each implementation the way a user would and runs all test cases against it.
+Every implementation is checked against the shared [test suite](/how-to-contribute/test-suite.html). Every week, and whenever the specification changes, CI installs each implementation the way a user would and runs all test cases against it. The score is for the LIVR 2.0 suite; the "2.5" column shows the separate suite of the rules added in LIVR 2.5.
 
 <ConformanceTable />
 

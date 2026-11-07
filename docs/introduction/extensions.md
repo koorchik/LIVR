@@ -10,7 +10,7 @@ Libraries and tools built on top of LIVR implementations. Built something with L
 
 Extra rules for LIVR: `ipv4`, `boolean`, `uuid`, `credit_card`, `list_length`, `list_items_unique`, `required_if` and more. It is absolutely fine to have your own custom rules in a project, but some rules are useful across projects.
 
-The rules are available in the [playground](/playground.html), except `instance_of` and `has_methods`, which need JavaScript classes and functions.
+Many of these rules (`boolean`, `uuid`, `credit_card`, `list_length`, `required_if`, …) are standard rules since LIVR 2.5, some with other names or error codes, see the [migration table](/changes.html#migration-from-js-livr-extra-rules). The rules that are not in LIVR 2.5 are available in the [playground](/playground.html), except `instance_of` and `has_methods`, which need JavaScript classes and functions.
 
 ### [react-livr-validation](https://github.com/one-more/react-livr-validation)
 
