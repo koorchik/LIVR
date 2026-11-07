@@ -8,10 +8,7 @@ import { data as testCases, type TestCase } from '../../../data/test-suite.data'
 // The live example of a rule page: the example from the frontmatter and the rule's test suite cases
 const { frontmatter } = useData()
 
-// The examples run on the livr npm package, which implements LIVR 2.0. Pages of rules from a draft
-// version (frontmatter `since: '2.5'`) show a notice instead.
-const draft = computed(() => frontmatter.value.since)
-
+// The examples run on the livr npm package, which implements LIVR 2.5
 interface Option {
   id: string
   label: string
@@ -27,7 +24,7 @@ const options = computed<Option[]>(() => {
   return [
     { id: 'example', label: 'Example', rules: example.rules ?? '', input: example.input ?? '' },
     ...cases.map((c) => ({
-      id: `${c.suite}/${c.name}`,
+      id: `${c.dir}/${c.suite}/${c.name}`,
       label: c.suite === 'positive' ? 'Test suite: valid data' : 'Test suite: invalid data',
       rules: c.rules,
       input: c.input,
@@ -47,15 +44,7 @@ const expected = computed(() => {
 </script>
 
 <template>
-  <div v-if="draft" class="warning custom-block">
-    <p class="custom-block-title">LIVR {{ draft }} draft</p>
-    <p>
-      This rule is part of the <a href="/changes.html#v2-5-draft">draft LIVR {{ draft }} specification</a> and can
-      change before the release. There is no live example yet: the JavaScript implementation that runs the examples
-      does not support the rule.
-    </p>
-  </div>
-  <div v-else class="rule-sandbox">
+  <div class="rule-sandbox">
     <div v-if="options.length > 1" class="rule-sandbox__tabs" role="tablist" aria-label="Examples">
       <button
         v-for="option in options"
@@ -75,12 +64,12 @@ const expected = computed(() => {
       :rules="selected.rules"
       :input="selected.input"
       :expected="expected"
-      :title="selected.testCase ? `test_suite/${selected.id}` : undefined"
+      :title="selected.testCase ? selected.id : undefined"
     />
     <p v-if="selected.testCase" class="rule-sandbox__note">
       This case comes from the <a href="/how-to-contribute/test-suite.html">LIVR test suite</a> that every implementation
       runs.
-      <a :href="`https://github.com/koorchik/LIVR/tree/master/test_suite/${selected.id}`" target="_blank" rel="noopener">
+      <a :href="`https://github.com/koorchik/LIVR/tree/master/${selected.id}`" target="_blank" rel="noopener">
         View the files on GitHub</a
       >
     </p>

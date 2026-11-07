@@ -25,7 +25,7 @@ export interface Implementation {
     archived?: boolean
   }
   conformance?: Conformance
-  // Result of the LIVR 2.5 draft suite (test_suite_2.5), if it was run
+  // Result of the LIVR 2.5 suite (test_suite_2.5), if it was run
   conformance25?: Conformance
 }
 

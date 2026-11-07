@@ -1028,12 +1028,12 @@
   font-size: 13px;
 }
 
-/* Rules of a draft version: "2.5" after the name */
+/* Rules added in a later version: "2.5" after the name */
 .sidebar-since {
   margin-left: 6px;
   font-size: 11px;
   font-weight: 600;
-  color: var(--vp-c-yellow-1);
+  color: var(--vp-c-text-2);
 }
 
 .VPSidebarItem.level-1:has(.sidebar-rule) .text {

@@ -9,7 +9,7 @@ export interface RuleInfo {
   summary: string // first paragraph of the page, markdown
   syntax: string
   errors: string[]
-  since?: string // the LIVR version that adds the rule, set only for draft versions (frontmatter `since`)
+  since?: string // the LIVR version that adds the rule, set for rules added after LIVR 2.0 (frontmatter `since`)
 }
 
 export interface RuleGroup {
