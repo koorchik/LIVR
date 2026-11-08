@@ -6,6 +6,7 @@ use std::env;
 use std::fs;
 use std::panic::{self, AssertUnwindSafe};
 use std::path::Path;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use livr::{Alias, Registry, Validator};
 use serde::Serialize;
@@ -35,6 +36,8 @@ const SUITES: [&str; 4] = [
     "aliases_positive",
     "aliases_negative",
 ];
+// LIVR 2.5: schemas that must not build
+const SCHEMA_ERRORS: &str = "schema_errors";
 
 fn read_json(dir: &Path, name: &str) -> Option<Value> {
     let text = fs::read_to_string(dir.join(format!("{name}.json"))).ok()?;
@@ -64,10 +67,39 @@ fn show(value: &Value) -> String {
     }
 }
 
-fn run_case(suite: &str, dir: &Path) -> Result<Option<String>, String> {
-    let rules = read_json(dir, "rules").unwrap_or(Value::Null);
-    let input = read_json(dir, "input").unwrap_or(Value::Null);
+// LIVR 2.5: options.json {"now": "YYYY-MM-DDTHH:MM:SSZ"} is the current time of the bounds
+// today, yesterday and tomorrow, given to the builder with `now()` (livr 0.2.0+, the version
+// that Cargo.toml requires), like the crate's own tests (livr-core/tests/common/mod.rs)
+fn parse_now(now: &str) -> Result<SystemTime, String> {
+    let wrong = || format!("options.json: a wrong \"now\": {now}");
+    let template = b"0000-00-00T00:00:00Z";
+    let valid = now.len() == template.len()
+        && now.bytes().zip(template).all(|(c, &t)| {
+            if t == b'0' {
+                c.is_ascii_digit()
+            } else {
+                c == t
+            }
+        });
+    if !valid {
+        return Err(wrong());
+    }
+    let number = |range: std::ops::Range<usize>| now[range].parse::<i64>().map_err(|_| wrong());
+    let (year, month, day) = (number(0..4)?, number(5..7)?, number(8..10)?);
+    // Days since 1970-01-01, "days_from_civil" by Howard Hinnant
+    let y = if month <= 2 { year - 1 } else { year };
+    let era = y.div_euclid(400);
+    let year_of_era = y - era * 400;
+    let day_of_year = (153 * (if month > 2 { month - 3 } else { month + 9 }) + 2) / 5 + day - 1;
+    let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
+    let days = era * 146_097 + day_of_era - 719_468;
+    let seconds = days * 86_400 + number(11..13)? * 3600 + number(14..16)? * 60 + number(17..19)?;
+    let seconds = u64::try_from(seconds).map_err(|_| wrong())?;
+    Ok(UNIX_EPOCH + Duration::from_secs(seconds))
+}
 
+// Registers the aliases of the case and builds the validator, which checks the schema
+fn build_validator(dir: &Path, rules: &Value) -> Result<Validator, String> {
     let mut registry = Registry::default();
     if let Some(Value::Array(aliases)) = read_json(dir, "aliases") {
         for alias in &aliases {
@@ -75,10 +107,26 @@ fn run_case(suite: &str, dir: &Path) -> Result<Option<String>, String> {
             registry.register_alias(alias).map_err(|e| e.to_string())?;
         }
     }
-    let validator = Validator::builder(&rules)
-        .registry(&registry)
-        .build()
-        .map_err(|e| e.to_string())?;
+    let mut builder = Validator::builder(rules).registry(&registry);
+    if let Some(now) = read_json(dir, "options").and_then(|options| options.get("now").cloned()) {
+        builder = builder.now(parse_now(now.as_str().unwrap_or_default())?);
+    }
+    builder.build().map_err(|e| e.to_string())
+}
+
+// Passes when the aliases or the schema are rejected: an error or a panic
+fn run_schema_error_case(dir: &Path) -> Option<String> {
+    let rules = read_json(dir, "rules").unwrap_or(Value::Null);
+    match panic::catch_unwind(AssertUnwindSafe(|| build_validator(dir, &rules))) {
+        Ok(Ok(_)) => Some("expected building the validator to fail".to_string()),
+        Ok(Err(_)) | Err(_) => None,
+    }
+}
+
+fn run_case(suite: &str, dir: &Path) -> Result<Option<String>, String> {
+    let rules = read_json(dir, "rules").unwrap_or(Value::Null);
+    let input = read_json(dir, "input").unwrap_or(Value::Null);
+    let validator = build_validator(dir, &rules)?;
     let result = validator.validate(&input);
 
     if suite.ends_with("positive") {
@@ -110,6 +158,9 @@ fn run_case(suite: &str, dir: &Path) -> Result<Option<String>, String> {
 
 // A schema error or a panic is an exception, like a thrown error in the other harnesses
 fn run_case_catching(suite: &str, dir: &Path) -> Option<String> {
+    if suite == SCHEMA_ERRORS {
+        return run_schema_error_case(dir);
+    }
     match panic::catch_unwind(AssertUnwindSafe(|| run_case(suite, dir))) {
         Ok(Ok(message)) => message,
         Ok(Err(error)) => Some(format!("exception: {error}")),
@@ -142,7 +193,11 @@ fn main() {
     let mut failures = Vec::new();
     let mut total = 0;
 
-    for suite in SUITES {
+    let mut suites = SUITES.to_vec();
+    if Path::new(&suite_dir).join(SCHEMA_ERRORS).is_dir() {
+        suites.push(SCHEMA_ERRORS);
+    }
+    for suite in suites {
         let mut names: Vec<String> = fs::read_dir(Path::new(&suite_dir).join(suite))
             .unwrap_or_else(|e| panic!("cannot read {suite_dir}/{suite}: {e}"))
             .filter_map(|entry| entry.ok())

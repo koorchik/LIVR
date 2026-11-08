@@ -27,15 +27,20 @@ Each run writes `conformance/out/<id>.json` and the full install/run log to
 SUITE=2.5 conformance/run.sh js   # runs test_suite_2.5, writes conformance/out/js.v2.5.json
 ```
 
-The 2.5 suite has the same layout as `test_suite`. A case may have `options.json` with
-`{"now": "…"}`, the current time for `iso_date` bounds. Only harnesses listed in `CLOCK_IDS` in
-`run.sh` fix the clock to it, the way the tests of the implementation do (the JavaScript harness
-stubs `Date.now()` for the case); the other implementations run a copy of the suite without such
-cases. The 2.5 suite also has `schema_errors/`: schemas that must not build, a case passes
-when creating the validator (with its aliases registered) fails. Only the JavaScript harness runs
-them for now; the other harnesses read the four usual directories. `merge.mjs` puts the 2.5 results into `suites["2.5"]` of `conformance.json`, and the site shows
-them in a separate column. `issues.mjs` reads only the top level (the 2.0 suite), so issues are opened only for the
-2.0 suite: most implementations don't have the 2.5 rules yet.
+The 2.5 suite has the same layout as `test_suite`, and every harness runs all of its cases:
+
+- A case may have `options.json` with `{"now": "…"}`, the current time for the `iso_date` and
+  `iso_datetime` bounds. The harness fixes the clock to it for that case the way the tests of the
+  implementation do (the JavaScript harness stubs `Date.now()`, others use the clock option of
+  their implementation). An installed version without such an option runs the case with the real
+  clock, and it fails.
+- `schema_errors/` holds schemas that must not build. A case passes when creating the validator
+  (with its aliases registered) fails; an implementation without a build step reports the error on
+  the first validation, so the harness validates `{}`.
+
+`merge.mjs` puts the 2.5 results into `suites["2.5"]` of `conformance.json`, and the site shows them
+in a separate column. `issues.mjs` reads only the top level (the 2.0 suite), so issues are opened
+only for the 2.0 suite: most implementations don't have the 2.5 rules yet.
 
 To run the JavaScript harness against a local checkout of js-validator-livr, without Docker:
 

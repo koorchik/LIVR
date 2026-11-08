@@ -6,10 +6,25 @@ use warnings;
 
 use JSON::PP;
 use Scalar::Util qw/blessed/;
+
+# LIVR 2.5: options.json {"now": "..."} fixes the current time of a case, as Validator-LIVR's own
+# t/01-livr_test_suite.t does with Test::MockTime. It replaces "time" of the modules compiled after
+# it, so it is loaded before Validator::LIVR. Without it the cases run with the system clock
+my $has_mock_time;
+BEGIN {
+    $has_mock_time = eval {
+        require Test::MockTime;
+        Test::MockTime->import(qw/set_fixed_time restore_time/);
+        1;
+    };
+}
 use Validator::LIVR;
 
 my $suite_dir = $ENV{TEST_SUITE_DIR} || '../../test_suite';
 my @suites    = qw/positive negative aliases_positive aliases_negative/;
+# LIVR 2.5: schemas that must not build
+my $schema_errors = 'schema_errors';
+push @suites, $schema_errors if -d "$suite_dir/$schema_errors";
 my $json      = JSON::PP->new->utf8->canonical;
 
 sub read_json {
@@ -56,7 +71,46 @@ sub show {
     return length($s) > 300 ? substr( $s, 0, 300 ) . '...' : $s;
 }
 
+sub with_clock {
+    my ( $options, $code ) = @_;
+    return $code->() unless $has_mock_time && $options && defined $options->{now};
+
+    # A datetime in UTC, as the cases have it: "2026-10-18T12:00:00Z"
+    die qq{options.json: a wrong "now": $options->{now}\n}
+        unless $options->{now} =~ /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?Z$/;
+    ( my $now = $options->{now} ) =~ s/\.\d+Z$/Z/;
+
+    Test::MockTime::set_fixed_time( $now, '%Y-%m-%dT%H:%M:%SZ' );
+    my @result = eval { $code->() };
+    my $error = $@;
+    Test::MockTime::restore_time();
+    die $error if $error;
+    return $result[0];
+}
+
+# The case passes when building the validator dies: prepare(), or the first validation for a
+# version without prepare()
+sub run_schema_error_case {
+    my $dir = shift;
+    my $is_built = eval {
+        my $validator = Validator::LIVR->new( read_json( $dir, 'rules' ) );
+        $validator->register_aliased_rule($_) for @{ read_json( $dir, 'aliases' ) || [] };
+        if   ( $validator->can('prepare') ) { $validator->prepare() }
+        else                                { $validator->validate( {} ) }
+        1;
+    };
+    return $is_built ? 'expected building the validator to fail' : undef;
+}
+
 sub run_case {
+    my ( $suite, $dir ) = @_;
+    my $run = $suite eq $schema_errors
+        ? sub { run_schema_error_case($dir) }
+        : sub { run_validation_case( $suite, $dir ) };
+    return with_clock( read_json( $dir, 'options' ), $run );
+}
+
+sub run_validation_case {
     my ( $suite, $dir ) = @_;
     my $rules   = read_json( $dir, 'rules' );
     my $input   = read_json( $dir, 'input' );
@@ -96,7 +150,7 @@ my %result = (
 
 for my $suite (@suites) {
     opendir( my $dh, "$suite_dir/$suite" ) or die "Cannot open $suite_dir/$suite: $!";
-    my @cases = sort grep { !/^\./ } readdir $dh;
+    my @cases = sort grep { !/^\./ && -d "$suite_dir/$suite/$_" } readdir $dh;
     closedir $dh;
 
     for my $name (@cases) {

@@ -15,6 +15,8 @@ const List<String> suites = [
   'aliases_positive',
   'aliases_negative',
 ];
+// LIVR 2.5: schemas that must not build
+const String schemaErrors = 'schema_errors';
 
 Object? readJson(String dir, String name) {
   final file = File('$dir/$name.json');
@@ -42,17 +44,49 @@ String show(Object? value) {
   return str.length > 300 ? '${str.substring(0, 300)}…' : str;
 }
 
-String? runCase(String suite, String dir) {
-  final rules = readJson(dir, 'rules') as Map<String, Object?>;
-  final aliases = (readJson(dir, 'aliases') as List<Object?>?) ?? const [];
+// LIVR 2.5: options.json {"now": "..."} is the current time of the bounds
+// today, yesterday and tomorrow. livr 0.2.0+ takes a clock, `now:`; older
+// versions have no such argument (checked by the type of the function), then
+// the case runs with the system time
+typedef _UntypedWithNow = Object? Function(
+  Map<Object?, Object?> schema, {
+  Iterable<LivrAlias>? aliases,
+  DateTime Function()? now,
+});
 
-  final validator = Validator.untyped(
-    rules,
-    aliases: [
-      for (final alias in aliases)
-        LivrAlias.fromJson(alias as Map<String, Object?>),
-    ],
-  );
+Validator<Map<String, Object?>> buildValidator(String dir) {
+  final rules = readJson(dir, 'rules') as Map<String, Object?>;
+  final aliases = [
+    for (final alias
+        in (readJson(dir, 'aliases') as List<Object?>?) ?? const [])
+      LivrAlias.fromJson(alias as Map<String, Object?>),
+  ];
+  final now = (readJson(dir, 'options') as Map<String, Object?>?)?['now'];
+  if (now == null) return Validator.untyped(rules, aliases: aliases);
+
+  final fixedNow = DateTime.parse(now as String);
+  const Object untyped = Validator.untyped;
+  if (untyped is! _UntypedWithNow) {
+    return Validator.untyped(rules, aliases: aliases);
+  }
+  return untyped(rules, aliases: aliases, now: () => fixedNow)
+      as Validator<Map<String, Object?>>;
+}
+
+// The validator checks the schema when it is created
+String? runSchemaErrorCase(String dir) {
+  try {
+    buildValidator(dir);
+  } catch (e) {
+    return null;
+  }
+  return 'expected building the validator to fail';
+}
+
+String? runCase(String suite, String dir) {
+  if (suite == schemaErrors) return runSchemaErrorCase(dir);
+
+  final validator = buildValidator(dir);
   final result = validator.validate(readJson(dir, 'input'));
 
   if (suite.endsWith('positive')) {
@@ -103,7 +137,11 @@ void main() {
   final failures = <Map<String, String>>[];
   var total = 0;
 
-  for (final suite in suites) {
+  final allSuites = [
+    ...suites,
+    if (Directory('$suiteDir/$schemaErrors').existsSync()) schemaErrors,
+  ];
+  for (final suite in allSuites) {
     final dirs =
         Directory('$suiteDir/$suite')
             .listSync()

@@ -20,10 +20,6 @@ OUT_DIR="${OUT_DIR:-$HERE/out}"
 
 IDS=(js perl raku php python erlang-liver erlang-olifer java ruby lua go swift dart rust)
 
-# Harnesses that fix the clock from options.json (the current time), the way the tests of their
-# implementation do. The other implementations get a copy of the 2.5 suite without such cases.
-CLOCK_IDS=" js "
-
 SUITE="${SUITE:-2.0}"
 case "$SUITE" in
     2.0) SUITE_DIR="test_suite"; SUFFIX="" ;;
@@ -63,11 +59,6 @@ run_one() {
     rm -f "$OUT_DIR/$out.json"
 
     suite_dir="$ROOT/$SUITE_DIR"
-    if [ "$SUITE" != "2.0" ] && [[ "$CLOCK_IDS" != *" $id "* ]]; then
-        # Outside OUT_DIR: merge.mjs reads every JSON file there
-        suite_dir="$(mktemp -d "${TMPDIR:-/tmp}/livr-suite.XXXXXX")"
-        copy_without_clock_cases "$ROOT/$SUITE_DIR" "$suite_dir"
-    fi
 
     if [ "${NATIVE:-}" = "1" ]; then
         echo "==> $id (native, suite $SUITE)"
@@ -105,13 +96,6 @@ cleanup_suite() {
 }
 
 # A copy of a suite without the cases that have options.json
-copy_without_clock_cases() {
-    local from="$1" to="$2" dir
-    cp -R "$from"/. "$to"
-    for dir in "$to"/*/*/; do
-        [ -f "$dir/options.json" ] && rm -rf "$dir"
-    done
-}
 
 report() {
     local id="$1" out="$2" rc="$3"  # out: the name of the result file, <id> or <id>.v2.5

@@ -2,10 +2,26 @@
 # Comparison mirrors ruby-livr's own specs (RSpec eq, i.e. ==):
 # "1" != 1, but 1 == 1.0; key order does not matter.
 require 'json'
+require 'time'
 require 'livr'
 
 SUITE_DIR = ENV.fetch('TEST_SUITE_DIR', '../../test_suite')
 SUITES = %w[positive negative aliases_positive aliases_negative].freeze
+# LIVR 2.5: schemas that must not build
+SCHEMA_ERRORS = 'schema_errors'.freeze
+
+# LIVR 2.5: options.json {"now": "..."} is the current time for the bounds today, yesterday and
+# tomorrow. ruby-livr reads Time.now; its specs fix it with travel_to of ActiveSupport (a
+# dependency of the gem), so the harness does the same. Without TimeHelpers the case runs as is
+begin
+  require 'active_support'
+  require 'active_support/testing/time_helpers'
+  class Clock
+    include ActiveSupport::Testing::TimeHelpers
+  end
+rescue LoadError
+  Clock = nil
+end
 
 def read_json(dir, name)
   file = File.join(dir, "#{name}.json")
@@ -21,13 +37,31 @@ def show(value)
   s.length > 300 ? "#{s[0, 300]}…" : s
 end
 
-def run_case(suite, dir)
-  rules = read_json(dir, 'rules')
-  input = read_json(dir, 'input')
-  aliases = read_json(dir, 'aliases') || []
+def with_clock(options)
+  now = options && options['now']
+  return yield if now.nil? || Clock.nil?
+  Clock.new.travel_to(Time.iso8601(now)) { yield }
+end
 
-  validator = LIVR::Validator.new(rules)
-  aliases.each { |a| validator.register_aliased_rule(a) }
+def build_validator(dir)
+  validator = LIVR::Validator.new(read_json(dir, 'rules'))
+  (read_json(dir, 'aliases') || []).each { |a| validator.register_aliased_rule(a) }
+  validator
+end
+
+def run_schema_error_case(dir)
+  begin
+    validator = build_validator(dir)
+    validator.respond_to?(:prepare) ? validator.prepare : validator.validate({})
+  rescue StandardError, ScriptError
+    return nil
+  end
+  'expected building the validator to fail'
+end
+
+def run_validation_case(suite, dir)
+  input = read_json(dir, 'input')
+  validator = build_validator(dir)
 
   output = validator.validate(input)
   errors = validator.get_errors
@@ -44,6 +78,12 @@ def run_case(suite, dir)
   nil
 end
 
+def run_case(suite, dir)
+  with_clock(read_json(dir, 'options')) do
+    suite == SCHEMA_ERRORS ? run_schema_error_case(dir) : run_validation_case(suite, dir)
+  end
+end
+
 result = {
   id: 'ruby',
   package: 'ruby-livr',
@@ -55,9 +95,12 @@ result = {
   error: nil
 }
 
-SUITES.each do |suite|
+suites = File.directory?(File.join(SUITE_DIR, SCHEMA_ERRORS)) ? SUITES + [SCHEMA_ERRORS] : SUITES
+
+suites.each do |suite|
   suite_dir = File.join(SUITE_DIR, suite)
-  Dir.children(suite_dir).reject { |n| n.start_with?('.') }.sort.each do |name|
+  names = Dir.children(suite_dir).reject { |n| n.start_with?('.') }.sort
+  names.select { |n| File.directory?(File.join(suite_dir, n)) }.each do |name|
     result[:total] += 1
     message = begin
       run_case(suite, File.join(suite_dir, name))
