@@ -4,7 +4,7 @@
 
 ## v2.5 {#v2-5}
 
-Released on 2026-11-07. The specification is in [`drafts/v2.5.md`](https://github.com/koorchik/LIVR/blob/master/drafts/v2.5.md), and the [conformance table](/introduction/implementations.html#test-suite-results) shows which implementations pass the 2.5 test suite.
+Released on 2026-11-07; the [`url`](/validation-rules/url.html#host-and-port) fix was added on 2026-11-08. The specification is in [`drafts/v2.5.md`](https://github.com/koorchik/LIVR/blob/master/drafts/v2.5.md), and the [conformance table](/introduction/implementations.html#test-suite-results) shows which implementations pass the 2.5 test suite.
 
 LIVR 2.5 only adds rules. Every LIVR 2.0 schema gives the same result in a 2.5 implementation, except for the fixes below: they change only schemas that never worked as written.
 
@@ -13,6 +13,7 @@ LIVR 2.5 only adds rules. Every LIVR 2.0 schema gives the same result in a 2.5 i
 - Fix: rules that read other fields ([`equal_to_field`](/validation-rules/equal_to_field.html#containing-object) and custom rules) saw a made-up object inside an alias, an `or` branch and an item of `list_of` in LIVR 2.0 (`{ value: x }`, `{ field: x }`, `{ field: item }` in the JavaScript implementation), so a comparison with a sibling field never worked there. 2.5 defines it through the [containing object](/validation-rules/how-it-works.html#field-references): in an alias or an `or` branch the rules see the siblings of the field, in an item of `list_of` they see no fields. A schema that relied on the made-up object gives a different result.
 - Fix: [`iso_date`](/validation-rules/iso_date.html#options-form) ignored any argument in 2.0, so `{ iso_date: 'today' }` or `{ iso_date: 'datetime' }` silently checked nothing of what they say. In 2.5 an argument that is not an options object is a schema error, and a boolean value gives `WRONG_DATE` in every implementation (some gave `FORMAT_ERROR`).
 - Fix: [`iso_date`](/validation-rules/iso_date.html) uses the proleptic Gregorian calendar, as almost every implementation already did: `1582-10-10` is valid and `1500-02-29` is not (Ruby used the Julian calendar before October 1582).
+- Fix: [`url`](/validation-rules/url.html#host-and-port) accepted a dot after the host (`https://www.google.`), host labels longer than 63 characters and ports above 65535, and rejected one-digit ports (`https://example.com:8`). In 2.5 a dot after the host gives `WRONG_URL`, like in [`hostname`](/validation-rules/hostname.html), labels have at most 63 characters and ports are 0–65535. The rest of the `url` grammar does not change.
 - Fix: an unknown rule is a [schema error](/validation-rules/how-it-works.html#arguments) in every implementation. Swift ignored it in 2.0 and olifer gave a field error, so a typo in a rule name checked nothing.
 - A clarification of [`like`](/validation-rules/like.html): `^` at the start and `$` at the end of a pattern match only at the start and the end of the value, so `{ like: '^[0-9]{5}$' }` rejects `"12345\n"`.
 - A "LIVR 2.5 compatible" implementation supports all the new rules. There are no optional modules.
@@ -74,7 +75,7 @@ The 2.5 cases are a separate test suite in `test_suite_2.5/`, next to `test_suit
 
 ### Not in 2.5
 
-- Changes of existing rules and of the engine: error params, string length in code points, the number grammar, the `email` and `url` grammars, I-Regexp for `like`, parent and root references, root rules, unknown field options for `nested_object`, meta keys (`$error`), recursive aliases.
+- Changes of existing rules and of the engine: error params, string length in code points, the number grammar, the `email` grammar and the rest of the `url` grammar (Unicode and punycode hosts, IPv6, user info), I-Regexp for `like`, parent and root references, root rules, unknown field options for `nested_object`, meta keys (`$error`), recursive aliases.
 - `not_null`, `default_if_missing` and `present`: the meaning of `null` for partial updates is decided in 3.0.
 - `alpha`, `alphanumeric` and `normalize`: they need Unicode tables that some languages do not have.
 - `not_like`: it depends on the `like` dialect that 3.0 replaces.

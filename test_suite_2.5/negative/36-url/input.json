@@ -1,0 +1,15 @@
+{
+    "google_dot": "https://www.google.",
+    "trailing_dot": "https://example.com.",
+    "trailing_dot_path": "https://example.com./path",
+    "trailing_dot_port": "https://example.com.:8080",
+    "trailing_dot_query": "https://example.com.?q=1",
+    "ipv4_trailing_dot": "http://192.0.2.1./",
+    "label_64": "https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example.com/",
+    "tld_64": "https://example.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "port_65536": "https://example.com:65536",
+    "port_99999": "https://example.com:99999/",
+    "port_six_digits": "https://example.com:123456",
+    "empty_field": "",
+    "extra_field": "aaaa"
+}

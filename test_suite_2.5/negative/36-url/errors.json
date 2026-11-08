@@ -1,0 +1,13 @@
+{
+    "google_dot": "WRONG_URL",
+    "trailing_dot": "WRONG_URL",
+    "trailing_dot_path": "WRONG_URL",
+    "trailing_dot_port": "WRONG_URL",
+    "trailing_dot_query": "WRONG_URL",
+    "ipv4_trailing_dot": "WRONG_URL",
+    "label_64": "WRONG_URL",
+    "tld_64": "WRONG_URL",
+    "port_65536": "WRONG_URL",
+    "port_99999": "WRONG_URL",
+    "port_six_digits": "WRONG_URL"
+}

@@ -19,7 +19,7 @@
     "@codemirror/view": "^6.43.15",
     "@lezer/highlight": "^1.2.5",
     "json5": "^2.2.3",
-    "livr": "^2.13.1",
+    "livr": "^2.13.3",
     "livr-extra-rules": "^1.7.0",
     "vitepress": "^1.6.4",
     "vue": "^3.5.44"

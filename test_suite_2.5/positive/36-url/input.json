@@ -1,0 +1,12 @@
+{
+    "port_one_digit": "https://example.com:8",
+    "port_one_digit_path": "http://example.com:8/path?q=1#top",
+    "port_max": "https://example.com:65535/",
+    "ipv4_port_one_digit": "http://192.0.2.1:8/",
+    "label_63": "https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example.com/",
+    "tld_63": "https://example.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dot_in_path": "https://example.com/file.",
+    "dot_in_query": "https://example.com/?q=a.",
+    "empty_field": "",
+    "extra_field": "aaaa"
+}
