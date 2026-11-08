@@ -145,14 +145,14 @@ const PRESETS: Preset[] = [
 }`
   },
   {
-    name: 'Extra rules',
+    name: 'LIVR 2.5 rules',
     rules: `{
     id: ['required', 'uuid'],
-    ip: 'ipv4',
+    ip: { ip: 'v4' },
     subscribe: ['required', 'boolean'],
     email: [{ required_if: { subscribe: true } }, 'email'],
-    tags: ['list_items_unique', { list_length: [1, 3] }],
-    birth_date: { iso_date: { max: 'current' } }
+    tags: ['unique', { list_length: [1, 3] }],
+    birth_date: { iso_date: { max: 'today' } }
 }`,
     data: `{
     id: '0b9f4c2e-6a1d-4f3b-9e2a-7c5d8e1f2a3b',
