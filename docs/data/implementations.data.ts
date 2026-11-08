@@ -25,8 +25,10 @@ export interface Implementation {
     archived?: boolean
   }
   conformance?: Conformance
-  // Result of the LIVR 2.5 suite (test_suite_2.5), if it was run
+  // Result of the LIVR 2.5 suite (test_suite_2.5), if it was run: the validation cases
+  // (positive, negative, aliases) and the schema_errors cases, counted separately
   conformance25?: Conformance
+  conformance25Schema?: Conformance
 }
 
 export interface Conformance {
@@ -48,6 +50,7 @@ export interface ImplementationsData {
   conformanceGeneratedAt?: string
   testSuiteTotal?: number
   testSuite25Total?: number
+  testSuite25SchemaTotal?: number
 }
 
 declare const data: ImplementationsData
@@ -136,6 +139,20 @@ function withCounted(conformance: Omit<Conformance, 'counted' | 'failing' | 'not
   }
 }
 
+const isSchemaCase = (name: string) => name.startsWith('schema_errors/')
+
+// Splits a result of the 2.5 suite into the cases of one kind. The total comes from the
+// suite: every case that did not fail passed. A run that counted fewer cases (an older
+// harness without schema_errors) gets the rest of its total.
+type RawConformance = Omit<Conformance, 'counted' | 'failing' | 'notCounted'>
+function part(raw: RawConformance | undefined, suiteCases: string[], schema: boolean): RawConformance | undefined {
+  if (!raw) return undefined
+  const failures = (raw.failures ?? []).filter((f) => isSchemaCase(f.case) === schema)
+  const validationTotal = suiteCases.filter((name) => !isSchemaCase(name)).length
+  const total = raw.error ? 0 : schema ? Math.max(raw.total - validationTotal, 0) : Math.min(raw.total, validationTotal)
+  return { ...raw, total, passed: total - failures.length, failures }
+}
+
 async function loadLive(items: Omit<Implementation, 'live'>[], cacheFile: string) {
   if (process.env.LIVR_DOCS_OFFLINE) return {}
 
@@ -160,17 +177,21 @@ export default defineLoader({
     const items: Omit<Implementation, 'live'>[] = readJson(implementationsFile)
     const conformance = readJson(conformanceFile)
     const live = await loadLive(items, cacheFile)
+    const suite25 = conformance?.suites?.['2.5']
+    const suite25Cases = Object.keys(suite25?.testSuite?.cases ?? {})
 
     return {
       implementations: items.map((item) => ({
         ...item,
         live: live[item.id] ?? {},
         conformance: withCounted(conformance?.results?.[item.id]),
-        conformance25: withCounted(conformance?.suites?.['2.5']?.results?.[item.id])
+        conformance25: withCounted(part(suite25?.results?.[item.id], suite25Cases, false)),
+        conformance25Schema: withCounted(part(suite25?.results?.[item.id], suite25Cases, true))
       })),
       conformanceGeneratedAt: conformance?.generatedAt,
       testSuiteTotal: conformance?.testSuite?.total,
-      testSuite25Total: conformance?.suites?.['2.5']?.testSuite?.total
+      testSuite25Total: suite25Cases.filter((name) => !isSchemaCase(name)).length,
+      testSuite25SchemaTotal: suite25Cases.filter(isSchemaCase).length
     }
   }
 })

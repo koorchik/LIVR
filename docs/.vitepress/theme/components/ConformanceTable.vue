@@ -30,6 +30,11 @@ const label = (item: Implementation) => (item.name ? `${item.language} · ${item
 const caseUrl = (name: string, dir = 'test_suite') => `https://github.com/koorchik/LIVR/tree/master/${dir}/${name}`
 // The LIVR 2.5 column is shown once the 2.5 suite has results
 const has25 = computed(() => data.implementations.some((item) => item.conformance25))
+const failing25 = (item: Implementation) =>
+  [
+    { label: '2.5', failing: item.conformance25?.failing ?? [] },
+    { label: '2.5 schema error', failing: item.conformance25Schema?.failing ?? [] }
+  ].filter((group) => group.failing.length)
 const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice(0, max)}…` : text)
 </script>
 
@@ -41,7 +46,8 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
           <th>Implementation</th>
           <th>Tested version</th>
           <th>Passed</th>
-          <th v-if="has25" title="The LIVR 2.5 suite: the rules added in LIVR 2.5, shown separately from the score">2.5</th>
+          <th v-if="has25" title="The validation cases of the LIVR 2.5 suite (positive, negative, aliases), shown separately from the score">2.5</th>
+          <th v-if="has25" title="The schema_errors cases of the LIVR 2.5 suite: invalid rule arguments that must fail when the validator is built">2.5 schema errors</th>
           <th>Details</th>
         </tr>
       </thead>
@@ -58,14 +64,14 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
               :title="item.conformance!.notCounted.length ? `${item.conformance!.notCounted.length} of ${item.conformance!.total} cases not counted` : undefined"
             >{{ item.conformance!.passed }} / {{ item.conformance!.counted }}</span>
           </td>
-          <td v-if="has25">
-            <span v-if="!item.conformance25" class="conformance__note">—</span>
-            <span v-else-if="item.conformance25.error" class="livr-badge livr-badge--muted">not run</span>
+          <td v-for="result in has25 ? [item.conformance25, item.conformance25Schema] : []">
+            <span v-if="!result" class="conformance__note">—</span>
+            <span v-else-if="result.error" class="livr-badge livr-badge--muted">not run</span>
             <span
               v-else
               class="livr-badge"
-              :class="item.conformance25.passed === item.conformance25.counted ? 'livr-badge--ok' : 'livr-badge--muted'"
-            >{{ item.conformance25.passed }} / {{ item.conformance25.counted }}</span>
+              :class="result.passed === result.counted ? 'livr-badge--ok' : 'livr-badge--muted'"
+            >{{ result.passed }} / {{ result.counted }}</span>
           </td>
           <td>
             <p v-if="item.conformance!.error" class="conformance__note">{{ item.conformance!.error }}</p>
@@ -82,12 +88,12 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
                 </li>
               </ul>
             </details>
-            <details v-if="item.conformance25?.failing.length">
+            <details v-for="group in failing25(item)" :key="group.label">
               <summary>
-                {{ item.conformance25.failing.length }} failing 2.5 case{{ item.conformance25.failing.length > 1 ? 's' : '' }}
+                {{ group.failing.length }} failing {{ group.label }} case{{ group.failing.length > 1 ? 's' : '' }}
               </summary>
               <ul>
-                <li v-for="failure in item.conformance25.failing" :key="failure.case">
+                <li v-for="failure in group.failing" :key="failure.case">
                   <a :href="caseUrl(failure.case, 'test_suite_2.5')" target="_blank" rel="noopener"><code>{{ failure.case }}</code></a>
                   <div v-if="failure.message" class="conformance__message">{{ truncate(failure.message) }}</div>
                 </li>
@@ -116,8 +122,10 @@ const truncate = (text: string, max = 280) => (text.length > max ? `${text.slice
       Cases that an implementation can't pass because of its language (for example, PHP and Lua decode <code>{}</code> and <code>[]</code>
       to the same value) are not counted, so its score is out of the remaining cases.
       <template v-if="has25">
-        The "2.5" column runs the <a href="https://github.com/koorchik/LIVR/tree/master/test_suite_2.5" target="_blank" rel="noopener">LIVR 2.5 suite</a>
-        ({{ data.testSuite25Total }} cases) with the rules added in LIVR 2.5. It is shown separately and is not part of the score.
+        The "2.5" columns run the <a href="https://github.com/koorchik/LIVR/tree/master/test_suite_2.5" target="_blank" rel="noopener">LIVR 2.5 suite</a>
+        with the rules added in LIVR 2.5. They are shown separately and are not part of the score: "2.5" has the validation cases
+        ({{ data.testSuite25Total }}), "2.5 schema errors" the schema cases ({{ data.testSuite25SchemaTotal }}), invalid rule arguments
+        that must fail when the validator is built. A version without the 2.5 rules passes many schema cases, because it rejects every rule it does not know.
       </template>
     </p>
   </div>
