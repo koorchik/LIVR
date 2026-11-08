@@ -1,0 +1,11 @@
+{
+    "port_one_digit": "url",
+    "port_one_digit_path": ["url"],
+    "port_max": {"url": []},
+    "ipv4_port_one_digit": "url",
+    "label_63": "url",
+    "tld_63": "url",
+    "dot_in_path": "url",
+    "dot_in_query": "url",
+    "empty_field": "url"
+}

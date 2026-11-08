@@ -638,15 +638,16 @@ Changes to LIVR 2 format rules:
   - Test cases: every row of [Appendix B](#appendix-b-probe-results), the five addresses from the
     liver TODO list, and `email24` split into a Cyrillic case and a trailing-space case.
 - **`url`**: allow a list of schemes, `{"url": ["http", "https", "ftp"]}`, defaults to `http` and
-  `https`. Pin the grammar in the spec and add `https://www.google.` ([js-validator-livr#56]) to the
-  negative cases. Do not reference the WHATWG URL parser (Zod, Valibot): other languages do not
-  have it. The grammar must decide (all of these differ today, [Appendix B](#appendix-b-probe-results)):
+  `https`. Pin the grammar in the spec. LIVR 2.5 already rejects a dot after the host
+  (`https://www.google.`, [js-validator-livr#56]), labels over 63 characters and ports over 65535,
+  and accepts one-digit ports (`test_suite_2.5/*/36-url`). Do not reference the WHATWG URL parser
+  (Zod, Valibot): other languages do not have it. The grammar must decide (all of these differ today, [Appendix B](#appendix-b-probe-results)):
   - The host is a `hostname` (punycode allowed, so `https://xn--80a1acn3a.xn--j1amh/` passes; it
     fails in JS, Java, Ruby, Go today), an IPv4 address or `[IPv6]` (accepted only by PHP and Lua
     today).
   - A host without a dot: `http://localhost:3000` (rejected only by Java) and
     `https://reciepts/12345678.pdf` ([LIVR#37]).
-  - A trailing dot (`https://www.google.`) is rejected.
+  - A trailing dot (`https://www.google.`) is rejected (since 2.5).
   - Userinfo (`https://user:pass@example.com/`) is rejected by Perl, Raku, Python and Lua.
   - No hidden length limit (JS has `length < 2083` in UTF-16 code units).
   - Unicode: the default is a URI (RFC 3986, ASCII only); `{"url": {"unicode": true}}` accepts an

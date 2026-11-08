@@ -1,0 +1,14 @@
+{
+    "google_dot": "url",
+    "trailing_dot": ["url"],
+    "trailing_dot_path": {"url": []},
+    "trailing_dot_port": "url",
+    "trailing_dot_query": "url",
+    "ipv4_trailing_dot": "url",
+    "label_64": "url",
+    "tld_64": "url",
+    "port_65536": "url",
+    "port_99999": "url",
+    "port_six_digits": "url",
+    "empty_field": "url"
+}
