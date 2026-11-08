@@ -24,8 +24,16 @@
             "negative/27-any_object": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list. lua-LIVR's own copy of the test suite adjusts this case."
         },
         "cases_2.5": {
+            "negative/13-values": "Lua loses a null value in an object (a table cannot hold nil), so the key is missing.",
+            "negative/35-object_or_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list.",
+            "positive/16-list_length": "Lua loses a null inside a list (a table cannot hold nil), so the case gets a shorter list.",
             "positive/35-object_or_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list.",
-            "negative/35-object_or_list": "Lua decodes {} and [] to the same empty table, so an empty object can't be told apart from an empty list."
+            "schema_errors/006-not_one_of_null_value": "Lua loses a null inside a list (a table cannot hold nil), so the case gets a shorter list.",
+            "schema_errors/077-required_if_null_in_list": "Lua loses a null inside a list (a table cannot hold nil), so the case gets a shorter list.",
+            "schema_errors/176-boolean_null_argument": "Lua loses a null argument (a table cannot hold nil), so the rule gets no argument and the schema builds.",
+            "schema_errors/177-uuid_null_argument": "Lua loses a null argument (a table cannot hold nil), so the rule gets no argument and the schema builds.",
+            "schema_errors/178-values_null_argument": "Lua loses a null argument (a table cannot hold nil), so the rule gets no argument and the schema builds.",
+            "schema_errors/179-keys_null_argument": "Lua loses a null argument (a table cannot hold nil), so the rule gets no argument and the schema builds."
         }
     },
     "php": {

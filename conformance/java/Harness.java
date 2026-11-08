@@ -14,9 +14,13 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -78,15 +82,55 @@ public class Harness {
         return s.length() > 300 ? s.substring(0, 300) + "…" : s;
     }
 
-    static String runCase(String suite, File dir) throws Exception {
+    // LIVR 2.5: schemas that must not build
+    static final String SCHEMA_ERRORS = "schema_errors";
+
+    // LIVR 2.5: options.json {"now": "..."} is the current time for the bounds today, yesterday and
+    // tomorrow. validator-livr with LIVR 2.5 takes it as Validator.setClock(Clock), like its own
+    // tests, set before the validator is prepared. It is called by reflection, so the harness also
+    // runs against 2.0.x, which has no clock: there the case runs with the system time.
+    static void setClock(Validator validator, File dir) throws Exception {
+        JSONObject options = (JSONObject) readJson(dir, "options");
+        if (options == null || options.get("now") == null) return;
+        Clock clock = Clock.fixed(Instant.parse((String) options.get("now")), ZoneOffset.UTC);
+        Method setClock;
+        try {
+            setClock = Validator.class.getMethod("setClock", Clock.class);
+        } catch (NoSuchMethodException e) {
+            return;
+        }
+        setClock.invoke(validator, clock);
+    }
+
+    static Validator buildValidator(File dir) throws Exception {
         JSONObject rules = (JSONObject) readJson(dir, "rules");
-        JSONObject input = (JSONObject) readJson(dir, "input");
         JSONArray aliases = (JSONArray) readJson(dir, "aliases");
 
-        Validator validator = LIVR.validator().init(rules, false);
+        Validator validator = LIVR.validator();
+        setClock(validator, dir);
+        validator.init(rules, false);
         if (aliases != null) {
             for (Object alias : aliases) validator.registerAliasedRule((JSONObject) alias);
         }
+        return validator;
+    }
+
+    // The library reports a wrong schema with an exception (IllegalArgumentException in 2.5) from
+    // prepare(), which validate() also calls on the first validation.
+    static String runSchemaErrorCase(File dir) {
+        try {
+            buildValidator(dir).prepare();
+        } catch (Throwable e) {
+            return null;
+        }
+        return "expected building the validator to fail";
+    }
+
+    static String runCase(String suite, File dir) throws Exception {
+        if (suite.equals(SCHEMA_ERRORS)) return runSchemaErrorCase(dir);
+
+        JSONObject input = (JSONObject) readJson(dir, "input");
+        Validator validator = buildValidator(dir);
 
         JSONObject output = validator.validate(input);
         Object errors = codes(validator.getErrors());
@@ -110,8 +154,11 @@ public class Harness {
         List<Map<String, Object>> failures = new ArrayList<>();
         int total = 0, passed = 0;
 
-        for (String suite : new String[] {"positive", "negative", "aliases_positive", "aliases_negative"}) {
-            String[] names = new File(suiteDir, suite).list((d, n) -> !n.startsWith("."));
+        List<String> suites = new ArrayList<>(List.of("positive", "negative", "aliases_positive", "aliases_negative"));
+        if (new File(suiteDir, SCHEMA_ERRORS).isDirectory()) suites.add(SCHEMA_ERRORS);
+
+        for (String suite : suites) {
+            String[] names = new File(suiteDir, suite).list((d, n) -> !n.startsWith(".") && new File(d, n).isDirectory());
             Arrays.sort(names);
             for (String name : names) {
                 total++;

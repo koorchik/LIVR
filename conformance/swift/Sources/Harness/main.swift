@@ -5,10 +5,19 @@
 // Each case runs in a child process, because the library can hit a fatalError
 // (e.g. NSPredicate(format:) is unavailable in Foundation on Linux), which
 // would otherwise abort the whole run.
+//
+// LIVR 2.5: schema_errors/ cases must not build: validate(data:) of an empty
+// object (released versions have no prepare(); in 2.5 it builds the rules and
+// throws the same errors as prepare()) or registering the aliases must throw.
+// options.json {"now": ...} fixes the clock through LIVR.now. Released versions
+// do not have it, and Swift cannot test for a member at compile time, so
+// container.sh defines LIVR_HAS_NOW when the library declares it; without it
+// such cases run with the system time.
 import Foundation
 import Livr
 
 let suites = ["positive", "negative", "aliases_positive", "aliases_negative"]
+let schemaErrors = "schema_errors"
 
 func readJSON(_ dir: String, _ name: String) -> Any? {
     let path = dir + "/" + name + ".json"
@@ -86,8 +95,46 @@ func show(_ value: Any?) -> String {
     return s
 }
 
+func parseDate(_ text: String) -> Date? {
+    let formatter = ISO8601DateFormatter()
+    if let date = formatter.date(from: text) { return date }
+    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    return formatter.date(from: text)
+}
+
+// Sets the current time of the case (options.json). Each case runs in its own
+// process, so there is nothing to restore.
+func setClock(_ dir: String) -> String? {
+    guard let options = readJSON(dir, "options") as? [String: Any], let now = options["now"] else { return nil }
+    guard let text = now as? String, let date = parseDate(text) else {
+        return "options.json: a wrong \"now\": \(show(now))"
+    }
+#if LIVR_HAS_NOW
+    LIVR.now = { date }
+#else
+    _ = date  // this version reads the system clock only
+#endif
+    return nil
+}
+
+func runSchemaErrorCase(dir: String) -> String? {
+    guard let rules = readJSON(dir, "rules") as? [String: Any?] else { return "could not load case files" }
+    let validator = LIVR.validator(validationRules: rules, isAutoTrim: false)
+    do {
+        if let aliases = readJSON(dir, "aliases") as? [[String: Any?]] {
+            try validator.registerRule(aliases: aliases)
+        }
+        _ = try validator.validate(data: [:])
+    } catch {
+        return nil
+    }
+    return "expected building the validator to fail"
+}
+
 // Runs one case in this process and returns a failure message (nil = passed).
 func runCase(suite: String, dir: String) -> String? {
+    if let message = setClock(dir) { return message }
+    if suite == schemaErrors { return runSchemaErrorCase(dir: dir) }
     guard let rules = readJSON(dir, "rules") as? [String: Any?],
           let input = readJSON(dir, "input") as? [String: Any?] else {
         return "could not load case files"
@@ -126,9 +173,16 @@ let suiteDir = env["TEST_SUITE_DIR"] ?? "../../test_suite"
 var failures: [[String: Any]] = []
 var total = 0, passed = 0
 
-for suite in suites {
+func isDirectory(_ path: String) -> Bool {
+    var isDir: ObjCBool = false
+    return FileManager.default.fileExists(atPath: path, isDirectory: &isDir) && isDir.boolValue
+}
+
+let allSuites = isDirectory(suiteDir + "/" + schemaErrors) ? suites + [schemaErrors] : suites
+
+for suite in allSuites {
     let names = try! FileManager.default.contentsOfDirectory(atPath: suiteDir + "/" + suite)
-        .filter { !$0.hasPrefix(".") }.sorted()
+        .filter { !$0.hasPrefix(".") && isDirectory(suiteDir + "/" + suite + "/" + $0) }.sorted()
     for name in names {
         total += 1
         let child = Process()

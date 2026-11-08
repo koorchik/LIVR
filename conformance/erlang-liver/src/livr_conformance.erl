@@ -6,11 +6,21 @@
 %% before liver's tests run. liver returns iso_date values as {Y, M, D}; they
 %% are compared in their JSON form ("YYYY-MM-DD"). Values are compared with ==,
 %% so 1 == 1.0, but <<"1">> =/= 1.
+%%
+%% LIVR 2.5 (test_suite_2.5): aliases go to the `aliased_rules' option (liver
+%% with add_aliased_rule/1); a schema_errors case passes when
+%% liver:check_schema/2 rejects the schema (or, without check_schema, when the
+%% first validation of #{} raises); options.json {"now": ...} fixes the clock
+%% with liver_clock:set_time/1, as liver's own tests do. Each is
+%% feature-detected, so the harness runs with older releases too.
 -module(livr_conformance).
 
 -export([main/0]).
 
 -define(SUITES, ["positive", "negative", "aliases_positive", "aliases_negative"]).
+%% LIVR 2.5: schemas that must not build
+-define(SCHEMA_ERRORS, "schema_errors").
+-define(OPTS, #{rule_set => livr_spec}).
 
 -define(LIVR_RULES, [
     <<"required">>, <<"not_empty">>, <<"not_empty_list">>, <<"any_object">>,
@@ -21,17 +31,29 @@
     <<"email">>, <<"url">>, <<"iso_date">>, <<"equal_to_field">>,
     <<"nested_object">>, <<"variable_object">>, <<"list_of">>, <<"list_of_objects">>,
     <<"list_of_different_objects">>, <<"or">>,
-    <<"trim">>, <<"to_lc">>, <<"to_uc">>, <<"remove">>, <<"leave_only">>, <<"default">>
+    <<"trim">>, <<"to_lc">>, <<"to_uc">>, <<"remove">>, <<"leave_only">>, <<"default">>,
+    %% LIVR 2.5
+    <<"boolean">>, <<"not_one_of">>, <<"max_decimals">>, <<"digits">>, <<"starts_with">>,
+    <<"ends_with">>, <<"contains">>, <<"iso_datetime">>, <<"iso_time">>, <<"required_if">>,
+    <<"when">>, <<"values">>, <<"keys">>, <<"any">>, <<"list_length">>, <<"unique">>,
+    <<"split">>, <<"uuid">>, <<"ip">>, <<"cidr">>, <<"hostname">>, <<"base64">>, <<"hex">>,
+    <<"digest">>, <<"mongo_id">>, <<"hex_color">>, <<"mac">>, <<"e164">>, <<"semver">>,
+    <<"jwt">>, <<"luhn">>, <<"credit_card">>, <<"iban">>
 ]).
 
 main() ->
     SuiteDir = os:getenv("TEST_SUITE_DIR", "../../test_suite"),
     ok = application:load(liver),
+    {module, liver} = code:ensure_loaded(liver),
     {ok, Vsn} = application:get_key(liver, vsn),
+    Suites = case filelib:is_dir(filename:join(SuiteDir, ?SCHEMA_ERRORS)) of
+        true -> ?SUITES ++ [?SCHEMA_ERRORS];
+        false -> ?SUITES
+    end,
     {Total, Passed, Failures} = lists:foldl(
         fun(Suite, Acc) -> run_suite(SuiteDir, Suite, Acc) end,
         {0, 0, []},
-        ?SUITES),
+        Suites),
     Result = #{
         id => <<"erlang-liver">>,
         package => <<"liver">>,
@@ -51,10 +73,11 @@ main() ->
 run_suite(SuiteDir, Suite, Acc0) ->
     Dir = filename:join(SuiteDir, Suite),
     {ok, Names} = file:list_dir(Dir),
-    Cases = lists:sort([N || N <- Names, hd(N) =/= $.]),
+    Cases = lists:sort([N || N <- Names, hd(N) =/= $., filelib:is_dir(filename:join(Dir, N))]),
     lists:foldl(
         fun(Name, {Total, Passed, Failures}) ->
-            Message = try run_case(Suite, filename:join(Dir, Name))
+            CaseDir = filename:join(Dir, Name),
+            Message = try with_clock(read_json(CaseDir, "options"), fun() -> run_case(Suite, CaseDir) end)
                       catch Class:Reason -> format("exception: ~p:~0p", [Class, Reason])
                       end,
             case Message of
@@ -66,15 +89,45 @@ run_suite(SuiteDir, Suite, Acc0) ->
         Acc0,
         Cases).
 
+%% options.json {"now": "<ISO datetime>"}: the current time of the case.
+%% liver_clock:set_time/1 (liver with LIVR 2.5) fixes it; without it the case
+%% runs with the system time.
+with_clock(#{<<"now">> := Now}, Fun) ->
+    case has_function(liver_clock, set_time, 1) of
+        true ->
+            Ms = calendar:rfc3339_to_system_time(binary_to_list(Now), [{unit, millisecond}]),
+            ok = liver_clock:set_time(Ms),
+            try Fun() after liver_clock:set_time(undefined) end;
+        false ->
+            Fun()
+    end;
+with_clock(_Options, Fun) ->
+    Fun().
+
+has_function(Module, Function, Arity) ->
+    code:ensure_loaded(Module) =:= {module, Module}
+        andalso erlang:function_exported(Module, Function, Arity).
+
 run_case(Suite, Dir) ->
-    case read_json(Dir, "aliases") of
-        undefined -> run_case(Suite, Dir, read_json(Dir, "rules"), read_json(Dir, "input"));
-        _ -> <<"liver has no API for registering aliased rules">>
+    case {read_json(Dir, "aliases"), has_function(liver, add_aliased_rule, 1)} of
+        {undefined, _} ->
+            run_case(Suite, Dir, ?OPTS);
+        {Aliases, true} ->
+            run_case(Suite, Dir, ?OPTS#{aliased_rules => [convert_alias(A) || A <- Aliases]});
+        {_, false} ->
+            <<"liver has no API for registering aliased rules">>
     end.
 
-run_case(Suite, Dir, Rules0, Input) ->
-    Rules = convert_schema(Rules0),
-    Result = liver:validate(Rules, Input, #{rule_set => livr_spec}),
+run_case(?SCHEMA_ERRORS, Dir, Opts) ->
+    Rules = convert_schema(read_json(Dir, "rules")),
+    case schema_error(Rules, Opts) of
+        true -> ok;
+        false -> <<"expected building the validator to fail">>
+    end;
+run_case(Suite, Dir, Opts) ->
+    Rules = convert_schema(read_json(Dir, "rules")),
+    Input = read_json(Dir, "input"),
+    Result = liver:validate(Rules, Input, Opts),
     case {lists:suffix("positive", Suite), Result} of
         {true, {ok, Output0}} ->
             Expected = read_json(Dir, "output"),
@@ -94,6 +147,26 @@ run_case(Suite, Dir, Rules0, Input) ->
             end;
         {false, {ok, Output}} ->
             format("expected validation to fail, got output ~ts", [show(to_json_term(Output))])
+    end.
+
+%% check_schema/2 (liver with LIVR 2.5) returns {error, Reason}; older liver
+%% has no build step, so the first validation (of an empty object) must
+%% raise. Field errors ({error, #{...}}) are not a schema error.
+schema_error(Rules, Opts) ->
+    case has_function(liver, check_schema, 2) of
+        true ->
+            try liver:check_schema(Rules, Opts) of
+                ok -> false;
+                _ -> true
+            catch _:_ -> true
+            end;
+        false ->
+            try liver:validate(Rules, #{}, Opts) of
+                {ok, _} -> false;
+                {error, Errors} when is_map(Errors) -> false;
+                _ -> true
+            catch _:_ -> true
+            end
     end.
 
 read_json(Dir, Name) ->
@@ -134,7 +207,21 @@ convert_args(list_of, Args) -> convert_rule(Args);
 convert_args('or', Args) when is_list(Args) -> [convert_rule(A) || A <- Args];
 convert_args(variable_object, [Selector, Variants]) -> [Selector, convert_variants(Variants)];
 convert_args(list_of_different_objects, [Selector, Variants]) -> [Selector, convert_variants(Variants)];
+%% LIVR 2.5: when takes a reference and rules (or an object of them), values and keys take rules
+convert_args('when', [Ref, Cases]) when is_map(Cases) ->
+    [Ref, maps:map(fun(_Value, Rule) -> convert_rule(Rule) end, Cases)];
+convert_args('when', [Ref | Rules]) when Rules =/= [] -> [Ref | [convert_rule(R) || R <- Rules]];
+convert_args(values, Args) -> convert_rule(Args);
+convert_args(keys, Args) -> convert_rule(Args);
 convert_args(_Rule, Args) -> Args.
+
+%% aliases.json {"name": ..., "rules": ..., "error": ...}, as liver's livr_import does
+convert_alias(Alias) ->
+    maps:from_list([case K of
+                        <<"name">> -> {name, binary_to_atom(V, utf8)};
+                        <<"rules">> -> {rules, convert_rule(V)};
+                        _ -> {binary_to_atom(K, utf8), V}
+                    end || {K, V} <- maps:to_list(Alias)]).
 
 convert_schema_args([Schema]) when is_map(Schema) -> [convert_schema(Schema)];
 convert_schema_args(Schema) -> convert_schema(Schema).

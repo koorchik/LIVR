@@ -5,6 +5,7 @@
 // key order does not matter.
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/clock.php';
 
 use Composer\InstalledVersions;
 use SebastianBergmann\Comparator\ComparisonFailure;
@@ -12,6 +13,11 @@ use SebastianBergmann\Comparator\Factory;
 
 $suiteDir = getenv('TEST_SUITE_DIR') ?: __DIR__ . '/../../test_suite';
 $suites   = ['positive', 'negative', 'aliases_positive', 'aliases_negative'];
+// LIVR 2.5: schemas that must not build
+$schemaErrors = 'schema_errors';
+if (is_dir("$suiteDir/$schemaErrors")) {
+    $suites[] = $schemaErrors;
+}
 
 function readJson($dir, $name)
 {
@@ -38,7 +44,47 @@ function show($value)
     return strlen($s) > 300 ? substr($s, 0, 300) . '...' : $s;
 }
 
+// LIVR 2.5: options.json {"now": "..."} is the current time for the bounds today, yesterday and
+// tomorrow, set for the case (clock.php) and restored after it
+function withClock($options, $fn)
+{
+    if (!is_array($options) || !array_key_exists('now', $options)) {
+        return $fn();
+    }
+    LivrHarnessClock::$now = (new DateTimeImmutable($options['now']))->getTimestamp();
+    try {
+        return $fn();
+    } finally {
+        LivrHarnessClock::$now = null;
+    }
+}
+
+function runSchemaErrorCase($dir)
+{
+    try {
+        $validator = new Validator\LIVR(readJson($dir, 'rules'));
+        foreach (readJson($dir, 'aliases') ?: [] as $alias) {
+            $validator->registerAliasedRule($alias);
+        }
+        if (method_exists($validator, 'prepare')) {
+            $validator->prepare();
+        } else {
+            $validator->validate([]);
+        }
+    } catch (Throwable $e) {
+        return null;
+    }
+    return 'expected building the validator to fail';
+}
+
 function runCase($suite, $dir)
+{
+    return withClock(readJson($dir, 'options'), function () use ($suite, $dir) {
+        return $suite === 'schema_errors' ? runSchemaErrorCase($dir) : runValidationCase($suite, $dir);
+    });
+}
+
+function runValidationCase($suite, $dir)
 {
     $rules   = readJson($dir, 'rules');
     $input   = readJson($dir, 'input');
@@ -90,8 +136,8 @@ $result = [
 ];
 
 foreach ($suites as $suite) {
-    $cases = array_values(array_filter(scandir("$suiteDir/$suite"), function ($n) {
-        return $n[0] !== '.';
+    $cases = array_values(array_filter(scandir("$suiteDir/$suite"), function ($n) use ($suiteDir, $suite) {
+        return $n[0] !== '.' && is_dir("$suiteDir/$suite/$n");
     }));
     sort($cases);
 

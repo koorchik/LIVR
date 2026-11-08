@@ -10,10 +10,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"runtime/debug"
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	livr "github.com/k33nice/go-livr"
 )
@@ -143,6 +145,65 @@ func show(v interface{}) string {
 	return s
 }
 
+// LIVR 2.5: options.json {"now": "..."} is the current time for the bounds today, yesterday and
+// tomorrow. go-livr with LIVR 2.5 takes the clock as Options.Now (func() time.Time), like its own
+// tests. The field is set by reflection, so the harness also compiles against go-livr v2.0.0,
+// which has no clock: there the case runs with the system time.
+func newOptions(rules map[string]interface{}, dir string) *livr.Options {
+	opts := &livr.Options{LivrRules: rules}
+	var options struct {
+		Now *string `json:"now"`
+	}
+	if !readJSON(dir, "options", &options) || options.Now == nil {
+		return opts
+	}
+	now, err := time.Parse(time.RFC3339, *options.Now)
+	if err != nil {
+		panic(fmt.Sprintf("options.json: a wrong \"now\": %q", *options.Now))
+	}
+	clock := func() time.Time { return now }
+	if field := reflect.ValueOf(opts).Elem().FieldByName("Now"); field.IsValid() && field.CanSet() &&
+		field.Type() == reflect.TypeOf(clock) {
+		field.Set(reflect.ValueOf(clock))
+	}
+	return opts
+}
+
+func newValidator(dir string) *livr.Validator {
+	var rules map[string]interface{}
+	var aliases []livr.Alias
+	readJSON(dir, "rules", &rules)
+	readJSON(dir, "aliases", &aliases)
+
+	v := livr.New(newOptions(rules, dir))
+	for _, a := range aliases {
+		v.RegisterAliasedRule(a)
+	}
+	return v
+}
+
+// LIVR 2.5: a schema that must not build. go-livr with LIVR 2.5 has Prepare() error (a
+// *SchemaError); go-livr v2.0.0 builds the validator on the first Validate and panics on a wrong
+// rule, so there the schema is validated with {} and a panic is the schema error. Field errors of
+// that validation are not.
+func runSchemaErrorCase(dir string) (message string) {
+	defer func() {
+		if r := recover(); r != nil {
+			message = ""
+		}
+	}()
+
+	v := newValidator(dir)
+	if p, ok := interface{}(v).(interface{ Prepare() error }); ok {
+		if p.Prepare() != nil {
+			return ""
+		}
+	} else {
+		v.Validate(livr.Dictionary{})
+	}
+	return "expected building the validator to fail"
+}
+
 func runCase(suite, dir string) (message string) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -150,16 +211,13 @@ func runCase(suite, dir string) (message string) {
 		}
 	}()
 
-	var rules, input map[string]interface{}
-	var aliases []livr.Alias
-	readJSON(dir, "rules", &rules)
-	readJSON(dir, "input", &input)
-	readJSON(dir, "aliases", &aliases)
-
-	v := livr.New(&livr.Options{LivrRules: rules})
-	for _, a := range aliases {
-		v.RegisterAliasedRule(a)
+	if suite == schemaErrors {
+		return runSchemaErrorCase(dir)
 	}
+
+	var input map[string]interface{}
+	readJSON(dir, "input", &input)
+	v := newValidator(dir)
 
 	output, err := v.Validate(input)
 	errors := normalize(map[string]interface{}(v.Errors()))
@@ -187,10 +245,16 @@ func runCase(suite, dir string) (message string) {
 	return ""
 }
 
+// LIVR 2.5: schemas that must not build
+const schemaErrors = "schema_errors"
+
 func moduleVersion() string {
 	if info, ok := debug.ReadBuildInfo(); ok {
 		for _, dep := range info.Deps {
 			if dep.Path == "github.com/k33nice/go-livr" {
+				if dep.Replace != nil {
+					return "local"
+				}
 				return dep.Version
 			}
 		}
@@ -206,14 +270,19 @@ func main() {
 
 	res := result{ID: "go", Package: "github.com/k33nice/go-livr", Version: moduleVersion(), Source: "go", Failures: []failure{}}
 
-	for _, suite := range []string{"positive", "negative", "aliases_positive", "aliases_negative"} {
+	suites := []string{"positive", "negative", "aliases_positive", "aliases_negative"}
+	if info, err := os.Stat(filepath.Join(suiteDir, schemaErrors)); err == nil && info.IsDir() {
+		suites = append(suites, schemaErrors)
+	}
+
+	for _, suite := range suites {
 		entries, err := os.ReadDir(filepath.Join(suiteDir, suite))
 		if err != nil {
 			panic(err)
 		}
 		var names []string
 		for _, e := range entries {
-			if !strings.HasPrefix(e.Name(), ".") {
+			if e.IsDir() && !strings.HasPrefix(e.Name(), ".") {
 				names = append(names, e.Name())
 			}
 		}
