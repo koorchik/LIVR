@@ -8,7 +8,7 @@ Package versions and repository activity are refreshed every time the site is bu
 
 ## Test suite results
 
-Every implementation is checked against the shared [test suite](/how-to-contribute/test-suite.html). Every week, and whenever the specification changes, CI installs each implementation the way a user would and runs all test cases against it. The score is for the LIVR 2.0 suite; the "2.5" column shows the separate suite of the rules added in LIVR 2.5.
+Every implementation is checked against the shared [test suite](/how-to-contribute/test-suite.html). Every week, and whenever the specification changes, CI installs each implementation the way a user would and runs all test cases against it. The score is for the LIVR 2.0 suite; the "2.5" columns show the separate suite of the rules added in LIVR 2.5: its validation cases and its schema error cases.
 
 <ConformanceTable />
 
