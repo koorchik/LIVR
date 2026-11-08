@@ -29,6 +29,9 @@ const rank = (item: Implementation) => TONE_ORDER[conformance(item)?.tone ?? 'mu
 // LIVR 2.5 only adds rules to 2.0, so implementations of both are current
 const CURRENT_SPECS = ['2.0', '2.5']
 const isCurrent = (item: Implementation) => CURRENT_SPECS.includes(item.spec)
+// Each current spec gets its own color, so 2.5 support stands out from 2.0
+const specTone = (item: Implementation) =>
+  item.spec === '2.5' ? 'livr-badge--spec-2-5' : isCurrent(item) ? 'livr-badge--brand' : 'livr-badge--warn'
 
 const items = computed(() => {
   const list = data.implementations
@@ -89,7 +92,7 @@ function conformance(item: Implementation) {
             <a :href="item.repo" target="_blank" rel="noopener">{{ title(item) }}</a>
           </h3>
           <div class="impl-card__tags">
-            <span class="livr-badge" :class="isCurrent(item) ? 'livr-badge--brand' : 'livr-badge--warn'">LIVR {{ item.spec }}</span>
+            <span class="livr-badge" :class="specTone(item)">LIVR {{ item.spec }}</span>
             <span v-if="item.live.archived" class="livr-badge livr-badge--muted">archived</span>
             <span
               v-if="conformance(item)"

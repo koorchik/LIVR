@@ -190,6 +190,11 @@
   background: var(--vp-c-brand-soft);
 }
 
+.livr-badge--spec-2-5 {
+  color: var(--vp-c-purple-1);
+  background: var(--vp-c-purple-soft);
+}
+
 .livr-badge--muted {
   color: var(--vp-c-text-2);
   background: var(--vp-c-default-soft);
