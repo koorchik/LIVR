@@ -15,7 +15,7 @@ export type Source = 'rules' | 'input' | 'aliases' | 'validator'
 export type RunResult =
   | { status: 'valid'; output: unknown }
   | { status: 'invalid'; errors: unknown }
-  | { status: 'error'; source: Source; message: string }
+  | { status: 'error'; source: Source; message: string; line?: number }
 
 export interface Expected {
   output?: unknown
@@ -23,7 +23,7 @@ export interface Expected {
 }
 
 class SourceError extends Error {
-  constructor(public source: Source, message: string) {
+  constructor(public source: Source, message: string, public line?: number) {
     super(message)
   }
 }
@@ -33,8 +33,9 @@ function parse(text: string, source: Source, fallback: unknown) {
   try {
     return JSON5.parse(text)
   } catch (e) {
-    const message = (e as Error).message.replace(/^JSON5: /, '')
-    throw new SourceError(source, message)
+    // JSON5 errors end with "at <line>:<column>"; the line is reported separately
+    const message = (e as Error).message.replace(/^JSON5: /, '').replace(/ at \d+:\d+$/, '')
+    throw new SourceError(source, message, (e as { lineNumber?: number }).lineNumber)
   }
 }
 
@@ -64,7 +65,7 @@ export function runLivr(rulesText: string, inputText: string, aliasesText = '', 
       throw new SourceError('validator', e instanceof Error ? e.message : String(e))
     }
   } catch (e) {
-    if (e instanceof SourceError) return { status: 'error', source: e.source, message: e.message }
+    if (e instanceof SourceError) return { status: 'error', source: e.source, message: e.message, line: e.line }
     throw e
   }
 }

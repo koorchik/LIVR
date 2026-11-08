@@ -1,10 +1,9 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
-import { h } from 'vue'
+import { defineAsyncComponent, h } from 'vue'
 
 import HeroDemo from './components/HeroDemo.vue'
 import LivrExample from './components/LivrExample.vue'
-import LivrPlayground from './components/LivrPlayground.vue'
 import ImplementationCards from './components/ImplementationCards.vue'
 import ConformanceTable from './components/ConformanceTable.vue'
 import RuleBreadcrumb from './components/RuleBreadcrumb.vue'
@@ -24,7 +23,8 @@ export default {
   },
   enhanceApp({ app }) {
     app.component('LivrExample', LivrExample)
-    app.component('LivrPlayground', LivrPlayground)
+    // The playground loads CodeMirror, so it is a separate chunk for the playground page only
+    app.component('LivrPlayground', defineAsyncComponent(() => import('./components/LivrPlayground.vue')))
     app.component('ImplementationCards', ImplementationCards)
     app.component('ConformanceTable', ConformanceTable)
     app.component('RuleSandbox', RuleSandbox)
