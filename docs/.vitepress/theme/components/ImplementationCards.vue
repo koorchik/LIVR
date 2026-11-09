@@ -21,10 +21,14 @@ const REGISTRY_LABELS: Record<string, string> = {
   crates: 'crates.io'
 }
 
-// Cards go by test suite result: all cases pass first, failing ones last. Implementations
-// with the same result keep the order of implementations.json
+// Cards go by test suite result: all cases pass first, failing ones last. With the same
+// result, implementations of LIVR 2.5 go before 2.0 and older ones; the rest keep the order
+// of implementations.json
 const TONE_ORDER: Record<string, number> = { ok: 0, warn: 1, muted: 2, fail: 3 }
+const SPEC_ORDER: Record<string, number> = { '2.5': 0, '2.0': 1 }
 const rank = (item: Implementation) => TONE_ORDER[conformance(item)?.tone ?? 'muted']
+const specRank = (item: Implementation) => SPEC_ORDER[item.spec] ?? 2
+const byRank = (a: Implementation, b: Implementation) => rank(a) - rank(b) || specRank(a) - specRank(b)
 
 // LIVR 2.5 only adds rules to 2.0, so implementations of both are current
 const CURRENT_SPECS = ['2.0', '2.5']
@@ -36,8 +40,8 @@ const specTone = (item: Implementation) =>
 const items = computed(() => {
   const list = data.implementations
   return props.compact
-    ? list.filter((item) => isCurrent(item) && !item.live.archived)
-    : [...list].sort((a, b) => rank(a) - rank(b))
+    ? list.filter((item) => isCurrent(item) && !item.live.archived).sort(byRank)
+    : [...list].sort(byRank)
 })
 
 const title = (item: Implementation) => (item.name ? `${item.language} · ${item.name}` : item.language)
